@@ -1,0 +1,45 @@
+{
+  "name": "yoroi-extension-ledger-connector-website",
+  "version": "1.0.0",
+  "description": "Yoroi Extension Ledger hardware wallet bridge connector",
+  "author": "EMURGO.io",
+  "license": "MIT",
+  "main": "./src/main.js",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp scripts",
+    "flow": "flow .",
+    "eslint": "eslint *.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "babel-core": "6.26.3",
+    "babel-preset-es2015": "6.24.1",
+    "browser-sync": "2.24.6",
+    "gulp": "3.9.1",
+    "source": "0.0.3",
+    "vinyl-source-stream": "2.0.0",
+    "flow-bin": "0.93.0",
+    "babel-preset-flow": "6.23.0",
+    "babel-eslint": "10.0.1",
+    "eslint-plugin-flowtype": "3.4.2",
+    "eslint": "5.14.0"
+  },
+  "dependencies": {
+    "@cardano-foundation/ledgerjs-hw-app-cardano": "1.0.7",
+    "@ledgerhq/hw-transport-webauthn": "4.63.2",
+    "@ledgerhq/hw-transport-u2f": "4.63.2",
+    "babel-polyfill": "6.26.0",
+    "babel-runtime": "6.26.0",
+    "babelify": "8.0.0",
+    "browserify": "16.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Emurgo/yoroi-extension-ledger-connector-website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Emurgo/yoroi-extension-ledger-connector-website/issues",
+    "email": "support@emurgo.io"
+  }
+}
