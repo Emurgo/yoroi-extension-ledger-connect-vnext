@@ -15544,17 +15544,17 @@ var init = async function init() {
   console.info('[YOROI-LB] Version: ' + _package.version);
   try {
     var transportGenerator = void 0;
-    if (get_param === 'webauthn') {
-      console.info('[YOROI-LB] Transport: webauthn');
-      var TransportWebAuthn = require('@ledgerhq/hw-transport-webauthn').default;
-      transportGenerator = function transportGenerator() {
-        return TransportWebAuthn.create();
-      };
-    } else {
+    if (get_param === 'u2f') {
       console.info('[YOROI-LB] Transport: u2f');
       var TransportU2F = require('@ledgerhq/hw-transport-u2f').default;
       transportGenerator = function transportGenerator() {
         return TransportU2F.create();
+      };
+    } else {
+      console.info('[YOROI-LB] Transport: webauthn');
+      var TransportWebAuthn = require('@ledgerhq/hw-transport-webauthn').default;
+      transportGenerator = function transportGenerator() {
+        return TransportWebAuthn.create();
       };
     }
     bridge = new _yoroiLedgerBridge2.default(transportGenerator);

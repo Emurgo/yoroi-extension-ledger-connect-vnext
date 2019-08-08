@@ -11,14 +11,14 @@ const init = async () => {
   console.info(`[YOROI-LB] Version: ${version}`);
   try {
     let transportGenerator;
-    if (get_param === 'webauthn') {
-      console.info(`[YOROI-LB] Transport: webauthn`);
-      const TransportWebAuthn = require('@ledgerhq/hw-transport-webauthn').default;
-      transportGenerator = () => TransportWebAuthn.create();
-    } else {
+    if (get_param === 'u2f') {
       console.info(`[YOROI-LB] Transport: u2f`);
       const TransportU2F = require('@ledgerhq/hw-transport-u2f').default;
       transportGenerator = () => TransportU2F.create();
+    } else {
+      console.info(`[YOROI-LB] Transport: webauthn`);
+      const TransportWebAuthn = require('@ledgerhq/hw-transport-webauthn').default;
+      transportGenerator = () => TransportWebAuthn.create();
     }
     bridge = new YoroiLedgerBridge(transportGenerator);
 
