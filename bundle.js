@@ -15620,10 +15620,6 @@ var _ledgerjsHwAppCardano = require('@cardano-foundation/ledgerjs-hw-app-cardano
 
 var _ledgerjsHwAppCardano2 = _interopRequireDefault(_ledgerjsHwAppCardano);
 
-var _hwTransportWebauthn = require('@ledgerhq/hw-transport-webauthn');
-
-var _hwTransportWebauthn2 = _interopRequireDefault(_hwTransportWebauthn);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -15969,4 +15965,4 @@ var YoroiLedgerBridge = function () {
 
 exports.default = YoroiLedgerBridge;
 
-},{"@cardano-foundation/ledgerjs-hw-app-cardano":1,"@ledgerhq/hw-transport-webauthn":7,"babel-polyfill":10}]},{},[444]);
+},{"@cardano-foundation/ledgerjs-hw-app-cardano":1,"babel-polyfill":10}]},{},[444]);

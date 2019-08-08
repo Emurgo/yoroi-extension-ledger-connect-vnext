@@ -10,8 +10,6 @@ import type {
   GetVersionResponse
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
-import TransportWebAuthn from '@ledgerhq/hw-transport-webauthn';
-
 type MessageType = {
   action: string,
   success: boolean,
