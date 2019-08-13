@@ -144,7 +144,7 @@
     "@ledgerhq/errors" "^4.68.2"
     events "^3.0.0"
 
-"@ledgerhq/logs@4.68.2", "@ledgerhq/logs@^4.68.2":
+"@ledgerhq/logs@^4.68.2":
   version "4.68.2"
   resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-4.68.2.tgz#3ba74680927807f83d9f0bfd7da45f192d2c0893"
   integrity sha512-iFwGIzPmAMDvxVLtTvBUo0DCWz8vVaD0C4IsprNaXbxu+AsDmlc9kO9CKLB5YFEZblKNNKqJMJDfKvg5brIpTw==

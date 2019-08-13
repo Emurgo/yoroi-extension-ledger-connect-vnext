@@ -10,9 +10,6 @@ import type {
   GetVersionResponse
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
-import { listen } from '@ledgerhq/logs';
-listen(log => console.log(log.type + ": " + log.message));
-
 type MessageType = {
   action: string,
   success: boolean,

@@ -29,7 +29,6 @@
     "@cardano-foundation/ledgerjs-hw-app-cardano": "1.0.7",
     "@ledgerhq/hw-transport-webauthn": "4.68.2",
     "@ledgerhq/hw-transport-u2f": "4.68.2",
-    "@ledgerhq/logs": "4.68.2",
     "babel-polyfill": "6.26.0",
     "babel-runtime": "6.26.0",
     "babelify": "8.0.0",
