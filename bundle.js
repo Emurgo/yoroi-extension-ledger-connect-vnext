@@ -15481,13 +15481,13 @@ makeDefault( 'sign' );
 },{"./google-u2f-api":441}],443:[function(require,module,exports){
 module.exports={
   "name": "yoroi-extension-ledger-connector-website",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Yoroi Extension Ledger hardware wallet bridge connector",
   "author": "EMURGO.io",
   "license": "MIT",
   "main": "./src/main.js",
   "scripts": {
-    "start": "gulp",
+    "start": "yarn build && gulp",
     "build": "gulp scripts",
     "flow": "flow .",
     "eslint": "eslint *.js",
@@ -15548,26 +15548,33 @@ var init = async function init() {
       console.info('[YOROI-LB] Transport: u2f');
       var TransportU2F = require('@ledgerhq/hw-transport-u2f').default;
       transportGenerator = function transportGenerator() {
-        return TransportU2F;
+        return TransportU2F.create();
       };
     } else {
       console.info('[YOROI-LB] Transport: webauthn');
       var TransportWebAuthn = require('@ledgerhq/hw-transport-webauthn').default;
       transportGenerator = function transportGenerator() {
-        return TransportWebAuthn;
+        return TransportWebAuthn.create();
       };
     }
     bridge = new _yoroiLedgerBridge2.default(transportGenerator);
 
     // Test Events
     window.onload = function (e) {
-      var buttonLog = document.getElementById("versionButton");
-      if (!buttonLog) {
+      var buttonGetVersion = document.getElementById("getVersionButton");
+      if (!buttonGetVersion) {
+        return;
+      }
+      var buttonGetExtendedPublicKey = document.getElementById("getExtendedPublicKeyButton");
+      if (!buttonGetExtendedPublicKey) {
         return;
       }
 
-      buttonLog.addEventListener('click', async function () {
+      buttonGetVersion.addEventListener('click', async function () {
         return logConnectedDeviceVersion();
+      });
+      buttonGetExtendedPublicKey.addEventListener('click', async function () {
+        return logGetExtendedPublicKey();
       });
     };
 
@@ -15590,12 +15597,25 @@ var onError = function onError(error) {
 };
 
 /**
- * Test Ledger connection : Console Log Connected Device Version
+ * Test Ledger connection : Console Log getVersion
  */
 var logConnectedDeviceVersion = async function logConnectedDeviceVersion() {
   try {
-    var result = await bridge.getConnectedDeviceVersion();
-    console.info('[YOROI-LB] Connected Ledger device version: ' + JSON.stringify(result, null, 2));
+    var result = await bridge.getVersion(null, '');
+    console.info('[YOROI-LB] getVersion: ' + JSON.stringify(result, null, 2));
+  } catch (error) {
+    console.error(error);
+    console.info('[YOROI-LB] ' + 'Is your Ledger Nano S device connected to your system\'s USB port?');
+  }
+};
+
+/**
+ * Test Ledger connection : Console Log getExtendedPublicKey
+ */
+var logGetExtendedPublicKey = async function logGetExtendedPublicKey() {
+  try {
+    var result = await bridge.getExtendedPublicKey(null, '', [2147483692, 2147485463, 2147483648]);
+    console.info('[YOROI-LB] getExtendedPublicKey: ' + JSON.stringify(result, null, 2));
   } catch (error) {
     console.error(error);
     console.info('[YOROI-LB] ' + 'Is your Ledger Nano S device connected to your system\'s USB port?');
@@ -15635,58 +15655,33 @@ var YoroiLedgerBridge = function () {
   }
 
   /**
-   * @description Just to testing connectiong, result is not sent to iframe invoker
+   * @description Returns an object containing the app version.
    * 
-   * @returns {Promise<{major:number, minor:number, patch:number, flags:{isDebug:boolean}}>}
+   * @param {*} replyAction
+   * @returns {Promise<{major:number, minor:number, patch:number, flags:{isDebug:boolean}}>} 
+   *
+   * @example
+   * const { major, minor, patch, flags } = await app.getVersion();
    */
 
 
   _createClass(YoroiLedgerBridge, [{
-    key: 'getConnectedDeviceVersion',
-    value: async function getConnectedDeviceVersion() {
-      var transport = void 0;
-      try {
-        var Transport = this.transportGenerator();
-        transport = await Transport.create();
-        // transport = await transport.open("");
-
-        var sub = Transport.listen(function (event) {
-          return console.log(JSON.stringify(event));
-        });
-
-        var adaApp = new _ledgerjsHwAppCardano2.default(transport);
-        return adaApp.getVersion();
-      } finally {
-        transport && transport.close();
-      }
-    }
-
-    /**
-     * @description Returns an object containing the app version.
-     * 
-     * @param {*} replyAction
-     * @returns {Promise<{major:number, minor:number, patch:number, flags:{isDebug:boolean}}>} 
-     *
-     * @example
-     * const { major, minor, patch, flags } = await app.getVersion();
-     */
-
-  }, {
     key: 'getVersion',
     value: async function getVersion(source, replyAction) {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::getVersion::' + replyAction + '::args::');
-        var Transport = this.transportGenerator();
-        transport = await Transport.create();
 
+        transport = await this.transportGenerator();
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
+
         var res = await adaApp.getVersion();
         this.sendMessage(source, {
           action: replyAction,
           success: true,
           payload: res
         });
+        return res;
       } catch (err) {
         console.error('[YOROI-LB]::getVersion::' + replyAction + '::error::' + JSON.stringify(err));
         var e = this.ledgerErrToMessage(err);
@@ -15719,20 +15714,17 @@ var YoroiLedgerBridge = function () {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::getExtendedPublicKey::' + replyAction + '::args::hdPath::' + JSON.stringify(hdPath));
-        var Transport = this.transportGenerator();
-        transport = await Transport.create();
 
-        var sub = Transport.listen(function (event) {
-          return console.log(JSON.stringify(event));
-        });
-
+        transport = await this.transportGenerator();
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
+
         var res = await adaApp.getExtendedPublicKey(hdPath);
         this.sendMessage(source, {
           action: replyAction,
           success: true,
           payload: res
         });
+        return res;
       } catch (err) {
         console.error('[YOROI-LB]::getExtendedPublicKey::' + replyAction + '::error::' + JSON.stringify(err));
         var e = this.ledgerErrToMessage(err);
@@ -15758,16 +15750,17 @@ var YoroiLedgerBridge = function () {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::signTransaction::' + replyAction + '::args::inputs::' + JSON.stringify(inputs) + '::outputs' + JSON.stringify(outputs));
-        var Transport = this.transportGenerator();
-        transport = await Transport.create();
 
+        transport = await this.transportGenerator();
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
+
         var res = await adaApp.signTransaction(inputs, outputs);
         this.sendMessage(source, {
           action: replyAction,
           success: true,
           payload: res
         });
+        return res;
       } catch (err) {
         console.error('[YOROI-LB]::signTransaction::' + replyAction + '::error::' + JSON.stringify(err));
         var e = this.ledgerErrToMessage(err);
@@ -15803,16 +15796,16 @@ var YoroiLedgerBridge = function () {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::deriveAddress::' + replyAction + '::args::hdPath::' + JSON.stringify(hdPath));
-        var Transport = this.transportGenerator();
-        transport = await Transport.create();
-
+        transport = await this.transportGenerator();
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
+
         var res = await adaApp.deriveAddress(hdPath);
         this.sendMessage(source, {
           action: replyAction,
           success: true,
           payload: res
         });
+        return res;
       } catch (err) {
         console.error('[YOROI-LB]::deriveAddress::' + replyAction + '::error::' + JSON.stringify(err));
         var e = this.ledgerErrToMessage(err);
@@ -15849,8 +15842,7 @@ var YoroiLedgerBridge = function () {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::showAddress::' + replyAction + '::args::hdPath::' + JSON.stringify(hdPath));
-        var Transport = this.transportGenerator();
-        transport = await Transport.create();
+        transport = await this.transportGenerator();
 
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
         var res = await adaApp.showAddress(hdPath);
@@ -15859,6 +15851,7 @@ var YoroiLedgerBridge = function () {
           success: true,
           payload: res
         });
+        return res;
       } catch (err) {
         console.error('[YOROI-LB]::showAddress::' + replyAction + '::error::' + JSON.stringify(err));
         var e = this.ledgerErrToMessage(err);
@@ -15932,7 +15925,7 @@ var YoroiLedgerBridge = function () {
       if (source) {
         source.postMessage(msg, '*');
       } else {
-        console.error('[YOROI-LB]::sendMessage::No Source window provided');
+        console.debug('[YOROI-LB]::sendMessage::No Source window provided');
       }
     }
   }, {

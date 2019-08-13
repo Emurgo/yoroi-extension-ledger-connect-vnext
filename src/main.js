@@ -14,22 +14,27 @@ const init = async () => {
     if (get_param === 'u2f') {
       console.info(`[YOROI-LB] Transport: u2f`);
       const TransportU2F = require('@ledgerhq/hw-transport-u2f').default;
-      transportGenerator = () => TransportU2F;
+      transportGenerator = () => TransportU2F.create();
     } else {
       console.info(`[YOROI-LB] Transport: webauthn`);
       const TransportWebAuthn = require('@ledgerhq/hw-transport-webauthn').default;
-      transportGenerator = () => TransportWebAuthn;
+      transportGenerator = () => TransportWebAuthn.create();
     }
     bridge = new YoroiLedgerBridge(transportGenerator);
 
     // Test Events
     window.onload = function(e) {
-      const buttonLog = document.getElementById("versionButton");
-      if (!buttonLog) {
+      const buttonGetVersion = document.getElementById("getVersionButton");
+      if (!buttonGetVersion) {
+        return;
+      }
+      const buttonGetExtendedPublicKey = document.getElementById("getExtendedPublicKeyButton");
+      if (!buttonGetExtendedPublicKey) {
         return;
       }
 
-      buttonLog.addEventListener('click', async () => logConnectedDeviceVersion());
+      buttonGetVersion.addEventListener('click', async () => logConnectedDeviceVersion());
+      buttonGetExtendedPublicKey.addEventListener('click', async () => logGetExtendedPublicKey());
     }
     
     if (bridge) {
@@ -51,12 +56,27 @@ const onError = (error) => {
 }
 
 /**
- * Test Ledger connection : Console Log Connected Device Version
+ * Test Ledger connection : Console Log getVersion
  */
 const logConnectedDeviceVersion = async () => {
   try {
-    const result = await bridge.getConnectedDeviceVersion();
-    console.info('[YOROI-LB] Connected Ledger device version: '
+    const result = await bridge.getVersion(null, '');
+    console.info('[YOROI-LB] getVersion: '
+      + JSON.stringify(result, null , 2));
+  } catch (error) {
+    console.error(error);
+    console.info('[YOROI-LB] '
+      + 'Is your Ledger Nano S device connected to your system\'s USB port?');
+  }
+}
+
+/**
+ * Test Ledger connection : Console Log getExtendedPublicKey
+ */
+const logGetExtendedPublicKey = async () => {
+  try {
+    const result = await bridge.getExtendedPublicKey(null, '', [2147483692, 2147485463, 2147483648]);
+    console.info('[YOROI-LB] getExtendedPublicKey: '
       + JSON.stringify(result, null , 2));
   } catch (error) {
     console.error(error);
