@@ -15711,6 +15711,11 @@ var YoroiLedgerBridge = function () {
       try {
         console.debug('[YOROI-LB]::getExtendedPublicKey::' + replyAction + '::args::hdPath::' + JSON.stringify(hdPath));
         transport = await this.transportGenerator();
+
+        var sub = transport.listen(function (event) {
+          return console.log(JSON.stringify(event));
+        });
+
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
         var res = await adaApp.getExtendedPublicKey(hdPath);
         this.sendMessage(source, {

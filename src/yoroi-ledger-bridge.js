@@ -105,6 +105,9 @@ export default class YoroiLedgerBridge {
     try {
       console.debug(`[YOROI-LB]::getExtendedPublicKey::${replyAction}::args::hdPath::${JSON.stringify(hdPath)}`);
       transport = await this.transportGenerator();
+
+      const sub = transport.listen(event => console.log(JSON.stringify(event)));
+
       const adaApp = new AdaApp(transport);
       const res = await adaApp.getExtendedPublicKey(hdPath);
       this.sendMessage(
