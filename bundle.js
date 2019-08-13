@@ -15481,7 +15481,7 @@ makeDefault( 'sign' );
 },{"./google-u2f-api":441}],443:[function(require,module,exports){
 module.exports={
   "name": "yoroi-extension-ledger-connector-website",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Yoroi Extension Ledger hardware wallet bridge connector",
   "author": "EMURGO.io",
   "license": "MIT",
@@ -15710,7 +15710,7 @@ var YoroiLedgerBridge = function () {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::getExtendedPublicKey::' + replyAction + '::args::hdPath::' + JSON.stringify(hdPath));
-        transport = await this.transportGenerator();
+        transport = await this.transportGenerator().open("");
 
         var sub = transport.listen(function (event) {
           return console.log(JSON.stringify(event));

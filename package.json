@@ -1,6 +1,6 @@
 {
   "name": "yoroi-extension-ledger-connector-website",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Yoroi Extension Ledger hardware wallet bridge connector",
   "author": "EMURGO.io",
   "license": "MIT",
