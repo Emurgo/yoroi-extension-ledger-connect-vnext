@@ -15548,13 +15548,13 @@ var init = async function init() {
       console.info('[YOROI-LB] Transport: u2f');
       var TransportU2F = require('@ledgerhq/hw-transport-u2f').default;
       transportGenerator = function transportGenerator() {
-        return TransportU2F.create();
+        return TransportU2F;
       };
     } else {
       console.info('[YOROI-LB] Transport: webauthn');
       var TransportWebAuthn = require('@ledgerhq/hw-transport-webauthn').default;
       transportGenerator = function transportGenerator() {
-        return TransportWebAuthn.create();
+        return TransportWebAuthn;
       };
     }
     bridge = new _yoroiLedgerBridge2.default(transportGenerator);
@@ -15646,7 +15646,14 @@ var YoroiLedgerBridge = function () {
     value: async function getConnectedDeviceVersion() {
       var transport = void 0;
       try {
-        transport = await this.transportGenerator();
+        var Transport = this.transportGenerator();
+        transport = await Transport.create();
+        // transport = await transport.open("");
+
+        var sub = Transport.listen(function (event) {
+          return console.log(JSON.stringify(event));
+        });
+
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
         return adaApp.getVersion();
       } finally {
@@ -15670,7 +15677,9 @@ var YoroiLedgerBridge = function () {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::getVersion::' + replyAction + '::args::');
-        transport = await this.transportGenerator();
+        var Transport = this.transportGenerator();
+        transport = await Transport.create();
+
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
         var res = await adaApp.getVersion();
         this.sendMessage(source, {
@@ -15710,10 +15719,10 @@ var YoroiLedgerBridge = function () {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::getExtendedPublicKey::' + replyAction + '::args::hdPath::' + JSON.stringify(hdPath));
-        transport = await this.transportGenerator();
-        transport = await transport.open("");
+        var Transport = this.transportGenerator();
+        transport = await Transport.create();
 
-        var sub = transport.listen(function (event) {
+        var sub = Transport.listen(function (event) {
           return console.log(JSON.stringify(event));
         });
 
@@ -15749,7 +15758,9 @@ var YoroiLedgerBridge = function () {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::signTransaction::' + replyAction + '::args::inputs::' + JSON.stringify(inputs) + '::outputs' + JSON.stringify(outputs));
-        transport = await this.transportGenerator();
+        var Transport = this.transportGenerator();
+        transport = await Transport.create();
+
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
         var res = await adaApp.signTransaction(inputs, outputs);
         this.sendMessage(source, {
@@ -15792,7 +15803,9 @@ var YoroiLedgerBridge = function () {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::deriveAddress::' + replyAction + '::args::hdPath::' + JSON.stringify(hdPath));
-        transport = await this.transportGenerator();
+        var Transport = this.transportGenerator();
+        transport = await Transport.create();
+
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
         var res = await adaApp.deriveAddress(hdPath);
         this.sendMessage(source, {
@@ -15836,7 +15849,9 @@ var YoroiLedgerBridge = function () {
       var transport = void 0;
       try {
         console.debug('[YOROI-LB]::showAddress::' + replyAction + '::args::hdPath::' + JSON.stringify(hdPath));
-        transport = await this.transportGenerator();
+        var Transport = this.transportGenerator();
+        transport = await Transport.create();
+
         var adaApp = new _ledgerjsHwAppCardano2.default(transport);
         var res = await adaApp.showAddress(hdPath);
         this.sendMessage(source, {

@@ -35,7 +35,12 @@ export default class YoroiLedgerBridge {
   async getConnectedDeviceVersion(): Promise<GetVersionResponse> {
     let transport;
     try {
-      transport = await this.transportGenerator();
+      const Transport = this.transportGenerator();
+      transport = await Transport.create();
+      // transport = await transport.open("");
+
+      const sub = Transport.listen(event => console.log(JSON.stringify(event)));
+      
       const adaApp = new AdaApp(transport);
       return adaApp.getVersion();
     } finally {
@@ -59,7 +64,9 @@ export default class YoroiLedgerBridge {
     let transport;
     try {
       console.debug(`[YOROI-LB]::getVersion::${replyAction}::args::`);
-      transport = await this.transportGenerator();
+      const Transport = this.transportGenerator();
+      transport = await Transport.create();
+
       const adaApp = new AdaApp(transport);
       const res = await adaApp.getVersion();
       this.sendMessage(
@@ -104,10 +111,10 @@ export default class YoroiLedgerBridge {
     let transport;
     try {
       console.debug(`[YOROI-LB]::getExtendedPublicKey::${replyAction}::args::hdPath::${JSON.stringify(hdPath)}`);
-      transport = await this.transportGenerator();
-      transport = await transport.open("");
+      const Transport = this.transportGenerator();
+      transport = await Transport.create();
 
-      const sub = transport.listen(event => console.log(JSON.stringify(event)));
+      const sub = Transport.listen(event => console.log(JSON.stringify(event)));
 
       const adaApp = new AdaApp(transport);
       const res = await adaApp.getExtendedPublicKey(hdPath);
@@ -147,7 +154,9 @@ export default class YoroiLedgerBridge {
     let transport;
     try {
       console.debug(`[YOROI-LB]::signTransaction::${replyAction}::args::inputs::${JSON.stringify(inputs)}::outputs${JSON.stringify(outputs)}`);
-      transport = await this.transportGenerator();
+      const Transport = this.transportGenerator();
+      transport = await Transport.create();
+
       const adaApp = new AdaApp(transport);
       const res = await adaApp.signTransaction(inputs, outputs);
       this.sendMessage(
@@ -195,7 +204,9 @@ export default class YoroiLedgerBridge {
     let transport;
     try {
       console.debug(`[YOROI-LB]::deriveAddress::${replyAction}::args::hdPath::${JSON.stringify(hdPath)}`);
-      transport = await this.transportGenerator();
+      const Transport = this.transportGenerator();
+      transport = await Transport.create();
+
       const adaApp = new AdaApp(transport);
       const res = await adaApp.deriveAddress(hdPath)
       this.sendMessage(
@@ -244,7 +255,9 @@ export default class YoroiLedgerBridge {
     let transport;
     try {
       console.debug(`[YOROI-LB]::showAddress::${replyAction}::args::hdPath::${JSON.stringify(hdPath)}`);
-      transport = await this.transportGenerator();
+      const Transport = this.transportGenerator();
+      transport = await Transport.create();
+
       const adaApp = new AdaApp(transport);
       const res = await adaApp.showAddress(hdPath);
       this.sendMessage(
