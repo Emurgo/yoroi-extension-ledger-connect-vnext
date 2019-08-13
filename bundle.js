@@ -15508,8 +15508,9 @@ module.exports={
   },
   "dependencies": {
     "@cardano-foundation/ledgerjs-hw-app-cardano": "1.0.7",
-    "@ledgerhq/hw-transport-webauthn": "4.63.2",
-    "@ledgerhq/hw-transport-u2f": "4.63.2",
+    "@ledgerhq/hw-transport-webauthn": "4.68.2",
+    "@ledgerhq/hw-transport-u2f": "4.68.2",
+    "@ledgerhq/logs": "4.68.2",
     "babel-polyfill": "6.26.0",
     "babel-runtime": "6.26.0",
     "babelify": "8.0.0",
@@ -15620,9 +15621,15 @@ var _ledgerjsHwAppCardano = require('@cardano-foundation/ledgerjs-hw-app-cardano
 
 var _ledgerjsHwAppCardano2 = _interopRequireDefault(_ledgerjsHwAppCardano);
 
+var _logs = require('@ledgerhq/logs');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+(0, _logs.listen)(function (log) {
+  return console.log(log.type + ": " + log.message);
+});
 
 var YOROI_LEDGER_BRIDGE_TEARGET_NAME = 'YOROI-LEDGER-BRIDGE';
 
@@ -15965,4 +15972,4 @@ var YoroiLedgerBridge = function () {
 
 exports.default = YoroiLedgerBridge;
 
-},{"@cardano-foundation/ledgerjs-hw-app-cardano":1,"babel-polyfill":10}]},{},[444]);
+},{"@cardano-foundation/ledgerjs-hw-app-cardano":1,"@ledgerhq/logs":9,"babel-polyfill":10}]},{},[444]);
