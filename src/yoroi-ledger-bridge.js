@@ -104,7 +104,8 @@ export default class YoroiLedgerBridge {
     let transport;
     try {
       console.debug(`[YOROI-LB]::getExtendedPublicKey::${replyAction}::args::hdPath::${JSON.stringify(hdPath)}`);
-      transport = await this.transportGenerator().open("");
+      transport = await this.transportGenerator();
+      transport = await transport.open("");
 
       const sub = transport.listen(event => console.log(JSON.stringify(event)));
 
