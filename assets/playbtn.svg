@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="27px" height="27px" viewBox="0 0 27 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>play-button</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="home-mobile" transform="translate(-82.000000, -290.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="Group-7" transform="translate(70.000000, 279.000000)">
+                <g id="play-button" transform="translate(12.000000, 11.000000)">
+                    <path d="M13.5,0 C6.0561,0 0,6.0561 0,13.5 C0,20.9439 6.0561,27 13.5,27 C20.9439,27 27,20.9439 27,13.5 C27,6.0561 20.9439,0 13.5,0 Z M20.50335,13.8717 L10.60335,20.6217 C10.5273,20.67345 10.43865,20.7 10.35,20.7 C10.278,20.7 10.20555,20.6829 10.13985,20.6478 C9.99225,20.56995 9.9,20.41695 9.9,20.25 L9.9,6.75 C9.9,6.58305 9.99225,6.43005 10.13985,6.3522 C10.28745,6.2739 10.46565,6.2847 10.6038,6.3783 L20.5038,13.1283 C20.6262,13.212 20.7,13.35105 20.7,13.5 C20.7,13.64895 20.6262,13.788 20.50335,13.8717 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

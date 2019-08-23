@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>ion-android-alert - Ionicons</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Support@2x" transform="translate(-792.000000, -2044.000000)" fill="#FFAB00">
+            <g id="Group-7" transform="translate(1.000000, 1895.000000)">
+                <g id="Group-5" transform="translate(778.000000, 139.000000)">
+                    <path d="M22.3125,10 C24.8794199,10 27.073208,10.9103475 28.8939303,12.7310697 C30.7146525,14.551792 31.625,16.7455801 31.625,19.3125 C31.625,21.8794199 30.7146525,24.073208 28.8939303,25.8939303 C27.073208,27.7146525 24.8794199,28.625 22.3125,28.625 C19.7455801,28.625 17.551792,27.7146525 15.7310697,25.8939303 C13.9103475,24.073208 13,21.8794199 13,19.3125 C13,16.7455801 13.9103475,14.551792 15.7310697,12.7310697 C17.551792,10.9103475 19.7455801,10 22.3125,10 Z M23.3870192,23.96875 L23.3870192,22.1778846 L21.2379808,22.1778846 L21.2379808,23.96875 L23.3870192,23.96875 Z M23.3870192,20.0288462 L23.3870192,14.2980769 L21.2379808,14.2980769 L21.2379808,20.0288462 L23.3870192,20.0288462 Z" id="ion-android-alert---Ionicons"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

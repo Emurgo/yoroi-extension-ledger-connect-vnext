@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="602px" height="398px" viewBox="0 0 602 398" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 17</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M461.342591,281.197877 L509.725673,281.000036 C511.441428,280.99302 512.99359,282.016989 513.662331,283.597067 C514.578438,285.761612 513.566378,288.258974 511.401833,289.17508 L510.336627,289.62591 C498.154202,294.781912 485.069839,297.469559 471.841394,297.53318 L262,298.542402 L262,298.590497 L257,298.56645 L252,298.590497 L252,298.542402 L42.1586062,297.53318 C28.9301609,297.469559 15.8457976,294.781912 3.66337324,289.62591 L2.59816702,289.17508 C0.4336219,288.258974 -0.578437614,285.761612 0.337668832,283.597067 C1.00640973,282.016989 2.55857246,280.99302 4.27432663,281.000036 L45.6386754,281.169177 C45.2345822,280.544288 45,279.799539 45,279 L45,17 C45,7.61115925 52.6111593,1.72470207e-15 62,0 L445,0 C454.388841,-1.72470207e-15 462,7.61115925 462,17 L462,279 C462,279.811816 461.758159,280.567146 461.342591,281.197877 Z" id="path-1"></path>
+        <filter x="-14.8%" y="-24.8%" width="129.6%" height="150.9%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="25" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.458823529   0 0 0 0 0.42745098   0 0 0 0 0.42745098  0 0 0 0.3 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M62,0 L445,0 C454.388841,-1.72470207e-15 462,7.61115925 462,17 L462,279 C462,281.209139 460.209139,283 458,283 L49,283 C46.790861,283 45,281.209139 45,279 L45,17 C45,7.61115925 52.6111593,1.72470207e-15 62,0 Z" id="path-3"></path>
+        <filter x="-1.9%" y="-2.8%" width="103.8%" height="105.7%" filterUnits="objectBoundingBox" id="filter-4">
+            <feGaussianBlur stdDeviation="7.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.852173682   0 0 0 0 0.852173682   0 0 0 0 0.852173682  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M257,282.033445 L509.725673,281.000036 C511.441428,280.99302 512.99359,282.016989 513.662331,283.597067 C514.578438,285.761612 513.566378,288.258974 511.401833,289.17508 L510.336627,289.62591 C498.154202,294.781912 485.069839,297.469559 471.841394,297.53318 L262,298.542402 L262,298.590497 L257,298.56645 L252,298.590497 L252,298.542402 L42.1586062,297.53318 C28.9301609,297.469559 15.8457976,294.781912 3.66337324,289.62591 L2.59816702,289.17508 C0.4336219,288.258974 -0.578437614,285.761612 0.337668832,283.597067 C1.00640973,282.016989 2.55857246,280.99302 4.27432663,281.000036 L257,282.033445 Z" id="path-5"></path>
+        <filter x="-0.8%" y="-22.7%" width="101.6%" height="145.5%" filterUnits="objectBoundingBox" id="filter-6">
+            <feGaussianBlur stdDeviation="3.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.737563776   0 0 0 0 0.723580214   0 0 0 0 0.723580214  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home@2x" transform="translate(-982.000000, -108.000000)">
+            <g id="Group-17" transform="translate(1026.000000, 156.000000)">
+                <g id="Combined-Shape">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <g id="Rectangle-12">
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                </g>
+                <g id="Combined-Shape" fill-rule="nonzero">
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-5"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                </g>
+                <g id="Group-16" transform="translate(64.000000, 16.000000)">
+                    <rect id="Rectangle-9" fill="#FFFFFF" x="0" y="0" width="379" height="244"></rect>
+                    <rect id="Rectangle-9" fill="#32373D" x="0" y="0" width="379" height="26"></rect>
+                    <rect id="Rectangle-9" fill="#4D535A" transform="translate(189.500000, 30.500000) scale(1, -1) translate(-189.500000, -30.500000) " x="0" y="26" width="379" height="9"></rect>
+                    <rect id="Rectangle-10-Copy-2" fill="#767699" x="158" y="48" width="61" height="6" rx="1.6"></rect>
+                    <rect id="Rectangle-11" fill="#EBEEF2" x="9" y="75" width="363" height="44" rx="6"></rect>
+                    <rect id="Rectangle-10" stroke="#979797" stroke-width="0.5" fill="#767699" x="19.25" y="85.25" width="66.5" height="5.5" rx="1.6"></rect>
+                    <rect id="Rectangle-10" fill="#B2DAC7" x="92" y="85" width="18" height="6" rx="1.6"></rect>
+                    <rect id="Rectangle-10" fill="#C1CBD8" x="19" y="95" width="95" height="4" rx="1.6"></rect>
+                    <rect id="Rectangle-10" fill="#C1CBD8" x="19" y="103" width="95" height="4" rx="1.6"></rect>
+                    <rect id="Rectangle-10-Copy" fill="#85E1B5" x="295" y="90" width="62" height="13" rx="6"></rect>
+                    <rect id="Rectangle-11" fill="#EBEEF2" x="9" y="123" width="363" height="44" rx="6"></rect>
+                    <rect id="Rectangle-10" stroke="#979797" stroke-width="0.5" fill="#767699" x="19.25" y="133.25" width="66.5" height="5.5" rx="1.6"></rect>
+                    <rect id="Rectangle-10" fill="#B2DAC7" x="92" y="133" width="18" height="6" rx="1.6"></rect>
+                    <rect id="Rectangle-10" fill="#C1CBD8" x="19" y="144" width="95" height="4" rx="1.6"></rect>
+                    <rect id="Rectangle-10" fill="#C1CBD8" x="19" y="151" width="95" height="4" rx="1.6"></rect>
+                    <rect id="Rectangle-10-Copy" fill="#EC927E" x="295" y="138" width="62" height="13" rx="6"></rect>
+                    <rect id="Rectangle-11" fill="#EBEEF2" x="9" y="172" width="363" height="44" rx="6"></rect>
+                    <rect id="Rectangle-10" stroke="#979797" stroke-width="0.5" fill="#767699" x="19.25" y="181.25" width="66.5" height="5.5" rx="1.6"></rect>
+                    <rect id="Rectangle-10" fill="#B2DAC7" x="92" y="181" width="18" height="6" rx="1.6"></rect>
+                    <rect id="Rectangle-10" fill="#C1CBD8" x="19" y="193" width="95" height="4" rx="1.6"></rect>
+                    <rect id="Rectangle-10" fill="#C1CBD8" x="19" y="201" width="95" height="4" rx="1.6"></rect>
+                    <rect id="Rectangle-10-Copy" fill="#85E1B5" x="295" y="188" width="62" height="13" rx="6"></rect>
+                    <rect id="Rectangle-10-Copy-3" fill="#767699" x="145" y="59" width="86" height="4" rx="1.6"></rect>
+                    <rect id="Rectangle-10-Copy-5" fill="#FFFFFF" opacity="0.572991071" x="170" y="13" width="38" height="3" rx="1.5"></rect>
+                    <rect id="Rectangle-10-Copy-5" fill="#FFFFFF" x="179" y="8" width="21" height="3" rx="1.5"></rect>
+                    <rect id="Rectangle-10-Copy-5" fill="#FFFFFF" x="179" y="28" width="19" height="2" rx="1"></rect>
+                </g>
+                <rect id="Rectangle-12" stroke="#E1EBF9" x="64.5" y="15.5" width="379" height="252" rx="17"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

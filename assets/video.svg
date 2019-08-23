@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="53px" height="53px" viewBox="0 0 53 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>play-button copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="about-mobile" transform="translate(-154.000000, -1080.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="play-button-copy" transform="translate(154.000000, 1080.000000)">
+                <path d="M26.5,0 C11.8879,0 0,11.8879 0,26.5 C0,41.1121 11.8879,53 26.5,53 C41.1121,53 53,41.1121 53,26.5 C53,11.8879 41.1121,0 26.5,0 Z M40.2473167,27.2296333 L20.8139833,40.4796333 C20.6647,40.5812167 20.4906833,40.6333333 20.3166667,40.6333333 C20.1753333,40.6333333 20.0331167,40.5997667 19.90415,40.5308667 C19.6144167,40.37805 19.4333333,40.0777167 19.4333333,39.75 L19.4333333,13.25 C19.4333333,12.9222833 19.6144167,12.62195 19.90415,12.4691333 C20.1938833,12.3154333 20.5436833,12.3366333 20.8148667,12.5203667 L40.2482,25.7703667 C40.4884667,25.9346667 40.6333333,26.2076167 40.6333333,26.5 C40.6333333,26.7923833 40.4884667,27.0653333 40.2473167,27.2296333 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>
