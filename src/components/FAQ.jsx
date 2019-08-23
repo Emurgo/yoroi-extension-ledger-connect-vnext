@@ -1,6 +1,6 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import { inject, observer } from 'mobx-react/index';
+import { inject } from 'mobx-react';
 import { Container, OverflowS } from './../css';
 import styled from 'styled-components';
 import { FormattedHTMLMessage } from 'react-intl';
@@ -306,6 +306,6 @@ const makeAnswerItem = (blockId, answerIdString, formatMessage) => {
   );
 }
 
-const FAQ = inject('locale')(injectIntl(observer(_FAQ)));
+const FAQ = inject('locale')(injectIntl(_FAQ));
 
 export default FAQ;

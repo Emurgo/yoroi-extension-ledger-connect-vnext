@@ -1,6 +1,6 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import { inject, observer } from 'mobx-react/index';
+import { inject } from 'mobx-react';
 import { FormattedHTMLMessage } from 'react-intl';
 import { Container, OverflowS } from './../css';
 import styled from 'styled-components';
@@ -66,6 +66,6 @@ const _Terms = ({ locale, intl: { formatMessage } }) => (
   </Container>
 );
 
-const Terms = inject('locale')(injectIntl(observer(_Terms)));
+const Terms = inject('locale')(injectIntl(_Terms));
 
 export default Terms;

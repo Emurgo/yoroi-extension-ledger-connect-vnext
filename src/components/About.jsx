@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
-import { inject, observer } from 'mobx-react/index';
+import { inject } from 'mobx-react';
 import { Container, ContainerBlue, OverflowS } from './../css';
 import styled from 'styled-components';
 import ModalVideo from 'react-modal-video';
@@ -167,7 +167,7 @@ class App extends Component {
       </span>
     );
 
-    const About = inject('locale')(injectIntl(observer(_About)));
+    const About = inject('locale')(injectIntl(_About));
     return <About />;
   }
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
 import ReactMarkdown from 'react-markdown';
 import Terms from './Terms';
 import { Container } from '../css';
@@ -10,7 +9,6 @@ const Wrapper = styled.div`
   display: block;
 `;
 
-@observer
 export default class TermsOfUseText extends Component {
   render() {
     return (

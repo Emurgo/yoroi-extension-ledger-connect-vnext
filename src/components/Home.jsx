@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
-import { inject, observer } from 'mobx-react/index';
+import { inject } from 'mobx-react';
 import ModalVideo from 'react-modal-video';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { FormattedHTMLMessage } from 'react-intl';
@@ -1024,7 +1024,7 @@ class App extends Component {
       </span>
     );
 
-    const Home = inject('locale')(injectIntl(observer(_Home)));
+    const Home = inject('locale')(injectIntl(_Home));
 
     return <Home />;
   }

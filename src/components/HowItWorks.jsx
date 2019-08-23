@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
-import { inject, observer } from 'mobx-react/index';
+import { inject } from 'mobx-react';
 import { Container, ContainerBlue, SectionTitleLight } from './../css';
 import styled from 'styled-components';
 
@@ -113,7 +113,7 @@ class App extends Component {
       </ContainerBlue>
     );
 
-    const HowItWorks = inject('locale')(injectIntl(observer(_HowItWorks)));
+    const HowItWorks = inject('locale')(injectIntl(_HowItWorks));
 
     return <HowItWorks />;
   }

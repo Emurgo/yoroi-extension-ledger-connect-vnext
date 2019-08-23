@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
-import { inject, observer } from 'mobx-react/index';
+import { inject } from 'mobx-react';
 import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -429,7 +429,7 @@ class App extends Component {
       </HContainer>
     );
 
-    const Header = inject('locale')(injectIntl(observer(_Header)));
+    const Header = inject('locale')(injectIntl(_Header));
 
     return <Header />;
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from "react-dom";
-import { Provider, inject, observer } from "mobx-react";
+import { Provider, inject } from "mobx-react";
 import { HashRouter as Router, BrowserRouter, Route, Link, Redirect, Switch } from "react-router-dom";
 import { MobxIntlProvider, LocaleStore } from "mobx-react-intl";
 import { addLocaleData } from "react-intl";

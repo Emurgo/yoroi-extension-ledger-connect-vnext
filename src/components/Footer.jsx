@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
-import { inject, observer } from 'mobx-react/index';
+import { inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Container } from './../css';
@@ -282,7 +282,7 @@ class App extends Component {
       </ContainerFooter>
     );
 
-    const Footer = inject('locale')(injectIntl(observer(_Footer)));
+    const Footer = inject('locale')(injectIntl(_Footer));
 
     return <Footer />;
   }

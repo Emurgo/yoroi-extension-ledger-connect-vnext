@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
-import { inject, observer } from 'mobx-react/index';
+import { inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import HowItWorks from './HowItWorks';
 import styled from 'styled-components';
@@ -505,7 +505,7 @@ class App extends Component {
       </span >
     );
 
-    const Support = inject('locale')(injectIntl(observer(_Support)));
+    const Support = inject('locale')(injectIntl(_Support));
 
     return <Support />;
   }
