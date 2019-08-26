@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/yoroi-extension-ledger-connect/precache-manifest.e9d9ccc5849d96c1f62d34f053525d87.js"
+  "/yoroi-extension-ledger-connect/precache-manifest.c513574d1286efd83f8ea3892c7d39f7.js"
 );
 
 self.addEventListener('message', (event) => {
