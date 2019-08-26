@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/yoroi-extension-ledger-connect/static/css/main.40da5861.chunk.css",
-    "main.js": "/yoroi-extension-ledger-connect/static/js/main.ffed7b9b.chunk.js",
-    "main.js.map": "/yoroi-extension-ledger-connect/static/js/main.ffed7b9b.chunk.js.map",
+    "main.css": "/yoroi-extension-ledger-connect/static/css/main.2cce8147.chunk.css",
+    "main.js": "/yoroi-extension-ledger-connect/static/js/main.2045f746.chunk.js",
+    "main.js.map": "/yoroi-extension-ledger-connect/static/js/main.2045f746.chunk.js.map",
     "runtime~main.js": "/yoroi-extension-ledger-connect/static/js/runtime~main.0166cd4e.js",
     "runtime~main.js.map": "/yoroi-extension-ledger-connect/static/js/runtime~main.0166cd4e.js.map",
-    "static/js/2.39b3106f.chunk.js": "/yoroi-extension-ledger-connect/static/js/2.39b3106f.chunk.js",
-    "static/js/2.39b3106f.chunk.js.map": "/yoroi-extension-ledger-connect/static/js/2.39b3106f.chunk.js.map",
+    "static/js/2.65e324cd.chunk.js": "/yoroi-extension-ledger-connect/static/js/2.65e324cd.chunk.js",
+    "static/js/2.65e324cd.chunk.js.map": "/yoroi-extension-ledger-connect/static/js/2.65e324cd.chunk.js.map",
     "index.html": "/yoroi-extension-ledger-connect/index.html",
-    "precache-manifest.31365c39905e8ff794400e540e8e6991.js": "/yoroi-extension-ledger-connect/precache-manifest.31365c39905e8ff794400e540e8e6991.js",
+    "precache-manifest.fb5b79eb2031ed98f76278b51d578db6.js": "/yoroi-extension-ledger-connect/precache-manifest.fb5b79eb2031ed98f76278b51d578db6.js",
     "service-worker.js": "/yoroi-extension-ledger-connect/service-worker.js",
-    "static/css/main.40da5861.chunk.css.map": "/yoroi-extension-ledger-connect/static/css/main.40da5861.chunk.css.map"
+    "static/css/main.2cce8147.chunk.css.map": "/yoroi-extension-ledger-connect/static/css/main.2cce8147.chunk.css.map",
+    "static/media/logo.svg": "/yoroi-extension-ledger-connect/static/media/logo.5d5d9eef.svg"
   }
 }
