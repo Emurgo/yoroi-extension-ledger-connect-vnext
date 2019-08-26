@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ad35c96117ba6cc8bc2edc3ac4658e6a",
+    "revision": "b1c153c406f67e80c2f7a313358e78be",
     "url": "/yoroi-extension-ledger-connect/index.html"
   },
   {
-    "revision": "168a2ea480b94f4b3f4e",
+    "revision": "e04610dfa333ad98ef16",
     "url": "/yoroi-extension-ledger-connect/static/css/main.40da5861.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/yoroi-extension-ledger-connect/static/js/2.04b63b43.chunk.js"
   },
   {
-    "revision": "168a2ea480b94f4b3f4e",
-    "url": "/yoroi-extension-ledger-connect/static/js/main.3f457ab3.chunk.js"
+    "revision": "e04610dfa333ad98ef16",
+    "url": "/yoroi-extension-ledger-connect/static/js/main.b6a08862.chunk.js"
   },
   {
     "revision": "84fb9d8dfcd227fe84c2",
