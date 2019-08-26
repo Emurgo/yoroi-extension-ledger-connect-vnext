@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/yoroi-extension-ledger-connect/static/css/main.40da5861.chunk.css",
-    "main.js": "/yoroi-extension-ledger-connect/static/js/main.b6a08862.chunk.js",
-    "main.js.map": "/yoroi-extension-ledger-connect/static/js/main.b6a08862.chunk.js.map",
-    "runtime~main.js": "/yoroi-extension-ledger-connect/static/js/runtime~main.6ed459d8.js",
-    "runtime~main.js.map": "/yoroi-extension-ledger-connect/static/js/runtime~main.6ed459d8.js.map",
-    "static/js/2.04b63b43.chunk.js": "/yoroi-extension-ledger-connect/static/js/2.04b63b43.chunk.js",
-    "static/js/2.04b63b43.chunk.js.map": "/yoroi-extension-ledger-connect/static/js/2.04b63b43.chunk.js.map",
+    "main.css": "/yoroi-extension-ledger-connect/static/css/main.2cce8147.chunk.css",
+    "main.js": "/yoroi-extension-ledger-connect/static/js/main.2045f746.chunk.js",
+    "main.js.map": "/yoroi-extension-ledger-connect/static/js/main.2045f746.chunk.js.map",
+    "runtime~main.js": "/yoroi-extension-ledger-connect/static/js/runtime~main.0166cd4e.js",
+    "runtime~main.js.map": "/yoroi-extension-ledger-connect/static/js/runtime~main.0166cd4e.js.map",
+    "static/js/2.65e324cd.chunk.js": "/yoroi-extension-ledger-connect/static/js/2.65e324cd.chunk.js",
+    "static/js/2.65e324cd.chunk.js.map": "/yoroi-extension-ledger-connect/static/js/2.65e324cd.chunk.js.map",
     "index.html": "/yoroi-extension-ledger-connect/index.html",
-    "precache-manifest.cb244a8ef1bb29561dfbf09b71820e77.js": "/yoroi-extension-ledger-connect/precache-manifest.cb244a8ef1bb29561dfbf09b71820e77.js",
+    "precache-manifest.fb5b79eb2031ed98f76278b51d578db6.js": "/yoroi-extension-ledger-connect/precache-manifest.fb5b79eb2031ed98f76278b51d578db6.js",
     "service-worker.js": "/yoroi-extension-ledger-connect/service-worker.js",
-    "static/css/main.40da5861.chunk.css.map": "/yoroi-extension-ledger-connect/static/css/main.40da5861.chunk.css.map"
+    "static/css/main.2cce8147.chunk.css.map": "/yoroi-extension-ledger-connect/static/css/main.2cce8147.chunk.css.map",
+    "static/media/logo.svg": "/yoroi-extension-ledger-connect/static/media/logo.5d5d9eef.svg"
   }
 }
