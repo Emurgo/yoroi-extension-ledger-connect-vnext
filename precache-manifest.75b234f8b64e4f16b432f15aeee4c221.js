@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ce884b9eacd84247fe242ce10dee7678",
+    "revision": "ac2afb2ac8ea2a2e4031218b7b51d6da",
     "url": "/yoroi-extension-ledger-connect/index.html"
   },
   {
