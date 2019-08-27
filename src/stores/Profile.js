@@ -5,6 +5,6 @@ export default class Profile {
   @observable language: string;
 
   constructor() {
-    this.language = 'en-US';
+    this.language = 'ja-JP';
   }
 }

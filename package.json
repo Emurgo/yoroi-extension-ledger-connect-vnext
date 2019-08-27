@@ -15,10 +15,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/cli": "7.5.5",
+    "@babel/core": "7.5.5",
+    "@babel/plugin-proposal-class-properties": "7.5.5",
+    "@babel/plugin-proposal-decorators": "7.4.4",
     "@babel/preset-env": "7.5.5",
     "@babel/preset-flow": "7.0.0",
     "@babel/preset-react": "7.0.0",
@@ -43,10 +43,12 @@
     "@cardano-foundation/ledgerjs-hw-app-cardano": "1.0.7",
     "@ledgerhq/hw-transport-u2f": "4.68.2",
     "@ledgerhq/hw-transport-webauthn": "4.68.2",
+    "es6-error": "4.1.1",
     "mobx": "5.13.0",
     "mobx-react": "6.1.3",
     "react": "16.9.0",
-    "react-dom": "16.9.0"
+    "react-dom": "16.9.0",
+    "react-intl": "2.9.0"
   },
   "repository": {
     "type": "git",
