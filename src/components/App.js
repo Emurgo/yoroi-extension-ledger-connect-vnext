@@ -4,7 +4,7 @@ class App extends Component {
   render() {
     return(
       <div>
-        <p>Hello !! this is react test</p>
+        <p>Yoroi Connect</p>
       </div>
     );
   }
