@@ -6,9 +6,12 @@ import ReactDOM from 'react-dom';
 import App from './containers/App';
 import stores from './stores';
 
-ReactDOM.render(
-  <Provider store={stores}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
+const root = document.getElementById('root');
+if (root !== null) {
+  ReactDOM.render(
+    <Provider store={stores}>
+      <App />
+    </Provider>,
+    root
+  );
+}
