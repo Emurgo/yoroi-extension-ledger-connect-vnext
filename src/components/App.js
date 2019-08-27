@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 
+@inject('store')
+@observer
 class App extends Component {
   render() {
-    return(
+    return (
       <div>
         <p>Yoroi Connect</p>
       </div>
