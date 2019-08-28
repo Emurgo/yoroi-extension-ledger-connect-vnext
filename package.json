@@ -1,10 +1,8 @@
 {
-  "name": "yoroi-extension-ledger-connector-website",
+  "name": "yoroi-extension-ledger-connect",
   "version": "1.0.3",
-  "description": "Yoroi Extension Ledger hardware wallet bridge connector",
+  "description": "A web app which communicates between Ledger device and Yoroi Extension",
   "author": "EMURGO.io",
-  "license": "MIT",
-  "main": "./src/main.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
@@ -24,6 +22,7 @@
     "@babel/preset-react": "7.0.0",
     "babel-eslint": "10.0.3",
     "babel-loader": "8.0.6",
+    "clean-webpack-plugin": "3.0.0",
     "eslint": "5.16.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-airbnb-base": "14.0.0",
@@ -52,10 +51,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Emurgo/yoroi-extension-ledger-connector-website.git"
+    "url": "https://github.com/Emurgo/yoroi-extension-ledger-connect"
   },
   "bugs": {
-    "url": "https://github.com/Emurgo/yoroi-extension-ledger-connector-website/issues",
+    "url": "https://github.com/Emurgo/yoroi-frontend/issues",
     "email": "support@emurgo.io"
   }
 }
