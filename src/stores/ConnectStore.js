@@ -32,42 +32,42 @@ export default class ConnectStore {
         console.debug(`[YLC]::request: ${action}`);
 
         const replyAction = `${action}-reply`;
-        const isProtocolSupported = await this.isProtocolSupported();
-        if (isProtocolSupported) {
-          switch (action) {
-            case 'is-ready':
-              this.isReady(e.source, replyAction);
-              break;
-            case 'ledger-get-version':
-              this.getVersion(e.source, replyAction);
-              break;
-            case 'ledger-get-extended-public-key':
-              this.getExtendedPublicKey(e.source, replyAction, params.hdPath);
-              break;
-            case 'ledger-sign-transaction':
-              this.signTransaction(e.source, replyAction, params.inputs, params.outputs);
-              break;
-            case 'ledger-derive-address':
-              this.deriveAddress(e.source, replyAction, params.hdPath);
-              break;
-            case 'ledger-show-address':
-              this.showAddress(e.source, replyAction, params.hdPath);
-              break;
-            default:
-              // FOR NOW NO-OPERATION
-              break;
-          }
-        } else {
-          this.replyMessage(
-            e.source,
-            {
-              action: replyAction,
-              success: false,
-              payload: { error: 'Your browser does not support requested protocol, please enable WebAuthn protocol' }
-            }
-          );
-          console.error('Requested protocol not supported');
+        // const isProtocolSupported = await this.isProtocolSupported();
+        // if (isProtocolSupported) {
+        switch (action) {
+          case 'is-ready':
+            this.isReady(e.source, replyAction);
+            break;
+          case 'ledger-get-version':
+            this.getVersion(e.source, replyAction);
+            break;
+          case 'ledger-get-extended-public-key':
+            this.getExtendedPublicKey(e.source, replyAction, params.hdPath);
+            break;
+          case 'ledger-sign-transaction':
+            this.signTransaction(e.source, replyAction, params.inputs, params.outputs);
+            break;
+          case 'ledger-derive-address':
+            this.deriveAddress(e.source, replyAction, params.hdPath);
+            break;
+          case 'ledger-show-address':
+            this.showAddress(e.source, replyAction, params.hdPath);
+            break;
+          default:
+            // FOR NOW NO-OPERATION
+            break;
         }
+        // } else {
+        //   this.replyMessage(
+        //     e.source,
+        //     {
+        //       action: replyAction,
+        //       success: false,
+        //       payload: { error: 'Your browser does not support requested protocol, please enable WebAuthn protocol' }
+        //     }
+        //   );
+        //   console.error('Requested protocol not supported');
+        // }
       } else {
         console.error('Got untrusted request');
       }
@@ -124,14 +124,16 @@ export default class ConnectStore {
     return await transport.create();
   }
 
-  async isProtocolSupported(): Promise<boolean> {
-    const isWebAuthnSupported = await TransportWebAuthn.isSupported();
-    const isU2FSupported = await TransportU2F.isSupported();
-    if (isWebAuthnSupported || isU2FSupported) {
-      return true;
-    }
-    return false;
-  }
+  // async isProtocolSupported(): Promise<boolean> {
+  //   const isWebAuthnSupported = await TransportWebAuthn.isSupported();
+  //   console.log(`isWebAuthnSupported: ${isWebAuthnSupported}`);
+  //   const isU2FSupported = await TransportU2F.isSupported();
+  //   console.log(`isU2FSupported: ${isU2FSupported}`);
+  //   if (isWebAuthnSupported || isU2FSupported) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   /**
    * @description Returns an object containing the app version.
