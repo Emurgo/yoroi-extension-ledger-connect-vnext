@@ -12,7 +12,7 @@ import id from 'react-intl/locale-data/id';
 import es from 'react-intl/locale-data/es';
 import it from 'react-intl/locale-data/it';
 
-import Layout from '../components/Layout';
+import Layout from './Layout';
 
 import { translations } from '../i18n/translations';
 // https://github.com/yahoo/react-intl/wiki#loading-locale-data

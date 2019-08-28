@@ -11,7 +11,7 @@ const messages = defineMessages({
 });
 
 @observer
-export default class Layout extends Component {
+export default class Layout extends Component<void> {
   static contextTypes = {
     intl: intlShape.isRequired,
   };
@@ -21,7 +21,7 @@ export default class Layout extends Component {
     return (
       <div>
         <p>{intl.formatMessage(messages.load)}</p>
-        <p>V-4</p>
+        <p>V-5</p>
       </div>
     );
   }
