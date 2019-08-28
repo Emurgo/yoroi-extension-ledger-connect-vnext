@@ -23,6 +23,7 @@ export default class ConnectStore {
   constructor(rootStore) {
     this.addEventListeners();
     this.rootStore = rootStore;
+    this.transportId = 'webauthn';
   }
 
   addEventListeners(): void {
