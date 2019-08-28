@@ -20,7 +20,7 @@ addLocaleData([...en, ...ko, ...ja, ...zh, ...ru, ...de, ...fr, ...id, ...es, ..
 
 @inject('store')
 @observer
-class App extends Component {
+export default class App extends Component {
   render() {
     const locale = this.props.store.profile.language;
 
@@ -40,5 +40,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

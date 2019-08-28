@@ -1,10 +1,11 @@
 // @flow
 import { observable } from 'mobx';
 
-export default class Profile {
+export default class ProfileStore {
   @observable language: string;
 
-  constructor() {
+  constructor(rootStore) {
+    this.rootStore = rootStore;
     this.language = 'ja-JP';
   }
 }

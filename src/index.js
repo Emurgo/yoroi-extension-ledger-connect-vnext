@@ -4,12 +4,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './containers/App';
-import stores from './stores';
+import RootStore from './stores';
 
 const root = document.getElementById('root');
 if (root !== null) {
   ReactDOM.render(
-    <Provider store={stores}>
+    <Provider rootStore={new RootStore()}>
       <App />
     </Provider>,
     root
