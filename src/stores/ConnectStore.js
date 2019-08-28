@@ -14,8 +14,8 @@ export default class ConnectStore {
 
   addEventListeners(): void {
     const processRequest = e => {
+      console.log(`Something shows up: ${JSON.stringify(e, null, 2)}`);
       if (e && e.data && e.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
-        // console.log(`Something shows up: ${JSON.stringify(e, null, 2)}`);
         const { action, params } = e.data;
         const replyAction = `${action}-reply`;
         switch (action) {
