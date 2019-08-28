@@ -11,7 +11,7 @@ const messages = defineMessages({
 });
 
 @observer
-export default class WalletAdd extends Component {
+export default class Layout extends Component {
   static contextTypes = {
     intl: intlShape.isRequired,
   };
