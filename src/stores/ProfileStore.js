@@ -2,10 +2,10 @@
 import { observable } from 'mobx';
 
 export default class ProfileStore {
-  @observable language: string;
+  @observable currentLocale: string;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
-    this.language = 'ja-JP';
+    this.currentLocale = 'ja-JP';
   }
 }

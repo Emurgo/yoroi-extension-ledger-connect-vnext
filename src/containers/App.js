@@ -18,11 +18,12 @@ import { translations } from '../i18n/translations';
 // https://github.com/yahoo/react-intl/wiki#loading-locale-data
 addLocaleData([...en, ...ko, ...ja, ...zh, ...ru, ...de, ...fr, ...id, ...es, ...it]);
 
-@inject('store')
+@inject('rootStore')
 @observer
 export default class App extends Component {
   render() {
-    const locale = this.props.store.profile.language;
+    const { profileStore } = this.props.rootStore;
+    const locale = profileStore.currentLocale;
 
     // Merged english messages with selected by user locale messages
     // In this case all english data would be overridden to user selected locale, but untranslated
@@ -32,9 +33,7 @@ export default class App extends Component {
     return (
       <div>
         <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
-          <Layout>
-            <p>Yoroi Connect</p>
-          </Layout>
+          <Layout />
         </IntlProvider>
       </div>
     );
