@@ -21,7 +21,7 @@ export default class Layout extends Component {
     return (
       <div>
         <p>{intl.formatMessage(messages.load)}</p>
-        <p>V-1</p>
+        <p>V-3</p>
       </div>
     );
   }
