@@ -1,6 +1,6 @@
 // @flow
 
-import YoroiLedgerBridge from './yoroi-ledger-bridge';
+import YoroiLedgerBridge from './api/ledger';
 import { version } from '../package.json';
 
 let bridge;
