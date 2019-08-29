@@ -1,5 +1,5 @@
 // @flow
-import { observable } from 'mobx';
+import { observable, decorate } from 'mobx';
 import AdaApp from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
   BIP32Path,
@@ -421,3 +421,7 @@ export default class ConnectStore {
     return err.toString();
   }
 }
+
+decorate(ConnectStore, {
+  transportId: observable
+});

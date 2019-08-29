@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import en from 'react-intl/locale-data/en';
@@ -18,24 +18,25 @@ import { translations } from '../i18n/translations';
 // https://github.com/yahoo/react-intl/wiki#loading-locale-data
 addLocaleData([...en, ...ko, ...ja, ...zh, ...ru, ...de, ...fr, ...id, ...es, ...it]);
 
-@inject('rootStore')
-@observer
-export default class App extends Component {
-  render() {
-    const { profileStore } = this.props.rootStore;
-    const locale = profileStore.currentLocale;
+const App = inject('rootStore')(observer(
+  class App extends React.Component {
+    render() {
+      const { profileStore } = this.props.rootStore;
+      const locale = profileStore.currentLocale;
 
-    // Merged english messages with selected by user locale messages
-    // In this case all english data would be overridden to user selected locale, but untranslated
-    // (missed in object keys) just stay in english
-    const mergedMessages = Object.assign({}, translations['en-US'], translations[locale]);
+      // Merged english messages with selected by user locale messages
+      // In this case all english data would be overridden to user selected locale, but untranslated
+      // (missed in object keys) just stay in english
+      const mergedMessages = Object.assign({}, translations['en-US'], translations[locale]);
 
-    return (
-      <div>
-        <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
-          <Layout />
-        </IntlProvider>
-      </div>
-    );
+      return (
+        <div>
+          <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
+            <Layout />
+          </IntlProvider>
+        </div>
+      );
+    }
   }
-}
+));
+export default App;

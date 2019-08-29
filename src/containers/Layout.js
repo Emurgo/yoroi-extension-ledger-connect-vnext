@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { observer, inject } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 import { ENV } from '../utils';
@@ -14,25 +14,27 @@ const messages = defineMessages({
   }
 });
 
-@observer
-export default class Layout extends Component<void> {
-  static contextTypes = {
-    intl: intlShape.isRequired,
-  };
+const Layout = inject('rootStore')(observer(
+  class Layout extends React.Component {
+    static contextTypes = {
+      intl: intlShape.isRequired,
+    };
 
-  render() {
-    const { intl } = this.context;
-    return (
-      <div>
-        <p>{intl.formatMessage(messages.load)}</p>
-        <p>{JSON.stringify(process.env.NODE_ENV, null, 2)}</p>
-        <p>V-9</p>
-        {ENV.isDevelopment && (
-          <Suspense fallback={<div>Loading...</div>}>
-            <TestBlock />
-          </Suspense>
-        )}
-      </div>
-    );
+    render() {
+      const { intl } = this.context;
+      return (
+        <div>
+          <p>{intl.formatMessage(messages.load)}</p>
+          <p>{JSON.stringify(process.env.NODE_ENV, null, 2)}</p>
+          <p>V-9</p>
+          {ENV.isDevelopment && (
+            <Suspense fallback={<div>Loading...</div>}>
+              <TestBlock />
+            </Suspense>
+          )}
+        </div>
+      );
+    }
   }
-}
+));
+export default Layout;
