@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -19,6 +20,10 @@ module.exports = (env) => {
     template: './src/index.html',
     favicon: './src/assets/favicon.ico',
     chunksSortMode: 'none'
+  });
+
+  const DefinePlugin = new webpack.DefinePlugin({
+    ENVIRONMENT: JSON.stringify(env),
   });
 
   config.entry = ['babel-polyfill', './src/index.js'];
@@ -65,7 +70,7 @@ module.exports = (env) => {
       chunkFilename: '[name].[chunkhash].bundle.js',
       filename: '[name].[chunkhash].bundle.js'
     };
-    config.plugins = [CleanPlugin, HtmlPlugin];
+    config.plugins = [CleanPlugin, HtmlPlugin, DefinePlugin];
   }
 
   if (isDevelopment) {
@@ -79,7 +84,7 @@ module.exports = (env) => {
       chunkFilename: '[name].bundle.js',
       filename: '[name].bundle.js'
     };
-    config.plugins = [CleanPlugin, HtmlPlugin, AnalyzerPlugin];
+    config.plugins = [CleanPlugin, HtmlPlugin, AnalyzerPlugin, DefinePlugin];
   }
 
   return config;

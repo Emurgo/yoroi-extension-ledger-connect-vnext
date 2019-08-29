@@ -11,6 +11,7 @@ import type {
   SignTransactionResponse,
   DeriveAddressResponse
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import type Transport from '@ledgerhq/hw-transport';
 import TransportWebAuthn from '@ledgerhq/hw-transport-webauthn';
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 
@@ -74,7 +75,7 @@ export default class ConnectStore {
         //   console.error('Requested protocol not supported');
         // }
       } else {
-        console.error('Got untrusted request');
+        console.debug(`Got untrusted request: ${e.origin}}`);
       }
     };
 
@@ -116,7 +117,7 @@ export default class ConnectStore {
     }
   }
 
-  async makeTransport(): Promise<any> {
+  async makeTransport(): Promise<Transport<*>> {
     let transport;
     if (this.transportId === 'webauthn') {
       transport = TransportWebAuthn;
@@ -153,7 +154,7 @@ export default class ConnectStore {
   async getVersion(
     source: window,
     replyAction: string
-  ): Promise<void> {
+  ): Promise<GetVersionResponse> {
     let transport;
     try {
       transport = await this.makeTransport();
@@ -168,6 +169,7 @@ export default class ConnectStore {
           payload: res,
         }
       );
+      return res;
     } catch (err) {
       console.error(`[YOROI-LB]::getVersion::${replyAction}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
@@ -202,13 +204,13 @@ export default class ConnectStore {
     source: window,
     replyAction: string,
     hdPath: BIP32Path
-  ): Promise<void> {
+  ): Promise<GetExtendedPublicKeyResponse> {
     let transport;
     try {
       transport = await this.makeTransport();
       const adaApp = new AdaApp(transport);
 
-      const res:GetExtendedPublicKeyResponse = await adaApp.getExtendedPublicKey(hdPath);
+      const res: GetExtendedPublicKeyResponse = await adaApp.getExtendedPublicKey(hdPath);
       this.replyMessage(
         source,
         {
@@ -217,6 +219,7 @@ export default class ConnectStore {
           payload: res,
         }
       );
+      return res;
     } catch (err) {
       console.error(`[YOROI-LB]::getExtendedPublicKey::${replyAction}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
@@ -243,13 +246,13 @@ export default class ConnectStore {
     replyAction: string,
     inputs: Array<InputTypeUTxO>,
     outputs: Array<OutputTypeAddress | OutputTypeChange>
-  ): Promise<void> {
+  ): Promise<SignTransactionResponse> {
     let transport;
     try {
       transport = await this.makeTransport();
       const adaApp = new AdaApp(transport);
 
-      const res:SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
+      const res: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
       this.replyMessage(
         source,
         {
@@ -258,6 +261,7 @@ export default class ConnectStore {
           payload: res,
         }
       );
+      return res;
     } catch (err) {
       console.error(`[YOROI-LB]::signTransaction::${replyAction}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
@@ -293,13 +297,13 @@ export default class ConnectStore {
     source: window,
     replyAction: string,
     hdPath: BIP32Path
-  ): Promise<void> {
+  ): Promise<DeriveAddressResponse> {
     let transport;
     try {
       transport = await this.makeTransport();
       const adaApp = new AdaApp(transport);
 
-      const res: DeriveAddressResponse = await adaApp.deriveAddress(hdPath)
+      const res: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
       this.replyMessage(
         source,
         {
@@ -308,6 +312,7 @@ export default class ConnectStore {
           payload: res,
         }
       );
+      return res;
     } catch (err) {
       console.error(`[YOROI-LB]::deriveAddress::${replyAction}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
@@ -401,7 +406,7 @@ export default class ConnectStore {
       // Ledger locked
       if (err.includes('6801')) {
         return 'LEDGER_LOCKED';
-      }  
+      }
       return err;
     }
 
