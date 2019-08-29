@@ -37,6 +37,7 @@ module.exports = (env) => {
       }
     ]
   };
+
   config.optimization = {
     splitChunks: {
       cacheGroups: {
@@ -65,11 +66,13 @@ module.exports = (env) => {
 
   if (isProduction) {
     config.mode = 'production';
+
     config.output = {
       path: path.join(__dirname, 'dist'),
       chunkFilename: '[name].[chunkhash].bundle.js',
       filename: '[name].[chunkhash].bundle.js'
     };
+
     config.plugins = [CleanPlugin, HtmlPlugin, DefinePlugin];
   }
 
@@ -77,13 +80,17 @@ module.exports = (env) => {
     const AnalyzerPlugin = new BundleAnalyzerPlugin({
       analyzerMode: 'none'
     });
+
     config.mode = 'development';
+
     config.devtool = 'inline-source-map';
+
     config.output = {
       path: path.join(__dirname, 'dist'),
       chunkFilename: '[name].bundle.js',
       filename: '[name].bundle.js'
     };
+
     config.plugins = [CleanPlugin, HtmlPlugin, AnalyzerPlugin, DefinePlugin];
   }
 
