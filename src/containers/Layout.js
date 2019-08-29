@@ -26,7 +26,7 @@ const Layout = inject('rootStore')(observer(
         <div>
           <p>{intl.formatMessage(messages.load)}</p>
           <p>{JSON.stringify(process.env.NODE_ENV, null, 2)}</p>
-          <p>V-9</p>
+          <p>V-10</p>
           {ENV.isDevelopment && (
             <Suspense fallback={<div>Loading...</div>}>
               <TestBlock />
