@@ -60,8 +60,7 @@ module.exports = (env) => {
   if (isProduction) {
     config.mode = 'production';
     config.output = {
-      path: path.join(__dirname, 'build'),
-      publicPath: path.join(__dirname, 'build', '/'),
+      path: path.join(__dirname, 'dist'),
       chunkFilename: '[name].[chunkhash].bundle.js',
       filename: '[name].[chunkhash].bundle.js'
     };
@@ -75,7 +74,7 @@ module.exports = (env) => {
     config.mode = 'development';
     config.devtool = 'inline-source-map';
     config.output = {
-      path: path.join(__dirname, 'build'),
+      path: path.join(__dirname, 'dist'),
       chunkFilename: '[name].bundle.js',
       filename: '[name].bundle.js'
     };

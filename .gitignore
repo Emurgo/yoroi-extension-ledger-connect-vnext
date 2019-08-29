@@ -60,5 +60,5 @@ typings/
 # Lock files
 package-lock.json
 
-# build
-build/
+# distribution directory
+dist/
