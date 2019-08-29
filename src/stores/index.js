@@ -27,7 +27,7 @@ export default class RootStore {
 
     const p: URLParams = {
       transportId: urlParams.get('transport') || '',
-      locale: urlParams.get('language') || ''
+      locale: urlParams.get('locale') || ''
     };
 
     if (p.transportId == null || p.transportId === '') {
