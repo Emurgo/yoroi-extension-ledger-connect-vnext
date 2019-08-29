@@ -4,3 +4,8 @@ export type MessageType = {
   success: boolean,
   payload: any
 };
+
+export type URLParams = {
+  transportId: string,
+  locale: string
+}

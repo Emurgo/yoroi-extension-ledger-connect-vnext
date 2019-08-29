@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --env development --open --hot",
     "build": "webpack --env production",
-    "predeploy": "npm run build",
+    "predeploy": "yarn run build",
     "deploy": "gh-pages -d dist",
     "flow": "flow",
     "lint": "eslint *.js",

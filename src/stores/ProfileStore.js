@@ -5,12 +5,12 @@ export default class ProfileStore {
   rootStore: any;
   currentLocale: string;
 
-  constructor(rootStore: any) {
+  constructor(rootStore: any, locale: string) {
     this.rootStore = rootStore;
-    this.currentLocale = 'ja-JP';
+    this.currentLocale = locale;
   }
 }
 
 decorate(ProfileStore, {
-  currentLocale: observable
+  currentLocale: observable,
 });

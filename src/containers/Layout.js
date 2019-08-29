@@ -2,7 +2,7 @@
 import React, { Suspense, lazy } from 'react';
 import { observer, inject } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
-import { ENV } from '../utils';
+import { ENV } from '../const';
 
 // https://reactjs.org/docs/code-splitting.html#reactlazy
 const TestBlock = lazy(() => import('../components/manual-test/TestBlock'));

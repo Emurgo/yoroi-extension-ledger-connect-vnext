@@ -19,14 +19,13 @@ import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
 import type { MessageType } from '../types';
 
 export default class ConnectStore {
-  transportId: string;
   rootStore: any;
+  transportId: string;
 
-  constructor(rootStore: any) {
+  constructor(rootStore: any, transportId: string) {
     this.addMessageEventListeners();
     this.rootStore = rootStore;
-    // TODO
-    this.transportId = 'webauthn';
+    this.transportId = transportId;
   }
 
   addMessageEventListeners(): void {
@@ -142,15 +141,6 @@ export default class ConnectStore {
   //   return false;
   // }
 
-  /**
-   * @description Returns an object containing the app version.
-   *
-   * @param {*} replyAction : replyAction is used to determine method to call in inter browser window
-   * @returns {Promise<{major:number, minor:number, patch:number, flags:{isDebug:boolean}}>}
-   *
-   * @example
-   * const { major, minor, patch, flags } = await app.getVersion();
-   */
   async getVersion(
     source: window,
     replyAction: string
@@ -186,20 +176,6 @@ export default class ConnectStore {
     }
   }
 
-  /**
-   * @description Get a public key from the specified BIP 32 path.
-   *
-   * @param {*} replyAction : used to determine method to call in inter browser window
-   * @param {*} hdPath : The path indexes.
-   * Path must begin with `44'/1815'/n'`, and may be up to 10 indexes long.
-   *
-   * @return {Promise<{ publicKey:string, chainCode:string }>}
-   * The public key with chaincode for the given path.
-   *
-   * @example
-   * const { publicKey, chainCode } = await ada.getExtendedPublicKey([ HARDENED + 44, HARDENED + 1815, HARDENED + 1 ]);
-   *
-   */
   async getExtendedPublicKey(
     source: window,
     replyAction: string,
@@ -236,11 +212,6 @@ export default class ConnectStore {
     }
   }
 
-  /**
-   * @description SignTx on device
-   * 
-   * @returns { txHashHex, witnesses }
-   */
   async signTransaction(
     source: window,
     replyAction: string,
@@ -278,21 +249,6 @@ export default class ConnectStore {
     }
   }
 
-  /**
-   * @description Gets an address from the specified BIP 32 path.
-   *
-   * @param {*} replyAction : used to determine method to call in inter browser window
-   * @param {*} hdPath : The path indexes. Path must begin with `44'/1815'/i'/(0 or 1)/j`, and may be up to 10 indexes long
-   * 
-   * @throws 5001 - The path provided does not have the first 3 indexes hardened or 4th index is not 0 or 1
-   * @throws 5002 - The path provided is less than 5 indexes
-   * @throws 5003 - Some of the indexes is not a number
-   *
-   * @example
-   * const { address } = await ada.deriveAddress([ HARDENED + 44, HARDENED + 1815, HARDENED + 1, 0, 5 ]);
-   * 
-   * @return {Promise<{ address58:string }>} The address for the given path.
-   */
   async deriveAddress(
     source: window,
     replyAction: string,
@@ -329,22 +285,6 @@ export default class ConnectStore {
     }
   }
 
-  /**
-   * @description Show an address on the Ledger device so the user can confirm the address not generated adversarially
-   * Note: Show address under the hood is actually a deriveAddress call
-   *
-   * @param {*} replyAction : used to determine method to call in inter browser window
-   * @param {*} hdPath : The path indexes. Path must begin with `44'/1815'/i'/(0 or 1)/j`, and may be up to 10 indexes long
-   * 
-   * @throws 5001 - The path provided does not have the first 3 indexes hardened or 4th index is not 0 or 1
-   * @throws 5002 - The path provided is less than 5 indexes
-   * @throws 5003 - Some of the indexes is not a number
-   *
-   * @example
-   *  await ada.showAddress(hdPath)
-   * 
-   * @return {Promise<void>}
-   */
   async showAddress(
     source: window,
     replyAction: string,
