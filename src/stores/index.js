@@ -7,6 +7,9 @@ import ConnectStore from './ConnectStore';
  * Refer: https://mobx.js.org/best/store.html (Combining multiple stores section)
  */
 export default class RootStore {
+  profileStore: ProfileStore;
+  connectStore: ConnectStore;
+
   constructor() {
     this.profileStore = new ProfileStore(this);
     this.connectStore = new ConnectStore(this);

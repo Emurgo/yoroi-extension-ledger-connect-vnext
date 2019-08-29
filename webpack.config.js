@@ -1,0 +1,86 @@
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+/**
+ * Building config using function,
+ * function parameter env='production' or 'development'
+ */
+module.exports = (env) => {
+  const config = {};
+  const isDevelopment = env === 'development';
+  const isProduction = env === 'production';
+
+  const CleanPlugin = new CleanWebpackPlugin();
+
+  const HtmlPlugin = new HtmlWebpackPlugin({
+    template: './src/index.html',
+    favicon: './src/assets/favicon.ico',
+    chunksSortMode: 'none'
+  });
+
+  config.entry = ['babel-polyfill', './src/index.js'];
+
+  config.module = {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
+    ]
+  };
+  config.optimization = {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'initial'
+        }
+      }
+    },
+    runtimeChunk: {
+      name: 'manifest'
+    },
+    minimizer: [
+      new UglifyJsPlugin({
+        sourceMap: false,
+        uglifyOptions: {
+          ecma: 8,
+          mangle: false,
+          keep_classname: true,
+          keep_fnames: true
+        }
+      })
+    ]
+  };
+
+  if (isProduction) {
+    config.mode = 'production';
+    config.output = {
+      path: path.join(__dirname, 'build'),
+      publicPath: path.join(__dirname, 'build', '/'),
+      chunkFilename: '[name].[chunkhash].bundle.js',
+      filename: '[name].[chunkhash].bundle.js'
+    };
+    config.plugins = [CleanPlugin, HtmlPlugin];
+  }
+
+  if (isDevelopment) {
+    const AnalyzerPlugin = new BundleAnalyzerPlugin({
+      analyzerMode: 'none'
+    });
+    config.mode = 'development';
+    config.devtool = 'inline-source-map';
+    config.output = {
+      path: path.join(__dirname, 'build'),
+      chunkFilename: '[name].bundle.js',
+      filename: '[name].bundle.js'
+    };
+    config.plugins = [CleanPlugin, HtmlPlugin, AnalyzerPlugin];
+  }
+
+  return config;
+};

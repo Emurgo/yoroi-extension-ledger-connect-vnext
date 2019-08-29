@@ -19,20 +19,23 @@ import type { MessageType } from '../types';
 
 export default class ConnectStore {
   transportId: string;
+  rootStore: any;
 
-  constructor(rootStore) {
-    this.addEventListeners();
+  constructor(rootStore: any) {
+    this.addMessageEventListeners();
     this.rootStore = rootStore;
+    // TODO
     this.transportId = 'webauthn';
   }
 
-  addEventListeners(): void {
+  addMessageEventListeners(): void {
     const processMessage = async e => {
       if (e && e.data && e.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
         const { action, params } = e.data;
         console.debug(`[YLC]::request: ${action}`);
 
         const replyAction = `${action}-reply`;
+        // TODO
         // const isProtocolSupported = await this.isProtocolSupported();
         // if (isProtocolSupported) {
         switch (action) {
@@ -58,6 +61,7 @@ export default class ConnectStore {
             // FOR NOW NO-OPERATION
             break;
         }
+        // TODO
         // } else {
         //   this.replyMessage(
         //     e.source,
@@ -125,6 +129,7 @@ export default class ConnectStore {
     return await transport.create();
   }
 
+  // TODO
   // async isProtocolSupported(): Promise<boolean> {
   //   const isWebAuthnSupported = await TransportWebAuthn.isSupported();
   //   console.log(`isWebAuthnSupported: ${isWebAuthnSupported}`);
