@@ -1,5 +1,5 @@
 // @flow
-import { observable, decorate } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import AdaApp from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
   BIP32Path,
@@ -15,30 +15,39 @@ import type Transport from '@ledgerhq/hw-transport';
 import TransportWebAuthn from '@ledgerhq/hw-transport-webauthn';
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 
+import type { MessageType, IRootStore, IChildStore } from '../types';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
-import type { MessageType } from '../types';
 
-export default class ConnectStore {
-  rootStore: any;
-  transportId: string;
+export default class ConnectStore implements IChildStore {
+  rootStore: IRootStore;
+  @observable transportId: string;
 
-  constructor(rootStore: any, transportId: string) {
+  constructor(rootStore: IRootStore, transportId: string) {
     this.addMessageEventListeners();
     this.rootStore = rootStore;
+
+    runInAction(() => {
+      this.transportId = transportId;
+    });
+  }
+
+  @action('Changing Transport')
+  setTransport = (transportId: string) => {
     this.transportId = transportId;
   }
 
   addMessageEventListeners(): void {
-    const processMessage = async e => {
+    const processMessage = async (e) => {
       if (e && e.data && e.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
-        const { action, params } = e.data;
-        console.debug(`[YLC]::request: ${action}`);
+        const actn = e.data.action;
+        const { params } = e.data;
+        console.debug(`[YLC]::request: ${actn}`);
 
-        const replyAction = `${action}-reply`;
+        const replyAction = `${actn}-reply`;
         // TODO
         // const isProtocolSupported = await this.isProtocolSupported();
         // if (isProtocolSupported) {
-        switch (action) {
+        switch (actn) {
           case 'is-ready':
             this.isReady(e.source, replyAction);
             break;
@@ -328,7 +337,10 @@ export default class ConnectStore {
     const isU2FError = (error) => !!error && !!(error).metaData;
     const isStringError = (error) => typeof error === 'string';
     // https://developers.yubico.com/U2F/Libraries/Client_error_codes.html
-    const isErrorWithId = (error) => error.hasOwnProperty('id') && error.hasOwnProperty('message');
+    const isErrorWithId = (error) => (
+      Object.prototype.hasOwnProperty.call(error, 'id') &&
+      Object.prototype.hasOwnProperty.call(error, 'message')
+    );
 
     if (isU2FError(err)) {
       // Timeout
@@ -361,7 +373,3 @@ export default class ConnectStore {
     return err.toString();
   }
 }
-
-decorate(ConnectStore, {
-  transportId: observable
-});

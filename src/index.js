@@ -1,18 +1,18 @@
 // @flow
-// import 'babel-polyfill';
-import { Provider } from 'mobx-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { configure } from 'mobx';
 
 import App from './containers/App';
 import RootStore from './stores';
 
-const root = document.getElementById('root');
+// Run MobX in strict mode
+configure({ enforceActions: 'always' });
+
+const root = document.querySelector('#root');
 if (root !== null) {
-  ReactDOM.render(
-    <Provider rootStore={new RootStore()}>
-      <App />
-    </Provider>,
-    root
-  );
+  console.debug('[YLC] Loading React...');
+  ReactDOM.render(<App rootStore={new RootStore()} />, root);
+} else {
+  console.error('[YLC] could not find React inject tag');
 }

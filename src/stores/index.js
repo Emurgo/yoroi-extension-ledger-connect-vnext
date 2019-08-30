@@ -6,15 +6,15 @@ import {
   DEFAULT_LOCALE
 } from '../const';
 import { SUPPORTED_LOCALS } from '../i18n/translations';
-import type { URLParams } from '../types';
+import type { URLParams, IRootStore, IChildStore } from '../types';
 
 /**
  * This is the RootStore, RootStore is responsible for creating all store
  * Refer: https://mobx.js.org/best/store.html (Combining multiple stores section)
  */
-export default class RootStore {
-  profileStore: ProfileStore;
-  connectStore: ConnectStore;
+export default class RootStore implements IRootStore {
+  profileStore: IChildStore;
+  connectStore: IChildStore;
 
   constructor() {
     const urlParams: URLParams = this.makeURLParams();
@@ -34,9 +34,9 @@ export default class RootStore {
       p.transportId = DEFAULT_TRANSPORT_PROTOCOL;
     }
 
-    if (p.locale == null || p.locale === '') {
-      p.locale = DEFAULT_LOCALE;
-    } else if (!SUPPORTED_LOCALS.includes(p.locale)) {
+    if (p.locale == null ||
+      p.locale === '' ||
+      !SUPPORTED_LOCALS.includes(p.locale)) {
       p.locale = DEFAULT_LOCALE;
     }
 

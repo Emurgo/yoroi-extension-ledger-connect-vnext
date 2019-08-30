@@ -1,16 +1,20 @@
 // @flow
-import { observable, decorate } from 'mobx';
+import { observable, runInAction, action } from 'mobx';
+import type { IRootStore, IChildStore } from '../types';
 
-export default class ProfileStore {
-  rootStore: any;
-  currentLocale: string;
+export default class ProfileStore implements IChildStore {
+  rootStore: IRootStore;
+  @observable currentLocale: string;
 
-  constructor(rootStore: any, locale: string) {
-    this.rootStore = rootStore;
+  constructor(rootStore: IRootStore, locale: string) {
+    runInAction(() => {
+      this.rootStore = rootStore;
+      this.currentLocale = locale;
+    });
+  }
+
+  @action('Changing Locale')
+  setLocale = (locale: string) => {
     this.currentLocale = locale;
   }
 }
-
-decorate(ProfileStore, {
-  currentLocale: observable,
-});
