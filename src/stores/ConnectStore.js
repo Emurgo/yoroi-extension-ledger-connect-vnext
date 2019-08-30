@@ -23,7 +23,7 @@ export default class ConnectStore implements IChildStore {
   @observable transportId: string;
 
   constructor(rootStore: IRootStore, transportId: string) {
-    this.addMessageEventListeners();
+    this._addMessageEventListeners();
     this.rootStore = rootStore;
 
     runInAction(() => {
@@ -36,7 +36,7 @@ export default class ConnectStore implements IChildStore {
     this.transportId = transportId;
   }
 
-  addMessageEventListeners(): void {
+  _addMessageEventListeners = (): void => {
     const processMessage = async (e) => {
       if (e && e.data && e.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
         const actn = e.data.action;
@@ -72,7 +72,7 @@ export default class ConnectStore implements IChildStore {
         }
         // TODO
         // } else {
-        //   this.replyMessage(
+        //   this._replyMessage(
         //     e.source,
         //     {
         //       action: replyAction,
@@ -90,42 +90,15 @@ export default class ConnectStore implements IChildStore {
     window.addEventListener('message', processMessage, false);
   }
 
-  replyMessage(source: window, msg: MessageType): void {
+  _replyMessage = (source: window, msg: MessageType): void => {
     if (source) {
       source.postMessage(msg, '*');
     } else {
-      console.debug('[YOROI-LB]::replyMessage::No Source window provided');
+      console.debug('[YOROI-LB]::_replyMessage::No Source window provided');
     }
   }
 
-  async isReady(
-    source: window,
-    replyAction: string
-  ): Promise<void> {
-    try {
-      console.debug(`[YOROI-LB]::isReady::${replyAction}`);
-      this.replyMessage(
-        source,
-        {
-          action: replyAction,
-          success: true,
-          payload: true
-        }
-      );
-    } catch (err) {
-      console.error(`[YOROI-LB]::isReady::${replyAction}::error::${JSON.stringify(err)}`);
-      this.replyMessage(
-        source,
-        {
-          action: replyAction,
-          success: false,
-          payload: { error: err.toString() }
-        }
-      );
-    }
-  }
-
-  async makeTransport(): Promise<Transport<*>> {
+  _makeTransport = async (): Promise<Transport<*>> => {
     let transport;
     if (this.transportId === 'webauthn') {
       transport = TransportWebAuthn;
@@ -150,17 +123,44 @@ export default class ConnectStore implements IChildStore {
   //   return false;
   // }
 
-  async getVersion(
+  isReady = async  (
     source: window,
     replyAction: string
-  ): Promise<GetVersionResponse> {
+  ): Promise<void> => {
+    try {
+      console.debug(`[YOROI-LB]::isReady::${replyAction}`);
+      this._replyMessage(
+        source,
+        {
+          action: replyAction,
+          success: true,
+          payload: true
+        }
+      );
+    } catch (err) {
+      console.error(`[YOROI-LB]::isReady::${replyAction}::error::${JSON.stringify(err)}`);
+      this._replyMessage(
+        source,
+        {
+          action: replyAction,
+          success: false,
+          payload: { error: err.toString() }
+        }
+      );
+    }
+  }
+
+  getVersion = async (
+    source: window,
+    replyAction: string
+  ): Promise<GetVersionResponse> => {
     let transport;
     try {
-      transport = await this.makeTransport();
+      transport = await this._makeTransport();
       const adaApp = new AdaApp(transport);
 
       const res: GetVersionResponse = await adaApp.getVersion();
-      this.replyMessage(
+      this._replyMessage(
         source,
         {
           action: replyAction,
@@ -172,7 +172,7 @@ export default class ConnectStore implements IChildStore {
     } catch (err) {
       console.error(`[YOROI-LB]::getVersion::${replyAction}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
-      this.replyMessage(
+      this._replyMessage(
         source,
         {
           action: replyAction,
@@ -185,18 +185,18 @@ export default class ConnectStore implements IChildStore {
     }
   }
 
-  async getExtendedPublicKey(
+  getExtendedPublicKey = async (
     source: window,
     replyAction: string,
     hdPath: BIP32Path
-  ): Promise<GetExtendedPublicKeyResponse> {
+  ): Promise<GetExtendedPublicKeyResponse> => {
     let transport;
     try {
-      transport = await this.makeTransport();
+      transport = await this._makeTransport();
       const adaApp = new AdaApp(transport);
 
       const res: GetExtendedPublicKeyResponse = await adaApp.getExtendedPublicKey(hdPath);
-      this.replyMessage(
+      this._replyMessage(
         source,
         {
           action: replyAction,
@@ -208,7 +208,7 @@ export default class ConnectStore implements IChildStore {
     } catch (err) {
       console.error(`[YOROI-LB]::getExtendedPublicKey::${replyAction}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
-      this.replyMessage(
+      this._replyMessage(
         source,
         {
           action: replyAction,
@@ -221,19 +221,19 @@ export default class ConnectStore implements IChildStore {
     }
   }
 
-  async signTransaction(
+  signTransaction = async (
     source: window,
     replyAction: string,
     inputs: Array<InputTypeUTxO>,
     outputs: Array<OutputTypeAddress | OutputTypeChange>
-  ): Promise<SignTransactionResponse> {
+  ): Promise<SignTransactionResponse> => {
     let transport;
     try {
-      transport = await this.makeTransport();
+      transport = await this._makeTransport();
       const adaApp = new AdaApp(transport);
 
       const res: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
-      this.replyMessage(
+      this._replyMessage(
         source,
         {
           action: replyAction,
@@ -245,7 +245,7 @@ export default class ConnectStore implements IChildStore {
     } catch (err) {
       console.error(`[YOROI-LB]::signTransaction::${replyAction}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
-      this.replyMessage(
+      this._replyMessage(
         source,
         {
           action: replyAction,
@@ -258,18 +258,18 @@ export default class ConnectStore implements IChildStore {
     }
   }
 
-  async deriveAddress(
+  deriveAddress = async (
     source: window,
     replyAction: string,
     hdPath: BIP32Path
-  ): Promise<DeriveAddressResponse> {
+  ): Promise<DeriveAddressResponse> => {
     let transport;
     try {
-      transport = await this.makeTransport();
+      transport = await this._makeTransport();
       const adaApp = new AdaApp(transport);
 
       const res: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
-      this.replyMessage(
+      this._replyMessage(
         source,
         {
           action: replyAction,
@@ -281,7 +281,7 @@ export default class ConnectStore implements IChildStore {
     } catch (err) {
       console.error(`[YOROI-LB]::deriveAddress::${replyAction}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
-      this.replyMessage(
+      this._replyMessage(
         source,
         {
           action: replyAction,
@@ -294,18 +294,18 @@ export default class ConnectStore implements IChildStore {
     }
   }
 
-  async showAddress(
+  showAddress = async (
     source: window,
     replyAction: string,
     hdPath: BIP32Path
-  ): Promise<void> {
+  ): Promise<void> => {
     let transport;
     try {
-      transport = await this.makeTransport();
+      transport = await this._makeTransport();
       const adaApp = new AdaApp(transport);
 
       const res = await adaApp.showAddress(hdPath);
-      this.replyMessage(
+      this._replyMessage(
         source,
         {
           action: replyAction,
@@ -316,7 +316,7 @@ export default class ConnectStore implements IChildStore {
     } catch (err) {
       console.error(`[YOROI-LB]::showAddress::${replyAction}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
-      this.replyMessage(
+      this._replyMessage(
         source,
         {
           action: replyAction,
@@ -333,7 +333,7 @@ export default class ConnectStore implements IChildStore {
    * Converts error code to string
    * @param {*} err
    */
-  ledgerErrToMessage(err: any): any {
+  ledgerErrToMessage = (err: any): any => {
     const isU2FError = (error) => !!error && !!(error).metaData;
     const isStringError = (error) => typeof error === 'string';
     // https://developers.yubico.com/U2F/Libraries/Client_error_codes.html
