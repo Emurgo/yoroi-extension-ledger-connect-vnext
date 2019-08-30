@@ -7,8 +7,9 @@ export default class ProfileStore implements IChildStore {
   @observable currentLocale: string;
 
   constructor(rootStore: IRootStore, locale: string) {
+    this.rootStore = rootStore;
+
     runInAction(() => {
-      this.rootStore = rootStore;
       this.currentLocale = locale;
     });
   }

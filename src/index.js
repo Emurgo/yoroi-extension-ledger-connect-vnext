@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { configure } from 'mobx';
 
 import App from './App';
+import './cmn-style/index.global.scss';
 import RootStore from './stores';
 
 // Run MobX in strict mode

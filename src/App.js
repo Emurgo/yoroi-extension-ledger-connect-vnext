@@ -14,14 +14,17 @@ import it from 'react-intl/locale-data/it';
 
 import { translations } from './i18n/translations';
 import { DEFAULT_LOCALE } from './const';
+import styleVariables from './cmn-style/style-variables';
 // https://github.com/yahoo/react-intl/wiki#loading-locale-data
 addLocaleData([...en, ...ko, ...ja, ...zh, ...ru, ...de, ...fr, ...id, ...es, ...it]);
 
 // https://reactjs.org/docs/code-splitting.html#reactlazy
 const ConnectPage = lazy(() => import('./containers/ConnectPage'));
+const StyleVariableLoader = lazy(() => import('./containers/StyleVariableLoader'));
 
 @observer
 export default class App extends React.Component {
+
   render() {
     const { profileStore } = this.props.rootStore;
 
@@ -38,11 +41,12 @@ export default class App extends React.Component {
 
     const component = (
       <div style={{ height: '100%' }}>
-        <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
-          <Suspense fallback={<div>Loading...</div>}>
-            {<ConnectPage rootStore={this.props.rootStore} />}
-          </Suspense>
-        </IntlProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <StyleVariableLoader variables={styleVariables} />
+          <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
+            <ConnectPage rootStore={this.props.rootStore} />
+          </IntlProvider>
+        </Suspense>
       </div>
     );
 
