@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 import { ENV } from '../const';
 
+import './Layout.scss';
 import TestBlock from './manual-test/TestBlock';
 
 const messages = defineMessages({
