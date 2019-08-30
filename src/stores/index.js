@@ -17,12 +17,12 @@ export default class RootStore implements IRootStore {
   connectStore: IChildStore;
 
   constructor() {
-    const urlParams: URLParams = this.makeURLParams();
+    const urlParams: URLParams = this.parseURLParams();
     this.profileStore = new ProfileStore(this, urlParams.locale);
     this.connectStore = new ConnectStore(this, urlParams.transportId);
   }
 
-  makeURLParams = (): URLParams => {
+  parseURLParams = (): URLParams => {
     const urlParams = new URLSearchParams(window.location.search);
 
     const p: URLParams = {
