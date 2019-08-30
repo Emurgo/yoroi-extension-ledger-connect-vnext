@@ -12,13 +12,13 @@ import id from 'react-intl/locale-data/id';
 import es from 'react-intl/locale-data/es';
 import it from 'react-intl/locale-data/it';
 
-import { translations } from '../i18n/translations';
-import { DEFAULT_LOCALE } from '../const';
+import { translations } from './i18n/translations';
+import { DEFAULT_LOCALE } from './const';
 // https://github.com/yahoo/react-intl/wiki#loading-locale-data
 addLocaleData([...en, ...ko, ...ja, ...zh, ...ru, ...de, ...fr, ...id, ...es, ...it]);
 
 // https://reactjs.org/docs/code-splitting.html#reactlazy
-const ConnectPage = lazy(() => import('./ConnectPage'));
+const ConnectPage = lazy(() => import('./containers/ConnectPage'));
 
 @observer
 export default class App extends React.Component {

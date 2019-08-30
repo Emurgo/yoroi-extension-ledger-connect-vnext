@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configure } from 'mobx';
 
-import App from './containers/App';
+import App from './App';
 import RootStore from './stores';
 
 // Run MobX in strict mode
