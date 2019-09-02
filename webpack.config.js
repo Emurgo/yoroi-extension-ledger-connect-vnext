@@ -37,7 +37,16 @@ module.exports = (env) => {
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          },
+          'sass-loader'
+        ]
       },
       {
         test: /\.(eot|otf|ttf|woff|woff2|gif|png)$/,
@@ -91,7 +100,7 @@ module.exports = (env) => {
 
     config.mode = 'development';
 
-    config.devtool = 'inline-source-map';
+    config.devtool = 'eval-source-map';
 
     config.output = {
       path: path.join(__dirname, 'dist'),

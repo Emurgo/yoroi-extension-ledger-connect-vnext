@@ -2,10 +2,9 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
-import { ENV } from '../const';
 
-import './Layout.scss';
 import TestBlock from './manual-test/TestBlock';
+import styles from './Layout.scss';
 
 const messages = defineMessages({
   load: {
@@ -20,6 +19,7 @@ type Props = {|
   signTransaction: Function,
   deriveAddress: Function,
   showAddress: Function,
+  isDevelopment: boolean
 |};
 
 @observer
@@ -35,15 +35,16 @@ export default class Layout extends React.Component<Props> {
       getExtendedPublicKey,
       signTransaction,
       deriveAddress,
-      showAddress
+      showAddress,
+      isDevelopment
     } = this.props;
 
     return (
-      <div>
+      <div className={styles.component}>
         <p>{intl.formatMessage(messages.load)}</p>
         <p>{JSON.stringify(process.env.NODE_ENV, null, 2)}</p>
         <p>V-10</p>
-        {ENV.isDevelopment && (
+        {isDevelopment && (
           <TestBlock
             getVersion={getVersion}
             getExtendedPublicKey={getExtendedPublicKey}
