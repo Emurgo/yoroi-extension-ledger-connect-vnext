@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import type { InjectedContainerProps } from '../types';
 import { ENV } from '../const';
 import Layout from '../components/Layout';
+import ConnectBlock from '../components/connect/ConnectBlock';
 
 type Props = InjectedContainerProps
 
@@ -28,7 +29,9 @@ export default class ConnectPage extends React.Component<Props> {
         deriveAddress={deriveAddress}
         showAddress={showAddress}
         isDevelopment={ENV.isDevelopment}
-      />
+      >
+        <ConnectBlock />
+      </Layout>
     );
     return component;
   }

@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { utils as CUtils } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
+import styles from './TestBlock.scss';
 type Props = {|
   getVersion: Function,
   getExtendedPublicKey: Function,
@@ -15,7 +16,7 @@ type Props = {|
 export default class TestBlock extends React.Component<Props> {
   render() {
     const component = (
-      <div>
+      <div className={styles.component}>
         <button type="button" onClick={this.onLogVersion}>Log Version</button>
         <br />
         <br />
@@ -31,7 +32,6 @@ export default class TestBlock extends React.Component<Props> {
         <button type="button" onClick={this.onLogShowAddress}>Log Show Address</button>
       </div>
     );
-
     return component;
   }
 
