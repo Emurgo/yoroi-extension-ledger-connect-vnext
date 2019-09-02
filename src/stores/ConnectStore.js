@@ -1,5 +1,5 @@
 // @flow
-import { observable, action, runInAction } from 'mobx';
+import { observable, action, runInAction, computed } from 'mobx';
 import AdaApp from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
   BIP32Path,
@@ -31,11 +31,22 @@ export default class ConnectStore implements IChildStore {
     });
   }
 
+  @computed
+  get isTransportWebAuthn(): boolean {
+    return this.transportId === 'webauthn';
+  }
+
+  @computed
+  get isTransportU2F(): boolean {
+    return this.transportId === 'u2f';
+  }
+
   @action('Changing Transport')
   setTransport = (transportId: string) => {
     this.transportId = transportId;
   }
 
+  // Ledger API
   _addMessageEventListeners = (): void => {
     const processMessage = async (e) => {
       if (e && e.data && e.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {

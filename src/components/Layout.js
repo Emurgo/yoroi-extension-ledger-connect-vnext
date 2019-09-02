@@ -2,7 +2,6 @@
 import React from 'react';
 import type { Node } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
 
 import TestBlock from './manual-test/TestBlock';
 import styles from './Layout.scss';
@@ -14,7 +13,8 @@ type Props = {|
   signTransaction: Function,
   deriveAddress: Function,
   showAddress: Function,
-  children: Node
+  children: Node,
+  isWebAuthn: boolean
 |};
 
 @observer
@@ -27,11 +27,15 @@ export default class Layout extends React.Component<Props> {
       deriveAddress,
       showAddress,
       isDevelopment,
+      isWebAuthn,
       children,
     } = this.props;
 
     return (
       <div className={styles.component}>
+        {isWebAuthn && (
+          <div className={styles.webAuthnTopGap} />
+        )}
         {isDevelopment && (
           <TestBlock
             getVersion={getVersion}

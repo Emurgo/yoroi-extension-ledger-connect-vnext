@@ -18,17 +18,19 @@ export default class ConnectPage extends React.Component<Props> {
       getExtendedPublicKey,
       signTransaction,
       deriveAddress,
-      showAddress
+      showAddress,
+      isTransportWebAuthn,
     } = connectStore;
 
     const component = (
       <Layout
+        isDevelopment={ENV.isDevelopment}
         getVersion={getVersion}
         getExtendedPublicKey={getExtendedPublicKey}
         signTransaction={signTransaction}
         deriveAddress={deriveAddress}
         showAddress={showAddress}
-        isDevelopment={ENV.isDevelopment}
+        isWebAuthn={isTransportWebAuthn}
       >
         <ConnectBlock />
       </Layout>

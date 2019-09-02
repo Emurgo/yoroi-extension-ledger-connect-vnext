@@ -24,14 +24,21 @@ export default class ConnectBlock extends React.Component<Props> {
     const WebAuthnNoteBlock = (
       <div>WebAuthn Note Block</div>
     );
-
     const TitleBlock = (
       <div>Operation Title Block</div>
+    );
+    const CommonBlock = (
+      <div>Common Block</div>
+    );
+    const OparationBlock = (
+      <div>Operation Block</div>
     );
     return (
       <div className={styles.component}>
         {WebAuthnNoteBlock}
         {TitleBlock}
+        {CommonBlock}
+        {OparationBlock}
       </div>
     );
   }
