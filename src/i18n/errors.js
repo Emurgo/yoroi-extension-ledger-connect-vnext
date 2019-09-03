@@ -1,46 +1,28 @@
 import LocalizableError from './LocalizableError';
 
-export class InvalidMnemonicError extends LocalizableError {
+// We are only supposed to throw LocalizableError
+// We use this as a fallback in case of programmer error
+class UnknowError extends LocalizableError {
   constructor() {
     super({
-      id: 'api.errors.invalidMnemonicError',
-      defaultMessage: '!!!Invalid phrase entered, please check.',
+      id: 'error.unknowError',
+      defaultMessage: '!!!Unknow error.',
     });
   }
 }
 
-export class InvalidEmailError extends LocalizableError {
+export class UnexpectedError extends LocalizableError {
   constructor() {
     super({
-      id: 'global.errors.invalidEmail',
-      defaultMessage: '!!!Invalid email entered, please check.',
+      id: 'error.unexpectedError',
+      defaultMessage: '!!!Something unexpected happened. Please retry.',
     });
   }
 }
 
-export class FieldRequiredError extends LocalizableError {
-  constructor() {
-    super({
-      id: 'global.errors.fieldIsRequired',
-      defaultMessage: '!!!This field is required.',
-    });
+export function localizedError(error: Error): LocalizableError {
+  if (error instanceof LocalizableError) {
+    return error;
   }
-}
-
-export class AdaRedemptionCertificateParseError extends LocalizableError {
-  constructor() {
-    super({
-      id: 'api.errors.AdaRedemptionCertificateParseError',
-      defaultMessage: '!!!The ADA redemption code could not be parsed from the given document.',
-    });
-  }
-}
-
-export class UnableToLoadError extends LocalizableError {
-  constructor() {
-    super({
-      id: 'app.errors.unableToLoad',
-      defaultMessage: '!!!Unable to load!',
-    });
-  }
+  return new UnknowError();
 }
