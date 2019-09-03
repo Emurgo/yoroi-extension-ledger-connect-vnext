@@ -15,12 +15,19 @@ import type Transport from '@ledgerhq/hw-transport';
 import TransportWebAuthn from '@ledgerhq/hw-transport-webauthn';
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 
-import type { MessageType, IRootStore, IChildStore } from '../types';
+import type {
+  MessageType,
+  IRootStore,
+  IChildStore,
+  ProgressStateType
+} from '../types';
+import { ProgressState } from '../types';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
 
 export default class ConnectStore implements IChildStore {
   rootStore: IRootStore;
   @observable transportId: string;
+  @observable progressState: ProgressStateType
 
   constructor(rootStore: IRootStore, transportId: string) {
     this._addMessageEventListeners();
@@ -28,6 +35,7 @@ export default class ConnectStore implements IChildStore {
 
     runInAction(() => {
       this.transportId = transportId;
+      this.progressState = ProgressState.IDLE;
     });
   }
 
@@ -44,6 +52,11 @@ export default class ConnectStore implements IChildStore {
   @action('Changing Transport')
   setTransport = (transportId: string) => {
     this.transportId = transportId;
+  }
+
+  @action('Changing Progress State')
+  setProgressState = (progressState: ProgressStateType) => {
+    this.progressState = progressState;
   }
 
   // Ledger API
@@ -120,6 +133,19 @@ export default class ConnectStore implements IChildStore {
     }
 
     return await transport.create();
+  }
+
+  @action
+  _detectLedgerDevice = async (transport: Transport<*>) => {
+    runInAction(() => {
+      this.progressState = ProgressState.DETECTING_DEVICE;
+    });
+    const adaApp = new AdaApp(transport);
+    await adaApp.getVersion();
+
+    runInAction(() => {
+      this.progressState = ProgressState.DEVICE_FOUND;
+    });
   }
 
   // TODO
@@ -204,6 +230,8 @@ export default class ConnectStore implements IChildStore {
     let transport;
     try {
       transport = await this._makeTransport();
+      await this._detectLedgerDevice(transport);
+
       const adaApp = new AdaApp(transport);
 
       const res: GetExtendedPublicKeyResponse = await adaApp.getExtendedPublicKey(hdPath);

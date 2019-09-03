@@ -25,3 +25,10 @@ export type InjectedContainerProps = {|
   rootStore: IRootStore,
   children?: Node,
 |}
+
+export const ProgressState = Object.freeze({
+  IDLE: 0,
+  DETECTING_DEVICE: 1,
+  DEVICE_FOUND: 2,
+});
+export type ProgressStateType = $Values<typeof ProgressState>;

@@ -12,6 +12,8 @@ const messages = defineMessages({
 });
 
 type Props = {|
+  showCommonHint: boolean,
+  showOparationHint: boolean
 |};
 
 @observer
@@ -21,24 +23,30 @@ export default class ConnectBlock extends React.Component<Props> {
   };
 
   render() {
+    const {
+      showCommonHint,
+      showOparationHint,
+    } = this.props;
+
     const WebAuthnNoteBlock = (
       <div>WebAuthn Note Block</div>
     );
     const TitleBlock = (
       <div>Operation Title Block</div>
     );
-    const CommonBlock = (
-      <div>Common Block</div>
+    const CommonHint = (
+      <div>Common Hint Block</div>
     );
-    const OparationBlock = (
-      <div>Operation Block</div>
+    const OparationHint = (
+      <div>Operation Hint Block</div>
     );
+
     return (
       <div className={styles.component}>
         {WebAuthnNoteBlock}
         {TitleBlock}
-        {CommonBlock}
-        {OparationBlock}
+        {showCommonHint && CommonHint}
+        {showOparationHint && OparationHint}
       </div>
     );
   }
