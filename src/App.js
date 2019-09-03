@@ -13,6 +13,8 @@ import id from 'react-intl/locale-data/id';
 import es from 'react-intl/locale-data/es';
 import it from 'react-intl/locale-data/it';
 
+import RootStore from './stores';
+
 import { translations } from './i18n/translations';
 import { DEFAULT_LOCALE } from './const';
 import styleVariables from './cmn-style/style-variables';
@@ -23,8 +25,12 @@ addLocaleData([...en, ...ko, ...ja, ...zh, ...ru, ...de, ...fr, ...id, ...es, ..
 const ConnectPage = lazy(() => import('./containers/ConnectPage'));
 const StyleVariableLoader = lazy(() => import('./containers/StyleVariableLoader'));
 
+type Props = {
+  rootStore: RootStore
+}
+
 @observer
-export default class App extends React.Component {
+export default class App extends React.Component<Props> {
 
   render() {
     const { profileStore } = this.props.rootStore;
