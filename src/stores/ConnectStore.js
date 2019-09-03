@@ -182,7 +182,10 @@ export default class ConnectStore implements IChildStore {
     }
   }
 
-  getVersion = async (source: window, replyAction: string): Promise<GetVersionResponse> => {
+  getVersion = async (
+    source: window,
+    replyAction: string
+  ): Promise<GetVersionResponse | void> => {
     let transport;
     try {
       transport = await this._makeTransport();
@@ -218,7 +221,7 @@ export default class ConnectStore implements IChildStore {
     source: window,
     replyAction: string,
     hdPath: BIP32Path
-  ): Promise<GetExtendedPublicKeyResponse> => {
+  ): Promise<GetExtendedPublicKeyResponse | void> => {
     let transport;
     try {
       transport = await this._makeTransport();
@@ -257,7 +260,7 @@ export default class ConnectStore implements IChildStore {
     replyAction: string,
     inputs: Array<InputTypeUTxO>,
     outputs: Array<OutputTypeAddress | OutputTypeChange>
-  ): Promise<SignTransactionResponse> => {
+  ): Promise<SignTransactionResponse | void> => {
     let transport;
     try {
       transport = await this._makeTransport();
@@ -295,7 +298,7 @@ export default class ConnectStore implements IChildStore {
     source: window,
     replyAction: string,
     hdPath: BIP32Path
-  ): Promise<DeriveAddressResponse> => {
+  ): Promise<DeriveAddressResponse | void> => {
     let transport;
     try {
       transport = await this._makeTransport();
