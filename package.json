@@ -33,7 +33,7 @@
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-react": "7.14.3",
     "file-loader": "4.2.0",
-    "flow-bin": "0.106.2",
+    "flow-bin": "0.106.3",
     "gh-pages": "2.1.1",
     "html-webpack-plugin": "3.2.0",
     "node-sass": "4.12.0",

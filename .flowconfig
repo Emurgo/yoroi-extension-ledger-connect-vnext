@@ -1,6 +1,4 @@
 [ignore]
-.*/.git/.*
-.*/node_modules/.*
 
 [include]
 
@@ -9,8 +7,5 @@
 [lints]
 
 [options]
-module.system.node.resolve_dirname=node_modules
-module.system.node.resolve_dirname=src
-esproposal.decorators=ignore
 
 [strict]
