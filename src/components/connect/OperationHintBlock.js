@@ -6,11 +6,7 @@ import type { MessageDescriptor } from 'react-intl';
 
 import styles from './OperationHintBlock.scss';
 
-type Props = {|
-  number: number,
-  text: MessageDescriptor,
-  imagePath: string
-|};
+type Props = {||};
 
 @observer
 export default class OperationHintBlock extends React.Component<Props> {

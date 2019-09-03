@@ -17,8 +17,7 @@ export default class NoteBlock extends React.Component<Props> {
   };
 
   render() {
-    const intl = this.contextTypes;
-    const { text } = this.props;
+    const { intl } = this.context;
 
     return (
       <div className={styles.component}>

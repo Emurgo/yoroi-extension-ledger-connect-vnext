@@ -19,7 +19,7 @@ export default class HintBlock extends React.Component<Props> {
   };
 
   render() {
-    const intl = this.contextTypes;
+    const { intl } = this.context;
     const {
       number,
       text,
