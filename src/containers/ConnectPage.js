@@ -22,7 +22,7 @@ export default class ConnectPage extends React.Component<Props> {
       progressState
     } = connectStore;
 
-    const component = (
+    return (
       <Layout
         isDevelopment={ENV.isDevelopment}
         getVersion={getVersion}
@@ -34,9 +34,9 @@ export default class ConnectPage extends React.Component<Props> {
       >
         <ConnectBlock
           progressState={progressState}
+          isWebAuthn={isTransportWebAuthn}
         />
       </Layout>
     );
-    return component;
   }
 }

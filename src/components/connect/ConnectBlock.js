@@ -4,6 +4,9 @@ import { defineMessages, intlShape } from 'react-intl';
 
 import type { ProgressStateType } from '../../types';
 import { ProgressState } from '../../types';
+import NoteBlock from '../widgets/NoteBlock';
+import CommonHintBlock from './CommonHintBlock';
+import OperationHintBlock from './OperationHintBlock';
 import styles from './ConnectBlock.scss';
 
 const messages = defineMessages({
@@ -14,7 +17,8 @@ const messages = defineMessages({
 });
 
 type Props = {|
-  progressState: ProgressStateType
+  progressState: ProgressStateType,
+  isWebAuthn: boolean,
 |};
 
 @observer
@@ -24,29 +28,23 @@ export default class ConnectBlock extends React.Component<Props> {
   };
 
   render() {
-    const { progressState } = this.props;
+    const {
+      progressState,
+      isWebAuthn
+    } = this.props;
     const showCommonHint = (progressState !== ProgressState.DEVICE_FOUND);
     const showOparationHint = (progressState === ProgressState.DEVICE_FOUND);
 
-    const WebAuthnNoteBlock = (
-      <div>WebAuthn Note Block</div>
-    );
     const TitleBlock = (
       <div>Operation Title Block</div>
-    );
-    const CommonHint = (
-      <div>Common Hint Block</div>
-    );
-    const OparationHint = (
-      <div>Operation Hint Block</div>
     );
 
     return (
       <div className={styles.component}>
-        {WebAuthnNoteBlock}
+        { isWebAuthn && <NoteBlock />}
         {TitleBlock}
-        {showCommonHint && CommonHint}
-        {showOparationHint && OparationHint}
+        {showCommonHint && <CommonHintBlock />}
+        {showOparationHint && <OperationHintBlock />}
       </div>
     );
   }
