@@ -135,12 +135,15 @@ export default class ConnectStore implements IChildStore {
     return await transport.create();
   }
 
-  _detectLedgerDevice = async (transport: Transport<*>) => {
+  _detectLedgerDevice = async (transport: Transport<*>): Promise<GetVersionResponse> => {
     this.setProgressState(ProgressState.DETECTING_DEVICE);
+
     const adaApp = new AdaApp(transport);
-    await adaApp.getVersion();
+    const verResp = await adaApp.getVersion();
 
     this.setProgressState(ProgressState.DEVICE_FOUND);
+
+    return verResp;
   }
 
   // TODO
@@ -155,10 +158,7 @@ export default class ConnectStore implements IChildStore {
   //   return false;
   // }
 
-  isReady = async  (
-    source: window,
-    replyAction: string
-  ): Promise<void> => {
+  isReady = async (source: window, replyAction: string): Promise<void> => {
     try {
       console.debug(`[YOROI-LB]::isReady::${replyAction}`);
       this._replyMessage(
@@ -182,10 +182,7 @@ export default class ConnectStore implements IChildStore {
     }
   }
 
-  getVersion = async (
-    source: window,
-    replyAction: string
-  ): Promise<GetVersionResponse> => {
+  getVersion = async (source: window, replyAction: string): Promise<GetVersionResponse> => {
     let transport;
     try {
       transport = await this._makeTransport();
@@ -225,7 +222,7 @@ export default class ConnectStore implements IChildStore {
     let transport;
     try {
       transport = await this._makeTransport();
-      await this._detectLedgerDevice(transport);
+      const verResp = await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
 
@@ -264,6 +261,8 @@ export default class ConnectStore implements IChildStore {
     let transport;
     try {
       transport = await this._makeTransport();
+      await this._detectLedgerDevice(transport);
+
       const adaApp = new AdaApp(transport);
 
       const res: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
@@ -300,6 +299,8 @@ export default class ConnectStore implements IChildStore {
     let transport;
     try {
       transport = await this._makeTransport();
+      await this._detectLedgerDevice(transport);
+
       const adaApp = new AdaApp(transport);
 
       const res: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
@@ -336,6 +337,8 @@ export default class ConnectStore implements IChildStore {
     let transport;
     try {
       transport = await this._makeTransport();
+      await this._detectLedgerDevice(transport);
+
       const adaApp = new AdaApp(transport);
 
       const res = await adaApp.showAddress(hdPath);
