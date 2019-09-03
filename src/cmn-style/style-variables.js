@@ -1,4 +1,3 @@
-// @flow
 export default {
   // FONTS
   '--preferred-font': '"Times New Roman", serif',

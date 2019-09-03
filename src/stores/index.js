@@ -1,4 +1,3 @@
-// @flow
 import ProfileStore from './ProfileStore';
 import ConnectStore from './ConnectStore';
 import {
