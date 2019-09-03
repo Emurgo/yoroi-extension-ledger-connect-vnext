@@ -17,21 +17,17 @@ import TransportU2F from '@ledgerhq/hw-transport-u2f';
 
 import type {
   MessageType,
-  IRootStore,
-  IChildStore,
   ProgressStateType
-} from '../types';
-import { ProgressState } from '../types';
+} from '../types/cmn';
+import { ProgressState } from '../types/cmn';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
 
-export default class ConnectStore implements IChildStore {
-  rootStore: IRootStore;
+export default class ConnectStore {
   @observable transportId: string;
   @observable progressState: ProgressStateType
 
-  constructor(rootStore: IRootStore, transportId: string) {
+  constructor(transportId: string) {
     this._addMessageEventListeners();
-    this.rootStore = rootStore;
 
     runInAction(() => {
       this.transportId = transportId;

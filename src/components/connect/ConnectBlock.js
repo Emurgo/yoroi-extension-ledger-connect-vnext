@@ -3,8 +3,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 
-import type { ProgressStateType } from '../../types';
-import { ProgressState } from '../../types';
+import type { ProgressStateType } from '../../types/cmn';
+import { ProgressState } from '../../types/cmn';
 import NoteBlock from '../widgets/NoteBlock';
 import CommonHintBlock from './CommonHintBlock';
 import OperationHintBlock from './OperationHintBlock';

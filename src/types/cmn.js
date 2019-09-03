@@ -1,6 +1,4 @@
 // @flow
-import type { Node } from 'react';
-
 export type MessageType = {
   action: string,
   success: boolean,
@@ -20,11 +18,6 @@ export interface IRootStore {
 export interface IChildStore {
   rootStore: IRootStore
 }
-
-export type InjectedContainerProps = {|
-  rootStore: IRootStore,
-  children?: Node,
-|}
 
 export const ProgressState = Object.freeze({
   IDLE: 'IDLE',

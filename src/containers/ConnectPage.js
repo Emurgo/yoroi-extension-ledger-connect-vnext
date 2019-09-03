@@ -2,7 +2,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import type { InjectedContainerProps } from '../types';
+import type { InjectedContainerProps } from '../types/injected-props';
 import { ENV } from '../const';
 import Layout from '../components/Layout';
 import ConnectBlock from '../components/connect/ConnectBlock';
