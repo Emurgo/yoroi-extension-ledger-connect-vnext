@@ -135,17 +135,12 @@ export default class ConnectStore implements IChildStore {
     return await transport.create();
   }
 
-  @action
   _detectLedgerDevice = async (transport: Transport<*>) => {
-    runInAction(() => {
-      this.progressState = ProgressState.DETECTING_DEVICE;
-    });
+    this.setProgressState(ProgressState.DETECTING_DEVICE);
     const adaApp = new AdaApp(transport);
     await adaApp.getVersion();
 
-    runInAction(() => {
-      this.progressState = ProgressState.DEVICE_FOUND;
-    });
+    this.setProgressState(ProgressState.DEVICE_FOUND);
   }
 
   // TODO

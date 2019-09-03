@@ -6,7 +6,6 @@ import type { InjectedContainerProps } from '../types';
 import { ENV } from '../const';
 import Layout from '../components/Layout';
 import ConnectBlock from '../components/connect/ConnectBlock';
-import { ProgressState } from '../types';
 
 type Props = InjectedContainerProps
 
@@ -21,7 +20,7 @@ export default class ConnectPage extends React.Component<Props> {
       deriveAddress,
       showAddress,
       isTransportWebAuthn,
-      prgressState
+      progressState
     } = connectStore;
 
     const component = (
@@ -35,8 +34,7 @@ export default class ConnectPage extends React.Component<Props> {
         isWebAuthn={isTransportWebAuthn}
       >
         <ConnectBlock
-          showCommonHint
-          showOparationHint={prgressState === ProgressState.DEVICE_FOUND}
+          progressState={progressState}
         />
       </Layout>
     );

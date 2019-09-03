@@ -27,8 +27,8 @@ export type InjectedContainerProps = {|
 |}
 
 export const ProgressState = Object.freeze({
-  IDLE: 0,
-  DETECTING_DEVICE: 1,
-  DEVICE_FOUND: 2,
+  IDLE: 'IDLE',
+  DETECTING_DEVICE: 'DETECTING_DEVICE',
+  DEVICE_FOUND: 'DEVICE_FOUND',
 });
 export type ProgressStateType = $Values<typeof ProgressState>;
