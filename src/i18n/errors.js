@@ -1,3 +1,4 @@
+// @flow
 import LocalizableError from './LocalizableError';
 
 // We are only supposed to throw LocalizableError

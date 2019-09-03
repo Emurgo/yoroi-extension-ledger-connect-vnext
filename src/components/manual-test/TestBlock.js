@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { observer } from 'mobx-react';
 import { utils as CUtils } from '@cardano-foundation/ledgerjs-hw-app-cardano';

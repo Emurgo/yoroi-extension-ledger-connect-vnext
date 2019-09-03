@@ -1,3 +1,4 @@
+// @flow
 import ExtendableError from 'es6-error';
 import type { MessageDescriptor } from 'react-intl';
 

@@ -1,3 +1,4 @@
+// @flow
 import { observable, runInAction, action } from 'mobx';
 import type { IRootStore, IChildStore } from '../types';
 
