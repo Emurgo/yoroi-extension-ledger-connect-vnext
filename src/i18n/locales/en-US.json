@@ -1,4 +1,6 @@
 {
   "error.unexpectedError": "Something unexpected happened. Please retry.",
-  "error.unknowError": "Unknown error."
+  "error.unknowError": "Unknown error.",
+  "hint.common.pinCode": "Insert you password. Press left button — to decrease the number, right button — to increase the number and both buttons —  to confirm number",
+  "hint.common.CardanoApp": "Cardano App"
 }
