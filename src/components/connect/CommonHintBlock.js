@@ -20,7 +20,6 @@ const message = defineMessages({
   },
 });
 
-
 type Props = {||};
 
 @observer

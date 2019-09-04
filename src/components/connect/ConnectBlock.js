@@ -45,7 +45,8 @@ export default class ConnectBlock extends React.Component<Props> {
         { isWebAuthn && <NoteBlock />}
         {TitleBlock}
         {showCommonHint && <CommonHintBlock />}
-        {showOparationHint && <OperationHintBlock />}
+        {/* {showOparationHint && <OperationHintBlock />} */}
+        {<OperationHintBlock />}
       </div>
     );
   }
