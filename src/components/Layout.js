@@ -33,19 +33,21 @@ export default class Layout extends React.Component<Props> {
 
     return (
       <div className={styles.component}>
-        {isWebAuthn && (
-          <div className={styles.webAuthnTopGap} />
-        )}
-        {isDevelopment && (
-          <TestBlock
-            getVersion={getVersion}
-            getExtendedPublicKey={getExtendedPublicKey}
-            signTransaction={signTransaction}
-            deriveAddress={deriveAddress}
-            showAddress={showAddress}
-          />
-        )}
-        {children}
+        <div className={styles.contentInCenter}>
+          {isWebAuthn && (
+            <div className={styles.webAuthnTopGap} />
+          )}
+          {isDevelopment && (
+            <TestBlock
+              getVersion={getVersion}
+              getExtendedPublicKey={getExtendedPublicKey}
+              signTransaction={signTransaction}
+              deriveAddress={deriveAddress}
+              showAddress={showAddress}
+            />
+          )}
+          {children}
+        </div>
       </div>
     );
   }

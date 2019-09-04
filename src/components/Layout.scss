@@ -1,10 +1,13 @@
 .component {
+  height: 100vh;
   margin-left: auto;
   margin-right: auto;
-  width: var(--width-layout);
-  padding: var(--padding-layout);
-  border: 3px solid green; // TODO: Delete, its just for initial test
-  background: pink; // TODO: Delete, its just for initial test
+  text-align: center;
+  background-color: pink; // TODO: Delete, its just for initial test
+
+  .contentInCenter {
+    display: inline-block;
+  }
 
   .webAuthnTopGap {
     margin-top: var(--margin-layout-top-webauthn);
