@@ -1,11 +1,9 @@
 .component {
-  .textWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;      
+  .topWrapper {
     margin-bottom: 12px;
     height: 60px;
     width: 480px;
+
     .number {
       display: flex;
       align-items: center;
@@ -14,6 +12,7 @@
       width: 24px;
       float: left;
       margin-right: 8px;
+
       .numberCircle {
         display: flex;
         align-items: center;
@@ -25,9 +24,13 @@
       }
     }
     .text {
+      display: flex;
+      text-align: left;
+      align-items: center;
       height: 60px;
     }
   }
+
   .image {
     height: 172px;
     width: 480px;

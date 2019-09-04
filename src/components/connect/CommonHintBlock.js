@@ -37,6 +37,7 @@ export default class CommonHintBlock extends React.Component<Props> {
           text={message.hintCommon1}
           imagePath={hintCommon1GIF}
         />
+        <div className={styles.gap} />
         <HintBlock
           number={2}
           text={message.hintCommon2}
