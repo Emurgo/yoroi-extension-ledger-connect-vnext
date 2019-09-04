@@ -37,6 +37,7 @@ export default class Layout extends React.Component<Props> {
           {isWebAuthn && (
             <div className={styles.webAuthnTopGap} />
           )}
+          {children}
           {isDevelopment && (
             <TestBlock
               getVersion={getVersion}
@@ -46,7 +47,6 @@ export default class Layout extends React.Component<Props> {
               showAddress={showAddress}
             />
           )}
-          {children}
         </div>
       </div>
     );
