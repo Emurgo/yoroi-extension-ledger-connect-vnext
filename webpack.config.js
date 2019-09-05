@@ -38,20 +38,36 @@ module.exports = (env) => {
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
+          {
+            loader: 'style-loader'
+          },
           {
             loader: 'css-loader',
             options: {
-              modules: true
-            }
+              importLoaders: 1,
+              sourceMap: true,
+              modules: {
+                mode: 'local',
+                localIdentName: '[name]_[local]',
+              }
+            },
           },
-          'sass-loader'
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            }
+          }
         ]
       },
       {
         test: /\.(eot|otf|ttf|woff|woff2|gif|png)$/,
         loader: 'file-loader',
       },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      }
     ]
   };
 
