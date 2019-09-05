@@ -74,25 +74,24 @@ export default class ConnectStore {
         const { params } = e.data;
         console.debug(`[YLC]::request: ${actn}`);
 
-        const replyAction = `${actn}-reply`;
         switch (actn) {
           case OPARATION_NAME.TEST_READY:
-            this.testReady(e.source, replyAction);
+            this.testReady(e.source, actn);
             break;
           case OPARATION_NAME.GET_LEDGER_VERSION:
-            this.getVersion(e.source, replyAction);
+            this.getVersion(e.source, actn);
             break;
           case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-            this.getExtendedPublicKey(e.source, replyAction, params.hdPath);
+            this.getExtendedPublicKey(e.source, actn, params.hdPath);
             break;
           case OPARATION_NAME.SIGN_TX:
-            this.signTransaction(e.source, replyAction, params.inputs, params.outputs);
+            this.signTransaction(e.source, actn, params.inputs, params.outputs);
             break;
           case OPARATION_NAME.SHOW_ADDRESS:
-            this.showAddress(e.source, replyAction, params.hdPath);
+            this.showAddress(e.source, actn, params.hdPath);
             break;
           case OPARATION_NAME.DERIVE_ADDRESS:
-            this.deriveAddress(e.source, replyAction, params.hdPath);
+            this.deriveAddress(e.source, actn, params.hdPath);
             break;
           default:
             // FOR NOW NO-OPERATION
@@ -108,6 +107,7 @@ export default class ConnectStore {
 
   _replyMessage = (source: window, msg: MessageType): void => {
     if (source) {
+      msg.action = `${msg.action}-reply`;
       source.postMessage(msg, '*');
     } else {
       console.debug('[YOROI-LB]::_replyMessage::No Source window provided');
@@ -138,23 +138,26 @@ export default class ConnectStore {
     return verResp;
   }
 
-  testReady = async (source: window, replyAction: string): Promise<void> => {
+  testReady = async (
+    source: window,
+    actn: string
+  ): Promise<void> => {
     try {
-      console.debug(`[YOROI-LB]::testReady::${replyAction}`);
+      console.debug(`[YOROI-LB]::testReady::${actn}`);
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: true,
           payload: true
         }
       );
     } catch (err) {
-      console.error(`[YOROI-LB]::testReady::${replyAction}::error::${JSON.stringify(err)}`);
+      console.error(`[YOROI-LB]::testReady::${actn}::error::${JSON.stringify(err)}`);
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: false,
           payload: { error: err.toString() }
         }
@@ -164,10 +167,12 @@ export default class ConnectStore {
 
   getVersion = async (
     source: window,
-    replyAction: string
+    actn: OparationNameType
   ): Promise<GetVersionResponse | void> => {
     let transport;
     try {
+      this.setCurrentOparationName(actn);
+
       transport = await this._makeTransport();
       const adaApp = new AdaApp(transport);
 
@@ -175,19 +180,19 @@ export default class ConnectStore {
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: true,
           payload: res,
         }
       );
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::getVersion::${replyAction}::error::${JSON.stringify(err)}`);
+      console.error(`[YOROI-LB]::getVersion::${actn}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: false,
           payload: { error: e.toString() }
         }
@@ -199,11 +204,13 @@ export default class ConnectStore {
 
   getExtendedPublicKey = async (
     source: window,
-    replyAction: string,
+    actn: OparationNameType,
     hdPath: BIP32Path
   ): Promise<GetExtendedPublicKeyResponse | void> => {
     let transport;
     try {
+      this.setCurrentOparationName(actn);
+
       transport = await this._makeTransport();
       const verResp = await this._detectLedgerDevice(transport);
 
@@ -213,19 +220,19 @@ export default class ConnectStore {
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: true,
           payload: res,
         }
       );
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::getExtendedPublicKey::${replyAction}::error::${JSON.stringify(err)}`);
+      console.error(`[YOROI-LB]::getExtendedPublicKey::${actn}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: false,
           payload: { error: e.toString() }
         }
@@ -237,12 +244,14 @@ export default class ConnectStore {
 
   signTransaction = async (
     source: window,
-    replyAction: string,
+    actn: OparationNameType,
     inputs: Array<InputTypeUTxO>,
     outputs: Array<OutputTypeAddress | OutputTypeChange>
   ): Promise<SignTransactionResponse | void> => {
     let transport;
     try {
+      this.setCurrentOparationName(actn);
+
       transport = await this._makeTransport();
       await this._detectLedgerDevice(transport);
 
@@ -252,19 +261,19 @@ export default class ConnectStore {
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: true,
           payload: res,
         }
       );
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::signTransaction::${replyAction}::error::${JSON.stringify(err)}`);
+      console.error(`[YOROI-LB]::signTransaction::${actn}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: false,
           payload: { error: e.toString() }
         }
@@ -276,11 +285,13 @@ export default class ConnectStore {
 
   deriveAddress = async (
     source: window,
-    replyAction: string,
+    actn: OparationNameType,
     hdPath: BIP32Path
   ): Promise<DeriveAddressResponse | void> => {
     let transport;
     try {
+      this.setCurrentOparationName(actn);
+
       transport = await this._makeTransport();
       await this._detectLedgerDevice(transport);
 
@@ -290,19 +301,19 @@ export default class ConnectStore {
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: true,
           payload: res,
         }
       );
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::deriveAddress::${replyAction}::error::${JSON.stringify(err)}`);
+      console.error(`[YOROI-LB]::deriveAddress::${actn}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: false,
           payload: { error: e.toString() },
         }
@@ -314,11 +325,13 @@ export default class ConnectStore {
 
   showAddress = async (
     source: window,
-    replyAction: string,
+    actn: OparationNameType,
     hdPath: BIP32Path
   ): Promise<void> => {
     let transport;
     try {
+      this.setCurrentOparationName(actn);
+
       transport = await this._makeTransport();
       await this._detectLedgerDevice(transport);
 
@@ -328,18 +341,18 @@ export default class ConnectStore {
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: true,
           payload: res
         }
       );
     } catch (err) {
-      console.error(`[YOROI-LB]::showAddress::${replyAction}::error::${JSON.stringify(err)}`);
+      console.error(`[YOROI-LB]::showAddress::${actn}::error::${JSON.stringify(err)}`);
       const e = this.ledgerErrToMessage(err);
       this._replyMessage(
         source,
         {
-          action: replyAction,
+          action: actn,
           success: false,
           payload: { error: e.toString() }
         }

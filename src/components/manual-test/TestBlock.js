@@ -2,6 +2,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { utils as CUtils } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import { OPARATION_NAME } from '../../types/cmn';
 
 import styles from './TestBlock.scss';
 
@@ -36,11 +37,17 @@ export default class TestBlock extends React.Component<Props> {
     return component;
   }
 
+  /**
+   * Test getVersion
+   */
   onLogVersion = async () => {
-    const resp = await this.props.getVersion(null, 'ledger-get-version-reply');
+    const resp = await this.props.getVersion(null, OPARATION_NAME.GET_LEDGER_VERSION);
     console.debug(`onLogVersion: ${JSON.stringify(resp, null, 2)}`);
   }
 
+  /**
+   * Test getExtendedPublicKey
+   */
   onLogExtendedPublicKey = async () => {
     const rootPathH = [
       CUtils.HARDENED + 44,
@@ -49,12 +56,15 @@ export default class TestBlock extends React.Component<Props> {
     ];
     const resp = await this.props.getExtendedPublicKey(
       null,
-      'ledger-get-extended-public-key-reply',
+      OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY,
       rootPathH
     );
     console.debug(`onLogExtendedPublicKey: ${JSON.stringify(resp, null, 2)}`);
   }
 
+  /**
+   * Test signTransaction
+   */
   onLogSignTransaction = async () => {
     const inputs = [
       {
@@ -86,27 +96,33 @@ export default class TestBlock extends React.Component<Props> {
 
     const resp = await this.props.signTransaction(
       null,
-      'ledger-sign-transaction-reply',
+      OPARATION_NAME.SIGN_TX,
       inputs,
       outputs
     );
     console.debug(`onLogSignTransaction: ${JSON.stringify(resp, null, 2)}`);
   }
 
-  onLogDeriveAddress = async () => {
-    const resp = await this.props.deriveAddress(
+  /**
+   * Test showAddress
+   */
+  onLogShowAddress = async () => {
+    const resp = await this.props.showAddress(
       null,
-      'ledger-derive-address-reply',
-      CUtils.str_to_path("44'/1815'/0'/1/0")
+      OPARATION_NAME.SHOW_ADDRESS,
+      CUtils.str_to_path("44'/1815'/1000'/1/0")
     );
     console.debug(`onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
   }
 
-  onLogShowAddress = async () => {
-    const resp = await this.props.showAddress(
+  /**
+   * Test deriveAddress
+   */
+  onLogDeriveAddress = async () => {
+    const resp = await this.props.deriveAddress(
       null,
-      'ledger-show-address-reply',
-      CUtils.str_to_path("44'/1815'/1000'/1/0")
+      OPARATION_NAME.DERIVE_ADDRESS,
+      CUtils.str_to_path("44'/1815'/0'/1/0")
     );
     console.debug(`onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
   }
