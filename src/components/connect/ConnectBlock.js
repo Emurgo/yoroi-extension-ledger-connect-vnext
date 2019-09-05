@@ -4,10 +4,12 @@ import { observer } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 
 import type { ProgressStateType } from '../../types/cmn';
-import { ProgressState } from '../../types/cmn';
+import { PROGRESS_STATE } from '../../types/cmn';
 import NoteBlock from '../widgets/NoteBlock';
 import CommonHintBlock from './CommonHintBlock';
-import OperationHintBlock from './OperationHintBlock';
+import ConnectYoroiHintBlock from './operation/ConnectYoroiHintBlock';
+import SendTxHintBlock from './operation/SendTxHintBlock';
+import VerifyAddressHintBlock from './operation/VerifyAddressHintBlock';
 import styles from './ConnectBlock.scss';
 
 const messages = defineMessages({
@@ -33,8 +35,8 @@ export default class ConnectBlock extends React.Component<Props> {
       progressState,
       isWebAuthn
     } = this.props;
-    const showCommonHint = (progressState !== ProgressState.DEVICE_FOUND);
-    const showOparationHint = (progressState === ProgressState.DEVICE_FOUND);
+    const showCommonHint = (progressState !== PROGRESS_STATE.DEVICE_FOUND);
+    const showOparationHint = (progressState === PROGRESS_STATE.DEVICE_FOUND);
 
     const TitleBlock = (
       <div>Operation Title Block</div>
@@ -46,7 +48,9 @@ export default class ConnectBlock extends React.Component<Props> {
         {TitleBlock}
         {showCommonHint && <CommonHintBlock />}
         {/* {showOparationHint && <OperationHintBlock />} */}
-        {<OperationHintBlock />}
+        {<ConnectYoroiHintBlock />}
+        {<SendTxHintBlock />}
+        {<VerifyAddressHintBlock />}
       </div>
     );
   }
