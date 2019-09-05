@@ -66,8 +66,12 @@ module.exports = (env) => {
       },
       {
         test: /\.svg$/,
-        use: ['@svgr/webpack'],
+        use: ['@svgr/webpack', 'url-loader'],
       }
+      // {
+      //   test: /\.svg$/,
+      //   loader: 'svg-inline-loader?removeSVGTagAttrs=false&removeTags=true&removingTags[]=title&removingTags[]=desc&idPrefix=[sha512:hash:hex:5]-',
+      // },
     ]
   };
 

@@ -1,14 +1,35 @@
 .component {
-  height: 66px;
   width: 986px;
+  padding: 8px;
   opacity: 0.5;
   border-radius: 8px;
-  background-color: #C9EDE5;
-  box-shadow: 0 2px 40px 0 rgba(242,242,242,0.5);
+  background-color: #C9EDE5;  // TODO
+  box-shadow: 0 2px 40px 0 rgba(242, 242, 242, 0.5);  // TODO
 
   .header {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .headerSVG {
+      width: 20px;
+      height: 20px;
+    }
+  
+    .headerText {
+      text-transform: uppercase;
+      color: #17D1AA; // TODO
+      height: 20px;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 19px;
+    }    
+  }
+
+  .noteContent {
+    padding-top: 8px;
+    color: #38393D; // TODO
+    font-size: 12px;
+    line-height: 18px;
   }
 }

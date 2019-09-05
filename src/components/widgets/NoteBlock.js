@@ -4,7 +4,8 @@ import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 import type { MessageDescriptor } from 'react-intl';
 
-import ExclamationMark from '../../assets/img/exclamation-mark-green.svg';
+import exclamationMarkSvg from '../../assets/img/exclamation-mark-green.svg';
+
 import styles from './NoteBlock.scss';
 
 const messages = defineMessages({
@@ -31,10 +32,12 @@ export default class NoteBlock extends React.Component<Props> {
     return (
       <div className={styles.component}>
         <div className={styles.header}>
-          <ExclamationMark />
-          <span>{intl.formatMessage(messages.noteText)}</span>
+          <img src={exclamationMarkSvg} className={styles.headerSVG} alt="Exclamation Mark" />
+          <span className={styles.headerText}>
+            {intl.formatMessage(messages.noteText)}
+          </span>
         </div>
-        <div>{intl.formatMessage(content)}</div>
+        <div className={styles.noteContent}>{intl.formatMessage(content)}</div>
       </div>
     );
   }
