@@ -19,7 +19,10 @@ import type {
   MessageType,
   ProgressStateType
 } from '../types/cmn';
-import { ProgressState } from '../types/cmn';
+import {
+  PROGRESS_STATE,
+  ACTION_NAME,
+} from '../types/cmn';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
 
 export default class ConnectStore {
@@ -31,7 +34,7 @@ export default class ConnectStore {
 
     runInAction(() => {
       this.transportId = transportId;
-      this.progressState = ProgressState.IDLE;
+      this.progressState = PROGRESS_STATE.IDLE;
     });
   }
 
@@ -64,46 +67,31 @@ export default class ConnectStore {
         console.debug(`[YLC]::request: ${actn}`);
 
         const replyAction = `${actn}-reply`;
-        // TODO
-        // const isProtocolSupported = await this.isProtocolSupported();
-        // if (isProtocolSupported) {
         switch (actn) {
-          case 'is-ready':
+          case ACTION_NAME.IS_READY:
             this.isReady(e.source, replyAction);
             break;
-          case 'ledger-get-version':
+          case ACTION_NAME.GET_LEDGER_VERSION:
             this.getVersion(e.source, replyAction);
             break;
-          case 'ledger-get-extended-public-key':
+          case ACTION_NAME.GET_EXTENDED_PUBLIC_KEY:
             this.getExtendedPublicKey(e.source, replyAction, params.hdPath);
             break;
-          case 'ledger-sign-transaction':
+          case ACTION_NAME.SIGN_TX:
             this.signTransaction(e.source, replyAction, params.inputs, params.outputs);
             break;
-          case 'ledger-derive-address':
-            this.deriveAddress(e.source, replyAction, params.hdPath);
-            break;
-          case 'ledger-show-address':
+          case ACTION_NAME.SHOW_ADDRESS:
             this.showAddress(e.source, replyAction, params.hdPath);
+            break;
+          case ACTION_NAME.DERIVE_ADDRESS:
+            this.deriveAddress(e.source, replyAction, params.hdPath);
             break;
           default:
             // FOR NOW NO-OPERATION
             break;
         }
-        // TODO
-        // } else {
-        //   this._replyMessage(
-        //     e.source,
-        //     {
-        //       action: replyAction,
-        //       success: false,
-        //       payload: { error: 'Your browser does not support requested protocol, please enable WebAuthn protocol' }
-        //     }
-        //   );
-        //   console.error('Requested protocol not supported');
-        // }
       } else {
-        console.debug(`Got untrusted request: ${e.origin}}`);
+        console.debug(`Got non ledger connectore request: ${e.origin}}`);
       }
     };
 
@@ -132,27 +120,15 @@ export default class ConnectStore {
   }
 
   _detectLedgerDevice = async (transport: Transport<*>): Promise<GetVersionResponse> => {
-    this.setProgressState(ProgressState.DETECTING_DEVICE);
+    this.setProgressState(PROGRESS_STATE.DETECTING_DEVICE);
 
     const adaApp = new AdaApp(transport);
     const verResp = await adaApp.getVersion();
 
-    this.setProgressState(ProgressState.DEVICE_FOUND);
+    this.setProgressState(PROGRESS_STATE.DEVICE_FOUND);
 
     return verResp;
   }
-
-  // TODO
-  // async isProtocolSupported(): Promise<boolean> {
-  //   const isWebAuthnSupported = await TransportWebAuthn.isSupported();
-  //   console.log(`isWebAuthnSupported: ${isWebAuthnSupported}`);
-  //   const isU2FSupported = await TransportU2F.isSupported();
-  //   console.log(`isU2FSupported: ${isU2FSupported}`);
-  //   if (isWebAuthnSupported || isU2FSupported) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
 
   isReady = async (source: window, replyAction: string): Promise<void> => {
     try {
