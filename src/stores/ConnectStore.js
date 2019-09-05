@@ -17,17 +17,19 @@ import TransportU2F from '@ledgerhq/hw-transport-u2f';
 
 import type {
   MessageType,
-  ProgressStateType
+  ProgressStateType,
+  OparationNameType,
 } from '../types/cmn';
 import {
   PROGRESS_STATE,
-  ACTION_NAME,
+  OPARATION_NAME,
 } from '../types/cmn';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
 
 export default class ConnectStore {
   @observable transportId: string;
-  @observable progressState: ProgressStateType
+  @observable progressState: ProgressStateType;
+  @observable currentOparationName: OparationNameType;
 
   constructor(transportId: string) {
     this._addMessageEventListeners();
@@ -35,6 +37,7 @@ export default class ConnectStore {
     runInAction(() => {
       this.transportId = transportId;
       this.progressState = PROGRESS_STATE.IDLE;
+      this.currentOparationName = OPARATION_NAME.NO_OPARATION;
     });
   }
 
@@ -58,6 +61,11 @@ export default class ConnectStore {
     this.progressState = progressState;
   }
 
+  @action('Changing Current Oparation Name')
+  setCurrentOparationName = (currentOparationName: OparationNameType) => {
+    this.currentOparationName = currentOparationName;
+  }
+
   // Ledger API
   _addMessageEventListeners = (): void => {
     const processMessage = async (e) => {
@@ -68,22 +76,22 @@ export default class ConnectStore {
 
         const replyAction = `${actn}-reply`;
         switch (actn) {
-          case ACTION_NAME.IS_READY:
-            this.isReady(e.source, replyAction);
+          case OPARATION_NAME.TEST_READY:
+            this.testReady(e.source, replyAction);
             break;
-          case ACTION_NAME.GET_LEDGER_VERSION:
+          case OPARATION_NAME.GET_LEDGER_VERSION:
             this.getVersion(e.source, replyAction);
             break;
-          case ACTION_NAME.GET_EXTENDED_PUBLIC_KEY:
+          case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
             this.getExtendedPublicKey(e.source, replyAction, params.hdPath);
             break;
-          case ACTION_NAME.SIGN_TX:
+          case OPARATION_NAME.SIGN_TX:
             this.signTransaction(e.source, replyAction, params.inputs, params.outputs);
             break;
-          case ACTION_NAME.SHOW_ADDRESS:
+          case OPARATION_NAME.SHOW_ADDRESS:
             this.showAddress(e.source, replyAction, params.hdPath);
             break;
-          case ACTION_NAME.DERIVE_ADDRESS:
+          case OPARATION_NAME.DERIVE_ADDRESS:
             this.deriveAddress(e.source, replyAction, params.hdPath);
             break;
           default:
@@ -130,9 +138,9 @@ export default class ConnectStore {
     return verResp;
   }
 
-  isReady = async (source: window, replyAction: string): Promise<void> => {
+  testReady = async (source: window, replyAction: string): Promise<void> => {
     try {
-      console.debug(`[YOROI-LB]::isReady::${replyAction}`);
+      console.debug(`[YOROI-LB]::testReady::${replyAction}`);
       this._replyMessage(
         source,
         {
@@ -142,7 +150,7 @@ export default class ConnectStore {
         }
       );
     } catch (err) {
-      console.error(`[YOROI-LB]::isReady::${replyAction}::error::${JSON.stringify(err)}`);
+      console.error(`[YOROI-LB]::testReady::${replyAction}::error::${JSON.stringify(err)}`);
       this._replyMessage(
         source,
         {

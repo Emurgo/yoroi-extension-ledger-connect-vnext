@@ -3,7 +3,10 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 
-import type { ProgressStateType } from '../../types/cmn';
+import type {
+  ProgressStateType,
+  OparationNameType
+} from '../../types/cmn';
 import { PROGRESS_STATE } from '../../types/cmn';
 import NoteBlock from '../widgets/NoteBlock';
 import CommonHintBlock from './CommonHintBlock';
@@ -21,6 +24,7 @@ const messages = defineMessages({
 
 type Props = {|
   progressState: ProgressStateType,
+  currentOparationName: OparationNameType,
   isWebAuthn: boolean,
 |};
 

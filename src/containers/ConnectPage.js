@@ -20,7 +20,8 @@ export default class ConnectPage extends React.Component<Props> {
       deriveAddress,
       showAddress,
       isTransportWebAuthn,
-      progressState
+      progressState,
+      currentOparationName
     } = connectStore;
 
     return (
@@ -34,8 +35,9 @@ export default class ConnectPage extends React.Component<Props> {
         isWebAuthn={isTransportWebAuthn}
       >
         <ConnectBlock
-          progressState={progressState}
           isWebAuthn={isTransportWebAuthn}
+          progressState={progressState}
+          currentOparationName={currentOparationName}
         />
       </Layout>
     );
