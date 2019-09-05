@@ -1,3 +1,14 @@
 .component {
-  background-color: #AB4AC1;
+  height: 66px;
+  width: 986px;
+  opacity: 0.5;
+  border-radius: 8px;
+  background-color: #C9EDE5;
+  box-shadow: 0 2px 40px 0 rgba(242,242,242,0.5);
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

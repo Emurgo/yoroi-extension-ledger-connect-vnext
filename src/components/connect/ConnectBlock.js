@@ -20,9 +20,9 @@ import VerifyAddressHintBlock from './operation/VerifyAddressHintBlock';
 import styles from './ConnectBlock.scss';
 
 const messages = defineMessages({
-  load: {
-    id: 'loading.screen.loading',
-    defaultMessage: '!!!Loading',
+  webAuthnNote: {
+    id: 'note.webauthn',
+    defaultMessage: '!!!You will see a popup message about a security key above. This appears because Yoroi uses the WebAuthn API. Please disregard the message and DO NOT INTERACT with the above window.',
   }
 });
 
@@ -71,7 +71,7 @@ export default class ConnectBlock extends React.Component<Props> {
 
     return (
       <div className={styles.component}>
-        { isWebAuthn && <NoteBlock />}
+        { isWebAuthn && <NoteBlock content={messages.webAuthnNote} />}
         {TitleBlock}
         {showCommonHint && <CommonHintBlock />}
         {/* {<ConnectYoroiHintBlock />}

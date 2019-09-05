@@ -1,6 +1,8 @@
 {
   "error.unexpectedError": "Something unexpected happened. Please retry.",
   "error.unknowError": "Unknown error.",
+  "note.text": "Note:",
+  "note.webauthn": "You will see a popup message about a security key above. This appears because Yoroi uses the WebAuthn API. Please disregard the message and DO NOT INTERACT with the above window.",
   "hint.common.pinCode": "Insert you password. Press left button — to decrease the number, right button — to increase the number and both buttons —  to confirm number",
   "hint.common.CardanoApp": "Cardano App"
 }
