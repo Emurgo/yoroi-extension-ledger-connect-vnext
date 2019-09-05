@@ -1,3 +1,13 @@
 .component {
   // background-color: greenyellow; // TODO: Delete, its just for initial test
+  .title {
+    margin-top: 26px;
+    margin-bottom: 26px;
+    text-transform: uppercase;
+    color: #38393D;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    height: 20px;
+  }
 }

@@ -23,7 +23,19 @@ const messages = defineMessages({
   webAuthnNote: {
     id: 'note.webauthn',
     defaultMessage: '!!!You will see a popup message about a security key above. This appears because Yoroi uses the WebAuthn API. Please disregard the message and DO NOT INTERACT with the above window.',
-  }
+  },
+  titleConnect: {
+    id: 'title.connect',
+    defaultMessage: '!!!Connect To Ledger Hardware Wallet',
+  },
+  titleSenTx: {
+    id: 'title.sendTx',
+    defaultMessage: '!!!Send Transaction Using Ledger Hardware Wallet',
+  },
+  titleVerifyAddress: {
+    id: 'title.verifyAddress',
+    defaultMessage: '!!!Verify Address on Ledger Hardware Wallet',
+  },
 });
 
 type Props = {|
@@ -39,6 +51,7 @@ export default class ConnectBlock extends React.Component<Props> {
   };
 
   render() {
+    const { intl } = this.context;
     const {
       isWebAuthn,
       progressState,
@@ -49,24 +62,27 @@ export default class ConnectBlock extends React.Component<Props> {
     const showOparationHint = (progressState === PROGRESS_STATE.DEVICE_FOUND);
 
     let operationHintBlock;
-    if (showOparationHint) {
-      switch (currentOparationName) {
-        case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-          operationHintBlock = <ConnectYoroiHintBlock />;
-          break;
-        case OPARATION_NAME.SIGN_TX:
-          operationHintBlock = <SendTxHintBlock />;
-          break;
-        case OPARATION_NAME.SHOW_ADDRESS:
-          operationHintBlock = <VerifyAddressHintBlock />;
-          break;
-        default:
-          // FOR NOW NO-OPERATION
-          break;
-      }
+    let title;
+    switch (currentOparationName) {
+      case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
+        operationHintBlock = <ConnectYoroiHintBlock />;
+        title = messages.titleConnect;
+        break;
+      case OPARATION_NAME.SIGN_TX:
+        operationHintBlock = <SendTxHintBlock />;
+        title = messages.titleSenTx;
+        break;
+      case OPARATION_NAME.SHOW_ADDRESS:
+        operationHintBlock = <VerifyAddressHintBlock />;
+        title = messages.titleVerifyAddress;
+        break;
+      default:
+        title = messages.titleConnect;
+        // FOR NOW NO-OPERATION
+        break;
     }
     const TitleBlock = (
-      <div>Operation Title Block</div>
+      <div className={styles.title}>{intl.formatMessage(title)}</div>
     );
 
     return (
@@ -77,7 +93,7 @@ export default class ConnectBlock extends React.Component<Props> {
         {/* {<ConnectYoroiHintBlock />}
         {<SendTxHintBlock />}
         {<VerifyAddressHintBlock />} */}
-        {operationHintBlock}
+        {showOparationHint && operationHintBlock}
       </div>
     );
   }
