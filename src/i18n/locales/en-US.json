@@ -3,9 +3,19 @@
   "error.unknowError": "Unknown error.",
   "note.text": "Note:",
   "note.webauthn": "You will see a popup message about a security key above. This appears because Yoroi uses the WebAuthn API. Please disregard the message and DO NOT INTERACT with the above window.",
-  "hint.common.pinCode": "Enter your PIN on your Ledger device, using the RIGHT and LEFT buttons to select each number and then BOTH buttons to confirm.",
-  "hint.common.CardanoApp": "Cardano App",
   "title.connect": "Connect To Ledger Hardware Wallet",
   "title.sendTx": "Send Transaction Using Ledger Hardware Wallet",
-  "title.verifyAddress": "Verify Address on Ledger Hardware Wallet"
+  "title.verifyAddress": "Verify Address on Ledger Hardware Wallet",
+  "hint.common.pinCode": "Enter your PIN on your Ledger device, using the RIGHT and LEFT buttons to select each number and then BOTH buttons to confirm.",
+  "hint.common.CardanoApp": "Cardano App",
+  "hint.connect.exportPublicKey": "Press BOTH.",
+  "hint.common.confirmExportPublicKey": "Press RIGHT.",
+  "hint.sendTx.startNewTx": "Press RIGHT.",
+  "hint.sendTx.confirmValue": "Press BOTH.",
+  "hint.sendTx.confirmAddress": "Press BOTH.",
+  "hint.sendTx.confirmFee": "Press BOTH.",
+  "hint.sendTx.confirmTx": "Press RIGHT.",
+  "hint.verifyAddress.info": "Press BOTH.",
+  "hint.verifyAddress.path": "Press BOTH.",
+  "hint.verifyAddress.address": "Press BOTH."
 }

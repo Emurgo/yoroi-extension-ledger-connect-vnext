@@ -90,10 +90,8 @@ export default class ConnectBlock extends React.Component<Props> {
         { isWebAuthn && <NoteBlock content={messages.webAuthnNote} />}
         {TitleBlock}
         {showCommonHint && <CommonHintBlock />}
-        {/* {<ConnectYoroiHintBlock />}
-        {<SendTxHintBlock />}
-        {<VerifyAddressHintBlock />} */}
         {showOparationHint && operationHintBlock}
+        {<ConnectYoroiHintBlock />}
       </div>
     );
   }

@@ -10,13 +10,13 @@ import hintConnect2GIF from '../../../assets/img/hint-connect-2.gif';
 import styles from './ConnectYoroiHintBlock.scss';
 
 const message = defineMessages({
-  hintCommon1: {
-    id: 'hint.common.pinCode',
-    defaultMessage: '!!!Pin Code'
+  exportPublicKey: {
+    id: 'hint.connect.exportPublicKey',
+    defaultMessage: '!!!Press BOTH.'
   },
-  hintCommon2: {
-    id: 'hint.common.CardanoApp',
-    defaultMessage: '!!!Cardano App'
+  confirmExportPublicKey: {
+    id: 'hint.common.confirmExportPublicKey',
+    defaultMessage: '!!!Press RIGHT.'
   },
 });
 
@@ -32,13 +32,13 @@ export default class OperationHintBlock extends React.Component<Props> {
       <div className={styles.component}>
         <HintBlock
           number={1}
-          text={message.hintCommon1}
+          text={message.exportPublicKey}
           imagePath={hintConnect1GIF}
         />
         <div className={styles.gap} />
         <HintBlock
           number={2}
-          text={message.hintCommon2}
+          text={message.confirmExportPublicKey}
           imagePath={hintConnect2GIF}
         />
       </div>

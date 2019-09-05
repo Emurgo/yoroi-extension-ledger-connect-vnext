@@ -11,13 +11,17 @@ import hintVefifyAddress3GIF from '../../../assets/img/hint-verify-address-3.gif
 import styles from './VerifyAddressHintBlock.scss';
 
 const message = defineMessages({
-  hintCommon1: {
-    id: 'hint.common.pinCode',
-    defaultMessage: '!!!Pin Code'
+  info: {
+    id: 'hint.verifyAddress.info',
+    defaultMessage: '!!!Press BOTH.'
   },
-  hintCommon2: {
-    id: 'hint.common.CardanoApp',
-    defaultMessage: '!!!Cardano App'
+  path: {
+    id: 'hint.verifyAddress.path',
+    defaultMessage: '!!!Press BOTH.'
+  },
+  address: {
+    id: 'hint.verifyAddress.address',
+    defaultMessage: '!!!Press BOTH.'
   },
 });
 
@@ -33,19 +37,19 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
       <div className={styles.component}>
         <HintBlock
           number={1}
-          text={message.hintCommon1}
+          text={message.info}
           imagePath={hintVefifyAddress1GIF}
         />
         <div className={styles.gap} />
         <HintBlock
           number={2}
-          text={message.hintCommon2}
+          text={message.path}
           imagePath={hintVefifyAddress2GIF}
         />
         <div className={styles.gap} />
         <HintBlock
           number={3}
-          text={message.hintCommon2}
+          text={message.address}
           imagePath={hintVefifyAddress3GIF}
         />
       </div>
