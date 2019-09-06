@@ -3,10 +3,10 @@
   margin-left: auto;
   margin-right: auto;
   // background-color: pink; // TODO: Delete, its just for initial test
+  text-align: center;
 
   .contentInCenter {
-    display: block;
-    text-align: center;
+    display: inline-block;
   }
 
   .webAuthnTopGap {

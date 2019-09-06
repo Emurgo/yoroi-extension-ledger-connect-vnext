@@ -1,4 +1,9 @@
 .component {
   padding: 20px;  // TODO: Delete, its just for initial test
   background: red; // TODO: Delete, its just for initial test
+  margin-left: auto;
+  margin-right: auto;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;  
 }

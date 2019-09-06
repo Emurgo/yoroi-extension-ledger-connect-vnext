@@ -1,6 +1,10 @@
 .component {
-  width: 986px;
-  padding: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  padding: 10px;
   border-radius: 8px;
   background-color: #e4f6f2;  // TODO
   box-shadow: 0 2px 40px 0 rgba(242, 242, 242, 0.5);  // TODO
