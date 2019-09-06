@@ -2,7 +2,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
-import type { MessageDescriptor } from 'react-intl';
 
 import HintBlock from '../../widgets/HintBlock';
 import hintVefifyAddress1GIF from '../../../assets/img/hint-verify-address-1.gif';

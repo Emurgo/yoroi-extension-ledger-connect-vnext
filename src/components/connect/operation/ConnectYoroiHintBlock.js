@@ -2,7 +2,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
-import type { MessageDescriptor } from 'react-intl';
 
 import HintBlock from '../../widgets/HintBlock';
 import hintConnect1GIF from '../../../assets/img/hint-connect-1.gif';
@@ -22,7 +21,7 @@ const message = defineMessages({
 
 type Props = {||};
 @observer
-export default class OperationHintBlock extends React.Component<Props> {
+export default class ConnectYoroiHintBlock extends React.Component<Props> {
   static contextTypes = {
     intl: intlShape.isRequired,
   };

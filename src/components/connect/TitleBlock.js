@@ -2,7 +2,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
-import type { MessageDescriptor } from 'react-intl';
 
 import type { OparationNameType } from '../../types/cmn';
 import { OPARATION_NAME } from '../../types/cmn';
