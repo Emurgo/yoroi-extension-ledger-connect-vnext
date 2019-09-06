@@ -47,7 +47,7 @@ export default class App extends React.Component<Props> {
     );
 
     const component = (
-      <div style={{ height: '100%' }}>
+      <div>
         <Suspense fallback={<div>Loading...</div>}>
           <StyleVariableLoader variables={styleVariables} />
           <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>

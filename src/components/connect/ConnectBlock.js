@@ -82,7 +82,7 @@ export default class ConnectBlock extends React.Component<Props> {
         break;
       default:
         // FOR NOW NO-OPERATION
-        title = messages.default;
+        title = messages.titleDefault;
         break;
     }
     const TitleBlock = (

@@ -9,9 +9,9 @@ export default {
   '--font-bold': 'Rubik-Bold',
   '--font-black': 'Rubik-Black',
 
-  // MARGIN
-  '--margin-layout-top': '0px',
-  '--margin-layout-top-webauthn': '300px',
+  // GAP
+  '--layout-top-gap': '0px',
+  '--webauthn-layout-top-gap': '300px',
 
   // COLORS
   '--scrollbar-thumb-background': '#c8ccce',
