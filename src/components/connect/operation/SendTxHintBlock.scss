@@ -5,5 +5,15 @@
   .gap {
     margin-left: 8px;
     margin-right: 8px;
-  }  
+  }
+
+  :global(.HintBlock_topWrapper) {
+    height: 60px;
+    width: 246px;
+  }
+
+  :global(.HintBlock_image) {
+    height: 172px;
+    width: 246px;
+  }
 }

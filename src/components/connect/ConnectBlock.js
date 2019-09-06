@@ -67,7 +67,6 @@ export default class ConnectBlock extends React.Component<Props> {
         {<TitleBlock currentOparationName={currentOparationName} />}
         {showCommonHint && <CommonHintBlock />}
         {showOparationHint && operationHintBlock}
-        {<ConnectYoroiHintBlock />}
       </div>
     );
   }
