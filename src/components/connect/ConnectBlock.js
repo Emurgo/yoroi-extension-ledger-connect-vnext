@@ -24,6 +24,10 @@ const messages = defineMessages({
     id: 'note.webauthn',
     defaultMessage: '!!!You will see a popup message about a security key above. This appears because Yoroi uses the WebAuthn API. Please disregard the message and DO NOT INTERACT with the above window.',
   },
+  titleDefault: {
+    id: 'title.default',
+    defaultMessage: '!!!Yoroi Ledger Connector',
+  },
   titleConnect: {
     id: 'title.connect',
     defaultMessage: '!!!Connect To Ledger Hardware Wallet',
@@ -77,8 +81,8 @@ export default class ConnectBlock extends React.Component<Props> {
         title = messages.titleVerifyAddress;
         break;
       default:
-        title = messages.titleConnect;
         // FOR NOW NO-OPERATION
+        title = messages.default;
         break;
     }
     const TitleBlock = (

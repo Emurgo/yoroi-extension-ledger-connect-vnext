@@ -3,6 +3,7 @@
   "error.unknowError": "Unknown error.",
   "note.text": "Note:",
   "note.webauthn": "You will see a popup message about a security key above. This appears because Yoroi uses the WebAuthn API. Please disregard the message and DO NOT INTERACT with the above window.",
+  "title.default": "Yoroi Ledger Connector",
   "title.connect": "Connect To Ledger Hardware Wallet",
   "title.sendTx": "Send Transaction Using Ledger Hardware Wallet",
   "title.verifyAddress": "Verify Address on Ledger Hardware Wallet",
