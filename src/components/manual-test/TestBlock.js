@@ -19,19 +19,47 @@ export default class TestBlock extends React.Component<Props> {
   render() {
     const component = (
       <div className={styles.component}>
-        <button type="button" onClick={this.onLogVersion}>Log Version</button>
-        <br />
-        <br />
-        <button type="button" onClick={this.onLogExtendedPublicKey}>Log Extended public key</button>
-        <br />
-        <br />
-        <button type="button" onClick={this.onLogSignTransaction}>Log Sign Transaction</button>
-        <br />
-        <br />
-        <button type="button" onClick={this.onLogDeriveAddress}>Log Derive Address</button>
-        <br />
-        <br />
-        <button type="button" onClick={this.onLogShowAddress}>Log Show Address</button>
+        <div className={styles.devArea}>Test Area for Development</div>
+        <div className={styles.btnWrap}>
+          <button
+            type="button"
+            onClick={this.onLogVersion}
+          >
+              Log Version
+          </button>
+        </div>
+        <div className={styles.btnWrap}>
+          <button
+            type="button"
+            onClick={this.onLogExtendedPublicKey}
+          >
+            Log Extended public key
+          </button>
+        </div>
+        <div className={styles.btnWrap}>
+          <button
+            type="button"
+            onClick={this.onLogSignTransaction}
+          >
+            Log Sign Transaction
+          </button>
+        </div>
+        <div className={styles.btnWrap}>
+          <button
+            type="button"
+            onClick={this.onLogDeriveAddress}
+          >
+            Log Derive Address
+          </button>
+        </div>
+        <div className={styles.btnWrap}>
+          <button
+            type="button"
+            onClick={this.onLogShowAddress}
+          >
+            Log Show Address
+          </button>
+        </div>
       </div>
     );
     return component;

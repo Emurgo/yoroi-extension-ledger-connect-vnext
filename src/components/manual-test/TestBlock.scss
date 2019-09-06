@@ -1,9 +1,20 @@
 .component {
-  padding: 20px;  // TODO: Delete, its just for initial test
-  background: red; // TODO: Delete, its just for initial test
-  margin-left: auto;
-  margin-right: auto;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-  width: fit-content;  
+  position: absolute;
+  top: 2px;
+  right: 10px;
+  padding: 20px;
+  background-color: #82E331;
+  border: 3px dotted;
+  border-radius: 5px;
+  font-size: 20px;
+
+  button {
+    width: 200px;
+    height: 26px;
+    margin: 8px;
+  }
+
+  .devArea {
+    margin-bottom: 10px;
+  }
 }
