@@ -11,7 +11,7 @@ import styles from './TitleBlock.scss';
 const messages = defineMessages({
   titleDefault: {
     id: 'title.default',
-    defaultMessage: '!!!Yoroi Ledger Connector',
+    defaultMessage: '!!!Loading...',
   },
   titleConnect: {
     id: 'title.connect',
@@ -24,6 +24,14 @@ const messages = defineMessages({
   titleVerifyAddress: {
     id: 'title.verifyAddress',
     defaultMessage: '!!!Verify Address on Ledger Hardware Wallet',
+  },
+  titleLedgerVersion: {
+    id: 'title.ledgerVersion',
+    defaultMessage: '!!!Fetching Ledger device version',
+  },
+  titleDeriveAddress: {
+    id: 'title.deriveAddress',
+    defaultMessage: '!!!Deriving Address',
   },
 });
 
@@ -51,6 +59,12 @@ export default class TitleBlock extends React.Component<Props> {
         break;
       case OPARATION_NAME.SHOW_ADDRESS:
         title = messages.titleVerifyAddress;
+        break;
+      case OPARATION_NAME.GET_LEDGER_VERSION:
+        title = messages.titleLedgerVersion;
+        break;
+      case OPARATION_NAME.DERIVE_ADDRESS:
+        title = messages.titleDeriveAddress;
         break;
       default:
         // FOR NOW NO-OPERATION
