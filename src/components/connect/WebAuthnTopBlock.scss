@@ -13,23 +13,23 @@ $ShadowWidth: 454px;
     height: $ShadowHeight;
     width: $ShadowWidth;
     border: 2px dotted red;
-  }
-
-  .textBlock {
-    position: relative;
-    top: $ShadowHeight - 45;
-    left: $ShadowWidth + 10;
-    color: white;
-
-    .arrow {
-      height: 18px;
-      width: 18px;
-      vertical-align: sub;
-    }
-
-    .text {
-      line-height: 18px;
-      font-size: 12px;
-    }
+    
+    .textBlock {
+      position: relative;
+      top: $ShadowHeight - 45;
+      left: $ShadowWidth + 10;
+      color: white;
+  
+      .arrow {
+        height: 18px;
+        width: 18px;
+        vertical-align: sub;
+      }
+  
+      .text {
+        line-height: 18px;
+        font-size: 12px;
+      }
+    }    
   }
 }

@@ -1,0 +1,51 @@
+.component {
+  background-color: aqua; // TODO, detete
+
+  .navigator {
+    background-color: azure;  // TODO, detete
+    display: inline-flex;
+    width: 100%;
+
+    button {
+      background: none;
+      border: none;
+      padding: 0;
+    
+      &:focus {
+        outline: 0;
+      }
+    }
+
+    .wallet {
+      display: inline-flex;
+      width: 50%;
+      height: 50px;
+
+      &:hover {
+        background-color: #FF7A00;
+        cursor: pointer;
+      }
+      &:active {
+        background-color: rgb(36, 178, 0);
+        cursor: default;
+      }
+      &:focus {
+        background-color: rgb(194, 74, 37);
+      }      
+
+      .text {
+        width: fit-content;
+        margin: auto;
+        height: 20px;
+        color: #38393D;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 20px;
+      }
+    }
+  }
+
+  .targets {
+
+  }
+}

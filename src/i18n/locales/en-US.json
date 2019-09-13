@@ -5,6 +5,8 @@
   "title.default": "Loading...",
   "title.connect": "Connecting to ledger hardware wallet",
   "title.sendTx": "Confirm transaction using ledger",
+  "wallet.title.ledgerNanoS": "Ledger Nano S",
+  "wallet.title.ledgerNanoX": "Ledger Nano X",
   "title.verifyAddress": "Verify address",
   "title.ledgerVersion": "Fetching Ledger device version",
   "title.deriveAddress": "Deriving Address",  

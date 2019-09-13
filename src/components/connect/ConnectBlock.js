@@ -13,10 +13,10 @@ import {
 } from '../../types/cmn';
 import WebAuthnTopBlock from './WebAuthnTopBlock';
 import TitleBlock from './TitleBlock';
-import CommonHintBlock from './CommonHintBlock';
 import ConnectYoroiHintBlock from './operation/ConnectYoroiHintBlock';
 import SendTxHintBlock from './operation/SendTxHintBlock';
 import VerifyAddressHintBlock from './operation/VerifyAddressHintBlock';
+import NavigationBlock from './NavigationBlock';
 
 import styles from './ConnectBlock.scss';
 
@@ -35,31 +35,30 @@ export default class ConnectBlock extends React.Component<Props> {
       currentOparationName,
     } = this.props;
 
-    const showCommonHint = (progressState !== PROGRESS_STATE.DEVICE_FOUND);
-    const showOparationHint = (progressState === PROGRESS_STATE.DEVICE_FOUND);
+    // const showCommonHint = (progressState !== PROGRESS_STATE.DEVICE_FOUND);
+    // const showOparationHint = (progressState === PROGRESS_STATE.DEVICE_FOUND);
 
-    let operationHintBlock;
-    switch (currentOparationName) {
-      case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-        operationHintBlock = <ConnectYoroiHintBlock />;
-        break;
-      case OPARATION_NAME.SIGN_TX:
-        operationHintBlock = <SendTxHintBlock />;
-        break;
-      case OPARATION_NAME.SHOW_ADDRESS:
-        operationHintBlock = <VerifyAddressHintBlock />;
-        break;
-      default:
-        // FOR NOW NO-OPERATION
-        break;
-    }
+    // let operationHintBlock;
+    // switch (currentOparationName) {
+    //   case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
+    //     operationHintBlock = <ConnectYoroiHintBlock />;
+    //     break;
+    //   case OPARATION_NAME.SIGN_TX:
+    //     operationHintBlock = <SendTxHintBlock />;
+    //     break;
+    //   case OPARATION_NAME.SHOW_ADDRESS:
+    //     operationHintBlock = <VerifyAddressHintBlock />;
+    //     break;
+    //   default:
+    //     // FOR NOW NO-OPERATION
+    //     break;
+    // }
 
     return (
       <div className={styles.component}>
         { isWebAuthn && <WebAuthnTopBlock />}
-        {<TitleBlock currentOparationName={currentOparationName} />}
-        {showCommonHint && <CommonHintBlock />}
-        {showOparationHint && operationHintBlock}
+        <TitleBlock currentOparationName={currentOparationName} />
+        <NavigationBlock />
       </div>
     );
   }
