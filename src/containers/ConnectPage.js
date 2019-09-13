@@ -32,7 +32,6 @@ export default class ConnectPage extends React.Component<Props> {
         signTransaction={signTransaction}
         deriveAddress={deriveAddress}
         showAddress={showAddress}
-        isWebAuthn={isTransportWebAuthn}
       >
         <ConnectBlock
           isWebAuthn={isTransportWebAuthn}
