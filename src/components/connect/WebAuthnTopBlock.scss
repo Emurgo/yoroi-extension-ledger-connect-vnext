@@ -1,31 +1,35 @@
+$ShadowHeight: 292px;
+$ShadowWidth: 454px;
+
 .component {
+  display: inline-flex;
+  width: 100%;
+  opacity: 0.8;
   height: 320px;
   background-color: #060D24;  // TODO
 
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .headerSVG {
-      width: 20px;
-      height: 20px;
-    }
-  
-    .headerText {
-      text-transform: uppercase;
-      color: #17D1AA; // TODO
-      height: 20px;
-      font-size: 16px;
-      font-weight: 800;
-      line-height: 19px;
-    }    
+  .dialogShadow {
+    margin: 0 auto;
+    height: $ShadowHeight;
+    width: $ShadowWidth;
+    border: 2px dotted red;
   }
 
-  .noteContent {
-    padding-top: 8px;
-    color: #38393D; // TODO
-    font-size: 12px;
-    line-height: 18px;
+  .textBlock {
+    position: relative;
+    top: $ShadowHeight - 45;
+    left: $ShadowWidth + 10;
+    color: white;
+
+    .arrow {
+      height: 18px;
+      width: 18px;
+      vertical-align: sub;
+    }
+
+    .text {
+      line-height: 18px;
+      font-size: 12px;
+    }
   }
 }

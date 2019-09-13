@@ -2,7 +2,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
-import type { MessageDescriptor } from 'react-intl';
 
 import backArrowSVG from '../../assets/img/back-arrow.svg';
 import styles from './WebAuthnTopBlock.scss';
@@ -22,15 +21,21 @@ export default class WebAuthnTopBlock extends React.Component<Props> {
 
   render() {
     const { intl } = this.context;
-    const { content } = this.props;
 
     return (
       <div className={styles.component}>
-        <div className={styles.header}>
-          <img src={backArrowSVG} className={styles.headerSVG} alt="Back arrow" />
-          <span className={styles.headerText}>
-            {intl.formatMessage(messages.noteText)}
-          </span>
+        <div className={styles.dialogShadow}>
+          <div className={styles.textBlock}>
+            {/* TODO: Use correct arrow asset */}
+            <img
+              className={styles.arrow}
+              src={backArrowSVG}
+              alt="Back arrow"
+            />
+            <span className={styles.text}>
+              {intl.formatMessage(messages.noteText)}
+            </span>
+          </div>
         </div>
       </div>
     );
