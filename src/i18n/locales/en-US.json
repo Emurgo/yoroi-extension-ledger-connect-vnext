@@ -1,8 +1,7 @@
 {
   "error.unexpectedError": "Something unexpected happened. Please retry.",
   "error.unknowError": "Unknown error.",
-  "note.text": "Note:",
-  "note.webauthn": "You will see a popup message about a security key above. This appears because Yoroi uses the WebAuthn API. Please disregard the message and DO NOT INTERACT with the above window.",
+  "webauthn.note": "A CANCEL button will appear here. Do not press it.",
   "title.default": "Yoroi Ledger Connector",
   "title.connect": "Connect To Ledger Hardware Wallet",
   "title.sendTx": "Send Transaction Using Ledger Hardware Wallet",
