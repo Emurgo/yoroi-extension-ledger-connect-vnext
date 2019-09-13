@@ -1,0 +1,31 @@
+.component {
+  height: 320px;
+  background-color: #060D24;  // TODO
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .headerSVG {
+      width: 20px;
+      height: 20px;
+    }
+  
+    .headerText {
+      text-transform: uppercase;
+      color: #17D1AA; // TODO
+      height: 20px;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 19px;
+    }    
+  }
+
+  .noteContent {
+    padding-top: 8px;
+    color: #38393D; // TODO
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
