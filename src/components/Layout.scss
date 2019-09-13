@@ -1,16 +1,3 @@
 .component {
-  // height: 100vh;
-  margin-left: auto;
-  margin-right: auto;
-  // background-color: pink; // TODO: Delete, its just for initial test
-  text-align: center;
-
-  .contentInCenter {
-    display: inline-block;
-  }
-
-  .webAuthnTopGap {
-    height: var(--webauthn-layout-top-gap);
-    visibility: hidden;
-  }
+  background-color: pink; // TODO: Delete, its just for initial test
 }

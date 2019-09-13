@@ -14,7 +14,6 @@ type Props = {|
   deriveAddress: Function,
   showAddress: Function,
   children: Node,
-  isWebAuthn: boolean
 |};
 
 @observer
@@ -27,27 +26,21 @@ export default class Layout extends React.Component<Props> {
       deriveAddress,
       showAddress,
       isDevelopment,
-      isWebAuthn,
       children,
     } = this.props;
 
     return (
       <div className={styles.component}>
-        <div className={styles.contentInCenter}>
-          {isWebAuthn && (
-            <div className={styles.webAuthnTopGap} />
-          )}
-          {children}
-          {isDevelopment && (
-            <TestBlock
-              getVersion={getVersion}
-              getExtendedPublicKey={getExtendedPublicKey}
-              signTransaction={signTransaction}
-              deriveAddress={deriveAddress}
-              showAddress={showAddress}
-            />
-          )}
-        </div>
+        {children}
+        {isDevelopment && (
+          <TestBlock
+            getVersion={getVersion}
+            getExtendedPublicKey={getExtendedPublicKey}
+            signTransaction={signTransaction}
+            deriveAddress={deriveAddress}
+            showAddress={showAddress}
+          />
+        )}
       </div>
     );
   }
