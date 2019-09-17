@@ -21,5 +21,6 @@
   "hint.sendTx.confirmTx": "Press RIGHT.",
   "hint.verifyAddress.info": "Press BOTH.",
   "hint.verifyAddress.path": "Press BOTH.",
-  "hint.verifyAddress.address": "Press BOTH."
+  "hint.verifyAddress.address": "Press BOTH.",
+  "oparation.top.ledgerDeviceInfo": "Perform the following actions on your Ledger device"
 }

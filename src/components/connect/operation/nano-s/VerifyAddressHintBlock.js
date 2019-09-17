@@ -3,10 +3,10 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import HintBlock from '../../widgets/HintBlock';
-import hintVefifyAddress1GIF from '../../../assets/img/hint-verify-address-1.gif';
-import hintVefifyAddress2GIF from '../../../assets/img/hint-verify-address-2.gif';
-import hintVefifyAddress3GIF from '../../../assets/img/hint-verify-address-3.gif';
+import HintBlock from '../../../widgets/HintBlock';
+import hintVefifyAddress1GIF from '../../../../assets/img/hint-verify-address-1.gif';
+import hintVefifyAddress2GIF from '../../../../assets/img/hint-verify-address-2.gif';
+import hintVefifyAddress3GIF from '../../../../assets/img/hint-verify-address-3.gif';
 import styles from './VerifyAddressHintBlock.scss';
 
 const message = defineMessages({

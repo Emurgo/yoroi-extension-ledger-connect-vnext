@@ -4,8 +4,13 @@ import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 import classNames from 'classnames';
 
-import type { DeviceNameType }  from '../../types/cmn';
+import type {
+  DeviceNameType,
+  ProgressStateType,
+  OparationNameType
+}  from '../../types/cmn';
 import { DEVICE_NAME } from '../../types/cmn';
+import OparationBlock from './operation/OparationBlock';
 import styles from './NavigationBlock.scss';
 
 const message = defineMessages({
@@ -19,7 +24,10 @@ const message = defineMessages({
   },
 });
 
-type Props = {||};
+type Props = {|
+  progressState: ProgressStateType,
+  currentOparationName: OparationNameType,
+|};
 type State = {
   selectedDeviceType: DeviceNameType
 }
@@ -47,6 +55,10 @@ export default class NavigationBlock extends React.Component<Props, State> {
 
   render() {
     const { intl } = this.context;
+    const {
+      currentOparationName,
+      progressState
+    } = this.props;
 
     const styleNanoS = classNames([
       styles.wallet,
@@ -80,7 +92,11 @@ export default class NavigationBlock extends React.Component<Props, State> {
           </button>
         </div>
         <div className={styles.targets}>
-          CHILD
+          <OparationBlock
+            deviceType={this.state.selectedDeviceType}
+            currentOparationName={currentOparationName}
+            progressState={progressState}
+          />
         </div>
       </div>
     );

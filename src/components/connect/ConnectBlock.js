@@ -13,9 +13,9 @@ import {
 } from '../../types/cmn';
 import WebAuthnTopBlock from './WebAuthnTopBlock';
 import TitleBlock from './TitleBlock';
-import ConnectYoroiHintBlock from './operation/ConnectYoroiHintBlock';
-import SendTxHintBlock from './operation/SendTxHintBlock';
-import VerifyAddressHintBlock from './operation/VerifyAddressHintBlock';
+// import ConnectYoroiHintBlock from './operation/ConnectYoroiHintBlock';
+// import SendTxHintBlock from './operation/SendTxHintBlock';
+// import VerifyAddressHintBlock from './operation/VerifyAddressHintBlock';
 import NavigationBlock from './NavigationBlock';
 
 import styles from './ConnectBlock.scss';
@@ -58,7 +58,10 @@ export default class ConnectBlock extends React.Component<Props> {
       <div className={styles.component}>
         { isWebAuthn && <WebAuthnTopBlock />}
         <TitleBlock currentOparationName={currentOparationName} />
-        <NavigationBlock />
+        <NavigationBlock
+          currentOparationName={currentOparationName}
+          progressState={progressState}
+        />
       </div>
     );
   }

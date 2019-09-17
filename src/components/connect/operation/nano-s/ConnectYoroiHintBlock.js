@@ -3,9 +3,10 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import HintBlock from '../../widgets/HintBlock';
-import hintConnect1GIF from '../../../assets/img/hint-connect-1.gif';
-import hintConnect2GIF from '../../../assets/img/hint-connect-2.gif';
+import OparationBase from '../base/OparationBase';
+import HintBlock from '../../../widgets/HintBlock';
+import hintConnect1GIF from '../../../../assets/img/hint-connect-1.gif';
+import hintConnect2GIF from '../../../../assets/img/hint-connect-2.gif';
 import styles from './ConnectYoroiHintBlock.scss';
 
 const message = defineMessages({
@@ -19,9 +20,8 @@ const message = defineMessages({
   },
 });
 
-type Props = {||};
 @observer
-export default class ConnectYoroiHintBlock extends React.Component<Props> {
+export default class ConnectYoroiHintBlock extends OparationBase {
   static contextTypes = {
     intl: intlShape.isRequired,
   };
