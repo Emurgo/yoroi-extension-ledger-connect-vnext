@@ -41,9 +41,7 @@ type Props = {|
 
 @observer
 export default class TitleBlock extends React.Component<Props> {
-  static contextTypes = {
-    intl: intlShape.isRequired,
-  };
+  static contextTypes = { intl: intlShape.isRequired };
 
   render() {
     const { intl } = this.context;

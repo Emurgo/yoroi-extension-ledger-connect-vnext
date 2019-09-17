@@ -45,9 +45,7 @@ type Props = {|
 
 @observer
 export default class ConnectYoroiHintBlock extends React.Component<Props> {
-  static contextTypes = {
-    intl: intlShape.isRequired,
-  };
+  static contextTypes = { intl: intlShape.isRequired };
 
   render() {
     const { deviceType } = this.props;

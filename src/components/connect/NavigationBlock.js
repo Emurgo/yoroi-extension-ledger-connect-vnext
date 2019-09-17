@@ -34,9 +34,7 @@ type State = {
 
 @observer
 export default class NavigationBlock extends React.Component<Props, State> {
-  static contextTypes = {
-    intl: intlShape.isRequired,
-  };
+  static contextTypes = { intl: intlShape.isRequired };
 
   constructor() {
     super();
