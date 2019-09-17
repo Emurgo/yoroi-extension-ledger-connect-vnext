@@ -41,32 +41,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
 
   render() {
     const component = (
-      <div className={styles.component}>
-        <HintTextBlock
-          number={1}
-          text={message.startNewTx}
-        />
-        <div className={styles.gap} />
-        <HintTextBlock
-          number={2}
-          text={message.confirmValue}
-        />
-        <div className={styles.gap} />
-        <HintTextBlock
-          number={3}
-          text={message.confirmAddress}
-        />
-        <div className={styles.gap} />
-        <HintTextBlock
-          number={4}
-          text={message.confirmFee}
-        />
-        <div className={styles.gap} />
-        <HintTextBlock
-          number={5}
-          text={message.confirmTx}
-        />
-      </div>
+      <div className={styles.component} />
     );
 
     return component;

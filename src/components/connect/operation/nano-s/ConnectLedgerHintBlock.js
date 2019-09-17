@@ -16,8 +16,11 @@ import {
 
 import HintTextBlock from '../../../widgets/HintTextBlock';
 import HintImageBlock from '../../../widgets/HintImageBlock';
-import hintConnect1GIF from '../../../../assets/img/hint-connect-1.gif';
-import hintConnect2GIF from '../../../../assets/img/hint-connect-2.gif';
+
+import nanoSCommon1GIF from '../../../../assets/img/hint-common-1.gif';
+import nanoSCommon2GIF from '../../../../assets/img/hint-common-2.gif';
+import nanoSConnect1GIF from '../../../../assets/img/hint-connect-1.gif';
+import nanoSConnect2GIF from '../../../../assets/img/hint-connect-2.gif';
 import styles from './ConnectLedgerHintBlock.scss';
 
 const message = defineMessages({
@@ -42,14 +45,31 @@ const message = defineMessages({
 type Props = {|
   deviceType: DeviceNameType,
   progressState: ProgressStateType,
+  changeStep: Function,
+  selectedStep: number
 |};
 
 @observer
 export default class ConnectLedgerHintBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
+  assetNanoS: Array<string>;
+
+  constructor() {
+    super();
+    this.assetNanoS = [];
+    this.assetNanoS[1] = nanoSCommon1GIF;
+    this.assetNanoS[2] = nanoSCommon2GIF;
+    this.assetNanoS[3] = nanoSConnect1GIF;
+    this.assetNanoS[4] = nanoSConnect2GIF;
+  }
 
   render() {
-    const { deviceType } = this.props;
+    const {
+      deviceType,
+      changeStep,
+      selectedStep
+    } = this.props;
+
     let LeftBlock = null;
     let RightBlock = null;
 
@@ -60,25 +80,32 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
             <HintTextBlock
               number={1}
               text={message.nanoSPinCode}
-              selected
+              onClicked={changeStep}
+              selected={selectedStep === 1}
             />
             <HintTextBlock
               number={2}
               text={message.nanoSCardanoApp}
+              onClicked={changeStep}
+              selected={selectedStep === 2}
             />
             <HintTextBlock
               number={3}
               text={message.nanoSExportPublicKey}
+              onClicked={changeStep}
+              selected={selectedStep === 3}
             />
             <HintTextBlock
               number={4}
               text={message.nanoSConfirmExportPublicKey}
+              onClicked={changeStep}
+              selected={selectedStep === 4}
             />
           </div>
         );
 
         RightBlock = (
-          <HintImageBlock imagePath={hintConnect1GIF} />
+          <HintImageBlock imagePath={this.assetNanoS[selectedStep]} />
         );
         break;
       case DEVICE_NAME.NANO_X:

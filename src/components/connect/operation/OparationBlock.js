@@ -23,8 +23,27 @@ type Props = {|
   progressState: ProgressStateType,
 |};
 
+type State = {
+  selectedStep: number
+}
+
 @observer
-export default class OparationBlock extends React.Component<Props> {
+export default class OparationBlock extends React.Component<Props, State> {
+
+  constructor() {
+    super();
+    this.state = {
+      selectedStep: 1
+    };
+  }
+
+  changeStep = (stepIndex: number) => {
+    if (this.state.selectedStep !== stepIndex) {
+      this.setState({
+        selectedStep: stepIndex
+      });
+    }
+  }
 
   render() {
 
@@ -58,6 +77,8 @@ export default class OparationBlock extends React.Component<Props> {
         <ConnectLedgerHintBlock
           deviceType={deviceType}
           progressState={progressState}
+          changeStep={this.changeStep}
+          selectedStep={this.state.selectedStep}
         />
       </div>
     );

@@ -31,22 +31,7 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
 
   render() {
     const component = (
-      <div className={styles.component}>
-        <HintTextBlock
-          number={1}
-          text={message.info}
-        />
-        <div className={styles.gap} />
-        <HintTextBlock
-          number={2}
-          text={message.path}
-        />
-        <div className={styles.gap} />
-        <HintTextBlock
-          number={3}
-          text={message.address}
-        />
-      </div>
+      <div className={styles.component} />
     );
 
     return component;
