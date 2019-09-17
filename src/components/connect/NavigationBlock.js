@@ -2,7 +2,9 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
+import classNames from 'classnames';
 
+import type { DeviceNameType }  from '../../types/cmn';
 import { DEVICE_NAME } from '../../types/cmn';
 import styles from './NavigationBlock.scss';
 
@@ -18,25 +20,48 @@ const message = defineMessages({
 });
 
 type Props = {||};
+type State = {
+  selectedDeviceType: DeviceNameType
+}
 
 @observer
-export default class NavigationBlock extends React.Component<Props> {
+export default class NavigationBlock extends React.Component<Props, State> {
   static contextTypes = {
     intl: intlShape.isRequired,
   };
 
-  changeNavigation = (type: string) => {
-    console.log(type);
+  constructor() {
+    super();
+    this.state = {
+      selectedDeviceType: DEVICE_NAME.NANO_S
+    };
+  }
+
+  changeNavigation = (deviceName: DeviceNameType) => {
+    if (deviceName !== this.state.selectedDeviceType) {
+      this.setState({
+        selectedDeviceType: deviceName
+      });
+    }
   }
 
   render() {
     const { intl } = this.context;
 
+    const styleNanoS = classNames([
+      styles.wallet,
+      (this.state.selectedDeviceType === DEVICE_NAME.NANO_S) ? styles.selected : null
+    ]);
+    const styleNanoX = classNames([
+      styles.wallet,
+      (this.state.selectedDeviceType === DEVICE_NAME.NANO_X) ? styles.selected : null
+    ]);
+
     return (
       <div className={styles.component}>
         <div className={styles.navigator}>
           <button
-            className={styles.wallet}
+            className={styleNanoS}
             type="button"
             onClick={this.changeNavigation.bind(null, DEVICE_NAME.NANO_S)}
           >
@@ -45,7 +70,7 @@ export default class NavigationBlock extends React.Component<Props> {
             </div>
           </button>
           <button
-            className={styles.wallet}
+            className={styleNanoX}
             type="button"
             onClick={this.changeNavigation.bind(null, DEVICE_NAME.NANO_X)}
           >
