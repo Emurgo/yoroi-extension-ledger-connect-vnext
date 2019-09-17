@@ -28,13 +28,13 @@ const message = defineMessages({
   nanoSCardanoApp: {
     id: 'hint.nanoS.common.CardanoApp',
     defaultMessage: '!!!Enter your PIN on your Ledger device, using the right and left buttons to select each number and then both buttons to confirm.'
-  },  
+  },
   exportPublicKey: {
-    id: 'hint.connect.exportPublicKey',
+    id: 'hint.nanoS.connect.exportPublicKey',
     defaultMessage: '!!!Press BOTH.'
   },
   confirmExportPublicKey: {
-    id: 'hint.common.confirmExportPublicKey',
+    id: 'hint.nanoS.connect.confirmExportPublicKey',
     defaultMessage: '!!!Press RIGHT.'
   },
 });

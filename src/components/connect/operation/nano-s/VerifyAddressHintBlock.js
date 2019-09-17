@@ -11,15 +11,15 @@ import styles from './VerifyAddressHintBlock.scss';
 
 const message = defineMessages({
   info: {
-    id: 'hint.verifyAddress.info',
+    id: 'hint.nanoS.verifyAddress.info',
     defaultMessage: '!!!Press BOTH.'
   },
   path: {
-    id: 'hint.verifyAddress.path',
+    id: 'hint.nanoS.verifyAddress.path',
     defaultMessage: '!!!Press BOTH.'
   },
   address: {
-    id: 'hint.verifyAddress.address',
+    id: 'hint.nanoS.verifyAddress.address',
     defaultMessage: '!!!Press BOTH.'
   },
 });

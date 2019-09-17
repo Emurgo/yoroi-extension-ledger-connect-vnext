@@ -13,23 +13,23 @@ import styles from './SendTxHintBlock.scss';
 
 const message = defineMessages({
   startNewTx: {
-    id: 'hint.sendTx.startNewTx',
+    id: 'hint.nanoS.sendTx.startNewTx',
     defaultMessage: '!!!Press RIGHT.'
   },
   confirmValue: {
-    id: 'hint.sendTx.confirmValue',
+    id: 'hint.nanoS.sendTx.confirmValue',
     defaultMessage: '!!!Press BOTH.'
   },
   confirmAddress: {
-    id: 'hint.sendTx.confirmAddress',
+    id: 'hint.nanoS.sendTx.confirmAddress',
     defaultMessage: '!!!Press BOTH.'
   },
   confirmFee: {
-    id: 'hint.sendTx.confirmFee',
+    id: 'hint.nanoS.sendTx.confirmFee',
     defaultMessage: '!!!Press BOTH.'
   },
   confirmTx: {
-    id: 'hint.sendTx.confirmTx',
+    id: 'hint.nanoS.sendTx.confirmTx',
     defaultMessage: '!!!Press RIGHT.'
   },
 });
