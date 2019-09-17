@@ -8,8 +8,7 @@ import styles from './HintTextBlock.scss';
 
 type Props = {|
   number: number,
-  text: MessageDescriptor,
-  imagePath: string
+  text: MessageDescriptor
 |};
 
 @observer
@@ -20,6 +19,7 @@ export default class HintTextBlock extends React.Component<Props> {
     const { intl } = this.context;
     const { number, text } = this.props;
 
+    // TODO: add on hover effect
     return (
       <div className={styles.component}>
         <div className={styles.topWrapper}>

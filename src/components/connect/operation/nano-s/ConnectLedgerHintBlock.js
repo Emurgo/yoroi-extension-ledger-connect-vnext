@@ -60,12 +60,10 @@ export default class ConnectYoroiHintBlock extends React.Component<Props> {
             <HintTextBlock
               number={1}
               text={message.nanoSPinCode}
-              imagePath={hintConnect1GIF}
             />
             <HintTextBlock
               number={2}
               text={message.nanoSCardanoApp}
-              imagePath={hintConnect2GIF}
             />
           </div>
         );

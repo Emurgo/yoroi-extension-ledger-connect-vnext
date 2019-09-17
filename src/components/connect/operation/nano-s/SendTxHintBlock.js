@@ -45,31 +45,26 @@ export default class SendTxHintBlock extends React.Component<Props> {
         <HintTextBlock
           number={1}
           text={message.startNewTx}
-          imagePath={hintSendTx1GIF}
         />
         <div className={styles.gap} />
         <HintTextBlock
           number={2}
           text={message.confirmValue}
-          imagePath={hintSendTx2GIF}
         />
         <div className={styles.gap} />
         <HintTextBlock
           number={3}
           text={message.confirmAddress}
-          imagePath={hintSendTx3GIF}
         />
         <div className={styles.gap} />
         <HintTextBlock
           number={4}
           text={message.confirmFee}
-          imagePath={hintSendTx4GIF}
         />
         <div className={styles.gap} />
         <HintTextBlock
           number={5}
           text={message.confirmTx}
-          imagePath={hintSendTx5GIF}
         />
       </div>
     );

@@ -35,19 +35,16 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
         <HintTextBlock
           number={1}
           text={message.info}
-          imagePath={hintVefifyAddress1GIF}
         />
         <div className={styles.gap} />
         <HintTextBlock
           number={2}
           text={message.path}
-          imagePath={hintVefifyAddress2GIF}
         />
         <div className={styles.gap} />
         <HintTextBlock
           number={3}
           text={message.address}
-          imagePath={hintVefifyAddress3GIF}
         />
       </div>
     );
