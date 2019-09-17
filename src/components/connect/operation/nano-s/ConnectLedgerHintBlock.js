@@ -15,6 +15,7 @@ import {
 } from '../../../../types/cmn';
 
 import HintTextBlock from '../../../widgets/HintTextBlock';
+import HintImageBlock from '../../../widgets/HintImageBlock';
 import hintConnect1GIF from '../../../../assets/img/hint-connect-1.gif';
 import hintConnect2GIF from '../../../../assets/img/hint-connect-2.gif';
 import styles from './ConnectYoroiHintBlock.scss';
@@ -49,8 +50,8 @@ export default class ConnectYoroiHintBlock extends React.Component<Props> {
 
   render() {
     const { deviceType } = this.props;
-    let LeftBlock = (<div>LEFT</div>);
-    let RightBlock = (<div>RIGHT</div>);
+    let LeftBlock = null;
+    let RightBlock = null;
 
     switch (deviceType) {
       case DEVICE_NAME.NANO_S:
@@ -70,9 +71,7 @@ export default class ConnectYoroiHintBlock extends React.Component<Props> {
         );
 
         RightBlock = (
-          <div>
-            <img src={hintConnect1GIF} alt="HintImage" />
-          </div>
+          <HintImageBlock imagePath={hintConnect1GIF} />
         );
         break;
       case DEVICE_NAME.NANO_X:
@@ -80,6 +79,7 @@ export default class ConnectYoroiHintBlock extends React.Component<Props> {
       default:
         return (null);
     }
+
     return (
       <OparationBase
         LeftBlock={LeftBlock}

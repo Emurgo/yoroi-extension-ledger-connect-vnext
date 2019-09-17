@@ -13,8 +13,7 @@ type Props = {|
 |};
 
 @observer
-export default @observer
-class HintTextBlock extends React.Component<Props> {
+export default class HintTextBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
 
   render() {
