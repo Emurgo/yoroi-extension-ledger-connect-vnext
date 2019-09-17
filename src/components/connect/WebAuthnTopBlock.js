@@ -13,6 +13,8 @@ const messages = defineMessages({
   }
 });
 
+type Props = {||}
+
 @observer
 export default class WebAuthnTopBlock extends React.Component<Props> {
   static contextTypes = {
