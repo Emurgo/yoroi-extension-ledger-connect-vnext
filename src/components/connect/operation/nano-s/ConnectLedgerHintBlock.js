@@ -29,13 +29,13 @@ const message = defineMessages({
     id: 'hint.nanoS.common.CardanoApp',
     defaultMessage: '!!!Enter your PIN on your Ledger device, using the right and left buttons to select each number and then both buttons to confirm.'
   },
-  exportPublicKey: {
+  nanoSExportPublicKey: {
     id: 'hint.nanoS.connect.exportPublicKey',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: '!!!Check your Ledger screen, then press both buttons.'
   },
-  confirmExportPublicKey: {
+  nanoSConfirmExportPublicKey: {
     id: 'hint.nanoS.connect.confirmExportPublicKey',
-    defaultMessage: '!!!Press RIGHT.'
+    defaultMessage: '!!!Confirm exporting the public key by pressing both buttons.'
   },
 });
 
@@ -64,6 +64,14 @@ export default class ConnectYoroiHintBlock extends React.Component<Props> {
             <HintTextBlock
               number={2}
               text={message.nanoSCardanoApp}
+            />
+            <HintTextBlock
+              number={3}
+              text={message.nanoSExportPublicKey}
+            />
+            <HintTextBlock
+              number={4}
+              text={message.nanoSConfirmExportPublicKey}
             />
           </div>
         );
