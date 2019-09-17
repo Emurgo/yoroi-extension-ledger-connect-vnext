@@ -35,13 +35,16 @@ export default class OparationBase extends React.Component<Props> {
       <div className={styles.component}>
         <div className={styles.left}>
           <div className={styles.innerBlock}>
-            <div className={styles.topInfo}>
-              {intl.formatMessage(message.topInfo)}
+            <div className={styles.topBlock}>
+              <div className={styles.performActionText}>
+                {intl.formatMessage(message.topInfo)}
+              </div>
             </div>
             {LeftBlock}
           </div>
         </div>
         <div className={styles.right}>
+          <div className={styles.topBlock} />
           {RightBlock}
         </div>
       </div>

@@ -1,8 +1,10 @@
 .component {
   display: inline-flex;
-  padding-top: 40px;
-  height: 400px; // TODO
   width: 100%;
+
+  .topBlock {
+    height: 86px;
+  }
 
   .left {
     width: 50%;
@@ -12,7 +14,8 @@
       margin-right: 46px;
       margin-left: auto;
 
-      .topInfo {
+      .performActionText {
+        padding-top: 40px;
         height: 22px;
         color: #676970;
         font-size: 14px;
