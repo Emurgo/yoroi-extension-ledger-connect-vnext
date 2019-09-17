@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { intlShape } from 'react-intl';
 import type { MessageDescriptor } from 'react-intl';
 
-import styles from './HintBlock.scss';
+import styles from './HintTextBlock.scss';
 
 type Props = {|
   number: number,
@@ -13,18 +13,13 @@ type Props = {|
 |};
 
 @observer
-export default class HintBlock extends React.Component<Props> {
-  static contextTypes = {
-    intl: intlShape.isRequired,
-  };
+export default @observer
+class HintTextBlock extends React.Component<Props> {
+  static contextTypes = { intl: intlShape.isRequired };
 
   render() {
     const { intl } = this.context;
-    const {
-      number,
-      text,
-      imagePath
-    } = this.props;
+    const { number, text } = this.props;
 
     return (
       <div className={styles.component}>
@@ -35,9 +30,6 @@ export default class HintBlock extends React.Component<Props> {
             </div>
           </div>
           <div className={styles.text}>{intl.formatMessage(text)}</div>
-        </div>
-        <div>
-          <img className={styles.image} src={imagePath} alt="HintBlock" />
         </div>
       </div>
     );

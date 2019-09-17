@@ -1,42 +1,40 @@
 .component {
   .topWrapper {
-    margin-bottom: 12px;
-    height: 60px;
-    width: 480px;
+    margin-bottom: 16px;
+    height: 98px;
+    width: 490px;
+    box-shadow: 0 10px 25px 0 rgba(0,0,0,0.22);
 
     .number {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 60px;
-      width: 24px;
+      height: inherit;
       float: left;
-      margin-right: 8px;
+      margin-left: 16px;
+      margin-right: 12px;
 
       .numberCircle {
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        color: #1A44B7;
+        color: #FFFFFF;
         height: 24px;
         width: 24px;
-        background-color: #F2F4FB; // TODO, add variables
+        background-color: #1A44B7; // TODO, add variables
+        font-size: 14px;
+        line-height: 24px;
       }
     }
     .text {
       display: flex;
       text-align: left;
       align-items: center;
-      height: 60px;
+      height: inherit;
       color: #38393D;
       font-size: 14px;
       line-height: 20px;
     }
-  }
-
-  .image {
-    height: 172px;
-    width: 480px;
   }
 }
