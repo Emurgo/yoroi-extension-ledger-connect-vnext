@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
+import { DEVICE_NAME } from '../../types/cmn';
 import styles from './NavigationBlock.scss';
 
 const message = defineMessages({
@@ -37,7 +38,7 @@ export default class NavigationBlock extends React.Component<Props> {
           <button
             className={styles.wallet}
             type="button"
-            onClick={this.changeNavigation.bind(null, 'LedgerNanoS')}
+            onClick={this.changeNavigation.bind(null, DEVICE_NAME.NANO_S)}
           >
             <div className={styles.text}>
               {intl.formatMessage(message.titleLedgerNanoS)}
@@ -46,7 +47,7 @@ export default class NavigationBlock extends React.Component<Props> {
           <button
             className={styles.wallet}
             type="button"
-            onClick={this.changeNavigation.bind(null, 'LedgerNanoX')}
+            onClick={this.changeNavigation.bind(null, DEVICE_NAME.NANO_X)}
           >
             <div className={styles.text}>
               {intl.formatMessage(message.titleLedgerNanoX)}

@@ -36,3 +36,9 @@ export const OPARATION_NAME = Object.freeze({
   DERIVE_ADDRESS: 'ledger-derive-address',
 });
 export type OparationNameType = $Values<typeof OPARATION_NAME>;
+
+export const DEVICE_NAME = Object.freeze({
+  NANO_S: 'LedgerNanoS',
+  NANO_X: 'LedgerNanoX',
+});
+export type DeviceNameType = $Values<typeof DEVICE_NAME>;
