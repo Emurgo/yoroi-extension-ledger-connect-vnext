@@ -1,9 +1,27 @@
 .component {
-  // background-color: #FFBB33; // TODO: Delete, its just for initial test
   display: inline-flex;
+  padding-top: 40px;
+  height: 400px; // TODO
+  width: 100%;
 
-  .gap {
-    margin-left: 8px;
-    margin-right: 8px;
-  }  
+  .left {
+    width: 50%;
+    
+    .innerBlock {
+      width: 490px;
+      margin-right: 46px;
+      margin-left: auto;
+
+      .topInfo {
+        height: 22px;
+        color: #676970;
+        font-size: 14px;
+        line-height: 22px;
+      }
+    }
+  }
+
+  .right {
+    width: 50%;
+  }
 }

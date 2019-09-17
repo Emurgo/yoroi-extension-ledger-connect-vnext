@@ -14,7 +14,7 @@ import type {
   OparationNameType,
   ProgressStateType
 }  from '../../../types/cmn';
-import Connect from './nano-s/ConnectYoroiHintBlock';
+import ConnectLedgerHintBlock from './nano-s/ConnectLedgerHintBlock';
 import styles from './OparationBlock.scss';
 
 type Props = {|
@@ -27,6 +27,12 @@ type Props = {|
 export default class OparationBlock extends React.Component<Props> {
 
   render() {
+
+    const {
+      deviceType,
+      currentOparationName,
+      progressState,
+    } = this.props;
 
     // const showCommonHint = (progressState !== PROGRESS_STATE.DEVICE_FOUND);
     // const showOparationHint = (progressState === PROGRESS_STATE.DEVICE_FOUND);
@@ -49,7 +55,10 @@ export default class OparationBlock extends React.Component<Props> {
 
     const component = (
       <div className={styles.component}>
-        <Connect deviceType="LedgerNanoS" />
+        <ConnectLedgerHintBlock
+          deviceType={deviceType}
+          progressState={progressState}
+        />
       </div>
     );
 

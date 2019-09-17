@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
+import type { Node } from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import type { DeviceNameType }  from '../../../../types/cmn';
 import styles from './OparationBase.scss';
 
 const message = defineMessages({
@@ -14,7 +14,8 @@ const message = defineMessages({
 });
 
 type Props = {|
-  deviceType: DeviceNameType
+  LeftBlock: Node,
+  RightBlock: Node,
 |};
 
 @observer
@@ -25,10 +26,24 @@ export default class OparationBase extends React.Component<Props> {
 
   render() {
     const { intl } = this.context;
+    const {
+      LeftBlock,
+      RightBlock
+    } = this.props;
 
     const component = (
       <div className={styles.component}>
-        <div>{intl.formatMessage(message.topInfo)}</div>
+        <div className={styles.left}>
+          <div className={styles.innerBlock}>
+            <div className={styles.topInfo}>
+              {intl.formatMessage(message.topInfo)}
+            </div>
+            {LeftBlock}
+          </div>
+        </div>
+        <div className={styles.right}>
+          {RightBlock}
+        </div>
       </div>
     );
 
