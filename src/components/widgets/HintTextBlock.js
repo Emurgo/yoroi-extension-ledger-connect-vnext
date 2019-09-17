@@ -31,27 +31,27 @@ export default class HintTextBlock extends React.Component<Props> {
       selected
     } = this.props;
 
-    const styleComponent = classNames([
-      styles.component,
+    const styleTopWrapper = classNames([
+      styles.topWrapper,
       selected ? styles.selected : null
     ]);
 
     // TODO: add on hover effect
     return (
-      <button
-        className={styleComponent}
-        onClick={this.onClicked.bind(null, number)}
-        type="button"
-      >
-        <div className={styles.topWrapper}>
+      <div className={styles.component}>
+        <button
+          className={styleTopWrapper}
+          onClick={this.onClicked.bind(null, number)}
+          type="button"
+        >
           <div className={styles.number}>
             <div className={styles.numberCircle}>
               {number}
             </div>
           </div>
           <div className={styles.text}>{intl.formatMessage(text)}</div>
-        </div>
-      </button>
+        </button>
+      </div>
     );
   }
 }
