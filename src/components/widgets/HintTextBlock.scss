@@ -1,9 +1,11 @@
 .component {
+  opacity: 0.4;
+  margin-bottom: 16px;
+  cursor: pointer;
+
   .topWrapper {
-    margin-bottom: 16px;
     height: 98px;
     width: 490px;
-    box-shadow: 0 10px 25px 0 rgba(0,0,0,0.22);
 
     .number {
       display: flex;
@@ -39,4 +41,10 @@
       padding: 16px 16px 16px 0px;
     }
   }
+}
+
+.selected {
+  box-shadow: 0 10px 25px 0 rgba(0,0,0,0.22);
+  cursor: default;
+  opacity: 1;
 }

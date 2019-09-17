@@ -60,6 +60,7 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
             <HintTextBlock
               number={1}
               text={message.nanoSPinCode}
+              selected
             />
             <HintTextBlock
               number={2}
