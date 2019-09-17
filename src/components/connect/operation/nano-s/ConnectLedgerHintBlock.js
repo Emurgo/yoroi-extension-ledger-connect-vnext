@@ -18,7 +18,7 @@ import HintTextBlock from '../../../widgets/HintTextBlock';
 import HintImageBlock from '../../../widgets/HintImageBlock';
 import hintConnect1GIF from '../../../../assets/img/hint-connect-1.gif';
 import hintConnect2GIF from '../../../../assets/img/hint-connect-2.gif';
-import styles from './ConnectYoroiHintBlock.scss';
+import styles from './ConnectLedgerHintBlock.scss';
 
 const message = defineMessages({
   nanoSPinCode: {
@@ -45,7 +45,7 @@ type Props = {|
 |};
 
 @observer
-export default class ConnectYoroiHintBlock extends React.Component<Props> {
+export default class ConnectLedgerHintBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
 
   render() {
