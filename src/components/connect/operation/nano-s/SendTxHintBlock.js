@@ -3,7 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import HintBlock from '../../../widgets/HintBlock';
+import HintTextBlock from '../../../widgets/HintTextBlock';
 import hintSendTx1GIF from '../../../../assets/img/hint-send-tx-1.gif';
 import hintSendTx2GIF from '../../../../assets/img/hint-send-tx-2.gif';
 import hintSendTx3GIF from '../../../../assets/img/hint-send-tx-3.gif';
@@ -44,31 +44,31 @@ export default class SendTxHintBlock extends React.Component<Props> {
   render() {
     const component = (
       <div className={styles.component}>
-        <HintBlock
+        <HintTextBlock
           number={1}
           text={message.startNewTx}
           imagePath={hintSendTx1GIF}
         />
         <div className={styles.gap} />
-        <HintBlock
+        <HintTextBlock
           number={2}
           text={message.confirmValue}
           imagePath={hintSendTx2GIF}
         />
         <div className={styles.gap} />
-        <HintBlock
+        <HintTextBlock
           number={3}
           text={message.confirmAddress}
           imagePath={hintSendTx3GIF}
         />
         <div className={styles.gap} />
-        <HintBlock
+        <HintTextBlock
           number={4}
           text={message.confirmFee}
           imagePath={hintSendTx4GIF}
         />
         <div className={styles.gap} />
-        <HintBlock
+        <HintTextBlock
           number={5}
           text={message.confirmTx}
           imagePath={hintSendTx5GIF}
