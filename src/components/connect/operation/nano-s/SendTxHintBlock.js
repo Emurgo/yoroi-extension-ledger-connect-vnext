@@ -3,6 +3,10 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
+import type {
+  DeviceNameType,
+  ProgressStateType
+}  from '../../../../types/cmn';
 import HintTextBlock from '../../../widgets/HintTextBlock';
 import hintSendTx1GIF from '../../../../assets/img/hint-send-tx-1.gif';
 import hintSendTx2GIF from '../../../../assets/img/hint-send-tx-2.gif';
@@ -34,7 +38,13 @@ const message = defineMessages({
   },
 });
 
-type Props = {||};
+type Props = {|
+  deviceType: DeviceNameType,
+  progressState: ProgressStateType,
+  changeStep: Function,
+  selectedStep: number
+|};
+
 @observer
 export default class SendTxHintBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
