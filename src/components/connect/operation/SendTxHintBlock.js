@@ -6,13 +6,13 @@ import { intlShape, defineMessages } from 'react-intl';
 import type {
   DeviceNameType,
   ProgressStateType
-}  from '../../../../types/cmn';
-import HintTextBlock from '../../../widgets/HintTextBlock';
-import hintSendTx1GIF from '../../../../assets/img/hint-send-tx-1.gif';
-import hintSendTx2GIF from '../../../../assets/img/hint-send-tx-2.gif';
-import hintSendTx3GIF from '../../../../assets/img/hint-send-tx-3.gif';
-import hintSendTx4GIF from '../../../../assets/img/hint-send-tx-4.gif';
-import hintSendTx5GIF from '../../../../assets/img/hint-send-tx-5.gif';
+}  from '../../../types/cmn';
+import HintTextBlock from '../../widgets/HintTextBlock';
+import hintSendTx1GIF from '../../../assets/img/hint-send-tx-1.gif';
+import hintSendTx2GIF from '../../../assets/img/hint-send-tx-2.gif';
+import hintSendTx3GIF from '../../../assets/img/hint-send-tx-3.gif';
+import hintSendTx4GIF from '../../../assets/img/hint-send-tx-4.gif';
+import hintSendTx5GIF from '../../../assets/img/hint-send-tx-5.gif';
 import styles from './SendTxHintBlock.scss';
 
 const message = defineMessages({

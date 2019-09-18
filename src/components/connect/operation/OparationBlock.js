@@ -11,9 +11,9 @@ import type {
   OparationNameType,
   ProgressStateType
 }  from '../../../types/cmn';
-import ConnectLedgerHintBlock from './nano-s/ConnectLedgerHintBlock';
-import SendTxHintBlock from './nano-s/SendTxHintBlock';
-import VerifyAddressHintBlock from './nano-s/VerifyAddressHintBlock';
+import ConnectLedgerHintBlock from './ConnectLedgerHintBlock';
+import SendTxHintBlock from './SendTxHintBlock';
+import VerifyAddressHintBlock from './VerifyAddressHintBlock';
 
 import styles from './OparationBlock.scss';
 
@@ -81,7 +81,7 @@ export default class OparationBlock extends React.Component<Props, State> {
             deviceType={deviceType}
             progressState={progressState}
             changeStep={this.changeStep}
-            selectedStep={this.state.selectedStep}          
+            selectedStep={this.state.selectedStep}
           />
         );
         break;

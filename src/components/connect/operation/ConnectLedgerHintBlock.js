@@ -3,24 +3,24 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import OparationBase from '../base/OparationBase';
+import OparationBase from './base/OparationBase';
 import type {
   DeviceNameType,
   ProgressStateType
-}  from '../../../../types/cmn';
+}  from '../../../types/cmn';
 import {
   PROGRESS_STATE,
   OPARATION_NAME,
   DEVICE_NAME
-} from '../../../../types/cmn';
+} from '../../../types/cmn';
 
-import HintTextBlock from '../../../widgets/HintTextBlock';
-import HintImageBlock from '../../../widgets/HintImageBlock';
+import HintTextBlock from '../../widgets/HintTextBlock';
+import HintImageBlock from '../../widgets/HintImageBlock';
 
-import nanoSCommon1GIF from '../../../../assets/img/hint-common-1.gif';
-import nanoSCommon2GIF from '../../../../assets/img/hint-common-2.gif';
-import nanoSConnect1GIF from '../../../../assets/img/hint-connect-1.gif';
-import nanoSConnect2GIF from '../../../../assets/img/hint-connect-2.gif';
+import nanoSCommon1GIF from '../../../assets/img/hint-common-1.gif';
+import nanoSCommon2GIF from '../../../assets/img/hint-common-2.gif';
+import nanoSConnect1GIF from '../../../assets/img/hint-connect-1.gif';
+import nanoSConnect2GIF from '../../../assets/img/hint-connect-2.gif';
 import styles from './ConnectLedgerHintBlock.scss';
 
 const message = defineMessages({
