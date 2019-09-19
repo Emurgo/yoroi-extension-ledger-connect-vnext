@@ -74,6 +74,10 @@ export default class ConnectStore {
         const { params } = e.data;
         const actn = e.data.action;
 
+        // TEST
+        window.close();
+        // TEST
+
         console.debug(`[YLC]::request: ${actn}`);
 
         switch (actn) {
