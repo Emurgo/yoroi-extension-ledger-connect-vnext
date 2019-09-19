@@ -4,6 +4,7 @@ import type { Node } from 'react';
 import { observer } from 'mobx-react';
 
 import TestBlock from './manual-test/TestBlock';
+import Footer from './Footer';
 import styles from './Layout.scss';
 
 type Props = {|
@@ -13,6 +14,8 @@ type Props = {|
   signTransaction: Function,
   deriveAddress: Function,
   showAddress: Function,
+  appVersion: string,
+  transportId: string,
   children: Node,
 |};
 
@@ -26,6 +29,8 @@ export default class Layout extends React.Component<Props> {
       deriveAddress,
       showAddress,
       isDevelopment,
+      appVersion,
+      transportId,
       children,
     } = this.props;
 
@@ -41,6 +46,10 @@ export default class Layout extends React.Component<Props> {
             showAddress={showAddress}
           />
         )}
+        <Footer
+          appVersion={appVersion}
+          transportId={transportId}
+        />
       </div>
     );
   }

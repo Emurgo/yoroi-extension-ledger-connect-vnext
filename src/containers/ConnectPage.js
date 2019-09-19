@@ -12,7 +12,10 @@ type Props = InjectedContainerProps
 @observer
 export default class ConnectPage extends React.Component<Props> {
   render() {
-    const { connectStore } = this.props.rootStore;
+    const {
+      connectStore,
+      profileStore
+    } = this.props.rootStore;
     const {
       getVersion,
       getExtendedPublicKey,
@@ -20,9 +23,11 @@ export default class ConnectPage extends React.Component<Props> {
       deriveAddress,
       showAddress,
       isTransportWebAuthn,
+      transportId,
       progressState,
       currentOparationName
     } = connectStore;
+    const { appVersion } = profileStore;
 
     return (
       <Layout
@@ -32,6 +37,8 @@ export default class ConnectPage extends React.Component<Props> {
         signTransaction={signTransaction}
         deriveAddress={deriveAddress}
         showAddress={showAddress}
+        appVersion={appVersion}
+        transportId={transportId}
       >
         <ConnectBlock
           isWebAuthn={isTransportWebAuthn}

@@ -7,6 +7,7 @@ import {
 } from '../const';
 import { SUPPORTED_LOCALS } from '../i18n/translations';
 import type { URLParams } from '../types/cmn';
+import { version as appVersion } from '../../package.json';
 
 /**
  * This is the RootStore, RootStore is responsible for creating all store
@@ -18,7 +19,7 @@ export default class RootStore {
 
   constructor() {
     const urlParams: URLParams = this.parseURLParams();
-    this.profileStore = new ProfileStore(urlParams.locale);
+    this.profileStore = new ProfileStore(urlParams.locale, appVersion);
     this.connectStore = new ConnectStore(urlParams.transportId);
   }
 
