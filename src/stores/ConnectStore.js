@@ -73,7 +73,7 @@ export default class ConnectStore {
         const { source } = e;
         const { params } = e.data;
         const actn = e.data.action;
-        window.onunload = this._onForceClose.bind(this, source, actn);
+
         console.debug(`[YLC]::request: ${actn}`);
 
         switch (actn) {
@@ -362,20 +362,6 @@ export default class ConnectStore {
     } finally {
       transport && transport.close();
     }
-  }
-
-  _onForceClose = (
-    source: window,
-    actn: OparationNameType
-  ) => {
-    this._replyMessage(
-      source,
-      {
-        action: actn,
-        success: false,
-        payload: { error: 'Ledger connector forcefully closed' }
-      }
-    );
   }
 
   /**
