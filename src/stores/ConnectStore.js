@@ -74,9 +74,7 @@ export default class ConnectStore {
         const { params } = e.data;
         const actn = e.data.action;
 
-        // TEST
-        window.close();
-        // TEST
+        this._closeOnSorceClosed(source);
 
         console.debug(`[YLC]::request: ${actn}`);
 
@@ -194,7 +192,7 @@ export default class ConnectStore {
       return res;
     } catch (err) {
       console.error(`[YOROI-LB]::getVersion::${actn}::error::${JSON.stringify(err)}`);
-      const e = this.ledgerErrToMessage(err);
+      const e = this._ledgerErrToMessage(err);
       this._replyMessage(
         source,
         {
@@ -234,7 +232,7 @@ export default class ConnectStore {
       return res;
     } catch (err) {
       console.error(`[YOROI-LB]::getExtendedPublicKey::${actn}::error::${JSON.stringify(err)}`);
-      const e = this.ledgerErrToMessage(err);
+      const e = this._ledgerErrToMessage(err);
       this._replyMessage(
         source,
         {
@@ -275,7 +273,7 @@ export default class ConnectStore {
       return res;
     } catch (err) {
       console.error(`[YOROI-LB]::signTransaction::${actn}::error::${JSON.stringify(err)}`);
-      const e = this.ledgerErrToMessage(err);
+      const e = this._ledgerErrToMessage(err);
       this._replyMessage(
         source,
         {
@@ -315,7 +313,7 @@ export default class ConnectStore {
       return res;
     } catch (err) {
       console.error(`[YOROI-LB]::deriveAddress::${actn}::error::${JSON.stringify(err)}`);
-      const e = this.ledgerErrToMessage(err);
+      const e = this._ledgerErrToMessage(err);
       this._replyMessage(
         source,
         {
@@ -354,7 +352,7 @@ export default class ConnectStore {
       );
     } catch (err) {
       console.error(`[YOROI-LB]::showAddress::${actn}::error::${JSON.stringify(err)}`);
-      const e = this.ledgerErrToMessage(err);
+      const e = this._ledgerErrToMessage(err);
       this._replyMessage(
         source,
         {
@@ -368,11 +366,19 @@ export default class ConnectStore {
     }
   }
 
+  _closeOnSorceClosed = (source: window) => {
+    setInterval(() => {
+      if (source.closed) {
+        window.close();
+      }
+    }, 1000);
+  }
+
   /**
    * Converts error code to string
    * @param {*} err
    */
-  ledgerErrToMessage = (err: any): any => {
+  _ledgerErrToMessage = (err: any): any => {
     const isU2FError = (error) => !!error && !!(error).metaData;
     const isStringError = (error) => typeof error === 'string';
     // https://developers.yubico.com/U2F/Libraries/Client_error_codes.html
