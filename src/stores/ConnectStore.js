@@ -70,28 +70,30 @@ export default class ConnectStore {
   _addMessageEventListeners = (): void => {
     const processMessage = async (e) => {
       if (e && e.data && e.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
-        const actn = e.data.action;
+        const { source } = e;
         const { params } = e.data;
+        const actn = e.data.action;
+        window.onunload = this._onForceClose.bind(this, source, actn);
         console.debug(`[YLC]::request: ${actn}`);
 
         switch (actn) {
           case OPARATION_NAME.TEST_READY:
-            this.testReady(e.source, actn);
+            this.testReady(source, actn);
             break;
           case OPARATION_NAME.GET_LEDGER_VERSION:
-            this.getVersion(e.source, actn);
+            this.getVersion(source, actn);
             break;
           case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-            this.getExtendedPublicKey(e.source, actn, params.hdPath);
+            this.getExtendedPublicKey(source, actn, params.hdPath);
             break;
           case OPARATION_NAME.SIGN_TX:
-            this.signTransaction(e.source, actn, params.inputs, params.outputs);
+            this.signTransaction(source, actn, params.inputs, params.outputs);
             break;
           case OPARATION_NAME.SHOW_ADDRESS:
-            this.showAddress(e.source, actn, params.hdPath);
+            this.showAddress(source, actn, params.hdPath);
             break;
           case OPARATION_NAME.DERIVE_ADDRESS:
-            this.deriveAddress(e.source, actn, params.hdPath);
+            this.deriveAddress(source, actn, params.hdPath);
             break;
           default:
             // FOR NOW NO-OPERATION
@@ -360,6 +362,20 @@ export default class ConnectStore {
     } finally {
       transport && transport.close();
     }
+  }
+
+  _onForceClose = (
+    source: window,
+    actn: OparationNameType
+  ) => {
+    this._replyMessage(
+      source,
+      {
+        action: actn,
+        success: false,
+        payload: { error: 'Ledger connector forcefully closed' }
+      }
+    );
   }
 
   /**
