@@ -1,21 +1,28 @@
 // @flow
 import React from 'react';
 import { observer } from 'mobx-react';
-
-import {
-  OPARATION_NAME,
-} from '../../../types/cmn';
+import { intlShape, defineMessages } from 'react-intl';
 
 import type {
   DeviceNameType,
   OparationNameType,
   ProgressStateType
 }  from '../../../types/cmn';
+import {
+  OPARATION_NAME,
+} from '../../../types/cmn';
 import ConnectLedgerHintBlock from './ConnectLedgerHintBlock';
 import SendTxHintBlock from './SendTxHintBlock';
 import VerifyAddressHintBlock from './VerifyAddressHintBlock';
 
 import styles from './OparationBlock.scss';
+
+const message = defineMessages({
+  topInfo: {
+    id: 'oparation.top.ledgerDeviceInfo',
+    defaultMessage: '!!!Perform the following actions on your Ledger device'
+  },
+});
 
 type Props = {|
   deviceName: DeviceNameType,
@@ -29,6 +36,7 @@ type State = {
 
 @observer
 export default class OparationBlock extends React.Component<Props, State> {
+  static contextTypes = { intl: intlShape.isRequired };
 
   constructor() {
     super();
@@ -46,7 +54,7 @@ export default class OparationBlock extends React.Component<Props, State> {
   }
 
   render() {
-
+    const { intl } = this.context;
     const {
       deviceName,
       currentOparationName,
@@ -92,6 +100,9 @@ export default class OparationBlock extends React.Component<Props, State> {
 
     const component = (
       <div className={styles.component}>
+        <div className={styles.performActionText}>
+          {intl.formatMessage(message.topInfo)}
+        </div>
         {OperationHintBlock}
       </div>
     );
