@@ -5,16 +5,24 @@ export type MessageType = {
   payload: any
 };
 
+export type RequestType = {
+  action: OparationNameType,
+  params: any,
+  source: window,
+}
+
 export type URLParams = {
   transportId: string,
   locale: string
 }
 
+// TODO: delete
 export interface IRootStore {
   profileStore: IChildStore;
   connectStore: IChildStore;
 }
 
+// TODO: delete
 export interface IChildStore {
   rootStore: IRootStore
 }

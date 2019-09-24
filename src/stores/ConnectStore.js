@@ -17,6 +17,8 @@ import TransportU2F from '@ledgerhq/hw-transport-u2f';
 
 import type {
   MessageType,
+  RequestType,
+  DeviceNameType,
   ProgressStateType,
   OparationNameType,
 } from '../types/cmn';
@@ -30,6 +32,8 @@ export default class ConnectStore {
   @observable transportId: string;
   @observable progressState: ProgressStateType;
   @observable currentOparationName: OparationNameType;
+  @observable deviceName: DeviceNameType
+  userInteractablerequest: RequestType;
 
   constructor(transportId: string) {
     this._addMessageEventListeners();
@@ -66,6 +70,11 @@ export default class ConnectStore {
     this.currentOparationName = currentOparationName;
   }
 
+  @action('Changing device name')
+  setDeviceName = (deviceName: DeviceNameType) => {
+    this.deviceName = deviceName;
+  }
+
   // Ledger API
   _addMessageEventListeners = (): void => {
     const processMessage = async (e) => {
@@ -83,19 +92,17 @@ export default class ConnectStore {
             this.testReady(source, actn);
             break;
           case OPARATION_NAME.GET_LEDGER_VERSION:
-            this.getVersion(source, actn);
-            break;
           case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-            this.getExtendedPublicKey(source, actn, params.hdPath);
-            break;
           case OPARATION_NAME.SIGN_TX:
-            this.signTransaction(source, actn, params.inputs, params.outputs);
-            break;
           case OPARATION_NAME.SHOW_ADDRESS:
-            this.showAddress(source, actn, params.hdPath);
-            break;
           case OPARATION_NAME.DERIVE_ADDRESS:
-            this.deriveAddress(source, actn, params.hdPath);
+            if (!this.userInteractablerequest) {
+              this.userInteractablerequest = {
+                params,
+                action: actn,
+                source
+              };
+            }
             break;
           default:
             // FOR NOW NO-OPERATION
@@ -166,6 +173,35 @@ export default class ConnectStore {
           payload: { error: err.toString() }
         }
       );
+    }
+  }
+
+  performAction = (deviceName: DeviceNameType) => {
+    this.setDeviceName(deviceName);
+
+    const { source } = this.userInteractablerequest;
+    const { params } = this.userInteractablerequest;
+    const actn = this.userInteractablerequest.action;
+
+    switch (actn) {
+      case OPARATION_NAME.GET_LEDGER_VERSION:
+        this.getVersion(source, actn);
+        break;
+      case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
+        this.getExtendedPublicKey(source, actn, params.hdPath);
+        break;
+      case OPARATION_NAME.SIGN_TX:
+        this.signTransaction(source, actn, params.inputs, params.outputs);
+        break;
+      case OPARATION_NAME.SHOW_ADDRESS:
+        this.showAddress(source, actn, params.hdPath);
+        break;
+      case OPARATION_NAME.DERIVE_ADDRESS:
+        this.deriveAddress(source, actn, params.hdPath);
+        break;
+      default:
+        // FOR NOW NO-OPERATION
+        break;
     }
   }
 
