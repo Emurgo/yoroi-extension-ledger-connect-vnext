@@ -8,7 +8,7 @@ import type {
 } from '../../types/cmn';
 import WebAuthnTopBlock from './WebAuthnTopBlock';
 import TitleBlock from './TitleBlock';
-import NavigationBlock from './NavigationBlock';
+import DeviceSelectionBlock from './DeviceSelectionBlock';
 
 import styles from './ConnectBlock.scss';
 
@@ -16,6 +16,7 @@ type Props = {|
   isWebAuthn: boolean,
   progressState: ProgressStateType,
   currentOparationName: OparationNameType,
+  executeAction: Function,
 |};
 
 @observer
@@ -25,16 +26,14 @@ export default class ConnectBlock extends React.Component<Props> {
       isWebAuthn,
       progressState,
       currentOparationName,
+      executeAction,
     } = this.props;
 
     return (
       <div className={styles.component}>
         {/* { isWebAuthn && <WebAuthnTopBlock />} */}
         <TitleBlock currentOparationName={currentOparationName} />
-        <NavigationBlock
-          currentOparationName={currentOparationName}
-          progressState={progressState}
-        />
+        <DeviceSelectionBlock executeAction={executeAction} />
       </div>
     );
   }

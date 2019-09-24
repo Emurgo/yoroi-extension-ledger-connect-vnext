@@ -176,7 +176,7 @@ export default class ConnectStore {
     }
   }
 
-  performAction = (deviceName: DeviceNameType) => {
+  executeAction = (deviceName: DeviceNameType) => {
     this.setDeviceName(deviceName);
 
     const { source } = this.userInteractablerequest;

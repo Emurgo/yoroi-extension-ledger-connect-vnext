@@ -25,7 +25,8 @@ export default class ConnectPage extends React.Component<Props> {
       isTransportWebAuthn,
       transportId,
       progressState,
-      currentOparationName
+      currentOparationName,
+      executeAction,
     } = connectStore;
     const { appVersion } = profileStore;
 
@@ -44,6 +45,7 @@ export default class ConnectPage extends React.Component<Props> {
           isWebAuthn={isTransportWebAuthn}
           progressState={progressState}
           currentOparationName={currentOparationName}
+          executeAction={executeAction}
         />
       </Layout>
     );

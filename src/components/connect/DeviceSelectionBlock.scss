@@ -1,0 +1,57 @@
+.component {
+  .deviceSelectionWrap {
+    .deviceSelection {
+      height: 800px; // TODO, it's temp
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .title {
+        text-align: center;
+        margin-bottom: 60px
+      }
+
+      // TODO: make it mixins
+      button {
+        background: none;
+        border: none;
+        padding: 0;
+      
+        &:focus {
+          outline: 0;
+        }
+      }      
+
+      .device {
+        width: 400px;
+        height: 52px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        cursor: pointer;
+        background-color: #17D1AA; // TODO
+  
+        .text {
+          height: 20px;
+          color: #FFFFFF; // TODO
+          font-size: 18px;
+          font-weight: bold;
+          line-height: 20px;
+          text-transform: uppercase;
+        }
+      }
+
+      .device:last-child {
+        margin-bottom: 0px;
+      }
+
+      .device:hover {
+        background-color: rgb(107, 228, 185); // TODO
+      }
+
+      .device:active {
+        background-color: rgb(99, 211, 171) // TODO
+      }
+    }
+  }
+}
