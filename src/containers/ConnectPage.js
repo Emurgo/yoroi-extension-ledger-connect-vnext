@@ -17,11 +17,7 @@ export default class ConnectPage extends React.Component<Props> {
       profileStore
     } = this.props.rootStore;
     const {
-      getVersion,
-      getExtendedPublicKey,
-      signTransaction,
-      deriveAddress,
-      showAddress,
+      executeActionWithCustomRequest,
       isTransportWebAuthn,
       transportId,
       progressState,
@@ -33,12 +29,8 @@ export default class ConnectPage extends React.Component<Props> {
 
     return (
       <Layout
+        executeActionWithCustomRequest={executeActionWithCustomRequest}
         isDevelopment={ENV.isDevelopment}
-        getVersion={getVersion}
-        getExtendedPublicKey={getExtendedPublicKey}
-        signTransaction={signTransaction}
-        deriveAddress={deriveAddress}
-        showAddress={showAddress}
         appVersion={appVersion}
         transportId={transportId}
       >

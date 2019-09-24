@@ -1,25 +1,70 @@
+/* eslint-disable jsx-a11y/label-has-for */
 // @flow
 import React from 'react';
 import { observer } from 'mobx-react';
 import { utils as CUtils } from '@cardano-foundation/ledgerjs-hw-app-cardano';
-import { OPARATION_NAME } from '../../types/cmn';
 
+import type {
+  DeviceNameType,
+} from '../../types/cmn';
+import {
+  OPARATION_NAME,
+  DEVICE_NAME,
+} from '../../types/cmn';
 import styles from './TestBlock.scss';
 
 type Props = {|
-  getVersion: Function,
-  getExtendedPublicKey: Function,
-  signTransaction: Function,
-  deriveAddress: Function,
-  showAddress: Function,
+  executeActionWithCustomRequest: Function,
+|};
+
+type State = {|
+  selectedDevice: DeviceNameType
 |};
 
 @observer
-export default class TestBlock extends React.Component<Props> {
+export default class TestBlock extends React.Component<Props, State> {
+  constructor() {
+    super();
+    this.state = {
+      selectedDevice: DEVICE_NAME.NANO_S
+    };
+  }
+
+  onDeviceSelectionChange = (deviceName: DeviceNameType) => {
+    if (this.state.selectedDevice !== deviceName) {
+      console.debug(`Device Selection Changed to : ${deviceName}`);
+      this.setState({ selectedDevice: deviceName });
+    }
+  };
+
   render() {
-    const component = (
+    return (
       <div className={styles.component}>
         <div className={styles.devArea}>Test Area for Development</div>
+        <div>
+          <div className={styles.deviceBlock}>
+            <input
+              type="radio"
+              name="device"
+              id={DEVICE_NAME.NANO_S}
+              value={DEVICE_NAME.NANO_S}
+              checked={this.state.selectedDevice === DEVICE_NAME.NANO_S}
+              onChange={this.onDeviceSelectionChange.bind(null, DEVICE_NAME.NANO_S)}
+            />
+            <label htmlFor={DEVICE_NAME.NANO_S}>{DEVICE_NAME.NANO_S}</label>
+          </div>
+          <div className={styles.deviceBlock}>
+            <input
+              type="radio"
+              name="device"
+              id={DEVICE_NAME.NANO_X}
+              value={DEVICE_NAME.NANO_X}
+              checked={this.state.selectedDevice === DEVICE_NAME.NANO_X}
+              onChange={this.onDeviceSelectionChange.bind(null, DEVICE_NAME.NANO_X)}
+            />
+            <label htmlFor={DEVICE_NAME.NANO_X}>{DEVICE_NAME.NANO_X}</label>
+          </div>
+        </div>
         <div className={styles.btnWrap}>
           <button
             type="button"
@@ -62,14 +107,18 @@ export default class TestBlock extends React.Component<Props> {
         </div>
       </div>
     );
-    return component;
   }
 
   /**
    * Test getVersion
    */
   onLogVersion = async () => {
-    const resp = await this.props.getVersion(null, OPARATION_NAME.GET_LEDGER_VERSION);
+    const req = {
+      action: OPARATION_NAME.GET_LEDGER_VERSION,
+      params: null,
+      source: null
+    };
+    const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
     console.debug(`onLogVersion: ${JSON.stringify(resp, null, 2)}`);
   }
 
@@ -82,11 +131,14 @@ export default class TestBlock extends React.Component<Props> {
       CUtils.HARDENED + 1815,
       CUtils.HARDENED + 0
     ];
-    const resp = await this.props.getExtendedPublicKey(
-      null,
-      OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY,
-      rootPathH
-    );
+
+    const req = {
+      action: OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY,
+      params: rootPathH,
+      source: null
+    };
+
+    const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
     console.debug(`onLogExtendedPublicKey: ${JSON.stringify(resp, null, 2)}`);
   }
 
@@ -122,12 +174,16 @@ export default class TestBlock extends React.Component<Props> {
       }
     ];
 
-    const resp = await this.props.signTransaction(
-      null,
-      OPARATION_NAME.SIGN_TX,
-      inputs,
-      outputs
-    );
+    const req = {
+      action: OPARATION_NAME.SIGN_TX,
+      params: {
+        inputs,
+        outputs
+      },
+      source: null
+    };
+
+    const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
     console.debug(`onLogSignTransaction: ${JSON.stringify(resp, null, 2)}`);
   }
 
@@ -135,11 +191,13 @@ export default class TestBlock extends React.Component<Props> {
    * Test showAddress
    */
   onLogShowAddress = async () => {
-    const resp = await this.props.showAddress(
-      null,
-      OPARATION_NAME.SHOW_ADDRESS,
-      CUtils.str_to_path("44'/1815'/1000'/1/0")
-    );
+    const req = {
+      action: OPARATION_NAME.SHOW_ADDRESS,
+      params: CUtils.str_to_path("44'/1815'/1000'/1/0"),
+      source: null
+    };
+
+    const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
     console.debug(`onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
   }
 
@@ -147,11 +205,13 @@ export default class TestBlock extends React.Component<Props> {
    * Test deriveAddress
    */
   onLogDeriveAddress = async () => {
-    const resp = await this.props.deriveAddress(
-      null,
-      OPARATION_NAME.DERIVE_ADDRESS,
-      CUtils.str_to_path("44'/1815'/0'/1/0")
-    );
+    const req = {
+      action: OPARATION_NAME.DERIVE_ADDRESS,
+      params: CUtils.str_to_path("44'/1815'/0'/1/0"),
+      source: null
+    };
+
+    const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
     console.debug(`onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
   }
 }

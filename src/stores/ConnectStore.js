@@ -33,7 +33,7 @@ export default class ConnectStore {
   @observable progressState: ProgressStateType;
   @observable currentOparationName: OparationNameType;
   @observable deviceName: DeviceNameType
-  userInteractablerequest: RequestType;
+  userInteractableRequest: RequestType;
 
   constructor(transportId: string) {
     this._addMessageEventListeners();
@@ -96,8 +96,8 @@ export default class ConnectStore {
           case OPARATION_NAME.SIGN_TX:
           case OPARATION_NAME.SHOW_ADDRESS:
           case OPARATION_NAME.DERIVE_ADDRESS:
-            if (!this.userInteractablerequest) {
-              this.userInteractablerequest = {
+            if (!this.userInteractableRequest) {
+              this.userInteractableRequest = {
                 params,
                 action: actn,
                 source
@@ -176,12 +176,20 @@ export default class ConnectStore {
     }
   }
 
+  executeActionWithCustomRequest = (
+    deviceName: DeviceNameType,
+    request: RequestType
+  ) => {
+    this.userInteractableRequest = request;
+    this.executeAction(deviceName);
+  }
+
   executeAction = (deviceName: DeviceNameType) => {
     this.setDeviceName(deviceName);
 
-    const { source } = this.userInteractablerequest;
-    const { params } = this.userInteractablerequest;
-    const actn = this.userInteractablerequest.action;
+    const actn = this.userInteractableRequest.action;
+    const source = this.userInteractableRequest.source;
+    const { params } = this.userInteractableRequest;
 
     switch (actn) {
       case OPARATION_NAME.GET_LEDGER_VERSION:

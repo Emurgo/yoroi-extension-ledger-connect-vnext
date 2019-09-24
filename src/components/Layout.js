@@ -8,12 +8,8 @@ import Footer from './Footer';
 import styles from './Layout.scss';
 
 type Props = {|
+  executeActionWithCustomRequest: Function,
   isDevelopment: boolean,
-  getVersion: Function,
-  getExtendedPublicKey: Function,
-  signTransaction: Function,
-  deriveAddress: Function,
-  showAddress: Function,
   appVersion: string,
   transportId: string,
   children: Node,
@@ -23,11 +19,7 @@ type Props = {|
 export default class Layout extends React.Component<Props> {
   render() {
     const {
-      getVersion,
-      getExtendedPublicKey,
-      signTransaction,
-      deriveAddress,
-      showAddress,
+      executeActionWithCustomRequest,
       isDevelopment,
       appVersion,
       transportId,
@@ -38,13 +30,7 @@ export default class Layout extends React.Component<Props> {
       <div className={styles.component}>
         {children}
         {isDevelopment && (
-          <TestBlock
-            getVersion={getVersion}
-            getExtendedPublicKey={getExtendedPublicKey}
-            signTransaction={signTransaction}
-            deriveAddress={deriveAddress}
-            showAddress={showAddress}
-          />
+          <TestBlock executeActionWithCustomRequest={executeActionWithCustomRequest} />
         )}
         <Footer
           appVersion={appVersion}
