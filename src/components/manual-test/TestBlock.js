@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
 // @flow
 import React from 'react';
@@ -42,28 +43,22 @@ export default class TestBlock extends React.Component<Props, State> {
       <div className={styles.component}>
         <div className={styles.devArea}>Test Area for Development</div>
         <div>
-          <div className={styles.deviceBlock}>
-            <input
-              type="radio"
-              name="device"
-              id={DEVICE_NAME.NANO_S}
-              value={DEVICE_NAME.NANO_S}
-              checked={this.state.selectedDevice === DEVICE_NAME.NANO_S}
-              onChange={this.onDeviceSelectionChange.bind(null, DEVICE_NAME.NANO_S)}
-            />
-            <label htmlFor={DEVICE_NAME.NANO_S}>{DEVICE_NAME.NANO_S}</label>
-          </div>
-          <div className={styles.deviceBlock}>
-            <input
-              type="radio"
-              name="device"
-              id={DEVICE_NAME.NANO_X}
-              value={DEVICE_NAME.NANO_X}
-              checked={this.state.selectedDevice === DEVICE_NAME.NANO_X}
-              onChange={this.onDeviceSelectionChange.bind(null, DEVICE_NAME.NANO_X)}
-            />
-            <label htmlFor={DEVICE_NAME.NANO_X}>{DEVICE_NAME.NANO_X}</label>
-          </div>
+          <input
+            type="radio"
+            name="device"
+            id={DEVICE_NAME.NANO_S}
+            checked={this.state.selectedDevice === DEVICE_NAME.NANO_S}
+            onChange={this.onDeviceSelectionChange.bind(null, DEVICE_NAME.NANO_S)}
+          />
+          <label style={{ marginRight: '26px' }} htmlFor={DEVICE_NAME.NANO_S}>Nano S</label>
+          <input
+            type="radio"
+            name="device"
+            id={DEVICE_NAME.NANO_X}
+            checked={this.state.selectedDevice === DEVICE_NAME.NANO_X}
+            onChange={this.onDeviceSelectionChange.bind(null, DEVICE_NAME.NANO_X)}
+          />
+          <label htmlFor={DEVICE_NAME.NANO_X}>Nano X</label>
         </div>
         <div className={styles.btnWrap}>
           <button
