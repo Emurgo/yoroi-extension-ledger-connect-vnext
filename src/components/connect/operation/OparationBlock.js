@@ -18,7 +18,7 @@ import VerifyAddressHintBlock from './VerifyAddressHintBlock';
 import styles from './OparationBlock.scss';
 
 type Props = {|
-  deviceType: DeviceNameType,
+  deviceName: DeviceNameType,
   currentOparationName: OparationNameType,
   progressState: ProgressStateType,
 |};
@@ -48,7 +48,7 @@ export default class OparationBlock extends React.Component<Props, State> {
   render() {
 
     const {
-      deviceType,
+      deviceName,
       currentOparationName,
       progressState,
     } = this.props;
@@ -58,7 +58,7 @@ export default class OparationBlock extends React.Component<Props, State> {
       case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
         OperationHintBlock = (
           <ConnectLedgerHintBlock
-            deviceType={deviceType}
+            deviceType={deviceName}
             progressState={progressState}
             changeStep={this.changeStep}
             selectedStep={this.state.selectedStep}
@@ -68,7 +68,7 @@ export default class OparationBlock extends React.Component<Props, State> {
       case OPARATION_NAME.SIGN_TX:
         OperationHintBlock = (
           <SendTxHintBlock
-            deviceType={deviceType}
+            deviceType={deviceName}
             progressState={progressState}
             changeStep={this.changeStep}
             selectedStep={this.state.selectedStep}
@@ -78,7 +78,7 @@ export default class OparationBlock extends React.Component<Props, State> {
       case OPARATION_NAME.SHOW_ADDRESS:
         OperationHintBlock = (
           <VerifyAddressHintBlock
-            deviceType={deviceType}
+            deviceType={deviceName}
             progressState={progressState}
             changeStep={this.changeStep}
             selectedStep={this.state.selectedStep}

@@ -27,6 +27,7 @@ export default class ConnectPage extends React.Component<Props> {
       progressState,
       currentOparationName,
       executeAction,
+      deviceName,
     } = connectStore;
     const { appVersion } = profileStore;
 
@@ -46,6 +47,7 @@ export default class ConnectPage extends React.Component<Props> {
           progressState={progressState}
           currentOparationName={currentOparationName}
           executeAction={executeAction}
+          deviceName={deviceName}
         />
       </Layout>
     );

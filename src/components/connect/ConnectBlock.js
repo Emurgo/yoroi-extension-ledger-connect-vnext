@@ -3,12 +3,14 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import type {
+  DeviceNameType,
   ProgressStateType,
   OparationNameType,
 } from '../../types/cmn';
 import WebAuthnTopBlock from './WebAuthnTopBlock';
 import TitleBlock from './TitleBlock';
 import DeviceSelectionBlock from './DeviceSelectionBlock';
+import OparationBlock from './operation/OparationBlock';
 
 import styles from './ConnectBlock.scss';
 
@@ -17,6 +19,7 @@ type Props = {|
   progressState: ProgressStateType,
   currentOparationName: OparationNameType,
   executeAction: Function,
+  deviceName: ?DeviceNameType,
 |};
 
 @observer
@@ -27,13 +30,24 @@ export default class ConnectBlock extends React.Component<Props> {
       progressState,
       currentOparationName,
       executeAction,
+      deviceName,
     } = this.props;
+
+    const content = deviceName ?
+      <OparationBlock
+        deviceName={deviceName}
+        currentOparationName={currentOparationName}
+        progressState={progressState}
+      /> :
+      <DeviceSelectionBlock executeAction={executeAction} />;
+
+    const showWebAuthnTop = isWebAuthn && deviceName;
 
     return (
       <div className={styles.component}>
-        {/* { isWebAuthn && <WebAuthnTopBlock />} */}
+        { showWebAuthnTop && <WebAuthnTopBlock />}
         <TitleBlock currentOparationName={currentOparationName} />
-        <DeviceSelectionBlock executeAction={executeAction} />
+        {content}
       </div>
     );
   }
