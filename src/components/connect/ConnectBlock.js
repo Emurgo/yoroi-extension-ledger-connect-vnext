@@ -29,7 +29,7 @@ export default class ConnectBlock extends React.Component<Props> {
 
     return (
       <div className={styles.component}>
-        { isWebAuthn && <WebAuthnTopBlock />}
+        {/* { isWebAuthn && <WebAuthnTopBlock />} */}
         <TitleBlock currentOparationName={currentOparationName} />
         <NavigationBlock
           currentOparationName={currentOparationName}
