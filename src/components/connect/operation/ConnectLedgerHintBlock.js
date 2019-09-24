@@ -14,7 +14,7 @@ import {
   DEVICE_NAME
 } from '../../../types/cmn';
 
-import HintTextBlock from '../../widgets/HintTextBlock';
+import HintBlock from '../../widgets/HintBlock';
 import HintImageBlock from '../../widgets/HintImageBlock';
 
 import nanoSCommon1GIF from '../../../assets/img/hint-common-1.gif';
@@ -77,29 +77,10 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
       case DEVICE_NAME.NANO_S:
         LeftBlock = (
           <div>
-            <HintTextBlock
+            <HintBlock
               number={1}
               text={message.nanoSPinCode}
-              onClicked={changeStep}
-              selected={selectedStep === 1}
-            />
-            <HintTextBlock
-              number={2}
-              text={message.nanoSCardanoApp}
-              onClicked={changeStep}
-              selected={selectedStep === 2}
-            />
-            <HintTextBlock
-              number={3}
-              text={message.nanoSExportPublicKey}
-              onClicked={changeStep}
-              selected={selectedStep === 3}
-            />
-            <HintTextBlock
-              number={4}
-              text={message.nanoSConfirmExportPublicKey}
-              onClicked={changeStep}
-              selected={selectedStep === 4}
+              imagePath={this.assetNanoS[selectedStep]}
             />
           </div>
         );
@@ -115,10 +96,9 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
     }
 
     return (
-      <OparationBase
-        LeftBlock={LeftBlock}
-        RightBlock={RightBlock}
-      />
+      <div>
+        {LeftBlock}
+      </div>
     );
   }
 }
