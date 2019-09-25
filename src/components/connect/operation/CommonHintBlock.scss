@@ -1,6 +1,6 @@
 .component {
   width: 100%;
-  .steps {
+  .stepsRowOne {
     margin-top: 30px;
     display: flex;
     flex-direction: row;
@@ -13,6 +13,7 @@
 
     :global(.HintBlock_component) {
       width: 600px;
-    }    
+      // Fix Height mis-match
+    }
   }
 }

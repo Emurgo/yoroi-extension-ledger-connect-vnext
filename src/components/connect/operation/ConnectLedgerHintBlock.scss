@@ -1,6 +1,19 @@
 .component {
-  .steps {
+  width: 100%;
+  .stepsRowOne {
+    margin-top: 30px;
     display: flex;
     flex-direction: row;
-  }
+    width: 100%;
+    justify-content: center;
+
+    .gap {
+      width: 40px;
+    }
+
+    :global(.HintBlock_component) {
+      width: 600px;
+      // Fix Height mis-match
+    }
+  }  
 }

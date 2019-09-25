@@ -48,7 +48,7 @@ export default class CommonHintBlock extends React.Component<Props> {
       case DEVICE_NAME.NANO_X:
       case DEVICE_NAME.NANO_S:
         content = (
-          <div className={styles.steps}>
+          <div className={styles.stepsRowOne}>
             <HintBlock
               number={1}
               text={message.nanoSPinCode}

@@ -10,28 +10,16 @@ import type {
 }  from '../../../types/cmn';
 import {
   PROGRESS_STATE,
-  OPARATION_NAME,
-  DEVICE_NAME
+  DEVICE_NAME,
 } from '../../../types/cmn';
 
 import HintBlock from '../../widgets/HintBlock';
-import HintImageBlock from '../../widgets/HintImageBlock';
 
-import nanoSCommon1GIF from '../../../assets/img/hint-common-1.gif';
-import nanoSCommon2GIF from '../../../assets/img/hint-common-2.gif';
-import nanoSConnect1GIF from '../../../assets/img/hint-connect-1.gif';
-import nanoSConnect2GIF from '../../../assets/img/hint-connect-2.gif';
+import imgNanoSConnect1 from '../../../assets/img/hint-connect-1.gif';
+import imgNanoSConnect2 from '../../../assets/img/hint-connect-2.gif';
 import styles from './ConnectLedgerHintBlock.scss';
 
 const message = defineMessages({
-  nanoSPinCode: {
-    id: 'hint.nanoS.common.pinCode',
-    defaultMessage: '!!!Enter your PIN on your Ledger device, using the right and left buttons to select each number and then both buttons to confirm.'
-  },
-  nanoSCardanoApp: {
-    id: 'hint.nanoS.common.CardanoApp',
-    defaultMessage: '!!!Enter your PIN on your Ledger device, using the right and left buttons to select each number and then both buttons to confirm.'
-  },
   nanoSExportPublicKey: {
     id: 'hint.nanoS.connect.exportPublicKey',
     defaultMessage: '!!!Check your Ledger screen, then press both buttons.'
@@ -50,16 +38,6 @@ type Props = {|
 @observer
 export default class ConnectLedgerHintBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
-  assetNanoS: Array<string>;
-
-  constructor() {
-    super();
-    this.assetNanoS = [];
-    this.assetNanoS[1] = nanoSCommon1GIF;
-    this.assetNanoS[2] = nanoSCommon2GIF;
-    this.assetNanoS[3] = nanoSConnect1GIF;
-    this.assetNanoS[4] = nanoSConnect2GIF;
-  }
 
   render() {
     const {
@@ -71,13 +49,25 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
     switch (deviceType) {
       case DEVICE_NAME.NANO_X:
       case DEVICE_NAME.NANO_S:
-        content = (
-          <div className={styles.steps}>
-            <CommonHintBlock
-              deviceType={deviceType}
-              progressState={progressState}
+        content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
+          <div className={styles.stepsRowOne}>
+            <HintBlock
+              number={1}
+              text={message.nanoSExportPublicKey}
+              imagePath={imgNanoSConnect1}
+            />
+            <div className={styles.gap} />
+            <HintBlock
+              number={2}
+              text={message.nanoSConfirmExportPublicKey}
+              imagePath={imgNanoSConnect2}
             />
           </div>
+        ) : (
+          <CommonHintBlock
+            deviceType={deviceType}
+            progressState={progressState}
+          />
         );
         break;
       default:

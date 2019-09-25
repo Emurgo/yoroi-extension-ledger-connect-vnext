@@ -14,7 +14,7 @@
   "title.deriveAddress": "Deriving Address",  
   "oparation.top.ledgerDeviceInfo": "Perform the following actions on your Ledger device",
   "hint.nanoS.common.pinCode": "Enter your PIN on your Ledger device, using the right and left buttons to select each number and then both buttons to confirm.",
-  "hint.nanoS.common.CardanoApp": "Highlight the \"Cardano ADA\" app on your Ledger and press BOTH buttons.",
+  "hint.nanoS.common.CardanoApp": "Highlight the \"Cardano ADA\" app on your Ledger and press both buttons.",
   "hint.nanoS.connect.exportPublicKey": "Check your Ledger screen, then press both buttons.",
   "hint.nanoS.connect.confirmExportPublicKey": "Confirm exporting the public key by pressing both buttons.",
   "hint.nanoS.sendTx.startNewTx": "Check your Ledger screen, then press right button.",
