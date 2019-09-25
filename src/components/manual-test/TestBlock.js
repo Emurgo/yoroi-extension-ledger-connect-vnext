@@ -121,15 +121,10 @@ export default class TestBlock extends React.Component<Props, State> {
    * Test getExtendedPublicKey
    */
   onLogExtendedPublicKey = async () => {
-    const rootPathH = [
-      CUtils.HARDENED + 44,
-      CUtils.HARDENED + 1815,
-      CUtils.HARDENED + 0
-    ];
-
+    const hdPath = CUtils.str_to_path("44'/1815'/0'");
     const req = {
       action: OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY,
-      params: rootPathH,
+      params: { hdPath },
       source: null
     };
 
@@ -186,9 +181,10 @@ export default class TestBlock extends React.Component<Props, State> {
    * Test showAddress
    */
   onLogShowAddress = async () => {
+    const hdPath = CUtils.str_to_path("44'/1815'/1000'/1/0");
     const req = {
       action: OPARATION_NAME.SHOW_ADDRESS,
-      params: CUtils.str_to_path("44'/1815'/1000'/1/0"),
+      params: { hdPath },
       source: null
     };
 
@@ -200,9 +196,10 @@ export default class TestBlock extends React.Component<Props, State> {
    * Test deriveAddress
    */
   onLogDeriveAddress = async () => {
+    const hdPath = CUtils.str_to_path("44'/1815'/0'/1/0");
     const req = {
       action: OPARATION_NAME.DERIVE_ADDRESS,
-      params: CUtils.str_to_path("44'/1815'/0'/1/0"),
+      params: { hdPath },
       source: null
     };
 
