@@ -15,8 +15,8 @@ import {
 
 import HintBlock from '../../widgets/HintBlock';
 
-import imgNanoSConnect1 from '../../../assets/img/hint-connect-1.gif';
-import imgNanoSConnect2 from '../../../assets/img/hint-connect-2.gif';
+import imgNanoSConnect1 from '../../../assets/img/nano-s/hint-connect-1.png';
+import imgNanoSConnect2 from '../../../assets/img/nano-s/hint-connect-2.png';
 import styles from './ConnectLedgerHintBlock.scss';
 
 const message = defineMessages({
