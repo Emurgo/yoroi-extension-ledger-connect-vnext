@@ -1,0 +1,18 @@
+.component {
+  width: 100%;
+  .steps {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+
+    .gap {
+      width: 40px;
+    }
+
+    :global(.HintBlock_component) {
+      width: 600px;
+    }    
+  }
+}

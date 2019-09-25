@@ -68,8 +68,6 @@ export default class OparationBlock extends React.Component<Props, State> {
           <ConnectLedgerHintBlock
             deviceType={deviceName}
             progressState={progressState}
-            changeStep={this.changeStep}
-            selectedStep={this.state.selectedStep}
           />
         );
         break;

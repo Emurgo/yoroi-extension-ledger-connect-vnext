@@ -1,5 +1,6 @@
 .component {
   .textBlock {
+    width: inherit;
     .numberCircle {
       display: flex;
       justify-content: center;
@@ -31,8 +32,13 @@
     }
   }
   .imageBlock {
+    width: inherit;
     margin-top: 16px;
     border-radius: 6px;
     background-color: #F2F4FB;
+
+    .image {
+      width: inherit;
+    }
   }
 }

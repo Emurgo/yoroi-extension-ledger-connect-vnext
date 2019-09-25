@@ -1,8 +1,6 @@
 .component {
-  display: inline-flex;
-
-  .gap {
-    margin-left: 8px;
-    margin-right: 8px;
-  }  
+  .steps {
+    display: flex;
+    flex-direction: row;
+  }
 }
