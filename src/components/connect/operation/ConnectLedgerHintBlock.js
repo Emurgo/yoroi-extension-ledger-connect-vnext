@@ -17,6 +17,8 @@ import HintBlock from '../../widgets/HintBlock';
 
 import imgNanoSConnect1 from '../../../assets/img/nano-s/hint-connect-1.png';
 import imgNanoSConnect2 from '../../../assets/img/nano-s/hint-connect-2.png';
+import imgNanoXConnect1 from '../../../assets/img/nano-x/hint-connect-1.png';
+import imgNanoXConnect2 from '../../../assets/img/nano-x/hint-connect-2.png';
 import styles from './ConnectLedgerHintBlock.scss';
 
 const message = defineMessages({
@@ -47,7 +49,6 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
 
     let content = null;
     switch (deviceType) {
-      case DEVICE_NAME.NANO_X:
       case DEVICE_NAME.NANO_S:
         content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
           <div className={styles.stepsRowOne}>
@@ -61,6 +62,28 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
               number={2}
               text={message.nanoSConfirmExportPublicKey}
               imagePath={imgNanoSConnect2}
+            />
+          </div>
+        ) : (
+          <CommonHintBlock
+            deviceType={deviceType}
+            progressState={progressState}
+          />
+        );
+        break;
+      case DEVICE_NAME.NANO_X:
+        content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
+          <div className={styles.stepsRowOne}>
+            <HintBlock
+              number={1}
+              text={message.nanoSExportPublicKey}
+              imagePath={imgNanoXConnect1}
+            />
+            <div className={styles.gap} />
+            <HintBlock
+              number={2}
+              text={message.nanoSConfirmExportPublicKey}
+              imagePath={imgNanoXConnect2}
             />
           </div>
         ) : (

@@ -16,6 +16,9 @@ import CommonHintBlock from './CommonHintBlock';
 import imgNanoSVerify1 from '../../../assets/img/nano-s/hint-verify-1.png';
 import imgNanoSVerify2 from '../../../assets/img/nano-s/hint-verify-2.png';
 import imgNanoSVerify3 from '../../../assets/img/nano-s/hint-verify-3.png';
+import imgNanoXVerify1 from '../../../assets/img/nano-x/hint-verify-1.png';
+import imgNanoXVerify2 from '../../../assets/img/nano-x/hint-verify-2.png';
+import imgNanoXVerify3 from '../../../assets/img/nano-x/hint-verify-3.png';
 import styles from './VerifyAddressHintBlock.scss';
 
 const message = defineMessages({
@@ -52,7 +55,6 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
 
     let content = null;
     switch (deviceType) {
-      case DEVICE_NAME.NANO_X:
       case DEVICE_NAME.NANO_S:
         content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
           <div className={styles.stepsRowOne}>
@@ -72,6 +74,34 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
               number={3}
               text={message.nanoSAddress}
               imagePath={imgNanoSVerify3}
+            />
+          </div>
+        ) : (
+          <CommonHintBlock
+            deviceType={deviceType}
+            progressState={progressState}
+          />
+        );
+        break;
+      case DEVICE_NAME.NANO_X:
+        content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
+          <div className={styles.stepsRowOne}>
+            <HintBlock
+              number={1}
+              text={message.nanoSInfo}
+              imagePath={imgNanoXVerify1}
+            />
+            <div className={styles.gap} />
+            <HintBlock
+              number={2}
+              text={message.nanoSPath}
+              imagePath={imgNanoXVerify2}
+            />
+            <div className={styles.gap} />
+            <HintBlock
+              number={3}
+              text={message.nanoSAddress}
+              imagePath={imgNanoXVerify3}
             />
           </div>
         ) : (

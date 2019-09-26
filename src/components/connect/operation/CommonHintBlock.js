@@ -15,6 +15,8 @@ import {
 import HintBlock from '../../widgets/HintBlock';
 import imgNanoSCommon1 from '../../../assets/img/nano-s/hint-common-1.png';
 import imgNanoSCommon2 from '../../../assets/img/nano-s/hint-common-2.png';
+import imgNanoXCommon1 from '../../../assets/img/nano-x/hint-common-1.png';
+import imgNanoXCommon2 from '../../../assets/img/nano-x/hint-common-2.png';
 import styles from './CommonHintBlock.scss';
 
 const message = defineMessages({
@@ -43,9 +45,7 @@ export default class CommonHintBlock extends React.Component<Props> {
     } = this.props;
 
     let content = null;
-
     switch (deviceType) {
-      case DEVICE_NAME.NANO_X:
       case DEVICE_NAME.NANO_S:
         content = (
           <div className={styles.stepsRowOne}>
@@ -59,6 +59,23 @@ export default class CommonHintBlock extends React.Component<Props> {
               number={2}
               text={message.nanoSCardanoApp}
               imagePath={imgNanoSCommon2}
+            />
+          </div>
+        );
+        break;
+      case DEVICE_NAME.NANO_X:
+        content = (
+          <div className={styles.stepsRowOne}>
+            <HintBlock
+              number={1}
+              text={message.nanoSPinCode}
+              imagePath={imgNanoXCommon1}
+            />
+            <div className={styles.gap} />
+            <HintBlock
+              number={2}
+              text={message.nanoSCardanoApp}
+              imagePath={imgNanoXCommon2}
             />
           </div>
         );
