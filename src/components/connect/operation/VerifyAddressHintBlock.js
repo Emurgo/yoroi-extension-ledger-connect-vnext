@@ -67,12 +67,14 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
             <HintBlock
               number={2}
               text={message.nanoSPath}
+              secondaryText="m/44'/1815'/0'/0/0"
               imagePath={imgNanoSVerify2}
             />
             <div className={styles.gap} />
             <HintBlock
               number={3}
               text={message.nanoSAddress}
+              secondaryText="Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV"
               imagePath={imgNanoSVerify3}
             />
           </div>

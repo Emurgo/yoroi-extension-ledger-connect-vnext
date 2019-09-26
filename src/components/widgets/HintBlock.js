@@ -49,7 +49,7 @@ export default class HintBlock extends React.Component<Props> {
             </div>
             {secondaryText && (
               <div className={styles.secondaryText}>
-                {intl.formatMessage(secondaryText)}
+                {secondaryText}
               </div>
             )}
           </div>

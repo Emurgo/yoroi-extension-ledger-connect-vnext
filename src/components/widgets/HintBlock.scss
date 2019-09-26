@@ -32,15 +32,17 @@
     .textBlock {
       display: flex;
       flex-direction: column;
+      width: 100%;
       .text {
+        text-align: center;
+        width: 100%;
         font-size: 14px;
         line-height: 22px;
         color: #38393D;
       }
       .secondaryText {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        margin-top: 4px;
+        width: 100%;
         padding-top: 4px;
         padding-bottom: 4px;
         background-color: #F0F3F5; // TODO, add variables
