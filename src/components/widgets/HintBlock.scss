@@ -1,44 +1,53 @@
 .component {
-  .textBlock {
-    width: inherit;
-    .numberCircle {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-      background-color: #f2f4fb; // TODO, add variables
-      height: 24px;
-      width: 24px;
-      .number {
-        color: #92979D; // TODO, add variables
-        font-size: 14px;
-      }
-    }
-    .text {
-      font-size: 14px;
-      line-height: 22px;
-      color: #38393D;
-    }
-    .secondaryText {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-top: 4px;
-      padding-bottom: 4px;
-      background-color: #F0F3F5; // TODO, add variables
-      color: #38393D; // TODO, add variables
-      font-size: 14px;
-      line-height: 22px;
-    }
-  }
   .imageBlock {
-    width: inherit;
-    margin-top: 16px;
+    margin-bottom: 12px;
     border-radius: 6px;
     background-color: #F2F4FB;
 
     .image {
-      width: inherit;
+      max-width: 100%;
+      max-height: 100%;
     }
   }
+  .infoBlock {
+    display: flex;
+    flex-direction: row;
+    .counterBlock {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 6px;
+      .number {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background-color: #f2f4fb; // TODO, add variables
+        color: #92979D; // TODO, add variables
+        height: 24px;
+        width: 24px;
+        font-size: 14px;
+      }
+    }
+    .textBlock {
+      display: flex;
+      flex-direction: column;
+      .text {
+        font-size: 14px;
+        line-height: 22px;
+        color: #38393D;
+      }
+      .secondaryText {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        background-color: #F0F3F5; // TODO, add variables
+        color: #38393D; // TODO, add variables
+        font-size: 14px;
+        line-height: 22px;
+      }
+    }
+  }  
 }

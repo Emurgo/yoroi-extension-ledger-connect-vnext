@@ -30,27 +30,29 @@ export default class HintBlock extends React.Component<Props> {
 
     return (
       <div className={styles.component}>
-        <div className={styles.textBlock}>
-          <div className={styles.numberCircle}>
-            <div className={styles.number}>
-              {number}
-            </div>
-          </div>
-          <div className={styles.text}>
-            {intl.formatMessage(text)}
-          </div>
-          {secondaryText && (
-            <div className={styles.secondaryText}>
-              {intl.formatMessage(secondaryText)}
-            </div>
-          )}
-        </div>
         <div className={styles.imageBlock}>
           <img
             className={styles.image}
             src={imagePath}
             alt="HintImage"
           />
+        </div>
+        <div className={styles.infoBlock}>
+          <div className={styles.counterBlock}>
+            <div className={styles.number}>
+              {number}
+            </div>
+          </div>
+          <div className={styles.textBlock}>
+            <div className={styles.text}>
+              {intl.formatMessage(text)}
+            </div>
+            {secondaryText && (
+              <div className={styles.secondaryText}>
+                {intl.formatMessage(secondaryText)}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );
