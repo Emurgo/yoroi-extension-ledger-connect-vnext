@@ -87,17 +87,17 @@ export default class TestBlock extends React.Component<Props, State> {
         <div className={styles.btnWrap}>
           <button
             type="button"
-            onClick={this.onLogDeriveAddress}
+            onClick={this.onLogShowAddress}
           >
-            Log Derive Address
+            Log Verify Address
           </button>
         </div>
         <div className={styles.btnWrap}>
           <button
             type="button"
-            onClick={this.onLogShowAddress}
+            onClick={this.onLogDeriveAddress}
           >
-            Log Show Address
+            Log Derive Address
           </button>
         </div>
       </div>
@@ -181,7 +181,7 @@ export default class TestBlock extends React.Component<Props, State> {
    * Test showAddress
    */
   onLogShowAddress = async () => {
-    const hdPath = CUtils.str_to_path("44'/1815'/1000'/1/0");
+    const hdPath = CUtils.str_to_path("44'/1815'/1'/1/0");
     const req = {
       action: OPARATION_NAME.SHOW_ADDRESS,
       params: { hdPath },
@@ -196,7 +196,7 @@ export default class TestBlock extends React.Component<Props, State> {
    * Test deriveAddress
    */
   onLogDeriveAddress = async () => {
-    const hdPath = CUtils.str_to_path("44'/1815'/0'/1/0");
+    const hdPath = CUtils.str_to_path("44'/1815'/0'/0/0");
     const req = {
       action: OPARATION_NAME.DERIVE_ADDRESS,
       params: { hdPath },
