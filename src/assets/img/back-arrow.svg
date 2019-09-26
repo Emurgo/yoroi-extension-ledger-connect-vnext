@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g id="qarrow.back..inline-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="arrow-back" transform="translate(8.000000, 6.000000)" fill="#ffffff" fill-rule="nonzero" stroke="#ffffff">
-            <path d="M6.16631556,12.8655172 C6.25568245,12.9551724 6.36739106,13 6.49027054,13 C6.61315002,13 6.72485863,12.9551724 6.81422552,12.8655172 C6.99295931,12.6862069 6.99295931,12.3948276 6.81422552,12.2155172 L1.11708615,6.5 L6.81422552,0.784482759 C6.99295931,0.605172414 6.99295931,0.313793103 6.81422552,0.134482759 C6.63549174,-0.0448275862 6.34504934,-0.0448275862 6.16631556,0.134482759 L0.134050338,6.175 C-0.0446834461,6.35431034 -0.0446834461,6.64568966 0.134050338,6.825 L6.16631556,12.8655172 Z"></path>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/arrow-left</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/arrow-left" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" x="0" y="0" width="20" height="20"></rect>
+        <g id="arrow_link" transform="translate(10.500000, 10.500000) scale(-1, 1) translate(-10.500000, -10.500000) translate(3.000000, 3.000000)" fill="#FFFFFF">
+            <g id="arrow_forward-" transform="translate(0.888889, 0.888889)">
+                <polygon id="arrow_forward---material-copy-3" points="6.61111111 0 13.2222222 6.61111111 6.61111111 13.2222222 5.44328011 12.0543912 10.0552229 7.42265469 0 7.42265469 0 5.79956753 10.0552229 5.79956753 5.44328011 1.167831"></polygon>
+            </g>
         </g>
     </g>
 </svg>
