@@ -7,11 +7,7 @@ import type {
   DeviceNameType,
   ProgressStateType
 }  from '../../../types/cmn';
-import {
-  PROGRESS_STATE,
-  OPARATION_NAME,
-  DEVICE_NAME
-} from '../../../types/cmn';
+import { DEVICE_NAME } from '../../../types/cmn';
 import HintBlock from '../../widgets/HintBlock';
 import imgNanoSCommon1 from '../../../assets/img/nano-s/hint-common-1.png';
 import imgNanoSCommon2 from '../../../assets/img/nano-s/hint-common-2.png';

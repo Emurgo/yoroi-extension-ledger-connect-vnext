@@ -331,6 +331,45 @@ export default class ConnectStore {
     }
   }
 
+  showAddress = async (
+    source: window,
+    actn: OparationNameType,
+    hdPath: BIP32Path
+  ): Promise<void> => {
+    let transport;
+    try {
+      this.setCurrentOparationName(actn);
+
+      transport = await this._makeTransport();
+      await this._detectLedgerDevice(transport);
+
+      const adaApp = new AdaApp(transport);
+
+      const res = await adaApp.showAddress(hdPath);
+      this._replyMessage(
+        source,
+        {
+          action: actn,
+          success: true,
+          payload: res
+        }
+      );
+    } catch (err) {
+      console.error(`[YOROI-LB]::showAddress::${actn}::error::${JSON.stringify(err)}`);
+      const e = this._ledgerErrToMessage(err);
+      this._replyMessage(
+        source,
+        {
+          action: actn,
+          success: false,
+          payload: { error: e.toString() }
+        }
+      );
+    } finally {
+      transport && transport.close();
+    }
+  }
+
   deriveAddress = async (
     source: window,
     actn: OparationNameType,
@@ -364,45 +403,6 @@ export default class ConnectStore {
           action: actn,
           success: false,
           payload: { error: e.toString() },
-        }
-      );
-    } finally {
-      transport && transport.close();
-    }
-  }
-
-  showAddress = async (
-    source: window,
-    actn: OparationNameType,
-    hdPath: BIP32Path
-  ): Promise<void> => {
-    let transport;
-    try {
-      this.setCurrentOparationName(actn);
-
-      transport = await this._makeTransport();
-      await this._detectLedgerDevice(transport);
-
-      const adaApp = new AdaApp(transport);
-
-      const res = await adaApp.showAddress(hdPath);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: true,
-          payload: res
-        }
-      );
-    } catch (err) {
-      console.error(`[YOROI-LB]::showAddress::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() }
         }
       );
     } finally {
