@@ -7,7 +7,7 @@ import type {
   DeviceNameType,
   ProgressStateType
 }  from '../../../types/cmn';
-import HintTextBlock from '../../widgets/HintTextBlock';
+import HintBlock from '../../widgets/HintBlock';
 import hintSendTx1GIF from '../../../assets/img/hint-send-tx-1.gif';
 import hintSendTx2GIF from '../../../assets/img/hint-send-tx-2.gif';
 import hintSendTx3GIF from '../../../assets/img/hint-send-tx-3.gif';

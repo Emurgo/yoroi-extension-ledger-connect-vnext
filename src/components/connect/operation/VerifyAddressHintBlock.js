@@ -3,7 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import HintTextBlock from '../../widgets/HintTextBlock';
+import HintBlock from '../../widgets/HintBlock';
 import type {
   DeviceNameType,
   ProgressStateType
