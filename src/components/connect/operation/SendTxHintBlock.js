@@ -7,32 +7,37 @@ import type {
   DeviceNameType,
   ProgressStateType
 }  from '../../../types/cmn';
+import {
+  PROGRESS_STATE,
+  DEVICE_NAME,
+} from '../../../types/cmn';
+import CommonHintBlock from './CommonHintBlock';
 import HintBlock from '../../widgets/HintBlock';
-import hintSendTx1GIF from '../../../assets/img/hint-send-tx-1.gif';
-import hintSendTx2GIF from '../../../assets/img/hint-send-tx-2.gif';
-import hintSendTx3GIF from '../../../assets/img/hint-send-tx-3.gif';
-import hintSendTx4GIF from '../../../assets/img/hint-send-tx-4.gif';
-import hintSendTx5GIF from '../../../assets/img/hint-send-tx-5.gif';
+import imgNanoSSendTx1 from '../../../assets/img/nano-s/hint-send-1.png';
+import imgNanoSSendTx2 from '../../../assets/img/nano-s/hint-send-2.png';
+import imgNanoSSendTx3 from '../../../assets/img/nano-s/hint-send-3.png';
+import imgNanoSSendTx4 from '../../../assets/img/nano-s/hint-send-4.png';
+import imgNanoSSendTx5 from '../../../assets/img/nano-s/hint-send-5.png';
 import styles from './SendTxHintBlock.scss';
 
 const message = defineMessages({
-  startNewTx: {
+  nanoSStartNewTx: {
     id: 'hint.nanoS.sendTx.startNewTx',
     defaultMessage: '!!!Press RIGHT.'
   },
-  confirmValue: {
+  nanoSConfirmValue: {
     id: 'hint.nanoS.sendTx.confirmValue',
     defaultMessage: '!!!Press BOTH.'
   },
-  confirmAddress: {
+  nanoSConfirmAddress: {
     id: 'hint.nanoS.sendTx.confirmAddress',
     defaultMessage: '!!!Press BOTH.'
   },
-  confirmFee: {
+  nanoSConfirmFee: {
     id: 'hint.nanoS.sendTx.confirmFee',
     defaultMessage: '!!!Press BOTH.'
   },
-  confirmTx: {
+  nanoSConfirmTx: {
     id: 'hint.nanoS.sendTx.confirmTx',
     defaultMessage: '!!!Press RIGHT.'
   },
@@ -50,10 +55,65 @@ export default class SendTxHintBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
 
   render() {
-    const component = (
-      <div className={styles.component} />
-    );
+    const {
+      deviceType,
+      progressState
+    } = this.props;
 
-    return component;
+    let content = null;
+    switch (deviceType) {
+      case DEVICE_NAME.NANO_X:
+      case DEVICE_NAME.NANO_S:
+        content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
+          <div>
+            <div className={styles.stepsRowOne}>
+              <HintBlock
+                number={1}
+                text={message.nanoSStartNewTx}
+                imagePath={imgNanoSSendTx1}
+              />
+              <div className={styles.gap} />
+              <HintBlock
+                number={2}
+                text={message.nanoSConfirmValue}
+                imagePath={imgNanoSSendTx2}
+              />
+              <div className={styles.gap} />
+              <HintBlock
+                number={3}
+                text={message.nanoSConfirmAddress}
+                imagePath={imgNanoSSendTx3}
+              />
+            </div>
+            <div className={styles.stepsRowOne}>
+              <HintBlock
+                number={4}
+                text={message.nanoSConfirmFee}
+                imagePath={imgNanoSSendTx4}
+              />
+              <div className={styles.gap} />
+              <HintBlock
+                number={5}
+                text={message.nanoSConfirmTx}
+                imagePath={imgNanoSSendTx5}
+              />
+            </div>
+          </div>
+        ) : (
+          <CommonHintBlock
+            deviceType={deviceType}
+            progressState={progressState}
+          />
+        );
+        break;
+      default:
+        return (null);
+    }
+
+    return (
+      <div className={styles.component}>
+        {content}
+      </div>
+    );
   }
 }

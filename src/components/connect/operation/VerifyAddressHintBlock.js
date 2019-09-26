@@ -3,26 +3,31 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import HintBlock from '../../widgets/HintBlock';
 import type {
   DeviceNameType,
   ProgressStateType
 }  from '../../../types/cmn';
-import hintVefifyAddress1GIF from '../../../assets/img/hint-verify-address-1.gif';
-import hintVefifyAddress2GIF from '../../../assets/img/hint-verify-address-2.gif';
-import hintVefifyAddress3GIF from '../../../assets/img/hint-verify-address-3.gif';
+import {
+  PROGRESS_STATE,
+  DEVICE_NAME,
+} from '../../../types/cmn';
+import HintBlock from '../../widgets/HintBlock';
+import CommonHintBlock from './CommonHintBlock';
+import imgNanoSVerify1 from '../../../assets/img/nano-s/hint-verify-1.png';
+import imgNanoSVerify2 from '../../../assets/img/nano-s/hint-verify-2.png';
+import imgNanoSVerify3 from '../../../assets/img/nano-s/hint-verify-3.png';
 import styles from './VerifyAddressHintBlock.scss';
 
 const message = defineMessages({
-  info: {
+  nanoSInfo: {
     id: 'hint.nanoS.verifyAddress.info',
     defaultMessage: '!!!Press BOTH.'
   },
-  path: {
+  nanoSPath: {
     id: 'hint.nanoS.verifyAddress.path',
     defaultMessage: '!!!Press BOTH.'
   },
-  address: {
+  nanoSAddress: {
     id: 'hint.nanoS.verifyAddress.address',
     defaultMessage: '!!!Press BOTH.'
   },
@@ -40,10 +45,50 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
 
   render() {
-    const component = (
-      <div className={styles.component} />
-    );
+    const {
+      deviceType,
+      progressState
+    } = this.props;
 
-    return component;
+    let content = null;
+    switch (deviceType) {
+      case DEVICE_NAME.NANO_X:
+      case DEVICE_NAME.NANO_S:
+        content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
+          <div className={styles.stepsRowOne}>
+            <HintBlock
+              number={1}
+              text={message.nanoSInfo}
+              imagePath={imgNanoSVerify1}
+            />
+            <div className={styles.gap} />
+            <HintBlock
+              number={2}
+              text={message.nanoSPath}
+              imagePath={imgNanoSVerify2}
+            />
+            <div className={styles.gap} />
+            <HintBlock
+              number={3}
+              text={message.nanoSAddress}
+              imagePath={imgNanoSVerify3}
+            />
+          </div>
+        ) : (
+          <CommonHintBlock
+            deviceType={deviceType}
+            progressState={progressState}
+          />
+        );
+        break;
+      default:
+        return (null);
+    }
+
+    return (
+      <div className={styles.component}>
+        {content}
+      </div>
+    );
   }
 }

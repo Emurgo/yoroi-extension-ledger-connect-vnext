@@ -1,8 +1,19 @@
 .component {
-  display: inline-flex;
+  width: 100%;
+  .stepsRowOne {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
 
-  .gap {
-    margin-left: 8px;
-    margin-right: 8px;
-  }  
+    .gap {
+      width: 40px;
+    }
+
+    :global(.HintBlock_component) {
+      width: 360px;
+      // Fix Height mis-match
+    }
+  }
 }
