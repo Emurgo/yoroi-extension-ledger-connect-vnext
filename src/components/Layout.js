@@ -32,10 +32,6 @@ export default class Layout extends React.Component<Props> {
         {isDevelopment && (
           <TestBlock executeActionWithCustomRequest={executeActionWithCustomRequest} />
         )}
-        <Footer
-          appVersion={appVersion}
-          transportId={transportId}
-        />
       </div>
     );
   }
