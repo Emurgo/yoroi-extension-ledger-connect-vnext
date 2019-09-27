@@ -7,9 +7,9 @@ import type {
   ProgressStateType,
   OparationNameType,
 } from '../../types/cmn';
-import WebAuthnTopBlock from './WebAuthnTopBlock';
-import TitleBlock from './TitleBlock';
-import DeviceSelectionBlock from './DeviceSelectionBlock';
+import WebAuthnTopBlock from './webauthn-top/WebAuthnTopBlock';
+import TitleBlock from './title/TitleBlock';
+import DeviceSelectionBlock from './device-selection/DeviceSelectionBlock';
 import OparationBlock from './operation/OparationBlock';
 
 import styles from './ConnectBlock.scss';

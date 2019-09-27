@@ -3,7 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import nanoSSVerify11 from '../../assets/img/back-arrow.svg';
+import imgBackArrow from '../../../assets/img/back-arrow.svg';
 import styles from './WebAuthnTopBlock.scss';
 
 const messages = defineMessages({
@@ -26,10 +26,9 @@ export default class WebAuthnTopBlock extends React.Component<Props> {
       <div className={styles.component}>
         <div className={styles.dialogShadow}>
           <div className={styles.textBlock}>
-            {/* TODO: Use correct arrow asset */}
             <img
               className={styles.arrow}
-              src={nanoSSVerify11}
+              src={imgBackArrow}
               alt="Back arrow"
             />
             <span className={styles.text}>

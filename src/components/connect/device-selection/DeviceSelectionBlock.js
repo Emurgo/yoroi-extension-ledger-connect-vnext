@@ -2,15 +2,9 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
-import classNames from 'classnames';
 
-import type {
-  DeviceNameType,
-  ProgressStateType,
-  OparationNameType
-}  from '../../types/cmn';
-import { DEVICE_NAME } from '../../types/cmn';
-import OparationBlock from './operation/OparationBlock';
+import type { DeviceNameType }  from '../../../types/cmn';
+import { DEVICE_NAME } from '../../../types/cmn';
 import styles from './DeviceSelectionBlock.scss';
 
 const message = defineMessages({
@@ -46,7 +40,8 @@ export default @observer class DeviceSelectionBlock extends React.Component<Prop
             <button
               className={styles.device}
               type="button"
-              onClick={this.onButtonClicked.bind(null, DEVICE_NAME.NANO_S)}>
+              onClick={this.onButtonClicked.bind(null, DEVICE_NAME.NANO_S)}
+            >
               <div className={styles.text}>
                 {intl.formatMessage(message.titleLedgerNanoS)}
               </div>
@@ -54,7 +49,8 @@ export default @observer class DeviceSelectionBlock extends React.Component<Prop
             <button
               className={styles.device}
               type="button"
-              onClick={this.onButtonClicked.bind(null, DEVICE_NAME.NANO_X)}>
+              onClick={this.onButtonClicked.bind(null, DEVICE_NAME.NANO_X)}
+            >
               <div className={styles.text}>
                 {intl.formatMessage(message.titleLedgerNanoX)}
               </div>
