@@ -1,3 +1,5 @@
+$CounterSize: 24px;
+
 .component {
   .imageBlock {
     margin-bottom: 12px;
@@ -12,43 +14,42 @@
   .infoBlock {
     display: flex;
     flex-direction: row;
+    width: 100%;
     .counterBlock {
       display: flex;
       justify-content: center;
       align-items: center;
       margin-right: 6px;
-      .number {
+      .counter {
         display: flex;
         justify-content: center;
         align-items: center;
         border-radius: 50%;
         background-color: #f2f4fb; // TODO, add variables
         color: #92979D; // TODO, add variables
-        height: 24px;
-        width: 24px;
+        height: $CounterSize;
+        width: $CounterSize;
         font-size: 14px;
       }
     }
     .textBlock {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      .text {
-        text-align: center;
-        width: 100%;
+      width: calc(100% - #{$CounterSize});
+      .primaryText,
+      .secondaryText {
+        overflow-wrap: break-word;
+        color: #38393D;
         font-size: 14px;
         line-height: 22px;
-        color: #38393D;
+      }
+      .primaryText {
+        text-align: start;
       }
       .secondaryText {
+        text-align: center;
         margin-top: 4px;
-        width: 100%;
-        padding-top: 4px;
-        padding-bottom: 4px;
+        padding: 4px;
         background-color: #F0F3F5; // TODO, add variables
-        color: #38393D; // TODO, add variables
-        font-size: 14px;
-        line-height: 22px;
+        border-radius: 4px;
       }
     }
   }  

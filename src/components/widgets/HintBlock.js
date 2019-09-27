@@ -39,12 +39,12 @@ export default class HintBlock extends React.Component<Props> {
         </div>
         <div className={styles.infoBlock}>
           <div className={styles.counterBlock}>
-            <div className={styles.number}>
+            <div className={styles.counter}>
               {number}
             </div>
           </div>
           <div className={styles.textBlock}>
-            <div className={styles.text}>
+            <div className={styles.primaryText}>
               {intl.formatMessage(text)}
             </div>
             {secondaryText && (
