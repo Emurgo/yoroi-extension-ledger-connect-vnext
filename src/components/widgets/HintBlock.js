@@ -3,7 +3,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape } from 'react-intl';
 import type { MessageDescriptor } from 'react-intl';
-import classNames from 'classnames';
 
 import styles from './HintBlock.scss';
 

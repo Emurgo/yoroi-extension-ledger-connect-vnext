@@ -18,8 +18,8 @@ $CounterSize: 24px;
     .counterBlock {
       display: flex;
       justify-content: center;
-      align-items: center;
       margin-right: 6px;
+      padding-top: 4px;
       .counter {
         display: flex;
         justify-content: center;
@@ -47,7 +47,7 @@ $CounterSize: 24px;
       .secondaryText {
         text-align: center;
         margin-top: 4px;
-        padding: 4px;
+        padding: 6px;
         background-color: #F0F3F5; // TODO, add variables
         border-radius: 4px;
       }
