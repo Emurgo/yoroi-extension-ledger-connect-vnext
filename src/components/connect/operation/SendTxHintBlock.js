@@ -69,33 +69,39 @@ export default class SendTxHintBlock extends React.Component<Props> {
     switch (deviceType) {
       case DEVICE_NAME.NANO_S:
         content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
-          <div>
-            <div className={styles.stepsRowOne}>
+          <div className={styles.stepsGrid}>
+            <div className={styles.item1}>
               <HintBlock
                 number={1}
                 text={message.nanoSStartNewTx}
                 imagePath={imgNanoSSendTx1}
               />
-              <div className={styles.gap} />
+            </div>
+            <div className={styles.gap1} />
+            <div className={styles.item2}>
               <HintBlock
                 number={2}
                 text={message.nanoSConfirmValue}
                 imagePath={imgNanoSSendTx2}
               />
-              <div className={styles.gap} />
+            </div>
+            <div className={styles.gap2} />
+            <div className={styles.item3}>
               <HintBlock
                 number={3}
                 text={message.nanoSConfirmAddress}
                 imagePath={imgNanoSSendTx3}
               />
             </div>
-            <div className={styles.stepsRowOne}>
+            <div className={styles.item4}>
               <HintBlock
                 number={4}
                 text={message.nanoSConfirmFee}
                 imagePath={imgNanoSSendTx4}
               />
-              <div className={styles.gap} />
+            </div>
+            <div className={styles.gap3} />
+            <div className={styles.item5}>
               <HintBlock
                 number={5}
                 text={message.nanoSConfirmTx}
@@ -112,33 +118,39 @@ export default class SendTxHintBlock extends React.Component<Props> {
         break;
       case DEVICE_NAME.NANO_X:
         content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
-          <div>
-            <div className={styles.stepsRowOne}>
+          <div className={styles.stepsGrid}>
+            <div className={styles.item1}>
               <HintBlock
                 number={1}
                 text={message.nanoSStartNewTx}
                 imagePath={imgNanoXSendTx1}
               />
-              <div className={styles.gap} />
+            </div>
+            <div className={styles.gap1} />
+            <div className={styles.item2}>
               <HintBlock
                 number={2}
                 text={message.nanoSConfirmValue}
                 imagePath={imgNanoXSendTx2}
               />
-              <div className={styles.gap} />
+            </div>
+            <div className={styles.gap2} />
+            <div className={styles.item3}>
               <HintBlock
                 number={3}
                 text={message.nanoSConfirmAddress}
                 imagePath={imgNanoXSendTx3}
               />
             </div>
-            <div className={styles.stepsRowOne}>
+            <div className={styles.item4}>
               <HintBlock
                 number={4}
                 text={message.nanoSConfirmFee}
                 imagePath={imgNanoXSendTx4}
               />
-              <div className={styles.gap} />
+            </div>
+            <div className={styles.gap3} />
+            <div className={styles.item5}>
               <HintBlock
                 number={5}
                 text={message.nanoSConfirmTx}
