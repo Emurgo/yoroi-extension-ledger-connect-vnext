@@ -104,6 +104,7 @@ export default class ConnectStore {
           case OPARATION_NAME.SIGN_TX:
           case OPARATION_NAME.SHOW_ADDRESS:
           case OPARATION_NAME.DERIVE_ADDRESS:
+            this.setCurrentOparationName(actn);
             if (!this.userInteractableRequest) {
               this.userInteractableRequest = {
                 params,
@@ -227,7 +228,6 @@ export default class ConnectStore {
   ): Promise<GetVersionResponse | void> => {
     let transport;
     try {
-      this.setCurrentOparationName(actn);
 
       transport = await this._makeTransport();
       const adaApp = new AdaApp(transport);
@@ -265,7 +265,6 @@ export default class ConnectStore {
   ): Promise<GetExtendedPublicKeyResponse | void> => {
     let transport;
     try {
-      this.setCurrentOparationName(actn);
 
       transport = await this._makeTransport();
       const verResp = await this._detectLedgerDevice(transport);
@@ -306,7 +305,6 @@ export default class ConnectStore {
   ): Promise<SignTransactionResponse | void> => {
     let transport;
     try {
-      this.setCurrentOparationName(actn);
 
       transport = await this._makeTransport();
       await this._detectLedgerDevice(transport);
@@ -347,12 +345,9 @@ export default class ConnectStore {
   ): Promise<void> => {
     let transport;
     try {
-      runInAction(() => {
-        this.setCurrentOparationName(actn);
-        this.setVerifyAddressInfo({
-          address,
-          hdPath: pathToString(hdPath)
-        });
+      this.setVerifyAddressInfo({
+        address,
+        hdPath: pathToString(hdPath)
       });
 
       transport = await this._makeTransport();
@@ -392,7 +387,6 @@ export default class ConnectStore {
   ): Promise<DeriveAddressResponse | void> => {
     let transport;
     try {
-      this.setCurrentOparationName(actn);
 
       transport = await this._makeTransport();
       await this._detectLedgerDevice(transport);

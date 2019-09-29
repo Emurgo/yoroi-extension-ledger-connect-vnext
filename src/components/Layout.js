@@ -12,6 +12,7 @@ type Props = {|
   isDevelopment: boolean,
   appVersion: string,
   transportId: string,
+  setCurrentOparationName: Function,
   children: Node,
 |};
 
@@ -20,6 +21,7 @@ export default class Layout extends React.Component<Props> {
   render() {
     const {
       executeActionWithCustomRequest,
+      setCurrentOparationName,
       isDevelopment,
       appVersion,
       transportId,
@@ -30,7 +32,10 @@ export default class Layout extends React.Component<Props> {
       <div className={styles.component}>
         {children}
         {isDevelopment && (
-          <TestBlock executeActionWithCustomRequest={executeActionWithCustomRequest} />
+          <TestBlock
+            executeActionWithCustomRequest={executeActionWithCustomRequest}
+            setCurrentOparationName={setCurrentOparationName}
+          />
         )}
       </div>
     );

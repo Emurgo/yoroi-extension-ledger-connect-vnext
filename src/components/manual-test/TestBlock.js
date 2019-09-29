@@ -16,6 +16,7 @@ import styles from './TestBlock.scss';
 
 type Props = {|
   executeActionWithCustomRequest: Function,
+  setCurrentOparationName: Function,
 |};
 
 type State = {|

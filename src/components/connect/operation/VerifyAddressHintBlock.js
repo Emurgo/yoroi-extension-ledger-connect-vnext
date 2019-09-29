@@ -5,7 +5,8 @@ import { intlShape, defineMessages } from 'react-intl';
 
 import type {
   DeviceNameType,
-  ProgressStateType
+  ProgressStateType,
+  VerifyAddressInfoType,
 }  from '../../../types/cmn';
 import {
   PROGRESS_STATE,
