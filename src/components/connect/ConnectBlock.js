@@ -6,6 +6,7 @@ import type {
   DeviceNameType,
   ProgressStateType,
   OparationNameType,
+  VerifyAddressInfoType,
 } from '../../types/cmn';
 import WebAuthnTopBlock from './webauthn-top/WebAuthnTopBlock';
 import TitleBlock from './title/TitleBlock';
@@ -20,6 +21,7 @@ type Props = {|
   currentOparationName: OparationNameType,
   executeAction: Function,
   deviceName: ?DeviceNameType,
+  verifyAddressInfo: VerifyAddressInfoType,
 |};
 
 @observer
@@ -31,6 +33,7 @@ export default class ConnectBlock extends React.Component<Props> {
       currentOparationName,
       executeAction,
       deviceName,
+      verifyAddressInfo
     } = this.props;
 
     const content = deviceName ?
@@ -38,6 +41,7 @@ export default class ConnectBlock extends React.Component<Props> {
         deviceName={deviceName}
         currentOparationName={currentOparationName}
         progressState={progressState}
+        verifyAddressInfo={verifyAddressInfo}
       /> :
       <DeviceSelectionBlock executeAction={executeAction} />;
 

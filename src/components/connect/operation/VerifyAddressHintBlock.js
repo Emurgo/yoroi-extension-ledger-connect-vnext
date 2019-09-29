@@ -40,7 +40,8 @@ type Props = {|
   deviceType: DeviceNameType,
   progressState: ProgressStateType,
   changeStep: Function,
-  selectedStep: number
+  selectedStep: number,
+  verifyAddressInfo: VerifyAddressInfoType,
 |};
 
 @observer
@@ -50,7 +51,8 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
   render() {
     const {
       deviceType,
-      progressState
+      progressState,
+      verifyAddressInfo
     } = this.props;
 
     let content = null;
@@ -67,14 +69,14 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
             <HintBlock
               number={2}
               text={message.nanoSPath}
-              secondaryText="m/44'/1815'/0'/0/0"
+              secondaryText={verifyAddressInfo.hdPath}
               imagePath={imgNanoSVerify2}
             />
             <div className={styles.gap} />
             <HintBlock
               number={3}
               text={message.nanoSAddress}
-              secondaryText="Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV"
+              secondaryText={verifyAddressInfo.address}
               imagePath={imgNanoSVerify3}
             />
           </div>

@@ -6,7 +6,8 @@ import { intlShape, defineMessages } from 'react-intl';
 import type {
   DeviceNameType,
   OparationNameType,
-  ProgressStateType
+  ProgressStateType,
+  VerifyAddressInfoType,
 }  from '../../../types/cmn';
 import {
   OPARATION_NAME,
@@ -28,6 +29,7 @@ type Props = {|
   deviceName: DeviceNameType,
   currentOparationName: OparationNameType,
   progressState: ProgressStateType,
+  verifyAddressInfo: VerifyAddressInfoType,
 |};
 
 type State = {
@@ -59,6 +61,7 @@ export default class OparationBlock extends React.Component<Props, State> {
       deviceName,
       currentOparationName,
       progressState,
+      verifyAddressInfo
     } = this.props;
 
     let OperationHintBlock;
@@ -88,6 +91,7 @@ export default class OparationBlock extends React.Component<Props, State> {
             progressState={progressState}
             changeStep={this.changeStep}
             selectedStep={this.state.selectedStep}
+            verifyAddressInfo={verifyAddressInfo}
           />
         );
         break;

@@ -16,15 +16,9 @@ export type URLParams = {
   locale: string
 }
 
-// TODO: delete
-export interface IRootStore {
-  profileStore: IChildStore;
-  connectStore: IChildStore;
-}
-
-// TODO: delete
-export interface IChildStore {
-  rootStore: IRootStore
+export type VerifyAddressInfoType = {
+  hdPath: string,
+  address: string,
 }
 
 export const PROGRESS_STATE = Object.freeze({

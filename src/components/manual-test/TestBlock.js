@@ -182,9 +182,10 @@ export default class TestBlock extends React.Component<Props, State> {
    */
   onLogShowAddress = async () => {
     const hdPath = CUtils.str_to_path("44'/1815'/1'/1/0");
+    const address = 'Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV';
     const req = {
       action: OPARATION_NAME.SHOW_ADDRESS,
-      params: { hdPath },
+      params: { hdPath, address },
       source: null
     };
 

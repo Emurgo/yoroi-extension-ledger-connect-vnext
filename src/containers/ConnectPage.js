@@ -24,6 +24,7 @@ export default class ConnectPage extends React.Component<Props> {
       currentOparationName,
       executeAction,
       deviceName,
+      verifyAddressInfo
     } = connectStore;
     const { appVersion } = profileStore;
 
@@ -40,6 +41,7 @@ export default class ConnectPage extends React.Component<Props> {
           currentOparationName={currentOparationName}
           executeAction={executeAction}
           deviceName={deviceName}
+          verifyAddressInfo={verifyAddressInfo}
         />
       </Layout>
     );

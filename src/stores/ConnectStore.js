@@ -21,17 +21,20 @@ import type {
   DeviceNameType,
   ProgressStateType,
   OparationNameType,
+  VerifyAddressInfoType
 } from '../types/cmn';
 import {
   PROGRESS_STATE,
   OPARATION_NAME,
 } from '../types/cmn';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
+import { pathToString } from '../utils';
 
 export default class ConnectStore {
   @observable transportId: string;
   @observable progressState: ProgressStateType;
   @observable currentOparationName: OparationNameType;
+  @observable verifyAddressInfo: VerifyAddressInfoType;
   @observable deviceName: DeviceNameType
   userInteractableRequest: RequestType;
 
@@ -73,6 +76,11 @@ export default class ConnectStore {
   @action('Changing device name')
   setDeviceName = (deviceName: DeviceNameType) => {
     this.deviceName = deviceName;
+  }
+
+  @action('Change Verify Address Info')
+  setVerifyAddressInfo = (verifyAddressInfo: VerifyAddressInfoType) => {
+    this.verifyAddressInfo = verifyAddressInfo;
   }
 
   // Ledger API
@@ -202,7 +210,7 @@ export default class ConnectStore {
         this.signTransaction(source, actn, params.inputs, params.outputs);
         break;
       case OPARATION_NAME.SHOW_ADDRESS:
-        this.showAddress(source, actn, params.hdPath);
+        this.showAddress(source, actn, params.hdPath, params.address);
         break;
       case OPARATION_NAME.DERIVE_ADDRESS:
         this.deriveAddress(source, actn, params.hdPath);
@@ -334,11 +342,18 @@ export default class ConnectStore {
   showAddress = async (
     source: window,
     actn: OparationNameType,
-    hdPath: BIP32Path
+    hdPath: BIP32Path,
+    address: string
   ): Promise<void> => {
     let transport;
     try {
-      this.setCurrentOparationName(actn);
+      runInAction(() => {
+        this.setCurrentOparationName(actn);
+        this.setVerifyAddressInfo({
+          address,
+          hdPath: pathToString(hdPath)
+        });
+      });
 
       transport = await this._makeTransport();
       await this._detectLedgerDevice(transport);
