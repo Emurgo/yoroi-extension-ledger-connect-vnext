@@ -37,6 +37,10 @@ export default class Layout extends React.Component<Props> {
             setCurrentOparationName={setCurrentOparationName}
           />
         )}
+        <Footer
+          appVersion={appVersion}
+          transportId={transportId}
+        />
       </div>
     );
   }
