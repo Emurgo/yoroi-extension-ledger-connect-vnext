@@ -36,14 +36,16 @@ export default class ConnectBlock extends React.Component<Props> {
       verifyAddressInfo
     } = this.props;
 
-    const content = deviceName ?
+    console.log(`CurrentOparationName : ${currentOparationName}`);
+
+    const content = !deviceName ?
+      <DeviceSelectionBlock executeAction={executeAction} /> :
       <OparationBlock
         deviceName={deviceName}
         currentOparationName={currentOparationName}
         progressState={progressState}
         verifyAddressInfo={verifyAddressInfo}
-      /> :
-      <DeviceSelectionBlock executeAction={executeAction} />;
+      />;
 
     const showWebAuthnTop = isWebAuthn && deviceName;
 
