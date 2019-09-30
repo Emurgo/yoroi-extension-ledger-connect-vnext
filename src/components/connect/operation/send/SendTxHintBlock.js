@@ -16,43 +16,43 @@ import styles from './SendTxHintBlock.scss';
 const message = defineMessages({
   sStartNewTx: {
     id: 'hint.sendTx.startNewTx',
-    defaultMessage: '!!!Press RIGHT.'
+    defaultMessage: '!!!Check your Ledger screen, then press <strong>right</strong> button.'
   },
   sConfirmValue: {
     id: 'hint.sendTx.confirmValue',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: '!!!Confirm the ADA amount by pressing <strong>both</strong> buttons.'
   },
   sConfirmAddress: {
     id: 'hint.sendTx.confirmAddress',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: "!!!Confirm the receiver's address by pressing <strong>both</strong> buttons."
   },
   sConfirmFee: {
     id: 'hint.sendTx.confirmFee',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: '!!!Confirm Transaction Fee by pressing <strong>both</strong> buttons.'
   },
   sConfirmTx: {
     id: 'hint.sendTx.confirmTx',
-    defaultMessage: '!!!Press RIGHT.'
+    defaultMessage: '!!!Confirm Transaction Fee by pressing <strong>both</strong> buttons.'
   },
   xStartNewTx: {
-    id: 'hint.sendTx.startNewTx',
-    defaultMessage: '!!!Press RIGHT.'
+    id: 'hint.nanoX.sendTx.startNewTx',
+    defaultMessage: '!!!Check your Ledger screen, then press <strong>both</strong> buttons.'
   },
   xConfirmValue: {
     id: 'hint.sendTx.confirmValue',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: '!!!Confirm the ADA amount by pressing <strong>both</strong> buttons.'
   },
   xConfirmAddress: {
-    id: 'hint.sendTx.confirmAddress',
-    defaultMessage: '!!!Press BOTH.'
+    id: 'hint.nanoX.sendTx.confirmAddress',
+    defaultMessage: "!!!Confirm the receiver's address by pressing the <strong>right</strong> button to scroll through the entire address. Then press <strong>both</strong> buttons."
   },
   xConfirmFee: {
     id: 'hint.sendTx.confirmFee',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: '!!!Confirm Transaction Fee by pressing <strong>both</strong> buttons.'
   },
   xConfirmTx: {
     id: 'hint.sendTx.confirmTx',
-    defaultMessage: '!!!Press RIGHT.'
+    defaultMessage: '!!!Confirm Transaction Fee by pressing <strong>both</strong> buttons.'
   },
 });
 

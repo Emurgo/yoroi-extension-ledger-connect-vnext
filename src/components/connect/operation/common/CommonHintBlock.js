@@ -14,19 +14,19 @@ import styles from './CommonHintBlock.scss';
 const message = defineMessages({
   sPinCode: {
     id: 'hint.common.pinCode',
-    defaultMessage: '!!!Enter your PIN on your Ledger device, using the right and left buttons to select each number and then both buttons to confirm.'
+    defaultMessage: '!!!If your Ledger device is locked enter your PIN, using the <strong>right</strong> and <strong>left</strong> buttons to select each number and then <strong>both</strong> buttons to confirm.'
   },
   sCardanoApp: {
     id: 'hint.common.CardanoApp',
-    defaultMessage: '!!!Enter your PIN on your Ledger device, using the right and left buttons to select each number and then both buttons to confirm.'
+    defaultMessage: '!!!Highlight the <strong>Cardano ADA</strong> app on your Ledger and press <strong>both</strong> buttons.'
   },
   xPinCode: {
     id: 'hint.common.pinCode',
-    defaultMessage: '!!!Enter your PIN on your Ledger device, using the right and left buttons to select each number and then both buttons to confirm.'
+    defaultMessage: '!!!If your Ledger device is locked enter your PIN, using the <strong>right</strong> and <strong>left</strong> buttons to select each number and then <strong>both</strong> buttons to confirm.'
   },
   xCardanoApp: {
     id: 'hint.common.CardanoApp',
-    defaultMessage: '!!!Enter your PIN on your Ledger device, using the right and left buttons to select each number and then both buttons to confirm.'
+    defaultMessage: '!!!Highlight the <strong>Cardano ADA</strong> app on your Ledger and press <strong>both</strong> buttons.'
   },
 });
 

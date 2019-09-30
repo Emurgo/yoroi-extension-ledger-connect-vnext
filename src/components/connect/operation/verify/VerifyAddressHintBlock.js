@@ -17,27 +17,27 @@ import styles from './VerifyAddressHintBlock.scss';
 const message = defineMessages({
   sInfo: {
     id: 'hint.verifyAddress.info',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: '!!!Check your Ledger screen, then press <strong>both</strong> buttons.'
   },
   sPath: {
     id: 'hint.verifyAddress.path',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: '!!!Make sure the address path shown on your Ledger is the same as the one shown below, then press <strong>both</strong> buttons.'
   },
   sAddress: {
     id: 'hint.verifyAddress.address',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: '!!!Make sure the address shown on your Ledger is the same as the one shown below, then press <strong>both</strong> buttons.'
   },
   xInfo: {
     id: 'hint.verifyAddress.info',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: '!!!Check your Ledger screen, then press <strong>both</strong> buttons.'
   },
   xPath: {
     id: 'hint.verifyAddress.path',
-    defaultMessage: '!!!Press BOTH.'
+    defaultMessage: '!!!Make sure the address path shown on your Ledger is the same as the one shown below, then press <strong>both</strong> buttons.'
   },
   xAddress: {
-    id: 'hint.verifyAddress.address',
-    defaultMessage: '!!!Press BOTH.'
+    id: 'hint.nanoX.verifyAddress.address',
+    defaultMessage: '!!!Make sure the address shown on your Ledger is the same as the one shown below. Press the <strong>right</strong> button on your Ledger to scroll to the end of the address, then press <strong>both</strong> buttons.'
   },
 });
 
