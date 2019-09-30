@@ -12,9 +12,9 @@ import type {
 import {
   OPARATION_NAME,
 } from '../../../types/cmn';
-import ConnectLedgerHintBlock from './ConnectLedgerHintBlock';
-import SendTxHintBlock from './SendTxHintBlock';
-import VerifyAddressHintBlock from './VerifyAddressHintBlock';
+import ConnectLedgerHintBlock from './connect/ConnectLedgerHintBlock';
+import SendTxHintBlock from './send/SendTxHintBlock';
+import VerifyAddressHintBlock from './verify/VerifyAddressHintBlock';
 
 import styles from './OparationBlock.scss';
 

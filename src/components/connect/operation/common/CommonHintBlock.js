@@ -6,8 +6,8 @@ import { intlShape, defineMessages } from 'react-intl';
 import type {
   DeviceCodeType,
   ProgressStateType
-}  from '../../../types/cmn';
-import HintBlock from '../../widgets/HintBlock';
+}  from '../../../../types/cmn';
+import HintBlock from '../../../widgets/HintBlock';
 
 import styles from './CommonHintBlock.scss';
 
@@ -44,8 +44,8 @@ export default class CommonHintBlock extends React.Component<Props> {
       deviceCode,
     } = this.props;
 
-    const imgCommon1 = require(`../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
-    const imgCommon2 = require(`../../../assets/img/nano-${deviceCode}/hint-common-2.png`);
+    const imgCommon1 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+    const imgCommon2 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-2.png`);
 
     return (
       <div className={styles.component}>

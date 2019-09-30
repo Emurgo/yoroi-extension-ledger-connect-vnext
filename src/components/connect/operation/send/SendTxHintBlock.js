@@ -6,10 +6,10 @@ import { intlShape, defineMessages } from 'react-intl';
 import type {
   DeviceCodeType,
   ProgressStateType
-}  from '../../../types/cmn';
-import { PROGRESS_STATE } from '../../../types/cmn';
-import CommonHintBlock from './CommonHintBlock';
-import HintBlock from '../../widgets/HintBlock';
+}  from '../../../../types/cmn';
+import { PROGRESS_STATE } from '../../../../types/cmn';
+import CommonHintBlock from '../common/CommonHintBlock';
+import HintBlock from '../../../widgets/HintBlock';
 
 import styles from './SendTxHintBlock.scss';
 
@@ -80,11 +80,11 @@ export default class SendTxHintBlock extends React.Component<Props> {
         />
       );
     } else {
-      const imgSend1 = require(`../../../assets/img/nano-${deviceCode}/hint-send-1.png`);
-      const imgSend2 = require(`../../../assets/img/nano-${deviceCode}/hint-send-2.png`);
-      const imgSend3 = require(`../../../assets/img/nano-${deviceCode}/hint-send-3.png`);
-      const imgSend4 = require(`../../../assets/img/nano-${deviceCode}/hint-send-4.png`);
-      const imgSend5 = require(`../../../assets/img/nano-${deviceCode}/hint-send-5.png`);
+      const imgSend1 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-1.png`);
+      const imgSend2 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-2.png`);
+      const imgSend3 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-3.png`);
+      const imgSend4 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-4.png`);
+      const imgSend5 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-5.png`);
 
       content = (
         <div className={styles.stepsGrid}>

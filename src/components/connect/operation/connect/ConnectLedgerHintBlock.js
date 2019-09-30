@@ -3,13 +3,13 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import CommonHintBlock from './CommonHintBlock';
 import type {
   DeviceCodeType,
   ProgressStateType
-}  from '../../../types/cmn';
-import { PROGRESS_STATE } from '../../../types/cmn';
-import HintBlock from '../../widgets/HintBlock';
+}  from '../../../../types/cmn';
+import { PROGRESS_STATE } from '../../../../types/cmn';
+import CommonHintBlock from '../common/CommonHintBlock';
+import HintBlock from '../../../widgets/HintBlock';
 
 import styles from './ConnectLedgerHintBlock.scss';
 
@@ -56,8 +56,8 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
         />
       );
     } else {
-      const imgConnect1 = require(`../../../assets/img/nano-${deviceCode}/hint-connect-1.png`);
-      const imgConnect2 = require(`../../../assets/img/nano-${deviceCode}/hint-connect-2.png`);
+      const imgConnect1 = require(`../../../../assets/img/nano-${deviceCode}/hint-connect-1.png`);
+      const imgConnect2 = require(`../../../../assets/img/nano-${deviceCode}/hint-connect-2.png`);
 
       content = (
         <div className={styles.stepsRowOne}>

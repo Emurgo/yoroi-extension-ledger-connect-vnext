@@ -7,10 +7,10 @@ import type {
   DeviceCodeType,
   ProgressStateType,
   VerifyAddressInfoType,
-}  from '../../../types/cmn';
-import { PROGRESS_STATE } from '../../../types/cmn';
-import HintBlock from '../../widgets/HintBlock';
-import CommonHintBlock from './CommonHintBlock';
+}  from '../../../../types/cmn';
+import { PROGRESS_STATE } from '../../../../types/cmn';
+import CommonHintBlock from '../common/CommonHintBlock';
+import HintBlock from '../../../widgets/HintBlock';
 
 import styles from './VerifyAddressHintBlock.scss';
 
@@ -67,9 +67,9 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
         />
       );
     } else {
-      const imgVerify1 = require(`../../../assets/img/nano-${deviceCode}/hint-verify-1.png`);
-      const imgVerify2 = require(`../../../assets/img/nano-${deviceCode}/hint-verify-2.png`);
-      const imgVerify3 = require(`../../../assets/img/nano-${deviceCode}/hint-verify-3.png`);
+      const imgVerify1 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-1.png`);
+      const imgVerify2 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-2.png`);
+      const imgVerify3 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-3.png`);
 
       content = (
         <div className={styles.stepsRowOne}>
