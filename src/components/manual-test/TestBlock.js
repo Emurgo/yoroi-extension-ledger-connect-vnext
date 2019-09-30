@@ -114,6 +114,8 @@ export default class TestBlock extends React.Component<Props, State> {
       params: null,
       source: null
     };
+
+    this.props.setCurrentOparationName(OPARATION_NAME.GET_LEDGER_VERSION);
     const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
     console.debug(`onLogVersion: ${JSON.stringify(resp, null, 2)}`);
   }
@@ -129,6 +131,7 @@ export default class TestBlock extends React.Component<Props, State> {
       source: null
     };
 
+    this.props.setCurrentOparationName(OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY);
     const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
     console.debug(`onLogExtendedPublicKey: ${JSON.stringify(resp, null, 2)}`);
   }
@@ -174,6 +177,7 @@ export default class TestBlock extends React.Component<Props, State> {
       source: null
     };
 
+    this.props.setCurrentOparationName(OPARATION_NAME.SIGN_TX);
     const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
     console.debug(`onLogSignTransaction: ${JSON.stringify(resp, null, 2)}`);
   }
@@ -190,6 +194,7 @@ export default class TestBlock extends React.Component<Props, State> {
       source: null
     };
 
+    this.props.setCurrentOparationName(OPARATION_NAME.SHOW_ADDRESS);
     const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
     console.debug(`onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
   }
@@ -205,6 +210,7 @@ export default class TestBlock extends React.Component<Props, State> {
       source: null
     };
 
+    this.props.setCurrentOparationName(OPARATION_NAME.DERIVE_ADDRESS);
     const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
     console.debug(`onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
   }
