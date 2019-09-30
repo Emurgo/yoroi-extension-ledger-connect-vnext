@@ -36,8 +36,6 @@ export default class ConnectBlock extends React.Component<Props> {
       verifyAddressInfo
     } = this.props;
 
-    console.log(`CurrentOparationName : ${currentOparationName}`);
-
     const content = !deviceName ?
       <DeviceSelectionBlock executeAction={executeAction} /> :
       <OparationBlock
