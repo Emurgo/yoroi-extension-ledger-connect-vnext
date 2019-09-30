@@ -30,6 +30,11 @@ import {
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
 import { pathToString } from '../utils';
 
+export type ExtenedPublicKeyResp = {
+  ePublicKey: GetExtendedPublicKeyResponse,
+  deviceVersion: GetVersionResponse
+};
+
 export default class ConnectStore {
   @observable transportId: string;
   @observable progressState: ProgressStateType;
@@ -262,7 +267,7 @@ export default class ConnectStore {
     source: window,
     actn: OparationNameType,
     hdPath: BIP32Path
-  ): Promise<GetExtendedPublicKeyResponse | void> => {
+  ): Promise<ExtenedPublicKeyResp | void> => {
     let transport;
     try {
 
@@ -271,7 +276,14 @@ export default class ConnectStore {
 
       const adaApp = new AdaApp(transport);
 
-      const res: GetExtendedPublicKeyResponse = await adaApp.getExtendedPublicKey(hdPath);
+      const ePublicKeyResp: GetExtendedPublicKeyResponse =
+        await adaApp.getExtendedPublicKey(hdPath);
+
+      const res = {
+        ePublicKey: ePublicKeyResp,
+        deviceVersion: verResp
+      };
+
       this._replyMessage(
         source,
         {
