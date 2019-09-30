@@ -1,25 +1,24 @@
 // @flow
 import React from 'react';
 import { observer } from 'mobx-react';
-import { intlShape } from 'react-intl';
 import type { MessageDescriptor } from 'react-intl';
+import { intlShape, FormattedHTMLMessage } from 'react-intl';
 
 import styles from './HintBlock.scss';
 
 type Props = {|
   number: number,
   text: MessageDescriptor,
-  secondaryText?: MessageDescriptor,
+  secondaryText?: string,
   imagePath: string,
 |};
 
 @observer
 export default class HintBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
-  static defaultProps = { secondaryText: null }
+  static defaultProps = { secondaryText: undefined }
 
   render() {
-    const { intl } = this.context;
     const {
       number,
       text,
@@ -44,7 +43,7 @@ export default class HintBlock extends React.Component<Props> {
           </div>
           <div className={styles.textBlock}>
             <div className={styles.primaryText}>
-              {intl.formatMessage(text)}
+              <FormattedHTMLMessage {...text} />
             </div>
             {secondaryText && (
               <div className={styles.secondaryText}>
