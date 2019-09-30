@@ -6,11 +6,11 @@ import { observer } from 'mobx-react';
 import { utils as CUtils } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import type {
-  DeviceNameType,
+  DeviceCodeType,
 } from '../../types/cmn';
 import {
   OPARATION_NAME,
-  DEVICE_NAME,
+  DEVICE_CODE,
 } from '../../types/cmn';
 import styles from './TestBlock.scss';
 
@@ -20,7 +20,7 @@ type Props = {|
 |};
 
 type State = {|
-  selectedDevice: DeviceNameType
+  selectedDevice: DeviceCodeType
 |};
 
 @observer
@@ -28,11 +28,11 @@ export default class TestBlock extends React.Component<Props, State> {
   constructor() {
     super();
     this.state = {
-      selectedDevice: DEVICE_NAME.NANO_S
+      selectedDevice: DEVICE_CODE.NANO_S
     };
   }
 
-  onDeviceSelectionChange = (deviceName: DeviceNameType) => {
+  onDeviceSelectionChange = (deviceName: DeviceCodeType) => {
     if (this.state.selectedDevice !== deviceName) {
       console.debug(`Device Selection Changed to : ${deviceName}`);
       this.setState({ selectedDevice: deviceName });
@@ -47,19 +47,19 @@ export default class TestBlock extends React.Component<Props, State> {
           <input
             type="radio"
             name="device"
-            id={DEVICE_NAME.NANO_S}
-            checked={this.state.selectedDevice === DEVICE_NAME.NANO_S}
-            onChange={this.onDeviceSelectionChange.bind(null, DEVICE_NAME.NANO_S)}
+            id={DEVICE_CODE.NANO_S}
+            checked={this.state.selectedDevice === DEVICE_CODE.NANO_S}
+            onChange={this.onDeviceSelectionChange.bind(null, DEVICE_CODE.NANO_S)}
           />
-          <label style={{ marginRight: '26px' }} htmlFor={DEVICE_NAME.NANO_S}>Nano S</label>
+          <label style={{ marginRight: '26px' }} htmlFor={DEVICE_CODE.NANO_S}>Nano S</label>
           <input
             type="radio"
             name="device"
-            id={DEVICE_NAME.NANO_X}
-            checked={this.state.selectedDevice === DEVICE_NAME.NANO_X}
-            onChange={this.onDeviceSelectionChange.bind(null, DEVICE_NAME.NANO_X)}
+            id={DEVICE_CODE.NANO_X}
+            checked={this.state.selectedDevice === DEVICE_CODE.NANO_X}
+            onChange={this.onDeviceSelectionChange.bind(null, DEVICE_CODE.NANO_X)}
           />
-          <label htmlFor={DEVICE_NAME.NANO_X}>Nano X</label>
+          <label htmlFor={DEVICE_CODE.NANO_X}>Nano X</label>
         </div>
         <div className={styles.btnWrap}>
           <button

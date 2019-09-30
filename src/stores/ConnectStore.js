@@ -18,7 +18,7 @@ import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import type {
   MessageType,
   RequestType,
-  DeviceNameType,
+  DeviceCodeType,
   ProgressStateType,
   OparationNameType,
   VerifyAddressInfoType
@@ -35,7 +35,7 @@ export default class ConnectStore {
   @observable progressState: ProgressStateType;
   @observable currentOparationName: OparationNameType;
   @observable verifyAddressInfo: VerifyAddressInfoType;
-  @observable deviceName: DeviceNameType
+  @observable deviceName: DeviceCodeType
   userInteractableRequest: RequestType;
 
   constructor(transportId: string) {
@@ -74,7 +74,7 @@ export default class ConnectStore {
   }
 
   @action('Changing device name')
-  setDeviceName = (deviceName: DeviceNameType) => {
+  setDeviceName = (deviceName: DeviceCodeType) => {
     this.deviceName = deviceName;
   }
 
@@ -186,14 +186,14 @@ export default class ConnectStore {
   }
 
   executeActionWithCustomRequest = (
-    deviceName: DeviceNameType,
+    deviceName: DeviceCodeType,
     request: RequestType
   ) => {
     this.userInteractableRequest = request;
     this.executeAction(deviceName);
   }
 
-  executeAction = (deviceName: DeviceNameType) => {
+  executeAction = (deviceName: DeviceCodeType) => {
     this.setDeviceName(deviceName);
 
     const actn = this.userInteractableRequest.action;

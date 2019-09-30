@@ -39,8 +39,8 @@ export const OPARATION_NAME = Object.freeze({
 });
 export type OparationNameType = $Values<typeof OPARATION_NAME>;
 
-export const DEVICE_NAME = Object.freeze({
-  NANO_S: 'LedgerNanoS',
-  NANO_X: 'LedgerNanoX',
+export const DEVICE_CODE = Object.freeze({
+  NANO_S: 's',
+  NANO_X: 'x',
 });
-export type DeviceNameType = $Values<typeof DEVICE_NAME>;
+export type DeviceCodeType = $Values<typeof DEVICE_CODE>;

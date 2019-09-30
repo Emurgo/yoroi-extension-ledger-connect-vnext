@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
 import type {
-  DeviceNameType,
+  DeviceCodeType,
   OparationNameType,
   ProgressStateType,
   VerifyAddressInfoType,
@@ -26,34 +26,15 @@ const message = defineMessages({
 });
 
 type Props = {|
-  deviceName: DeviceNameType,
+  deviceName: DeviceCodeType,
   currentOparationName: OparationNameType,
   progressState: ProgressStateType,
   verifyAddressInfo: VerifyAddressInfoType,
 |};
 
-type State = {
-  selectedStep: number
-}
-
 @observer
-export default class OparationBlock extends React.Component<Props, State> {
+export default class OparationBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
-
-  constructor() {
-    super();
-    this.state = {
-      selectedStep: 1
-    };
-  }
-
-  changeStep = (stepIndex: number) => {
-    if (this.state.selectedStep !== stepIndex) {
-      this.setState({
-        selectedStep: stepIndex
-      });
-    }
-  }
 
   render() {
     const { intl } = this.context;
@@ -69,7 +50,7 @@ export default class OparationBlock extends React.Component<Props, State> {
       case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
         OperationHintBlock = (
           <ConnectLedgerHintBlock
-            deviceType={deviceName}
+            deviceCode={deviceName}
             progressState={progressState}
           />
         );
@@ -77,20 +58,16 @@ export default class OparationBlock extends React.Component<Props, State> {
       case OPARATION_NAME.SIGN_TX:
         OperationHintBlock = (
           <SendTxHintBlock
-            deviceType={deviceName}
+            deviceCode={deviceName}
             progressState={progressState}
-            changeStep={this.changeStep}
-            selectedStep={this.state.selectedStep}
           />
         );
         break;
       case OPARATION_NAME.SHOW_ADDRESS:
         OperationHintBlock = (
           <VerifyAddressHintBlock
-            deviceType={deviceName}
+            deviceCode={deviceName}
             progressState={progressState}
-            changeStep={this.changeStep}
-            selectedStep={this.state.selectedStep}
             verifyAddressInfo={verifyAddressInfo}
           />
         );

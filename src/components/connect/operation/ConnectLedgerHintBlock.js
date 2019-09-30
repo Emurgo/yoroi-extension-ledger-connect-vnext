@@ -5,35 +5,35 @@ import { intlShape, defineMessages } from 'react-intl';
 
 import CommonHintBlock from './CommonHintBlock';
 import type {
-  DeviceNameType,
+  DeviceCodeType,
   ProgressStateType
 }  from '../../../types/cmn';
-import {
-  PROGRESS_STATE,
-  DEVICE_NAME,
-} from '../../../types/cmn';
-
+import { PROGRESS_STATE } from '../../../types/cmn';
 import HintBlock from '../../widgets/HintBlock';
 
-import imgNanoSConnect1 from '../../../assets/img/nano-s/hint-connect-1.png';
-import imgNanoSConnect2 from '../../../assets/img/nano-s/hint-connect-2.png';
-import imgNanoXConnect1 from '../../../assets/img/nano-x/hint-connect-1.png';
-import imgNanoXConnect2 from '../../../assets/img/nano-x/hint-connect-2.png';
 import styles from './ConnectLedgerHintBlock.scss';
 
 const message = defineMessages({
-  nanoSExportPublicKey: {
-    id: 'hint.nanoS.connect.exportPublicKey',
+  sExportPublicKey: {
+    id: 'hint.connect.exportPublicKey',
     defaultMessage: '!!!Check your Ledger screen, then press both buttons.'
   },
-  nanoSConfirmExportPublicKey: {
-    id: 'hint.nanoS.connect.confirmExportPublicKey',
+  sConfirmExportPublicKey: {
+    id: 'hint.connect.confirmExportPublicKey',
+    defaultMessage: '!!!Confirm exporting the public key by pressing both buttons.'
+  },
+  xExportPublicKey: {
+    id: 'hint.connect.exportPublicKey',
+    defaultMessage: '!!!Check your Ledger screen, then press both buttons.'
+  },
+  xConfirmExportPublicKey: {
+    id: 'hint.connect.confirmExportPublicKey',
     defaultMessage: '!!!Confirm exporting the public key by pressing both buttons.'
   },
 });
 
 type Props = {|
-  deviceType: DeviceNameType,
+  deviceCode: DeviceCodeType,
   progressState: ProgressStateType,
 |};
 
@@ -43,58 +43,37 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
 
   render() {
     const {
-      deviceType,
+      deviceCode,
       progressState
     } = this.props;
 
     let content = null;
-    switch (deviceType) {
-      case DEVICE_NAME.NANO_S:
-        content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
-          <div className={styles.stepsRowOne}>
-            <HintBlock
-              number={1}
-              text={message.nanoSExportPublicKey}
-              imagePath={imgNanoSConnect1}
-            />
-            <div className={styles.gap} />
-            <HintBlock
-              number={2}
-              text={message.nanoSConfirmExportPublicKey}
-              imagePath={imgNanoSConnect2}
-            />
-          </div>
-        ) : (
-          <CommonHintBlock
-            deviceType={deviceType}
-            progressState={progressState}
+    if (progressState !== PROGRESS_STATE.DEVICE_FOUND) {
+      content = (
+        <CommonHintBlock
+          deviceCode={deviceCode}
+          progressState={progressState}
+        />
+      );
+    } else {
+      const imgConnect1 = require(`../../../assets/img/nano-${deviceCode}/hint-connect-1.png`);
+      const imgConnect2 = require(`../../../assets/img/nano-${deviceCode}/hint-connect-2.png`);
+
+      content = (
+        <div className={styles.stepsRowOne}>
+          <HintBlock
+            number={1}
+            text={message[`${deviceCode}ExportPublicKey`]}
+            imagePath={imgConnect1}
           />
-        );
-        break;
-      case DEVICE_NAME.NANO_X:
-        content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
-          <div className={styles.stepsRowOne}>
-            <HintBlock
-              number={1}
-              text={message.nanoSExportPublicKey}
-              imagePath={imgNanoXConnect1}
-            />
-            <div className={styles.gap} />
-            <HintBlock
-              number={2}
-              text={message.nanoSConfirmExportPublicKey}
-              imagePath={imgNanoXConnect2}
-            />
-          </div>
-        ) : (
-          <CommonHintBlock
-            deviceType={deviceType}
-            progressState={progressState}
+          <div className={styles.gap} />
+          <HintBlock
+            number={2}
+            text={message[`${deviceCode}ConfirmExportPublicKey`]}
+            imagePath={imgConnect2}
           />
-        );
-        break;
-      default:
-        return (null);
+        </div>
+      );
     }
 
     return (

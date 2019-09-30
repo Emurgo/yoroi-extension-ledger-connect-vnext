@@ -3,7 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import type {
-  DeviceNameType,
+  DeviceCodeType,
   ProgressStateType,
   OparationNameType,
   VerifyAddressInfoType,
@@ -20,7 +20,7 @@ type Props = {|
   progressState: ProgressStateType,
   currentOparationName: OparationNameType,
   executeAction: Function,
-  deviceName: ?DeviceNameType,
+  deviceName: ?DeviceCodeType,
   verifyAddressInfo: VerifyAddressInfoType,
 |};
 

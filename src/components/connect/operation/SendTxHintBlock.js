@@ -4,55 +4,61 @@ import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
 import type {
-  DeviceNameType,
+  DeviceCodeType,
   ProgressStateType
 }  from '../../../types/cmn';
-import {
-  PROGRESS_STATE,
-  DEVICE_NAME,
-} from '../../../types/cmn';
+import { PROGRESS_STATE } from '../../../types/cmn';
 import CommonHintBlock from './CommonHintBlock';
 import HintBlock from '../../widgets/HintBlock';
-import imgNanoSSendTx1 from '../../../assets/img/nano-s/hint-send-1.png';
-import imgNanoSSendTx2 from '../../../assets/img/nano-s/hint-send-2.png';
-import imgNanoSSendTx3 from '../../../assets/img/nano-s/hint-send-3.png';
-import imgNanoSSendTx4 from '../../../assets/img/nano-s/hint-send-4.png';
-import imgNanoSSendTx5 from '../../../assets/img/nano-s/hint-send-5.png';
-import imgNanoXSendTx1 from '../../../assets/img/nano-x/hint-send-1.png';
-import imgNanoXSendTx2 from '../../../assets/img/nano-x/hint-send-2.png';
-import imgNanoXSendTx3 from '../../../assets/img/nano-x/hint-send-3.png';
-import imgNanoXSendTx4 from '../../../assets/img/nano-x/hint-send-4.png';
-import imgNanoXSendTx5 from '../../../assets/img/nano-x/hint-send-5.png';
+
 import styles from './SendTxHintBlock.scss';
 
 const message = defineMessages({
-  nanoSStartNewTx: {
-    id: 'hint.nanoS.sendTx.startNewTx',
+  sStartNewTx: {
+    id: 'hint.sendTx.startNewTx',
     defaultMessage: '!!!Press RIGHT.'
   },
-  nanoSConfirmValue: {
-    id: 'hint.nanoS.sendTx.confirmValue',
+  sConfirmValue: {
+    id: 'hint.sendTx.confirmValue',
     defaultMessage: '!!!Press BOTH.'
   },
-  nanoSConfirmAddress: {
-    id: 'hint.nanoS.sendTx.confirmAddress',
+  sConfirmAddress: {
+    id: 'hint.sendTx.confirmAddress',
     defaultMessage: '!!!Press BOTH.'
   },
-  nanoSConfirmFee: {
-    id: 'hint.nanoS.sendTx.confirmFee',
+  sConfirmFee: {
+    id: 'hint.sendTx.confirmFee',
     defaultMessage: '!!!Press BOTH.'
   },
-  nanoSConfirmTx: {
-    id: 'hint.nanoS.sendTx.confirmTx',
+  sConfirmTx: {
+    id: 'hint.sendTx.confirmTx',
+    defaultMessage: '!!!Press RIGHT.'
+  },
+  xStartNewTx: {
+    id: 'hint.sendTx.startNewTx',
+    defaultMessage: '!!!Press RIGHT.'
+  },
+  xConfirmValue: {
+    id: 'hint.sendTx.confirmValue',
+    defaultMessage: '!!!Press BOTH.'
+  },
+  xConfirmAddress: {
+    id: 'hint.sendTx.confirmAddress',
+    defaultMessage: '!!!Press BOTH.'
+  },
+  xConfirmFee: {
+    id: 'hint.sendTx.confirmFee',
+    defaultMessage: '!!!Press BOTH.'
+  },
+  xConfirmTx: {
+    id: 'hint.sendTx.confirmTx',
     defaultMessage: '!!!Press RIGHT.'
   },
 });
 
 type Props = {|
-  deviceType: DeviceNameType,
+  deviceCode: DeviceCodeType,
   progressState: ProgressStateType,
-  changeStep: Function,
-  selectedStep: number
 |};
 
 @observer
@@ -61,112 +67,67 @@ export default class SendTxHintBlock extends React.Component<Props> {
 
   render() {
     const {
-      deviceType,
+      deviceCode,
       progressState
     } = this.props;
 
     let content = null;
-    switch (deviceType) {
-      case DEVICE_NAME.NANO_S:
-        content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
-          <div className={styles.stepsGrid}>
-            <div className={styles.item1}>
-              <HintBlock
-                number={1}
-                text={message.nanoSStartNewTx}
-                imagePath={imgNanoSSendTx1}
-              />
-            </div>
-            <div className={styles.gap1} />
-            <div className={styles.item2}>
-              <HintBlock
-                number={2}
-                text={message.nanoSConfirmValue}
-                imagePath={imgNanoSSendTx2}
-              />
-            </div>
-            <div className={styles.gap2} />
-            <div className={styles.item3}>
-              <HintBlock
-                number={3}
-                text={message.nanoSConfirmAddress}
-                imagePath={imgNanoSSendTx3}
-              />
-            </div>
-            <div className={styles.item4}>
-              <HintBlock
-                number={4}
-                text={message.nanoSConfirmFee}
-                imagePath={imgNanoSSendTx4}
-              />
-            </div>
-            <div className={styles.gap3} />
-            <div className={styles.item5}>
-              <HintBlock
-                number={5}
-                text={message.nanoSConfirmTx}
-                imagePath={imgNanoSSendTx5}
-              />
-            </div>
+    if (progressState !== PROGRESS_STATE.DEVICE_FOUND) {
+      content = (
+        <CommonHintBlock
+          deviceCode={deviceCode}
+          progressState={progressState}
+        />
+      );
+    } else {
+      const imgSend1 = require(`../../../assets/img/nano-${deviceCode}/hint-send-1.png`);
+      const imgSend2 = require(`../../../assets/img/nano-${deviceCode}/hint-send-2.png`);
+      const imgSend3 = require(`../../../assets/img/nano-${deviceCode}/hint-send-3.png`);
+      const imgSend4 = require(`../../../assets/img/nano-${deviceCode}/hint-send-4.png`);
+      const imgSend5 = require(`../../../assets/img/nano-${deviceCode}/hint-send-5.png`);
+
+      content = (
+        <div className={styles.stepsGrid}>
+          <div className={styles.item1}>
+            <HintBlock
+              number={1}
+              text={message[`${deviceCode}StartNewTx`]}
+              imagePath={imgSend1}
+            />
           </div>
-        ) : (
-          <CommonHintBlock
-            deviceType={deviceType}
-            progressState={progressState}
-          />
-        );
-        break;
-      case DEVICE_NAME.NANO_X:
-        content =  (progressState === PROGRESS_STATE.DEVICE_FOUND) ? (
-          <div className={styles.stepsGrid}>
-            <div className={styles.item1}>
-              <HintBlock
-                number={1}
-                text={message.nanoSStartNewTx}
-                imagePath={imgNanoXSendTx1}
-              />
-            </div>
-            <div className={styles.gap1} />
-            <div className={styles.item2}>
-              <HintBlock
-                number={2}
-                text={message.nanoSConfirmValue}
-                imagePath={imgNanoXSendTx2}
-              />
-            </div>
-            <div className={styles.gap2} />
-            <div className={styles.item3}>
-              <HintBlock
-                number={3}
-                text={message.nanoSConfirmAddress}
-                imagePath={imgNanoXSendTx3}
-              />
-            </div>
-            <div className={styles.item4}>
-              <HintBlock
-                number={4}
-                text={message.nanoSConfirmFee}
-                imagePath={imgNanoXSendTx4}
-              />
-            </div>
-            <div className={styles.gap3} />
-            <div className={styles.item5}>
-              <HintBlock
-                number={5}
-                text={message.nanoSConfirmTx}
-                imagePath={imgNanoXSendTx5}
-              />
-            </div>
+          <div className={styles.gap1} />
+          <div className={styles.item2}>
+            <HintBlock
+              number={2}
+              text={message[`${deviceCode}ConfirmValue`]}
+              imagePath={imgSend2}
+            />
           </div>
-        ) : (
-          <CommonHintBlock
-            deviceType={deviceType}
-            progressState={progressState}
-          />
-        );
-        break;
-      default:
-        return (null);
+          <div className={styles.gap2} />
+          <div className={styles.item3}>
+            <HintBlock
+              number={3}
+              text={message[`${deviceCode}ConfirmAddress`]}
+              imagePath={imgSend3}
+            />
+          </div>
+          <div className={styles.item4}>
+            <HintBlock
+              number={4}
+              text={message[`${deviceCode}ConfirmFee`]}
+              imagePath={imgSend4}
+            />
+          </div>
+          <div className={styles.gap3} />
+          <div className={styles.item5}>
+            <HintBlock
+              number={5}
+              text={message[`${deviceCode}ConfirmTx`]}
+              imagePath={imgSend5}
+            />
+          </div>
+        </div>
+      );
     }
 
     return (
