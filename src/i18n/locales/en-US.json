@@ -1,6 +1,4 @@
 {
-  "error.unexpectedError": "Something unexpected happened. Please retry.",
-  "error.unknowError": "Unknown error.",
   "footer.version": "Version:",
   "footer.transportId": "Transport:",
   "webauthn.note": "A CANCEL button will appear here. Do not press it.",
