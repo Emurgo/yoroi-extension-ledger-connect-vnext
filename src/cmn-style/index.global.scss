@@ -80,6 +80,7 @@ html, body, #root, #root > [data-reactroot] {
   // is not yet defined correctly in our UI
   font-family: var(--default-font), serif;
   -webkit-font-smoothing: antialiased;
+  height: 100%;
 }
 
 * {

@@ -1,4 +1,7 @@
+$footerMargin: 50px;
+
 .component {
+  min-height: calc(100vh - #{$footerMargin});
   .title {
     margin-top: 26px;
     margin-bottom: 26px;

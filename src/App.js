@@ -49,14 +49,12 @@ export default class App extends React.Component<Props> {
     );
 
     const component = (
-      <div>
-        <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
-          <Suspense fallback={<SuspenceFallback />}>
-            <StyleVariableLoader variables={styleVariables} />
-            <ConnectPage rootStore={this.props.rootStore} />
-          </Suspense>
-        </IntlProvider>
-      </div>
+      <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
+        <Suspense fallback={<SuspenceFallback />}>
+          <StyleVariableLoader variables={styleVariables} />
+          <ConnectPage rootStore={this.props.rootStore} />
+        </Suspense>
+      </IntlProvider>
     );
 
     return component;
