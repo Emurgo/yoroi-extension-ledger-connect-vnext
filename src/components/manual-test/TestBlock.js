@@ -64,14 +64,6 @@ export default class TestBlock extends React.Component<Props, State> {
         <div className={styles.btnWrap}>
           <button
             type="button"
-            onClick={this.onLogVersion}
-          >
-              Log Version
-          </button>
-        </div>
-        <div className={styles.btnWrap}>
-          <button
-            type="button"
             onClick={this.onLogExtendedPublicKey}
           >
             Log Extended public key
@@ -99,6 +91,14 @@ export default class TestBlock extends React.Component<Props, State> {
             onClick={this.onLogDeriveAddress}
           >
             Log Derive Address
+          </button>
+        </div>
+        <div className={styles.btnWrap}>
+          <button
+            type="button"
+            onClick={this.onLogVersion}
+          >
+              Log Device Version
           </button>
         </div>
       </div>
