@@ -15,6 +15,8 @@ import it from 'react-intl/locale-data/it';
 
 import RootStore from './stores';
 
+import SuspenceFallback from './components/widgets/SuspenseFallback';
+
 import { translations } from './i18n/translations';
 import { DEFAULT_LOCALE } from './const';
 import styleVariables from './cmn-style/style-variables';
@@ -48,12 +50,12 @@ export default class App extends React.Component<Props> {
 
     const component = (
       <div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <StyleVariableLoader variables={styleVariables} />
-          <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
+        <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
+          <Suspense fallback={<SuspenceFallback />}>
+            <StyleVariableLoader variables={styleVariables} />
             <ConnectPage rootStore={this.props.rootStore} />
-          </IntlProvider>
-        </Suspense>
+          </Suspense>
+        </IntlProvider>
       </div>
     );
 
