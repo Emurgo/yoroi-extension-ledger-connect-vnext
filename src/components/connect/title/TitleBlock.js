@@ -15,23 +15,23 @@ const messages = defineMessages({
   },
   titleConnect: {
     id: 'title.connect',
-    defaultMessage: '!!!Connect To Ledger Hardware Wallet',
+    defaultMessage: '!!!Connect to ledger hardware wallet',
   },
   titleSenTx: {
     id: 'title.sendTx',
-    defaultMessage: '!!!Send Transaction Using Ledger Hardware Wallet',
+    defaultMessage: '!!!Send Transaction Using ledger',
   },
   titleVerifyAddress: {
     id: 'title.verifyAddress',
-    defaultMessage: '!!!Verify Address on Ledger Hardware Wallet',
+    defaultMessage: '!!!Verify address on ledger',
   },
   titleLedgerVersion: {
     id: 'title.ledgerVersion',
-    defaultMessage: '!!!Fetching Ledger device version',
+    defaultMessage: '!!!Fetch ledger device version',
   },
   titleDeriveAddress: {
     id: 'title.deriveAddress',
-    defaultMessage: '!!!Deriving Address',
+    defaultMessage: '!!!Derive Address',
   },
 });
 

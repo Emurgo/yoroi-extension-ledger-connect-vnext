@@ -12,7 +12,6 @@ $ShadowWidth: 454px;
     margin: 0 auto;
     height: $ShadowHeight;
     width: $ShadowWidth;
-    // border: 2px dotted red;
     
     .textBlock {
       position: relative;
@@ -29,6 +28,7 @@ $ShadowWidth: 454px;
       .text {
         line-height: 18px;
         font-size: 12px;
+        margin-left: 4px;
       }
     }    
   }

@@ -9,7 +9,7 @@ import styles from './WebAuthnTopBlock.scss';
 const messages = defineMessages({
   noteText: {
     id: 'webauthn.note',
-    defaultMessage: '!!!A CANCEL button will appear here. Do not press it.',
+    defaultMessage: '!!!Do not press CANCEL button.',
   }
 });
 

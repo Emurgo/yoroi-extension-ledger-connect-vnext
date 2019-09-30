@@ -1,15 +1,15 @@
 {
   "footer.version": "Version:",
   "footer.transportId": "Transport:",
-  "webauthn.note": "A CANCEL button will appear here. Do not press it.",
+  "webauthn.note": "Do not press CANCEL button.",
   "title.default": "Loading...",
-  "title.connect": "Connecting to ledger hardware wallet",
+  "title.connect": "Connect to ledger hardware wallet",
   "title.sendTx": "Confirm transaction using ledger",
+  "title.verifyAddress": "Verify address on ledger",
+  "title.ledgerVersion": "Fetch Ledger device version",
+  "title.deriveAddress": "Derive Address",
   "wallet.title.ledgerNanoS": "Ledger Nano S",
-  "wallet.title.ledgerNanoX": "Ledger Nano X",
-  "title.verifyAddress": "Verify address",
-  "title.ledgerVersion": "Fetching Ledger device version",
-  "title.deriveAddress": "Deriving Address",  
+  "wallet.title.ledgerNanoX": "Ledger Nano X",  
   "oparation.top.ledgerDeviceInfo": "Perform the following actions on your Ledger device",
   "hint.nanoS.common.pinCode": "Enter your PIN on your Ledger device, using the right and left buttons to select each number and then both buttons to confirm.",
   "hint.nanoS.common.CardanoApp": "Highlight the \"Cardano ADA\" app on your Ledger and press both buttons.",
@@ -21,6 +21,6 @@
   "hint.nanoS.sendTx.confirmFee": "Confirm Transaction Fee by pressing both buttons.",
   "hint.nanoS.sendTx.confirmTx": "Confirm the transaction by pressing the right button.",
   "hint.nanoS.verifyAddress.info": "Check your Ledger screen, then press both buttons.",
-  "hint.nanoS.verifyAddress.path": "Make sure the address path shown on your Ledger is the same as the one shown in Yoroi, then press both buttons.",
-  "hint.nanoS.verifyAddress.address": "Compare the address shown on your Ledger with the one shown here. Make sure they are the same, then press both buttons"
+  "hint.nanoS.verifyAddress.path": "Make sure the address path shown on your Ledger is the same as the one shown below, then press both buttons.",
+  "hint.nanoS.verifyAddress.address": "Make sure the address shown on your Ledger is the same as the one shown below, then press both buttons."
 }
