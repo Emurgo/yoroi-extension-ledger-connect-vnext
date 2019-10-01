@@ -10,6 +10,7 @@ import type {
   VerifyAddressInfoType,
 }  from '../../../types/cmn';
 import {
+  PROGRESS_STATE,
   OPARATION_NAME,
 } from '../../../types/cmn';
 import ConnectLedgerHintBlock from './connect/ConnectLedgerHintBlock';
@@ -32,9 +33,41 @@ type Props = {|
   verifyAddressInfo: VerifyAddressInfoType,
 |};
 
+type State = {
+  timeoutIn: number,
+  timerStarted: boolean
+}
+
 @observer
-export default class OparationBlock extends React.Component<Props> {
+export default class OparationBlock extends React.Component<Props, State> {
   static contextTypes = { intl: intlShape.isRequired };
+
+  constructor() {
+    super();
+    this.state = {
+      timeoutIn: 30,
+      timerStarted: false
+    };
+  }
+
+  startTimer = () => {
+    if (!this.state.timerStarted) {
+      this.setState({
+        timeoutIn: 30,
+        timerStarted: true
+      });
+      const timerId = setInterval(() => {
+        this.setState((prevState) => ({
+          timeoutIn: prevState.timeoutIn - 1
+        }), () => {
+          console.debug(`[YLC] Timeout In: ${this.state.timeoutIn}`);
+          if (this.state.timeoutIn === 0) {
+            clearInterval(timerId);
+          }
+        });
+      }, 1000);
+    }
+  }
 
   render() {
     const { intl } = this.context;
@@ -44,6 +77,10 @@ export default class OparationBlock extends React.Component<Props> {
       progressState,
       verifyAddressInfo
     } = this.props;
+
+    if (this.props.progressState === PROGRESS_STATE.DEVICE_FOUND) {
+      this.startTimer();
+    }
 
     let OperationHintBlock;
     switch (currentOparationName) {
@@ -80,7 +117,13 @@ export default class OparationBlock extends React.Component<Props> {
     const component = (
       <div className={styles.component}>
         <div className={styles.performActionText}>
-          {intl.formatMessage(message.topInfo)}
+          <div className={styles.leftBlock} />
+          <div className={styles.centerBlock}>
+            {intl.formatMessage(message.topInfo)}
+          </div>
+          <div className={styles.rightBlock}>
+            {this.state.timerStarted && (this.state.timeoutIn + 's')}
+          </div>
         </div>
         {OperationHintBlock}
       </div>
