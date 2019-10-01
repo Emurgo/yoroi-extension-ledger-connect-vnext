@@ -2,22 +2,10 @@
   width: 100%;
 
   .performActionText {
-    display: flex;
     margin-top: 20px;
     font-size: 14px;
     line-height: 22px;
     text-align: center;
-    .leftBlock {
-      width: 50px;
-      height: 22px;
-    }
-    .centerBlock {
-      flex: 1;
-      color: #676970;
-    }
-    .rightBlock {
-      width: 50px;
-      height: 22px;
-    }
+    color: #676970;
   }  
 }
