@@ -5,6 +5,7 @@ import { intlShape, defineMessages } from 'react-intl';
 
 import type { DeviceCodeType }  from '../../../types/cmn';
 import { DEVICE_CODE } from '../../../types/cmn';
+import imgExternalLink from '../../../assets/img/external-link.svg';
 import styles from './DeviceSelectionBlock.scss';
 
 const message = defineMessages({
@@ -19,7 +20,19 @@ const message = defineMessages({
   chooseDevice: {
     id: 'deviceSelection.chooseDevice',
     defaultMessage: '!!!Choose your device'
-  }
+  },
+  videoLinkPart1: {
+    id: 'deviceSelection.videoLink.part1',
+    defaultMessage: '!!!You can also check video instuction for '
+  },
+  videoLinkPart2: {
+    id: 'deviceSelection.videoLink.part2',
+    defaultMessage: '!!! or '
+  },
+  videoLinkPart3: {
+    id: 'deviceSelection.videoLink.part3',
+    defaultMessage: '!!! .'
+  },
 });
 
 type Props = {|
@@ -62,7 +75,43 @@ export default @observer class DeviceSelectionBlock extends React.Component<Prop
           </button>
         </div>
         <div className={styles.videoLink}>
-          You can also check video instuction for Ledger Nano S or Ledger Nano X.
+          <span className={styles.videoLinkText}>
+            {intl.formatMessage(message.videoLinkPart1)}
+          </span>
+          {/* TODO: Update correct link  */}
+          <a
+            href="https://www.youtube.com/watch?v=YwdBLh7qAsI&t=2s"
+            className={styles.link}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {intl.formatMessage(message.titleLedgerNanoS)}
+          </a>
+          <img
+            className={styles.linkIcon}
+            src={imgExternalLink}
+            alt="External Link"
+          />
+          <span className={styles.videoLinkText}>
+            {intl.formatMessage(message.videoLinkPart2)}
+          </span>
+          {/* TODO: Update correct link  */}
+          <a
+            href="https://www.youtube.com/watch?v=YwdBLh7qAsI&t=2s"
+            className={styles.link}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {intl.formatMessage(message.titleLedgerNanoX)}
+          </a>
+          <img
+            className={styles.linkIcon}
+            src={imgExternalLink}
+            alt="External Link"
+          />
+          <span className={styles.videoLinkText}>
+            {intl.formatMessage(message.videoLinkPart3)}
+          </span>
         </div>
       </div>
     );

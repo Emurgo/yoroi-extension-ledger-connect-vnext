@@ -1,3 +1,5 @@
+@import '../../../cmn-style/mixin/underline.scss';
+
 .component {
   height: 100%;
   display: flex;
@@ -51,10 +53,22 @@
     }
   }
   .videoLink {
-    display: flex;
     height: 30px;
-    flex-direction: column;
+    display: flex;
     justify-content: flex-end;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
+    .videoLinkText,
+    .link {
+      font-size: 14px;
+      height: 22px;
+      line-height: 22px;
+      color: #38393D;
+    }
+    .link {
+      @include underline(#38393D);
+    }
+    .linkIcon {
+      margin-left: 4px;
+    }
   }
 }
