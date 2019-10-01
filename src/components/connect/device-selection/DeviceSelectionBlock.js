@@ -38,30 +38,31 @@ export default @observer class DeviceSelectionBlock extends React.Component<Prop
     const { intl } = this.context;
     return (
       <div className={styles.component}>
-        <div className={styles.deviceSelectionWrap}>
-          <div className={styles.deviceSelection}>
-            <div className={styles.title}>
-              {intl.formatMessage(message.chooseDevice)}
-            </div>
-            <button
-              className={styles.device}
-              type="button"
-              onClick={this.onButtonClicked.bind(null, DEVICE_CODE.NANO_S)}
-            >
-              <div className={styles.text}>
-                {intl.formatMessage(message.titleLedgerNanoS)}
-              </div>
-            </button>
-            <button
-              className={styles.device}
-              type="button"
-              onClick={this.onButtonClicked.bind(null, DEVICE_CODE.NANO_X)}
-            >
-              <div className={styles.text}>
-                {intl.formatMessage(message.titleLedgerNanoX)}
-              </div>
-            </button>
+        <div className={styles.deviceSelection}>
+          <div className={styles.title}>
+            {intl.formatMessage(message.chooseDevice)}
           </div>
+          <button
+            className={styles.device}
+            type="button"
+            onClick={this.onButtonClicked.bind(null, DEVICE_CODE.NANO_S)}
+          >
+            <div className={styles.text}>
+              {intl.formatMessage(message.titleLedgerNanoS)}
+            </div>
+          </button>
+          <button
+            className={styles.device}
+            type="button"
+            onClick={this.onButtonClicked.bind(null, DEVICE_CODE.NANO_X)}
+          >
+            <div className={styles.text}>
+              {intl.formatMessage(message.titleLedgerNanoX)}
+            </div>
+          </button>
+        </div>
+        <div className={styles.videoLink}>
+          You can also check video instuction for Ledger Nano S or Ledger Nano X.
         </div>
       </div>
     );

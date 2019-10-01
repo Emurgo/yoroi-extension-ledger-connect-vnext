@@ -112,3 +112,8 @@ html, body, #root, #root > [data-reactroot] {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+// ======= IntlProvider Default div height =======
+body > div > div {
+  height: 100%;
+}

@@ -1,15 +1,15 @@
 $footerMargin: 50px;
 
 .component {
-  min-height: calc(100vh - #{$footerMargin});
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - #{$footerMargin});
   .title {
-    margin-top: 26px;
-    margin-bottom: 26px;
+    height: 58px;
     text-transform: uppercase;
     color: #38393D;
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
-    height: 20px;
   }
 }
