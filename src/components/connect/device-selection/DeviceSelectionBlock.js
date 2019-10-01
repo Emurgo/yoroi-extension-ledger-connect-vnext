@@ -5,7 +5,12 @@ import { intlShape, defineMessages } from 'react-intl';
 
 import type { DeviceCodeType }  from '../../../types/cmn';
 import { DEVICE_CODE } from '../../../types/cmn';
+import {
+  VIDEO_LINK_NANO_S,
+  VIDEO_LINK_NANO_X
+} from '../../../const';
 import imgExternalLink from '../../../assets/img/external-link.svg';
+
 import styles from './DeviceSelectionBlock.scss';
 
 const message = defineMessages({
@@ -80,7 +85,7 @@ export default @observer class DeviceSelectionBlock extends React.Component<Prop
           </span>
           {/* TODO: Update correct link  */}
           <a
-            href="https://www.youtube.com/watch?v=YwdBLh7qAsI&t=2s"
+            href={VIDEO_LINK_NANO_S}
             className={styles.link}
             rel="noopener noreferrer"
             target="_blank"
@@ -97,7 +102,7 @@ export default @observer class DeviceSelectionBlock extends React.Component<Prop
           </span>
           {/* TODO: Update correct link  */}
           <a
-            href="https://www.youtube.com/watch?v=YwdBLh7qAsI&t=2s"
+            href={VIDEO_LINK_NANO_X}
             className={styles.link}
             rel="noopener noreferrer"
             target="_blank"

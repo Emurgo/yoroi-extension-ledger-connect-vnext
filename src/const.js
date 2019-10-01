@@ -6,3 +6,5 @@ export const ENV = {
   isProduction: process.env.NODE_ENV === 'production',
   isDevelopment: process.env.NODE_ENV === 'development'
 };
+export const VIDEO_LINK_NANO_S = 'https://www.youtube.com/watch?v=YwdBLh7qAsI&t=2s';
+export const VIDEO_LINK_NANO_X = 'https://www.youtube.com/watch?v=YwdBLh7qAsI&t=2s';
