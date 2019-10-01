@@ -16,6 +16,10 @@ const message = defineMessages({
     id: 'wallet.title.ledgerNanoX',
     defaultMessage: '!!!Ledger Nano X'
   },
+  chooseDevice: {
+    id: 'deviceSelection.chooseDevice',
+    defaultMessage: '!!!Choose your device'
+  }
 });
 
 type Props = {|
@@ -36,7 +40,9 @@ export default @observer class DeviceSelectionBlock extends React.Component<Prop
       <div className={styles.component}>
         <div className={styles.deviceSelectionWrap}>
           <div className={styles.deviceSelection}>
-            <div className={styles.title}>Choose your device</div>
+            <div className={styles.title}>
+              {intl.formatMessage(message.chooseDevice)}
+            </div>
             <button
               className={styles.device}
               type="button"
