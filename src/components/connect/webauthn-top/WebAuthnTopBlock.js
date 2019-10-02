@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { observer } from 'mobx-react';
-import { intlShape, defineMessages } from 'react-intl';
+import { intlShape, defineMessages, FormattedHTMLMessage } from 'react-intl';
 
 import imgBackArrow from '../../../assets/img/back-arrow.svg';
 import styles from './WebAuthnTopBlock.scss';
@@ -9,7 +9,7 @@ import styles from './WebAuthnTopBlock.scss';
 const messages = defineMessages({
   noteText: {
     id: 'webauthn.note',
-    defaultMessage: '!!!Do not press CANCEL button.',
+    defaultMessage: '!!!Do not press the <strong>Cancel</strong> button',
   }
 });
 
@@ -20,8 +20,6 @@ export default class WebAuthnTopBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
 
   render() {
-    const { intl } = this.context;
-
     return (
       <div className={styles.component}>
         <div className={styles.dialogShadow}>
@@ -32,7 +30,7 @@ export default class WebAuthnTopBlock extends React.Component<Props> {
               alt="Back arrow"
             />
             <span className={styles.text}>
-              {intl.formatMessage(messages.noteText)}
+              {<FormattedHTMLMessage {...messages.noteText} />}
             </span>
           </div>
         </div>
