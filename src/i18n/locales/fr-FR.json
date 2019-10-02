@@ -2,7 +2,7 @@
   "suspence.fallbackText": "Chargement...",
   "footer.version": "Version :",
   "footer.transportId": "Transport:",
-  "webauthn.note": "Ne pas appuyez pas sur le bouton CANCEL.",
+  "webauthn.note": "Do not press the <strong>Cancel</strong> button",
   "title.default": "Initialisation...",
   "title.connect": "Connecter au wallet matériel ledger",
   "title.sendTx": "Confirmer la transaction en utilisant ledger",
