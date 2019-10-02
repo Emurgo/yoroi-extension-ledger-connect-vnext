@@ -2,7 +2,7 @@
   "suspence.fallbackText": "読み込み中…",
   "footer.version": "バージョン：",
   "footer.transportId": "Transport:",
-  "webauthn.note": "「キャンセル」ボタンを押さないでください",
+  "webauthn.note": "Do not press the <strong>Cancel</strong> button",
   "title.default": "初期化中…",
   "title.connect": "Connect to ledger hardware wallet",
   "title.sendTx": "Confirm transaction using ledger",
