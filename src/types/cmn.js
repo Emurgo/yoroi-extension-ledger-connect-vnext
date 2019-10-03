@@ -8,7 +8,6 @@ export type MessageType = {
 export type RequestType = {
   action: OparationNameType,
   params: any,
-  source: window,
 }
 
 export type URLParams = {

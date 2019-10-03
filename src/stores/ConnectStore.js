@@ -44,7 +44,7 @@ export default class ConnectStore {
   userInteractableRequest: RequestType;
 
   constructor(transportId: string) {
-    this._addMessageEventListeners();
+    this._setupContentScriptMessageListeners();
 
     runInAction(() => {
       this.transportId = transportId;
@@ -88,57 +88,6 @@ export default class ConnectStore {
     this.verifyAddressInfo = verifyAddressInfo;
   }
 
-  // Ledger API
-  _addMessageEventListeners = (): void => {
-    const processMessage = async (e) => {
-      if (e && e.data && e.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
-        const { source } = e;
-        const { params } = e.data;
-        const actn = e.data.action;
-
-        this._closeOnSorceClosed(source);
-
-        console.debug(`[YLC]::request: ${actn}`);
-
-        switch (actn) {
-          case OPARATION_NAME.TEST_READY:
-            this.testReady(source, actn);
-            break;
-          case OPARATION_NAME.GET_LEDGER_VERSION:
-          case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-          case OPARATION_NAME.SIGN_TX:
-          case OPARATION_NAME.SHOW_ADDRESS:
-          case OPARATION_NAME.DERIVE_ADDRESS:
-            this.setCurrentOparationName(actn);
-            if (!this.userInteractableRequest) {
-              this.userInteractableRequest = {
-                params,
-                action: actn,
-                source
-              };
-            }
-            break;
-          default:
-            // FOR NOW NO-OPERATION
-            break;
-        }
-      } else {
-        console.debug(`Got non ledger connectore request: ${e.origin}}`);
-      }
-    };
-
-    window.addEventListener('message', processMessage, false);
-  }
-
-  _replyMessage = (source: window, msg: MessageType): void => {
-    if (source) {
-      msg.action = `${msg.action}-reply`;
-      source.postMessage(msg, '*');
-    } else {
-      console.debug('[YOROI-LB]::_replyMessage::No Source window provided');
-    }
-  }
-
   _makeTransport = async (): Promise<Transport<*>> => {
     let transport;
     if (this.transportId === 'webauthn') {
@@ -163,33 +112,6 @@ export default class ConnectStore {
     return verResp;
   }
 
-  testReady = async (
-    source: window,
-    actn: string
-  ): Promise<void> => {
-    try {
-      console.debug(`[YOROI-LB]::testReady::${actn}`);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: true,
-          payload: true
-        }
-      );
-    } catch (err) {
-      console.error(`[YOROI-LB]::testReady::${actn}::error::${JSON.stringify(err)}`);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: false,
-          payload: { error: err.toString() }
-        }
-      );
-    }
-  }
-
   executeActionWithCustomRequest = (
     deviceName: DeviceCodeType,
     request: RequestType
@@ -202,24 +124,23 @@ export default class ConnectStore {
     this.setDeviceName(deviceName);
 
     const actn = this.userInteractableRequest.action;
-    const source = this.userInteractableRequest.source;
     const { params } = this.userInteractableRequest;
 
     switch (actn) {
       case OPARATION_NAME.GET_LEDGER_VERSION:
-        this.getVersion(source, actn);
+        this.getVersion(actn);
         break;
       case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-        this.getExtendedPublicKey(source, actn, params.hdPath);
+        this.getExtendedPublicKey(actn, params.hdPath);
         break;
       case OPARATION_NAME.SIGN_TX:
-        this.signTransaction(source, actn, params.inputs, params.outputs);
+        this.signTransaction(actn, params.inputs, params.outputs);
         break;
       case OPARATION_NAME.SHOW_ADDRESS:
-        this.showAddress(source, actn, params.hdPath, params.address);
+        this.showAddress(actn, params.hdPath, params.address);
         break;
       case OPARATION_NAME.DERIVE_ADDRESS:
-        this.deriveAddress(source, actn, params.hdPath);
+        this.deriveAddress(actn, params.hdPath);
         break;
       default:
         // FOR NOW NO-OPERATION
@@ -227,8 +148,32 @@ export default class ConnectStore {
     }
   }
 
-  getVersion = async (
+  testReady = async (
     source: window,
+    actn: string
+  ): Promise<void> => {
+    try {
+      console.debug(`[YLC]::testReady::${actn}`);
+      this._replyMessage(
+        {
+          action: actn,
+          success: true,
+          payload: true
+        }
+      );
+    } catch (err) {
+      console.error(`[YLC]::testReady::${actn}::error::${JSON.stringify(err)}`);
+      this._replyMessage(
+        {
+          action: actn,
+          success: false,
+          payload: { error: err.toString() }
+        }
+      );
+    }
+  }
+
+  getVersion = async (
     actn: OparationNameType
   ): Promise<GetVersionResponse | void> => {
     let transport;
@@ -239,7 +184,6 @@ export default class ConnectStore {
 
       const res: GetVersionResponse = await adaApp.getVersion();
       this._replyMessage(
-        source,
         {
           action: actn,
           success: true,
@@ -248,10 +192,9 @@ export default class ConnectStore {
       );
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::getVersion::${actn}::error::${JSON.stringify(err)}`);
+      console.error(`[YLC]::getVersion::${actn}::error::${JSON.stringify(err)}`);
       const e = this._ledgerErrToMessage(err);
       this._replyMessage(
-        source,
         {
           action: actn,
           success: false,
@@ -264,7 +207,6 @@ export default class ConnectStore {
   }
 
   getExtendedPublicKey = async (
-    source: window,
     actn: OparationNameType,
     hdPath: BIP32Path
   ): Promise<ExtenedPublicKeyResp | void> => {
@@ -285,7 +227,6 @@ export default class ConnectStore {
       };
 
       this._replyMessage(
-        source,
         {
           action: actn,
           success: true,
@@ -294,10 +235,9 @@ export default class ConnectStore {
       );
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::getExtendedPublicKey::${actn}::error::${JSON.stringify(err)}`);
+      console.error(`[YLC]::getExtendedPublicKey::${actn}::error::${JSON.stringify(err)}`);
       const e = this._ledgerErrToMessage(err);
       this._replyMessage(
-        source,
         {
           action: actn,
           success: false,
@@ -310,7 +250,6 @@ export default class ConnectStore {
   }
 
   signTransaction = async (
-    source: window,
     actn: OparationNameType,
     inputs: Array<InputTypeUTxO>,
     outputs: Array<OutputTypeAddress | OutputTypeChange>
@@ -325,7 +264,6 @@ export default class ConnectStore {
 
       const res: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
       this._replyMessage(
-        source,
         {
           action: actn,
           success: true,
@@ -334,10 +272,9 @@ export default class ConnectStore {
       );
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::signTransaction::${actn}::error::${JSON.stringify(err)}`);
+      console.error(`[YLC]::signTransaction::${actn}::error::${JSON.stringify(err)}`);
       const e = this._ledgerErrToMessage(err);
       this._replyMessage(
-        source,
         {
           action: actn,
           success: false,
@@ -350,7 +287,6 @@ export default class ConnectStore {
   }
 
   showAddress = async (
-    source: window,
     actn: OparationNameType,
     hdPath: BIP32Path,
     address: string
@@ -369,7 +305,6 @@ export default class ConnectStore {
 
       const res = await adaApp.showAddress(hdPath);
       this._replyMessage(
-        source,
         {
           action: actn,
           success: true,
@@ -377,10 +312,9 @@ export default class ConnectStore {
         }
       );
     } catch (err) {
-      console.error(`[YOROI-LB]::showAddress::${actn}::error::${JSON.stringify(err)}`);
+      console.error(`[YLC]::showAddress::${actn}::error::${JSON.stringify(err)}`);
       const e = this._ledgerErrToMessage(err);
       this._replyMessage(
-        source,
         {
           action: actn,
           success: false,
@@ -393,7 +327,6 @@ export default class ConnectStore {
   }
 
   deriveAddress = async (
-    source: window,
     actn: OparationNameType,
     hdPath: BIP32Path
   ): Promise<DeriveAddressResponse | void> => {
@@ -407,7 +340,6 @@ export default class ConnectStore {
 
       const res: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
       this._replyMessage(
-        source,
         {
           action: actn,
           success: true,
@@ -416,10 +348,9 @@ export default class ConnectStore {
       );
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::deriveAddress::${actn}::error::${JSON.stringify(err)}`);
+      console.error(`[YLC]::deriveAddress::${actn}::error::${JSON.stringify(err)}`);
       const e = this._ledgerErrToMessage(err);
       this._replyMessage(
-        source,
         {
           action: actn,
           success: false,
@@ -431,13 +362,64 @@ export default class ConnectStore {
     }
   }
 
-  _closeOnSorceClosed = (source: window) => {
-    setInterval(() => {
-      if (source.closed) {
-        window.close();
-      }
-    }, 1000);
+  // #==============================================#
+  // Website <==> Content Script communications
+  // #==============================================#
+
+  _setupContentScriptMessageListeners = (): void => {
+    window.addEventListener('message', this._onMessage, false);
   }
+
+  // Handle message from Content Script [ Website <== Content Script ]
+  _onMessage = (req: any): void => {
+    if (req && req.data && req.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
+      const { source } = req;
+      const { params } = req.data;
+      const actn = req.data.action;
+
+      console.debug(`[YLC]::request: ${actn}`);
+
+      switch (actn) {
+        case OPARATION_NAME.TEST_READY:
+          this.testReady(source, actn);
+          break;
+        case OPARATION_NAME.GET_LEDGER_VERSION:
+        case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
+        case OPARATION_NAME.SIGN_TX:
+        case OPARATION_NAME.SHOW_ADDRESS:
+        case OPARATION_NAME.DERIVE_ADDRESS:
+          this.setCurrentOparationName(actn);
+          if (!this.userInteractableRequest) {
+            this.userInteractableRequest = {
+              params,
+              action: actn,
+              source
+            };
+          }
+          break;
+        default:
+          // FOR NOW NO-OPERATION
+          break;
+      }
+    } else {
+      console.debug(`[YLC]::Got non ledger connectore request: ${req.origin}}`);
+    }
+  }
+
+  // Reply message to Content Script  [ Website ==> Content Script ]
+  _replyMessage = (msg: MessageType): void => {
+    msg.action = `${msg.action}-reply`;
+    window.postMessage(msg, '*');
+  }
+
+  // TODO: Fix
+  // _closeOnSorceClosed = (source: window) => {
+  //   setInterval(() => {
+  //     if (source.closed) {
+  //       window.close();
+  //     }
+  //   }, 1000);
+  // }
 
   /**
    * Converts error code to string

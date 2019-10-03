@@ -34,7 +34,7 @@ export default class TestBlock extends React.Component<Props, State> {
 
   onDeviceSelectionChange = (deviceName: DeviceCodeType) => {
     if (this.state.selectedDevice !== deviceName) {
-      console.debug(`Device Selection Changed to : ${deviceName}`);
+      console.debug(`[YLC]::Device Selection Changed to : ${deviceName}`);
       this.setState({ selectedDevice: deviceName });
     }
   };
@@ -117,7 +117,7 @@ export default class TestBlock extends React.Component<Props, State> {
 
     this.props.setCurrentOparationName(OPARATION_NAME.GET_LEDGER_VERSION);
     const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
-    console.debug(`onLogVersion: ${JSON.stringify(resp, null, 2)}`);
+    console.debug(`[YLC]::onLogVersion: ${JSON.stringify(resp, null, 2)}`);
   }
 
   /**
@@ -133,7 +133,7 @@ export default class TestBlock extends React.Component<Props, State> {
 
     this.props.setCurrentOparationName(OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY);
     const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
-    console.debug(`onLogExtendedPublicKey: ${JSON.stringify(resp, null, 2)}`);
+    console.debug(`[YLC]::onLogExtendedPublicKey: ${JSON.stringify(resp, null, 2)}`);
   }
 
   /**
@@ -179,7 +179,7 @@ export default class TestBlock extends React.Component<Props, State> {
 
     this.props.setCurrentOparationName(OPARATION_NAME.SIGN_TX);
     const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
-    console.debug(`onLogSignTransaction: ${JSON.stringify(resp, null, 2)}`);
+    console.debug(`[YLC]::onLogSignTransaction: ${JSON.stringify(resp, null, 2)}`);
   }
 
   /**
@@ -196,7 +196,7 @@ export default class TestBlock extends React.Component<Props, State> {
 
     this.props.setCurrentOparationName(OPARATION_NAME.SHOW_ADDRESS);
     const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
-    console.debug(`onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
+    console.debug(`[YLC]::onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
   }
 
   /**
@@ -212,6 +212,6 @@ export default class TestBlock extends React.Component<Props, State> {
 
     this.props.setCurrentOparationName(OPARATION_NAME.DERIVE_ADDRESS);
     const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
-    console.debug(`onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
+    console.debug(`[YLC]::onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
   }
 }
