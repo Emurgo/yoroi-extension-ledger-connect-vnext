@@ -1,12 +1,12 @@
 {
   "name": "yoroi-extension-ledger-connect",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "A web app which communicates between Ledger device and Yoroi Extension",
   "author": "EMURGO.io",
   "scripts": {
     "start": "webpack-dev-server --env development --open --hot",
     "build": "webpack --env production",
-    "predeploy": "yarn run build",
+    "predeploy": "nvm i && yarn run build",
     "deploy": "gh-pages -d dist",
     "flow": "flow",
     "lint": "eslint *.js",
