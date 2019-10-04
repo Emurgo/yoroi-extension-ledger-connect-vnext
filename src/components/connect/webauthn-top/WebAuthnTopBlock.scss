@@ -1,68 +1,28 @@
-$ShadowHeightChrome: 292px;
-$ShadowWidthChrome: 454px;
-
-.componentChrome {
-  display: inline-flex;
+.component {
   width: 100%;
+  min-height: 310px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   opacity: 0.8;
-  min-height: 320px;
-  background-color: #060D24;  // TODO, add
-
-  .dialogShadow {
-    margin: 0 auto;
-    height: $ShadowHeightChrome;
-    width: $ShadowWidthChrome;
-    
-    .textBlock {
-      position: relative;
-      top: $ShadowHeightChrome - 45;
-      left: $ShadowWidthChrome + 10;
-      color: white;
-  
-      .arrow {
-        height: 18px;
-        width: 18px;
-        vertical-align: sub;
-      }
-  
-      .text {
-        line-height: 18px;
-        font-size: 12px;
-        margin-left: 4px;
-      }
-    }    
+  background-color: #060D24; // TODO, add
+  .warningBlock {
+    display: flex;
+    margin-bottom: 6px;
+    .warningIcon {
+      height: 16px;
+      width: 22px;
+      vertical-align: sub;
+    }
+    .text {
+      height: 18px;
+      color: #ffffff;
+      line-height: 18px;
+      font-size: 11px; // TODO, add
+    }
   }
 }
 
 .componentFirefox {
-  display: inline-flex;
-  width: 100%;
-  opacity: 0.8;
-  height: 160px;
-  background-color: #060D24;  // TODO, add
-
-  .dialogShadow {
-    margin: 0 auto;
-    height: $ShadowHeightChrome;
-    width: $ShadowWidthChrome;
-    
-    .textBlock {
-      position: relative;
-      top: $ShadowHeightChrome - 45;
-      left: $ShadowWidthChrome + 10;
-      color: white;
-  
-      .arrow {
-        height: 18px;
-        width: 18px;
-        vertical-align: sub;
-      }
-  
-      .text {
-        line-height: 18px;
-        font-size: 12px;
-        margin-left: 4px;
-      }
-    }    
-  }
+  min-height: 160px;
 }
