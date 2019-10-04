@@ -1,8 +1,8 @@
 {
-  "suspence.fallbackText": "Loading...",
-  "footer.version": "Version:",
-  "footer.transportId": "Transport:",
-  "webauthn.note": "Do not press the <strong>Cancel</strong> button",
+  "suspence.fallbackText": "Carregando...",
+  "footer.version": "Versão:",
+  "footer.transportId": "Transporte:",
+  "webauthn.note": "Não pressione o <strong>Cancelar</strong>",
   "title.default": "Initializing...",
   "title.connect": "Connect to ledger hardware wallet",
   "title.sendTx": "Confirm transaction using ledger",
