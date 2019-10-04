@@ -28,7 +28,10 @@ import {
   OPARATION_NAME,
 } from '../types/cmn';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
-import { pathToString } from '../utils';
+import {
+  pathToString,
+  ledgerErrToMessage
+} from '../utils';
 
 export type ExtenedPublicKeyResp = {
   ePublicKey: GetExtendedPublicKeyResponse,
@@ -147,6 +150,10 @@ export default class ConnectStore {
         break;
     }
   }
+
+  // #==============================================#
+  //  Cardano Ledger APIs
+  // #==============================================#
 
   getVersion = async (
     actn: OparationNameType
@@ -268,7 +275,10 @@ export default class ConnectStore {
   //  Website <==> Content Script communications
   // #==============================================#
 
-  // Handle message from Content Script [ Website <== Content Script ]
+  /**
+   * Handle message from Content Script [ Website <== Content Script ]
+   * @param {*} req request message object
+   */
   _onMessage = (req: any): void => {
     if (req && req.data && req.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
       const { source } = req;
@@ -301,73 +311,46 @@ export default class ConnectStore {
     }
   }
 
-  // Reply message to Content Script  [ Website ==> Content Script ]
+  /**
+   * Wrapper for _replyMessage()
+   * @param {*} actn action string
+   * @param {*} success success status boolean
+   * @param {*} payload payload object
+   */
   _replyMessageWrap = (
-    a: string,
-    s: boolean,
-    p: any
+    actn: string,
+    success: boolean,
+    payload: any
   ): void => {
     this._replyMessage({
-      action: a,
-      success: s,
-      payload: p
+      success,
+      payload,
+      action: actn,
     });
   }
 
+  /**
+   * Wrapper for _replyMessage() for sending error
+   * @param {*} actn action string
+   * @param {*} err Error object
+   */
   _replyError = (
     actn: string,
     err: Error
   ): void => {
     console.error(`[YLC]::${actn}::error::${JSON.stringify(err)}`);
     const payload = {
-      error: _ledgerErrToMessage(err).toString()
+      error: ledgerErrToMessage(err).toString()
     };
     this._replyMessageWrap(actn, false, payload);
   }
 
+  /**
+   * Reply message to Content Script  [ Website ==> Content Script ]
+   * @param {*} msg MessageType object as reply
+   */
   _replyMessage = (msg: MessageType): void => {
     msg.action = `${msg.action}-reply`;
     window.postMessage(msg, '*');
   }
 }
-
-
-/**
- * Converts error code to string
- * @param {*} err
- */
-const _ledgerErrToMessage = (err: any): any => {
-  const isU2FError = (error) => !!error && !!(error).metaData;
-  const isStringError = (error) => typeof error === 'string';
-  // https://developers.yubico.com/U2F/Libraries/Client_error_codes.html
-  const isErrorWithId = (error) => (
-    Object.prototype.hasOwnProperty.call(error, 'id') &&
-    Object.prototype.hasOwnProperty.call(error, 'message')
-  );
-  if (isU2FError(err)) {
-    // Timeout
-    if (err.metaData.code === 5) {
-      return 'LEDGER_TIMEOUT';
-    }
-    return err.metaData.type;
-  }
-  if (isStringError(err)) {
-    // Wrong app logged into
-    if (err.includes('6804')) {
-      return 'LEDGER_WRONG_APP';
-    }
-    // Ledger locked
-    if (err.includes('6801')) {
-      return 'LEDGER_LOCKED';
-    }
-    return err;
-  }
-  if (isErrorWithId(err)) {
-    // Browser doesn't support U2F
-    if (err.message.includes('U2F not supported')) {
-      return 'U2F_NOT_SUPPORTED';
-    }
-  }
-  // Other
-  return err.toString();
-};
