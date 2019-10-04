@@ -13,13 +13,26 @@ const messages = defineMessages({
   }
 });
 
-type Props = {||}
+type Props = {|
+  showWebAuthnTop: boolean,
+  isFirefox: boolean
+|}
 
 @observer
 export default class WebAuthnTopBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
 
   render() {
+    const {
+      showWebAuthnTop,
+      isFirefox
+    } = this.props;
+
+    if (!showWebAuthnTop) {
+      // Do not show this component
+      return (null);
+    }
+
     return (
       <div className={styles.component}>
         <div className={styles.dialogShadow}>

@@ -30,6 +30,7 @@ export default class ConnectBlock extends React.Component<Props> {
   render() {
     const {
       isWebAuthn,
+      isFirefox,
       progressState,
       currentOparationName,
       executeAction,
@@ -50,7 +51,10 @@ export default class ConnectBlock extends React.Component<Props> {
 
     return (
       <div className={styles.component}>
-        { showWebAuthnTop && <WebAuthnTopBlock />}
+        <WebAuthnTopBlock
+          showWebAuthnTop={showWebAuthnTop}
+          isFirefox={isFirefox}
+        />
         <TitleBlock currentOparationName={currentOparationName} />
         {content}
       </div>
