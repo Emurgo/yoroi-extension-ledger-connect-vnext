@@ -1,8 +1,5 @@
 // @flow
 import type { BIP32Path } from '@cardano-foundation/ledgerjs-hw-app-cardano';
-import TransportWebAuthn from '@ledgerhq/hw-transport-webauthn';
-import TransportU2F from '@ledgerhq/hw-transport-u2f';
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 
 const HARDENED = 0x80000000;
 
@@ -70,13 +67,13 @@ export const makeTransport = async (transportId: string): Promise<Transport<*>> 
 
   switch (transportId) {
     case 'webauthn':
-      transport = TransportWebAuthn;
+      transport = require('@ledgerhq/hw-transport-webauthn').default;
       break;
     case 'u2f':
-      transport = TransportU2F;
+      transport = require('@ledgerhq/hw-transport-u2f').default;
       break;
     case 'webusb':
-      transport = TransportWebUSB;
+      transport = require('@ledgerhq/hw-transport-webusb').default;
       break;
     default:
       throw new Error('Transport protocol not supported');
