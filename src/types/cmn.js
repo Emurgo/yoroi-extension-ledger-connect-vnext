@@ -28,8 +28,7 @@ export const PROGRESS_STATE = Object.freeze({
 export type ProgressStateType = $Values<typeof PROGRESS_STATE>;
 
 export const OPARATION_NAME = Object.freeze({
-  NO_OPARATION: 'no-oparation',
-  TEST_READY: 'is-ready', // TODO rename, is-ready -> test-ready
+  NO_OPARATION: 'no-oparation', // For internal management
   GET_LEDGER_VERSION: 'ledger-get-version',
   GET_EXTENDED_PUBLIC_KEY: 'ledger-get-extended-public-key',
   SIGN_TX: 'ledger-sign-transaction',

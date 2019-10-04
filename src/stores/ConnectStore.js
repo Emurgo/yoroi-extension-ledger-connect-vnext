@@ -44,7 +44,7 @@ export default class ConnectStore {
   userInteractableRequest: RequestType;
 
   constructor(transportId: string) {
-    this._setupContentScriptMessageListeners();
+    window.addEventListener('message', this._onMessage);
 
     runInAction(() => {
       this.transportId = transportId;
@@ -148,59 +148,20 @@ export default class ConnectStore {
     }
   }
 
-  testReady = async (
-    source: window,
-    actn: string
-  ): Promise<void> => {
-    try {
-      console.debug(`[YLC]::testReady::${actn}`);
-      this._replyMessage(
-        {
-          action: actn,
-          success: true,
-          payload: true
-        }
-      );
-    } catch (err) {
-      console.error(`[YLC]::testReady::${actn}::error::${JSON.stringify(err)}`);
-      this._replyMessage(
-        {
-          action: actn,
-          success: false,
-          payload: { error: err.toString() }
-        }
-      );
-    }
-  }
-
   getVersion = async (
     actn: OparationNameType
   ): Promise<GetVersionResponse | void> => {
     let transport;
     try {
-
       transport = await this._makeTransport();
-      const adaApp = new AdaApp(transport);
 
+      const adaApp = new AdaApp(transport);
       const res: GetVersionResponse = await adaApp.getVersion();
-      this._replyMessage(
-        {
-          action: actn,
-          success: true,
-          payload: res,
-        }
-      );
+      this._replyMessageWrap(actn, true, res);
+
       return res;
     } catch (err) {
-      console.error(`[YLC]::getVersion::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() }
-        }
-      );
+      this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
@@ -212,7 +173,6 @@ export default class ConnectStore {
   ): Promise<ExtenedPublicKeyResp | void> => {
     let transport;
     try {
-
       transport = await this._makeTransport();
       const verResp = await this._detectLedgerDevice(transport);
 
@@ -225,25 +185,11 @@ export default class ConnectStore {
         ePublicKey: ePublicKeyResp,
         deviceVersion: verResp
       };
+      this._replyMessageWrap(actn, true, res);
 
-      this._replyMessage(
-        {
-          action: actn,
-          success: true,
-          payload: res,
-        }
-      );
       return res;
     } catch (err) {
-      console.error(`[YLC]::getExtendedPublicKey::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() }
-        }
-      );
+      this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
@@ -256,31 +202,16 @@ export default class ConnectStore {
   ): Promise<SignTransactionResponse | void> => {
     let transport;
     try {
-
       transport = await this._makeTransport();
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-
       const res: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
-      this._replyMessage(
-        {
-          action: actn,
-          success: true,
-          payload: res,
-        }
-      );
+      this._replyMessageWrap(actn, true, res);
+
       return res;
     } catch (err) {
-      console.error(`[YLC]::signTransaction::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() }
-        }
-      );
+      this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
@@ -302,25 +233,11 @@ export default class ConnectStore {
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-
       const res = await adaApp.showAddress(hdPath);
-      this._replyMessage(
-        {
-          action: actn,
-          success: true,
-          payload: res
-        }
-      );
+      this._replyMessageWrap(actn, true, res);
+
     } catch (err) {
-      console.error(`[YLC]::showAddress::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() }
-        }
-      );
+      this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
@@ -332,43 +249,24 @@ export default class ConnectStore {
   ): Promise<DeriveAddressResponse | void> => {
     let transport;
     try {
-
       transport = await this._makeTransport();
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-
       const res: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
-      this._replyMessage(
-        {
-          action: actn,
-          success: true,
-          payload: res,
-        }
-      );
+      this._replyMessageWrap(actn, true, res);
+
       return res;
     } catch (err) {
-      console.error(`[YLC]::deriveAddress::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() },
-        }
-      );
+      this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
   }
 
   // #==============================================#
-  // Website <==> Content Script communications
+  //  Website <==> Content Script communications
   // #==============================================#
-
-  _setupContentScriptMessageListeners = (): void => {
-    window.addEventListener('message', this._onMessage, false);
-  }
 
   // Handle message from Content Script [ Website <== Content Script ]
   _onMessage = (req: any): void => {
@@ -380,9 +278,6 @@ export default class ConnectStore {
       console.debug(`[YLC]::request: ${actn}`);
 
       switch (actn) {
-        case OPARATION_NAME.TEST_READY:
-          this.testReady(source, actn);
-          break;
         case OPARATION_NAME.GET_LEDGER_VERSION:
         case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
         case OPARATION_NAME.SIGN_TX:
@@ -407,61 +302,72 @@ export default class ConnectStore {
   }
 
   // Reply message to Content Script  [ Website ==> Content Script ]
+  _replyMessageWrap = (
+    a: string,
+    s: boolean,
+    p: any
+  ): void => {
+    this._replyMessage({
+      action: a,
+      success: s,
+      payload: p
+    });
+  }
+
+  _replyError = (
+    actn: string,
+    err: Error
+  ): void => {
+    console.error(`[YLC]::${actn}::error::${JSON.stringify(err)}`);
+    const payload = {
+      error: _ledgerErrToMessage(err).toString()
+    };
+    this._replyMessageWrap(actn, false, payload);
+  }
+
   _replyMessage = (msg: MessageType): void => {
     msg.action = `${msg.action}-reply`;
     window.postMessage(msg, '*');
   }
-
-  // TODO: Fix
-  // _closeOnSorceClosed = (source: window) => {
-  //   setInterval(() => {
-  //     if (source.closed) {
-  //       window.close();
-  //     }
-  //   }, 1000);
-  // }
-
-  /**
-   * Converts error code to string
-   * @param {*} err
-   */
-  _ledgerErrToMessage = (err: any): any => {
-    const isU2FError = (error) => !!error && !!(error).metaData;
-    const isStringError = (error) => typeof error === 'string';
-    // https://developers.yubico.com/U2F/Libraries/Client_error_codes.html
-    const isErrorWithId = (error) => (
-      Object.prototype.hasOwnProperty.call(error, 'id') &&
-      Object.prototype.hasOwnProperty.call(error, 'message')
-    );
-
-    if (isU2FError(err)) {
-      // Timeout
-      if (err.metaData.code === 5) {
-        return 'LEDGER_TIMEOUT';
-      }
-      return err.metaData.type;
-    }
-
-    if (isStringError(err)) {
-      // Wrong app logged into
-      if (err.includes('6804')) {
-        return 'LEDGER_WRONG_APP';
-      }
-      // Ledger locked
-      if (err.includes('6801')) {
-        return 'LEDGER_LOCKED';
-      }
-      return err;
-    }
-
-    if (isErrorWithId(err)) {
-      // Browser doesn't support U2F
-      if (err.message.includes('U2F not supported')) {
-        return 'U2F_NOT_SUPPORTED';
-      }
-    }
-
-    // Other
-    return err.toString();
-  }
 }
+
+
+/**
+ * Converts error code to string
+ * @param {*} err
+ */
+const _ledgerErrToMessage = (err: any): any => {
+  const isU2FError = (error) => !!error && !!(error).metaData;
+  const isStringError = (error) => typeof error === 'string';
+  // https://developers.yubico.com/U2F/Libraries/Client_error_codes.html
+  const isErrorWithId = (error) => (
+    Object.prototype.hasOwnProperty.call(error, 'id') &&
+    Object.prototype.hasOwnProperty.call(error, 'message')
+  );
+  if (isU2FError(err)) {
+    // Timeout
+    if (err.metaData.code === 5) {
+      return 'LEDGER_TIMEOUT';
+    }
+    return err.metaData.type;
+  }
+  if (isStringError(err)) {
+    // Wrong app logged into
+    if (err.includes('6804')) {
+      return 'LEDGER_WRONG_APP';
+    }
+    // Ledger locked
+    if (err.includes('6801')) {
+      return 'LEDGER_LOCKED';
+    }
+    return err;
+  }
+  if (isErrorWithId(err)) {
+    // Browser doesn't support U2F
+    if (err.message.includes('U2F not supported')) {
+      return 'U2F_NOT_SUPPORTED';
+    }
+  }
+  // Other
+  return err.toString();
+};
