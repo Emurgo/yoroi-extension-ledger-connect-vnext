@@ -12,8 +12,6 @@ import type {
   DeriveAddressResponse
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type Transport from '@ledgerhq/hw-transport';
-import TransportWebAuthn from '@ledgerhq/hw-transport-webauthn';
-import TransportU2F from '@ledgerhq/hw-transport-u2f';
 
 import type {
   MessageType,
@@ -30,7 +28,8 @@ import {
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
 import {
   pathToString,
-  ledgerErrToMessage
+  ledgerErrToMessage,
+  makeTransport
 } from '../utils';
 
 export type ExtenedPublicKeyResp = {
@@ -89,19 +88,6 @@ export default class ConnectStore {
   @action('Change Verify Address Info')
   setVerifyAddressInfo = (verifyAddressInfo: VerifyAddressInfoType) => {
     this.verifyAddressInfo = verifyAddressInfo;
-  }
-
-  _makeTransport = async (): Promise<Transport<*>> => {
-    let transport;
-    if (this.transportId === 'webauthn') {
-      transport = TransportWebAuthn;
-    } else if (this.transportId === 'u2f') {
-      transport = TransportU2F;
-    } else {
-      throw new Error('Transport protocol not supported');
-    }
-
-    return await transport.create();
   }
 
   _detectLedgerDevice = async (transport: Transport<*>): Promise<GetVersionResponse> => {
@@ -180,7 +166,7 @@ export default class ConnectStore {
   ): Promise<ExtenedPublicKeyResp | void> => {
     let transport;
     try {
-      transport = await this._makeTransport();
+      transport = await makeTransport(this.transportId);
       const verResp = await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
@@ -209,7 +195,7 @@ export default class ConnectStore {
   ): Promise<SignTransactionResponse | void> => {
     let transport;
     try {
-      transport = await this._makeTransport();
+      transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
@@ -236,7 +222,7 @@ export default class ConnectStore {
         hdPath: pathToString(hdPath)
       });
 
-      transport = await this._makeTransport();
+      transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
@@ -256,7 +242,7 @@ export default class ConnectStore {
   ): Promise<DeriveAddressResponse | void> => {
     let transport;
     try {
-      transport = await this._makeTransport();
+      transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);

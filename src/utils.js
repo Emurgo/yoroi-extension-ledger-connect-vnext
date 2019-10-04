@@ -1,5 +1,8 @@
 // @flow
 import type { BIP32Path } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import TransportWebAuthn from '@ledgerhq/hw-transport-webauthn';
+import TransportU2F from '@ledgerhq/hw-transport-u2f';
+import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 
 const HARDENED = 0x80000000;
 
@@ -56,4 +59,28 @@ export const ledgerErrToMessage = (err: any): any => {
 
   // Other
   return err.toString();
+};
+
+/**
+ * Create Ledger Transport protocol
+ * @param {*} transportId transportId string
+ */
+export const makeTransport = async (transportId: string): Promise<Transport<*>> => {
+  let transport;
+
+  switch (transportId) {
+    case 'webauthn':
+      transport = TransportWebAuthn;
+      break;
+    case 'u2f':
+      transport = TransportU2F;
+      break;
+    case 'webusb':
+      transport = TransportWebUSB;
+      break;
+    default:
+      throw new Error('Transport protocol not supported');
+  }
+
+  return await transport.create();
 };
