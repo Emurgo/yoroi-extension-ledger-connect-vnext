@@ -1,22 +1,55 @@
-$ShadowHeight: 292px;
-$ShadowWidth: 454px;
+$ShadowHeightChrome: 292px;
+$ShadowWidthChrome: 454px;
 
-.component {
+.componentChrome {
   display: inline-flex;
   width: 100%;
   opacity: 0.8;
-  height: 320px;
+  min-height: 320px;
   background-color: #060D24;  // TODO, add
 
   .dialogShadow {
     margin: 0 auto;
-    height: $ShadowHeight;
-    width: $ShadowWidth;
+    height: $ShadowHeightChrome;
+    width: $ShadowWidthChrome;
     
     .textBlock {
       position: relative;
-      top: $ShadowHeight - 45;
-      left: $ShadowWidth + 10;
+      top: $ShadowHeightChrome - 45;
+      left: $ShadowWidthChrome + 10;
+      color: white;
+  
+      .arrow {
+        height: 18px;
+        width: 18px;
+        vertical-align: sub;
+      }
+  
+      .text {
+        line-height: 18px;
+        font-size: 12px;
+        margin-left: 4px;
+      }
+    }    
+  }
+}
+
+.componentFirefox {
+  display: inline-flex;
+  width: 100%;
+  opacity: 0.8;
+  height: 160px;
+  background-color: #060D24;  // TODO, add
+
+  .dialogShadow {
+    margin: 0 auto;
+    height: $ShadowHeightChrome;
+    width: $ShadowWidthChrome;
+    
+    .textBlock {
+      position: relative;
+      top: $ShadowHeightChrome - 45;
+      left: $ShadowWidthChrome + 10;
       color: white;
   
       .arrow {

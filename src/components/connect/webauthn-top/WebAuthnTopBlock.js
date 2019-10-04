@@ -33,8 +33,10 @@ export default class WebAuthnTopBlock extends React.Component<Props> {
       return (null);
     }
 
+    const styleComponent = isFirefox ? styles.componentFirefox : styles.componentChrome;
+
     return (
-      <div className={styles.component}>
+      <div className={styleComponent}>
         <div className={styles.dialogShadow}>
           <div className={styles.textBlock}>
             <img
