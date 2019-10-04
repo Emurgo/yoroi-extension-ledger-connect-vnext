@@ -17,6 +17,7 @@ import styles from './ConnectBlock.scss';
 
 type Props = {|
   isWebAuthn: boolean,
+  isFirefox: boolean,
   progressState: ProgressStateType,
   currentOparationName: OparationNameType,
   executeAction: Function,

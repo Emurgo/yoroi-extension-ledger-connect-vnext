@@ -81,8 +81,3 @@ export const makeTransport = async (transportId: string): Promise<Transport<*>> 
 
   return await transport.create();
 };
-
-/**
- * true for Firefox browser
- */
-export const isFirefox = (typeof InstallTrigger !== 'undefined');

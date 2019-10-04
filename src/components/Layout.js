@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 
 import TestBlock from './manual-test/TestBlock';
 import Footer from './footer/Footer';
+
 import styles from './Layout.scss';
 
 type Props = {|
@@ -30,13 +31,16 @@ export default class Layout extends React.Component<Props> {
 
     return (
       <div className={styles.component}>
-        {children}
+        {/* TestBlock will only be visible in Development mode */}
         {isDevelopment && (
           <TestBlock
             executeActionWithCustomRequest={executeActionWithCustomRequest}
             setCurrentOparationName={setCurrentOparationName}
           />
         )}
+        {/* Development mode block end */}
+
+        {children}
         <Footer
           appVersion={appVersion}
           transportId={transportId}

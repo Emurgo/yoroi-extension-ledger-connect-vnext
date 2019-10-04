@@ -39,6 +39,7 @@ export default class ConnectPage extends React.Component<Props> {
       >
         <ConnectBlock
           isWebAuthn={isTransportWebAuthn}
+          isFirefox={ENV.isFirefox}
           progressState={progressState}
           currentOparationName={currentOparationName}
           executeAction={executeAction}
