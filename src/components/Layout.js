@@ -4,7 +4,7 @@ import type { Node } from 'react';
 import { observer } from 'mobx-react';
 
 import TestBlock from './manual-test/TestBlock';
-import Footer from './Footer';
+import Footer from './footer/Footer';
 import styles from './Layout.scss';
 
 type Props = {|
