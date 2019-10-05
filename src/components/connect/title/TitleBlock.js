@@ -9,10 +9,6 @@ import { OPARATION_NAME } from '../../../types/cmn';
 import styles from './TitleBlock.scss';
 
 const messages = defineMessages({
-  titleDefault: {
-    id: 'title.default',
-    defaultMessage: '!!!Loading...',
-  },
   titleConnect: {
     id: 'title.connect',
     defaultMessage: '!!!Connect to ledger hardware wallet',
@@ -65,9 +61,7 @@ export default class TitleBlock extends React.Component<Props> {
         title = messages.titleDeriveAddress;
         break;
       default:
-        // FOR NOW NO-OPERATION
-        title = messages.titleDefault;
-        break;
+        return (null);
     }
 
     return (

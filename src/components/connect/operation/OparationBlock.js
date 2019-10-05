@@ -10,7 +10,6 @@ import type {
   VerifyAddressInfoType,
 }  from '../../../types/cmn';
 import {
-  PROGRESS_STATE,
   OPARATION_NAME,
 } from '../../../types/cmn';
 import ConnectLedgerHintBlock from './connect/ConnectLedgerHintBlock';

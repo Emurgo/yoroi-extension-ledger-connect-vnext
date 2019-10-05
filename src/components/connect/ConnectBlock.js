@@ -39,7 +39,10 @@ export default class ConnectBlock extends React.Component<Props> {
     } = this.props;
 
     const content = !deviceName ?
-      <DeviceSelectionBlock executeAction={executeAction} /> :
+      <DeviceSelectionBlock
+        executeAction={executeAction}
+        currentOparationName={currentOparationName}
+      /> :
       <OparationBlock
         deviceName={deviceName}
         currentOparationName={currentOparationName}
