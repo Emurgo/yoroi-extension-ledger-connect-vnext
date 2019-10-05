@@ -62,7 +62,7 @@ export const ledgerErrToMessage = (err: any): any => {
  * Create Ledger Transport protocol
  * @param {*} transportId transportId string
  */
-export const makeTransport = async (transportId: string): Promise<Transport<*>> => {
+export const makeTransport = async (transportId: string): any => {
   let transport;
 
   switch (transportId) {

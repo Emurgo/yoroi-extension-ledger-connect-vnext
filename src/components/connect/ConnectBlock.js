@@ -47,7 +47,10 @@ export default class ConnectBlock extends React.Component<Props> {
         verifyAddressInfo={verifyAddressInfo}
       />;
 
-    const showWebAuthnTop = isWebAuthn && deviceName;
+    let showWebAuthnTop: boolean = false;
+    if (isWebAuthn && deviceName) {
+      showWebAuthnTop = true;
+    }
 
     return (
       <div className={styles.component}>

@@ -11,7 +11,6 @@ import type {
   SignTransactionResponse,
   DeriveAddressResponse
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
-import type Transport from '@ledgerhq/hw-transport';
 
 import type {
   MessageType,
@@ -90,7 +89,7 @@ export default class ConnectStore {
     this.verifyAddressInfo = verifyAddressInfo;
   }
 
-  _detectLedgerDevice = async (transport: Transport<*>): Promise<GetVersionResponse> => {
+  _detectLedgerDevice = async (transport: any): Promise<GetVersionResponse> => {
     this.setProgressState(PROGRESS_STATE.DETECTING_DEVICE);
 
     const adaApp = new AdaApp(transport);
@@ -146,7 +145,7 @@ export default class ConnectStore {
   ): Promise<GetVersionResponse | void> => {
     let transport;
     try {
-      transport = await this._makeTransport();
+      transport = await makeTransport(this.transportId);
 
       const adaApp = new AdaApp(transport);
       const res: GetVersionResponse = await adaApp.getVersion();
