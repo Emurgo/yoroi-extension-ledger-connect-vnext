@@ -292,6 +292,9 @@ export default class ConnectStore {
             };
           }
           break;
+        case OPARATION_NAME.CLOSE_WINDOW:
+          window.close();
+          break;
         default:
           // FOR NOW NO-OPERATION
           break;

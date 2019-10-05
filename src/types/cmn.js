@@ -29,6 +29,7 @@ export type ProgressStateType = $Values<typeof PROGRESS_STATE>;
 
 export const OPARATION_NAME = Object.freeze({
   NO_OPARATION: 'no-oparation', // For internal management
+  CLOSE_WINDOW: 'close-window',
   GET_LEDGER_VERSION: 'ledger-get-version',
   GET_EXTENDED_PUBLIC_KEY: 'ledger-get-extended-public-key',
   SIGN_TX: 'ledger-sign-transaction',
