@@ -64,6 +64,11 @@ export default class ConnectStore {
     return this.transportId === 'u2f';
   }
 
+  @computed
+  get isTransportWebUSB(): boolean {
+    return this.transportId === 'webusb';
+  }
+
   @action('Changing Transport')
   setTransport = (transportId: string) => {
     this.transportId = transportId;
