@@ -5,6 +5,7 @@ import { intlShape, defineMessages } from 'react-intl';
 
 import type { DeviceCodeType }  from '../../../../types/cmn';
 import HintBlock from '../../../widgets/HintBlock';
+import HintGap from '../../../widgets/HintGap';
 
 import styles from './ConnectLedgerHintBlock.scss';
 
@@ -47,13 +48,13 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
     const imgConnect2 = require(`../../../../assets/img/nano-${deviceCode}/hint-connect-2.png`);
 
     const content = (
-      <div className={styles.stepsRowOne}>
+      <div className={styles.stepsRow}>
         <HintBlock
           number={stepStartNumber + 1}
           text={message[`${deviceCode}ExportPublicKey`]}
           imagePath={imgConnect1}
         />
-        <div className={styles.gap} />
+        <HintGap />
         <HintBlock
           number={stepStartNumber + 2}
           text={message[`${deviceCode}ConfirmExportPublicKey`]}

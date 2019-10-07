@@ -8,6 +8,7 @@ import type {
   ProgressStateType
 }  from '../../../../types/cmn';
 import HintBlock from '../../../widgets/HintBlock';
+import HintGap from '../../../widgets/HintGap';
 
 import styles from './CommonHintBlock.scss';
 
@@ -49,13 +50,13 @@ export default class CommonHintBlock extends React.Component<Props> {
 
     return (
       <div className={styles.component}>
-        <div className={styles.stepsRowOne}>
+        <div className={styles.stepsRow}>
           <HintBlock
             number={1}
             text={message[`${deviceCode}PinCode`]}
             imagePath={imgCommon1}
           />
-          <div className={styles.gap} />
+          <HintGap />
           <HintBlock
             number={2}
             text={message[`${deviceCode}CardanoApp`]}

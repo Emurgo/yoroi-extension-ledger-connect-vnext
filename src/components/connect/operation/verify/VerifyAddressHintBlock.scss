@@ -1,16 +1,7 @@
+@import '../CommonStyle.scss';
+
 .component {
-  width: 100%;
-  .stepsRowOne {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-
-    .gap {
-      width: 40px;
-    }
-
+  .stepsRow {
     :global(.HintBlock_component) {
       width: 24%;
     }

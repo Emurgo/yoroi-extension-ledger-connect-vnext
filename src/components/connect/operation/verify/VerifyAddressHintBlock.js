@@ -8,6 +8,7 @@ import type {
   VerifyAddressInfoType,
 }  from '../../../../types/cmn';
 import HintBlock from '../../../widgets/HintBlock';
+import HintGap from '../../../widgets/HintGap';
 
 import styles from './VerifyAddressHintBlock.scss';
 
@@ -55,26 +56,26 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
       wasDeviceLocked
     } = this.props;
 
-    const stepStartNumber: number = wasDeviceLocked ? 2 : 0; // 2 = count of common step        
+    const stepStartNumber: number = wasDeviceLocked ? 2 : 0; // 2 = count of common step
     const imgVerify1 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-1.png`);
     const imgVerify2 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-2.png`);
     const imgVerify3 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-3.png`);
 
     const content = (
-      <div className={styles.stepsRowOne}>
+      <div className={styles.stepsRow}>
         <HintBlock
           number={stepStartNumber + 1}
           text={message[`${deviceCode}Info`]}
           imagePath={imgVerify1}
         />
-        <div className={styles.gap} />
+        <HintGap />
         <HintBlock
           number={stepStartNumber + 2}
           text={message[`${deviceCode}Path`]}
           imagePath={imgVerify2}
           secondaryText={verifyAddressInfo.hdPath}
         />
-        <div className={styles.gap} />
+        <HintGap />
         <HintBlock
           number={stepStartNumber + 3}
           text={message[`${deviceCode}Address`]}
