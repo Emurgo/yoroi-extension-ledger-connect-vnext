@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import type {
   DeviceCodeType,
   ProgressStateType,
-  OparationNameType,
+  OperationNameType,
   VerifyAddressInfoType,
 } from '../../types/cmn';
 import { PROGRESS_STATE } from '../../types/cmn';
@@ -13,7 +13,7 @@ import LoadingFull from '../widgets/LoadingFull';
 import WebAuthnTopBlock from './webauthn-top/WebAuthnTopBlock';
 import TitleBlock from './title/TitleBlock';
 import DeviceSelectionBlock from './device-selection/DeviceSelectionBlock';
-import OparationBlock from './operation/OparationBlock';
+import OperationBlock from './operation/OperationBlock';
 
 import styles from './ConnectBlock.scss';
 
@@ -21,9 +21,9 @@ type Props = {|
   isWebAuthn: boolean,
   isFirefox: boolean,
   progressState: ProgressStateType,
-  currentOparationName: OparationNameType,
+  currentOperationName: OperationNameType,
   executeAction: Function,
-  deviceName: DeviceCodeType,
+  deviceCode: DeviceCodeType,
   verifyAddressInfo: VerifyAddressInfoType,
 |};
 
@@ -34,9 +34,9 @@ export default class ConnectBlock extends React.Component<Props> {
       isWebAuthn,
       isFirefox,
       progressState,
-      currentOparationName,
+      currentOperationName,
       executeAction,
-      deviceName,
+      deviceCode,
       verifyAddressInfo
     } = this.props;
 
@@ -54,9 +54,9 @@ export default class ConnectBlock extends React.Component<Props> {
       default:
         showWebAuthnTop = isWebAuthn;
         content = (
-          <OparationBlock
-            deviceName={deviceName}
-            currentOparationName={currentOparationName}
+          <OperationBlock
+            deviceCode={deviceCode}
+            currentOperationName={currentOperationName}
             progressState={progressState}
             verifyAddressInfo={verifyAddressInfo}
           />
@@ -69,7 +69,7 @@ export default class ConnectBlock extends React.Component<Props> {
           showWebAuthnTop={showWebAuthnTop}
           isFirefox={isFirefox}
         />
-        <TitleBlock currentOparationName={currentOparationName} />
+        <TitleBlock currentOperationName={currentOperationName} />
         {content}
       </div>
     );

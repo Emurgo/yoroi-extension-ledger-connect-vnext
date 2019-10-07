@@ -11,14 +11,14 @@ import type {
   DeviceCodeType,
 } from '../../types/cmn';
 import {
-  OPARATION_NAME,
+  OPERATION_NAME,
   DEVICE_CODE,
 } from '../../types/cmn';
 import styles from './TestBlock.scss';
 
 type Props = {|
   executeActionWithCustomRequest: Function,
-  setCurrentOparationName: Function,
+  setCurrentOperationName: Function,
 |};
 
 type State = {|
@@ -131,12 +131,12 @@ export default class TestBlock extends React.Component<Props, State> {
   onLogVersion = async () => {
     if (this.state.visible === `${styles.visible}`) {
       const req = {
-        action: OPARATION_NAME.GET_LEDGER_VERSION,
+        action: OPERATION_NAME.GET_LEDGER_VERSION,
         params: null,
         source: null
       };
 
-      this.props.setCurrentOparationName(OPARATION_NAME.GET_LEDGER_VERSION);
+      this.props.setCurrentOperationName(OPERATION_NAME.GET_LEDGER_VERSION);
       const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
       console.debug(`[YLC]::onLogVersion: ${JSON.stringify(resp, null, 2)}`);
     }
@@ -149,12 +149,12 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const hdPath = CUtils.str_to_path("44'/1815'/0'");
       const req = {
-        action: OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY,
+        action: OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
         params: { hdPath },
         source: null
       };
 
-      this.props.setCurrentOparationName(OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY);
+      this.props.setCurrentOperationName(OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY);
       const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
       console.debug(`[YLC]::onLogExtendedPublicKey: ${JSON.stringify(resp, null, 2)}`);
     }
@@ -194,7 +194,7 @@ export default class TestBlock extends React.Component<Props, State> {
       ];
 
       const req = {
-        action: OPARATION_NAME.SIGN_TX,
+        action: OPERATION_NAME.SIGN_TX,
         params: {
           inputs,
           outputs
@@ -202,7 +202,7 @@ export default class TestBlock extends React.Component<Props, State> {
         source: null
       };
 
-      this.props.setCurrentOparationName(OPARATION_NAME.SIGN_TX);
+      this.props.setCurrentOperationName(OPERATION_NAME.SIGN_TX);
       const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
       console.debug(`[YLC]::onLogSignTransaction: ${JSON.stringify(resp, null, 2)}`);
     }
@@ -216,12 +216,12 @@ export default class TestBlock extends React.Component<Props, State> {
       const hdPath = CUtils.str_to_path("44'/1815'/1'/1/0");
       const address = 'Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV';
       const req = {
-        action: OPARATION_NAME.SHOW_ADDRESS,
+        action: OPERATION_NAME.SHOW_ADDRESS,
         params: { hdPath, address },
         source: null
       };
 
-      this.props.setCurrentOparationName(OPARATION_NAME.SHOW_ADDRESS);
+      this.props.setCurrentOperationName(OPERATION_NAME.SHOW_ADDRESS);
       const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
       console.debug(`[YLC]::onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
     }
@@ -234,12 +234,12 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const hdPath = CUtils.str_to_path("44'/1815'/0'/0/0");
       const req = {
-        action: OPARATION_NAME.DERIVE_ADDRESS,
+        action: OPERATION_NAME.DERIVE_ADDRESS,
         params: { hdPath },
         source: null
       };
 
-      this.props.setCurrentOparationName(OPARATION_NAME.DERIVE_ADDRESS);
+      this.props.setCurrentOperationName(OPERATION_NAME.DERIVE_ADDRESS);
       const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
       console.debug(`[YLC]::onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
     }

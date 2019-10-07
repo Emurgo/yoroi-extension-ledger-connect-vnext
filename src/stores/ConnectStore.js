@@ -17,12 +17,12 @@ import type {
   RequestType,
   DeviceCodeType,
   ProgressStateType,
-  OparationNameType,
+  OperationNameType,
   VerifyAddressInfoType
 } from '../types/cmn';
 import {
   PROGRESS_STATE,
-  OPARATION_NAME,
+  OPERATION_NAME,
 } from '../types/cmn';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
 import {
@@ -39,9 +39,9 @@ export type ExtenedPublicKeyResp = {
 export default class ConnectStore {
   @observable transportId: string;
   @observable progressState: ProgressStateType;
-  @observable currentOparationName: OparationNameType;
+  @observable currentOperationName: OperationNameType;
   @observable verifyAddressInfo: VerifyAddressInfoType;
-  @observable deviceName: DeviceCodeType
+  @observable deviceCode: DeviceCodeType
   userInteractableRequest: RequestType;
 
   constructor(transportId: string) {
@@ -78,14 +78,14 @@ export default class ConnectStore {
     this.progressState = progressState;
   }
 
-  @action('Changing Current Oparation Name')
-  setCurrentOparationName = (currentOparationName: OparationNameType) => {
-    this.currentOparationName = currentOparationName;
+  @action('Changing Current Operation Name')
+  setCurrentOperationName = (currentOperationName: OperationNameType) => {
+    this.currentOperationName = currentOperationName;
   }
 
   @action('Changing device name')
-  setDeviceName = (deviceName: DeviceCodeType) => {
-    this.deviceName = deviceName;
+  setDeviceName = (deviceCode: DeviceCodeType) => {
+    this.deviceCode = deviceCode;
   }
 
   @action('Change Verify Address Info')
@@ -96,6 +96,9 @@ export default class ConnectStore {
   _detectLedgerDevice = async (transport: any): Promise<GetVersionResponse> => {
     this.setProgressState(PROGRESS_STATE.DETECTING_DEVICE);
 
+    setTimeout(() => {
+      console.log(`STATE: ${this.progressState}`);
+    }, 100);
     const adaApp = new AdaApp(transport);
     const verResp = await adaApp.getVersion();
 
@@ -113,25 +116,28 @@ export default class ConnectStore {
   }
 
   executeAction = (deviceName: DeviceCodeType) => {
-    this.setDeviceName(deviceName);
+    runInAction(() => {
+      this.setDeviceName(deviceName);
+      this.setProgressState(PROGRESS_STATE.DEVICE_TYPE_SELECTED);
+    });
 
     const actn = this.userInteractableRequest.action;
     const { params } = this.userInteractableRequest;
 
     switch (actn) {
-      case OPARATION_NAME.GET_LEDGER_VERSION:
+      case OPERATION_NAME.GET_LEDGER_VERSION:
         this.getVersion(actn);
         break;
-      case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
+      case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY:
         this.getExtendedPublicKey(actn, params.hdPath);
         break;
-      case OPARATION_NAME.SIGN_TX:
+      case OPERATION_NAME.SIGN_TX:
         this.signTransaction(actn, params.inputs, params.outputs);
         break;
-      case OPARATION_NAME.SHOW_ADDRESS:
+      case OPERATION_NAME.SHOW_ADDRESS:
         this.showAddress(actn, params.hdPath, params.address);
         break;
-      case OPARATION_NAME.DERIVE_ADDRESS:
+      case OPERATION_NAME.DERIVE_ADDRESS:
         this.deriveAddress(actn, params.hdPath);
         break;
       default:
@@ -145,7 +151,7 @@ export default class ConnectStore {
   // #==============================================#
 
   getVersion = async (
-    actn: OparationNameType
+    actn: OperationNameType
   ): Promise<GetVersionResponse | void> => {
     let transport;
     try {
@@ -164,7 +170,7 @@ export default class ConnectStore {
   }
 
   getExtendedPublicKey = async (
-    actn: OparationNameType,
+    actn: OperationNameType,
     hdPath: BIP32Path
   ): Promise<ExtenedPublicKeyResp | void> => {
     let transport;
@@ -192,7 +198,7 @@ export default class ConnectStore {
   }
 
   signTransaction = async (
-    actn: OparationNameType,
+    actn: OperationNameType,
     inputs: Array<InputTypeUTxO>,
     outputs: Array<OutputTypeAddress | OutputTypeChange>
   ): Promise<SignTransactionResponse | void> => {
@@ -214,7 +220,7 @@ export default class ConnectStore {
   }
 
   showAddress = async (
-    actn: OparationNameType,
+    actn: OperationNameType,
     hdPath: BIP32Path,
     address: string
   ): Promise<void> => {
@@ -240,7 +246,7 @@ export default class ConnectStore {
   }
 
   deriveAddress = async (
-    actn: OparationNameType,
+    actn: OperationNameType,
     hdPath: BIP32Path
   ): Promise<DeriveAddressResponse | void> => {
     let transport;
@@ -277,13 +283,13 @@ export default class ConnectStore {
       console.debug(`[YLC]::request: ${actn}`);
 
       switch (actn) {
-        case OPARATION_NAME.GET_LEDGER_VERSION:
-        case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-        case OPARATION_NAME.SIGN_TX:
-        case OPARATION_NAME.SHOW_ADDRESS:
-        case OPARATION_NAME.DERIVE_ADDRESS:
+        case OPERATION_NAME.GET_LEDGER_VERSION:
+        case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY:
+        case OPERATION_NAME.SIGN_TX:
+        case OPERATION_NAME.SHOW_ADDRESS:
+        case OPERATION_NAME.DERIVE_ADDRESS:
           runInAction(() => {
-            this.setCurrentOparationName(actn);
+            this.setCurrentOperationName(actn);
             this.setProgressState(PROGRESS_STATE.DEVICE_TYPE_SELECTION);
           });
 
@@ -295,7 +301,7 @@ export default class ConnectStore {
             };
           }
           break;
-        case OPARATION_NAME.CLOSE_WINDOW:
+        case OPERATION_NAME.CLOSE_WINDOW:
           window.close();
           break;
         default:

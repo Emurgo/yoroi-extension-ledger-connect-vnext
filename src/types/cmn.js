@@ -6,7 +6,7 @@ export type MessageType = {
 };
 
 export type RequestType = {
-  action: OparationNameType,
+  action: OperationNameType,
   params: any,
 }
 
@@ -23,12 +23,13 @@ export type VerifyAddressInfoType = {
 export const PROGRESS_STATE = Object.freeze({
   LOADING: 'LOADING',
   DEVICE_TYPE_SELECTION: 'DEVICE_TYPE_SELECTION',
+  DEVICE_TYPE_SELECTED: 'DEVICE_TYPE_SELECTED',
   DETECTING_DEVICE: 'DETECTING_DEVICE',
   DEVICE_FOUND: 'DEVICE_FOUND',
 });
 export type ProgressStateType = $Values<typeof PROGRESS_STATE>;
 
-export const OPARATION_NAME = Object.freeze({
+export const OPERATION_NAME = Object.freeze({
   GET_LEDGER_VERSION: 'ledger-get-version',
   GET_EXTENDED_PUBLIC_KEY: 'ledger-get-extended-public-key',
   SIGN_TX: 'ledger-sign-transaction',
@@ -36,7 +37,7 @@ export const OPARATION_NAME = Object.freeze({
   DERIVE_ADDRESS: 'ledger-derive-address',
   CLOSE_WINDOW: 'close-window',
 });
-export type OparationNameType = $Values<typeof OPARATION_NAME>;
+export type OperationNameType = $Values<typeof OPERATION_NAME>;
 
 export const DEVICE_CODE = Object.freeze({
   NANO_S: 's',

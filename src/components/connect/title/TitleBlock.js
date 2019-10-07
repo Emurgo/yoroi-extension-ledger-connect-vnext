@@ -3,8 +3,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 
-import type { OparationNameType } from '../../../types/cmn';
-import { OPARATION_NAME } from '../../../types/cmn';
+import type { OperationNameType } from '../../../types/cmn';
+import { OPERATION_NAME } from '../../../types/cmn';
 
 import styles from './TitleBlock.scss';
 
@@ -32,7 +32,7 @@ const messages = defineMessages({
 });
 
 type Props = {|
-  currentOparationName: OparationNameType,
+  currentOperationName: OperationNameType,
 |};
 
 @observer
@@ -41,23 +41,23 @@ export default class TitleBlock extends React.Component<Props> {
 
   render() {
     const { intl } = this.context;
-    const { currentOparationName } = this.props;
+    const { currentOperationName } = this.props;
 
     let title;
-    switch (currentOparationName) {
-      case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
+    switch (currentOperationName) {
+      case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY:
         title = messages.titleConnect;
         break;
-      case OPARATION_NAME.SIGN_TX:
+      case OPERATION_NAME.SIGN_TX:
         title = messages.titleSenTx;
         break;
-      case OPARATION_NAME.SHOW_ADDRESS:
+      case OPERATION_NAME.SHOW_ADDRESS:
         title = messages.titleVerifyAddress;
         break;
-      case OPARATION_NAME.GET_LEDGER_VERSION:
+      case OPERATION_NAME.GET_LEDGER_VERSION:
         title = messages.titleLedgerVersion;
         break;
-      case OPARATION_NAME.DERIVE_ADDRESS:
+      case OPERATION_NAME.DERIVE_ADDRESS:
         title = messages.titleDeriveAddress;
         break;
       default:

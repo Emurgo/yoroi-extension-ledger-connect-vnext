@@ -18,13 +18,13 @@ export default class ConnectPage extends React.Component<Props> {
     } = this.props.rootStore;
     const {
       executeActionWithCustomRequest,
-      setCurrentOparationName,
+      setCurrentOperationName,
       isTransportWebAuthn,
       transportId,
       progressState,
-      currentOparationName,
+      currentOperationName,
       executeAction,
-      deviceName,
+      deviceCode,
       verifyAddressInfo
     } = connectStore;
     const { appVersion } = profileStore;
@@ -32,7 +32,7 @@ export default class ConnectPage extends React.Component<Props> {
     return (
       <Layout
         executeActionWithCustomRequest={executeActionWithCustomRequest}
-        setCurrentOparationName={setCurrentOparationName}
+        setCurrentOperationName={setCurrentOperationName}
         isDevelopment={ENV.isDevelopment}
         appVersion={appVersion}
         transportId={transportId}
@@ -41,9 +41,9 @@ export default class ConnectPage extends React.Component<Props> {
           isWebAuthn={isTransportWebAuthn}
           isFirefox={ENV.isFirefox}
           progressState={progressState}
-          currentOparationName={currentOparationName}
+          currentOperationName={currentOperationName}
           executeAction={executeAction}
-          deviceName={deviceName}
+          deviceCode={deviceCode}
           verifyAddressInfo={verifyAddressInfo}
         />
       </Layout>

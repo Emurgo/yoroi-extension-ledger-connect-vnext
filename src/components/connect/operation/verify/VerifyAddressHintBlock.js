@@ -5,11 +5,8 @@ import { intlShape, defineMessages } from 'react-intl';
 
 import type {
   DeviceCodeType,
-  ProgressStateType,
   VerifyAddressInfoType,
 }  from '../../../../types/cmn';
-import { PROGRESS_STATE } from '../../../../types/cmn';
-import CommonHintBlock from '../common/CommonHintBlock';
 import HintBlock from '../../../widgets/HintBlock';
 
 import styles from './VerifyAddressHintBlock.scss';
@@ -43,7 +40,6 @@ const message = defineMessages({
 
 type Props = {|
   deviceCode: DeviceCodeType,
-  progressState: ProgressStateType,
   verifyAddressInfo: VerifyAddressInfoType,
 |};
 
@@ -54,47 +50,36 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
   render() {
     const {
       deviceCode,
-      progressState,
-      verifyAddressInfo
+      verifyAddressInfo,
     } = this.props;
 
-    let content = null;
-    if (progressState !== PROGRESS_STATE.DEVICE_FOUND) {
-      content = (
-        <CommonHintBlock
-          deviceCode={deviceCode}
-          progressState={progressState}
-        />
-      );
-    } else {
-      const imgVerify1 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-1.png`);
-      const imgVerify2 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-2.png`);
-      const imgVerify3 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-3.png`);
+    const imgVerify1 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-1.png`);
+    const imgVerify2 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-2.png`);
+    const imgVerify3 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-3.png`);
 
-      content = (
-        <div className={styles.stepsRowOne}>
-          <HintBlock
-            number={1}
-            text={message[`${deviceCode}Info`]}
-            imagePath={imgVerify1}
-          />
-          <div className={styles.gap} />
-          <HintBlock
-            number={2}
-            text={message[`${deviceCode}Path`]}
-            imagePath={imgVerify2}
-            secondaryText={verifyAddressInfo.hdPath}
-          />
-          <div className={styles.gap} />
-          <HintBlock
-            number={3}
-            text={message[`${deviceCode}Address`]}
-            imagePath={imgVerify3}
-            secondaryText={verifyAddressInfo.address}
-          />
-        </div>
-      );
-    }
+    const content = (
+      <div className={styles.stepsRowOne}>
+        <HintBlock
+          number={1}
+          text={message[`${deviceCode}Info`]}
+          imagePath={imgVerify1}
+        />
+        <div className={styles.gap} />
+        <HintBlock
+          number={2}
+          text={message[`${deviceCode}Path`]}
+          imagePath={imgVerify2}
+          secondaryText={verifyAddressInfo.hdPath}
+        />
+        <div className={styles.gap} />
+        <HintBlock
+          number={3}
+          text={message[`${deviceCode}Address`]}
+          imagePath={imgVerify3}
+          secondaryText={verifyAddressInfo.address}
+        />
+      </div>
+    );
 
     return (
       <div className={styles.component}>

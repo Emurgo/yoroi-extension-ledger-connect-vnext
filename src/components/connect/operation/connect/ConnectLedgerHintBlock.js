@@ -3,12 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import type {
-  DeviceCodeType,
-  ProgressStateType
-}  from '../../../../types/cmn';
-import { PROGRESS_STATE } from '../../../../types/cmn';
-import CommonHintBlock from '../common/CommonHintBlock';
+import type { DeviceCodeType }  from '../../../../types/cmn';
 import HintBlock from '../../../widgets/HintBlock';
 
 import styles from './ConnectLedgerHintBlock.scss';
@@ -34,7 +29,6 @@ const message = defineMessages({
 
 type Props = {|
   deviceCode: DeviceCodeType,
-  progressState: ProgressStateType,
 |};
 
 @observer
@@ -42,39 +36,25 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
 
   render() {
-    const {
-      deviceCode,
-      progressState
-    } = this.props;
+    const { deviceCode } = this.props;
 
-    let content = null;
-    if (progressState !== PROGRESS_STATE.DEVICE_FOUND) {
-      content = (
-        <CommonHintBlock
-          deviceCode={deviceCode}
-          progressState={progressState}
+    const imgConnect1 = require(`../../../../assets/img/nano-${deviceCode}/hint-connect-1.png`);
+    const imgConnect2 = require(`../../../../assets/img/nano-${deviceCode}/hint-connect-2.png`);
+    const content = (
+      <div className={styles.stepsRowOne}>
+        <HintBlock
+          number={1}
+          text={message[`${deviceCode}ExportPublicKey`]}
+          imagePath={imgConnect1}
         />
-      );
-    } else {
-      const imgConnect1 = require(`../../../../assets/img/nano-${deviceCode}/hint-connect-1.png`);
-      const imgConnect2 = require(`../../../../assets/img/nano-${deviceCode}/hint-connect-2.png`);
-
-      content = (
-        <div className={styles.stepsRowOne}>
-          <HintBlock
-            number={1}
-            text={message[`${deviceCode}ExportPublicKey`]}
-            imagePath={imgConnect1}
-          />
-          <div className={styles.gap} />
-          <HintBlock
-            number={2}
-            text={message[`${deviceCode}ConfirmExportPublicKey`]}
-            imagePath={imgConnect2}
-          />
-        </div>
-      );
-    }
+        <div className={styles.gap} />
+        <HintBlock
+          number={2}
+          text={message[`${deviceCode}ConfirmExportPublicKey`]}
+          imagePath={imgConnect2}
+        />
+      </div>
+    );
 
     return (
       <div className={styles.component}>
