@@ -47,7 +47,8 @@ export default class ConnectBlock extends React.Component<Props> {
 
     switch (progressState) {
       case PROGRESS_STATE.LOADING:
-        return (<Loading showText />);
+        content = <Loading showText />;
+        break;
       case PROGRESS_STATE.DEVICE_TYPE_SELECTION:
         content = (
           <DeviceSelectionBlock executeAction={executeAction} />
