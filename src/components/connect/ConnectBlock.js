@@ -8,6 +8,8 @@ import type {
   OparationNameType,
   VerifyAddressInfoType,
 } from '../../types/cmn';
+import { PROGRESS_STATE } from '../../types/cmn';
+import LoadingFull from '../widgets/LoadingFull';
 import WebAuthnTopBlock from './webauthn-top/WebAuthnTopBlock';
 import TitleBlock from './title/TitleBlock';
 import DeviceSelectionBlock from './device-selection/DeviceSelectionBlock';
@@ -21,7 +23,7 @@ type Props = {|
   progressState: ProgressStateType,
   currentOparationName: OparationNameType,
   executeAction: Function,
-  deviceName: ?DeviceCodeType,
+  deviceName: DeviceCodeType,
   verifyAddressInfo: VerifyAddressInfoType,
 |};
 
@@ -38,21 +40,27 @@ export default class ConnectBlock extends React.Component<Props> {
       verifyAddressInfo
     } = this.props;
 
-    const content = !deviceName ?
-      <DeviceSelectionBlock
-        executeAction={executeAction}
-        currentOparationName={currentOparationName}
-      /> :
-      <OparationBlock
-        deviceName={deviceName}
-        currentOparationName={currentOparationName}
-        progressState={progressState}
-        verifyAddressInfo={verifyAddressInfo}
-      />;
-
+    let content;
     let showWebAuthnTop: boolean = false;
-    if (isWebAuthn && deviceName) {
-      showWebAuthnTop = true;
+
+    switch (progressState) {
+      case PROGRESS_STATE.LOADING:
+        return (<LoadingFull />);
+      case PROGRESS_STATE.DEVICE_TYPE_SELECTION:
+        content = (
+          <DeviceSelectionBlock executeAction={executeAction} />
+        );
+        break;
+      default:
+        showWebAuthnTop = isWebAuthn;
+        content = (
+          <OparationBlock
+            deviceName={deviceName}
+            currentOparationName={currentOparationName}
+            progressState={progressState}
+            verifyAddressInfo={verifyAddressInfo}
+          />
+        );
     }
 
     return (

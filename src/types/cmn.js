@@ -21,20 +21,20 @@ export type VerifyAddressInfoType = {
 }
 
 export const PROGRESS_STATE = Object.freeze({
-  IDLE: 'IDLE',
+  LOADING: 'LOADING',
+  DEVICE_TYPE_SELECTION: 'DEVICE_TYPE_SELECTION',
   DETECTING_DEVICE: 'DETECTING_DEVICE',
   DEVICE_FOUND: 'DEVICE_FOUND',
 });
 export type ProgressStateType = $Values<typeof PROGRESS_STATE>;
 
 export const OPARATION_NAME = Object.freeze({
-  NO_OPARATION: 'no-oparation', // For internal management
-  CLOSE_WINDOW: 'close-window',
   GET_LEDGER_VERSION: 'ledger-get-version',
   GET_EXTENDED_PUBLIC_KEY: 'ledger-get-extended-public-key',
   SIGN_TX: 'ledger-sign-transaction',
   SHOW_ADDRESS: 'ledger-show-address',
   DERIVE_ADDRESS: 'ledger-derive-address',
+  CLOSE_WINDOW: 'close-window',
 });
 export type OparationNameType = $Values<typeof OPARATION_NAME>;
 

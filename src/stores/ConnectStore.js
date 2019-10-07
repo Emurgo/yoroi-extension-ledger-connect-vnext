@@ -49,8 +49,7 @@ export default class ConnectStore {
 
     runInAction(() => {
       this.transportId = transportId;
-      this.progressState = PROGRESS_STATE.IDLE;
-      this.currentOparationName = OPARATION_NAME.NO_OPARATION;
+      this.progressState = PROGRESS_STATE.LOADING;
     });
   }
 
@@ -283,7 +282,11 @@ export default class ConnectStore {
         case OPARATION_NAME.SIGN_TX:
         case OPARATION_NAME.SHOW_ADDRESS:
         case OPARATION_NAME.DERIVE_ADDRESS:
-          this.setCurrentOparationName(actn);
+          runInAction(() => {
+            this.setCurrentOparationName(actn);
+            this.setProgressState(PROGRESS_STATE.DEVICE_TYPE_SELECTION);
+          });
+
           if (!this.userInteractableRequest) {
             this.userInteractableRequest = {
               params,

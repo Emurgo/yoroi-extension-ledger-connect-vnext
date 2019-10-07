@@ -3,15 +3,9 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import LoadingFull from '../../widgets/LoadingFull';
-import type {
-  DeviceCodeType,
-  OparationNameType,
-}  from '../../../types/cmn';
-import {
-  DEVICE_CODE,
-  OPARATION_NAME
-} from '../../../types/cmn';
+
+import type { DeviceCodeType }  from '../../../types/cmn';
+import { DEVICE_CODE } from '../../../types/cmn';
 import {
   VIDEO_LINK_NANO_S,
   VIDEO_LINK_NANO_X
@@ -48,7 +42,6 @@ const message = defineMessages({
 });
 
 type Props = {|
-  currentOparationName: OparationNameType,
   executeAction: Function,
 |};
 
@@ -62,14 +55,6 @@ export default @observer class DeviceSelectionBlock extends React.Component<Prop
 
   render() {
     const { intl } = this.context;
-    const { currentOparationName } = this.props;
-
-    // In case oparation is not invoked, load loading page
-    if (currentOparationName === OPARATION_NAME.NO_OPARATION) {
-      return (
-        <LoadingFull />
-      );
-    }
 
     return (
       <div className={styles.component}>
