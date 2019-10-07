@@ -1,9 +1,10 @@
-$footerMargin: 50px;
+$footerMargin: 40px;
 
 .component {
   display: flex;
   flex-direction: column;
-  height: calc(100% - #{$footerMargin});
+  min-height: 100%;
+  padding-bottom: $footerMargin;
   .title {
     height: 58px;
     text-transform: uppercase;
