@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 
 import imgLoading from '../../assets/img/loading-full.gif';
-import styles from './LoadingFull.scss';
+import styles from './Loading.scss';
 
 const messages = defineMessages({
   text: {
@@ -13,14 +13,24 @@ const messages = defineMessages({
   },
 });
 
-type Props = {||};
+type Props = {|
+  showText?: boolean,
+  small?: boolean
+|};
 
 @observer
-export default class LoadingFull extends React.Component<Props> {
+export default class Loading extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
+  static defaultProps = { showText: false, small: false };
 
   render() {
     const { intl } = this.context;
+    const { showText } = this.props;
+    const textComp = (
+      <div className={styles.text}>
+        {intl.formatMessage(messages.text)}
+      </div>);
+
     return (
       <div className={styles.component}>
         <div className={styles.wrapper}>
@@ -29,9 +39,7 @@ export default class LoadingFull extends React.Component<Props> {
             src={imgLoading}
             alt="Loading"
           />
-          <div className={styles.text}>
-            {intl.formatMessage(messages.text)}
-          </div>
+          { showText && textComp}
         </div>
       </div>
     );

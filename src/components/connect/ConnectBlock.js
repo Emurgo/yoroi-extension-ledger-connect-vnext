@@ -9,7 +9,7 @@ import type {
   VerifyAddressInfoType,
 } from '../../types/cmn';
 import { PROGRESS_STATE } from '../../types/cmn';
-import LoadingFull from '../widgets/LoadingFull';
+import Loading from '../widgets/Loading';
 import WebAuthnTopBlock from './webauthn-top/WebAuthnTopBlock';
 import TitleBlock from './title/TitleBlock';
 import DeviceSelectionBlock from './device-selection/DeviceSelectionBlock';
@@ -47,7 +47,7 @@ export default class ConnectBlock extends React.Component<Props> {
 
     switch (progressState) {
       case PROGRESS_STATE.LOADING:
-        return (<LoadingFull />);
+        return (<Loading showText />);
       case PROGRESS_STATE.DEVICE_TYPE_SELECTION:
         content = (
           <DeviceSelectionBlock executeAction={executeAction} />

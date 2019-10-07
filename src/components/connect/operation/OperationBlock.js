@@ -13,6 +13,7 @@ import {
   OPERATION_NAME,
   PROGRESS_STATE,
 } from '../../../types/cmn';
+import Loading from '../../widgets/Loading';
 import CommonHintBlock from './common/CommonHintBlock';
 import ConnectLedgerHintBlock from './connect/ConnectLedgerHintBlock';
 import SendTxHintBlock from './send/SendTxHintBlock';
@@ -52,7 +53,7 @@ export default class OperationBlock extends React.Component<Props> {
     let content;
     switch (progressState) {
       case PROGRESS_STATE.DEVICE_TYPE_SELECTED:
-        content = (<div>Small Loading Page</div>);
+        content = (<Loading />);
         break;
       case PROGRESS_STATE.DETECTING_DEVICE:
         content = (
