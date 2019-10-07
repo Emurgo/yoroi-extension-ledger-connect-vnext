@@ -3,7 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages, FormattedHTMLMessage } from 'react-intl';
 
-import imgBackArrow from '../../../assets/img/back-arrow.svg';
+import imgWarningIcon from '../../../assets/img/warning-icon.svg';
 import styles from './WebAuthnTopBlock.scss';
 
 const messages = defineMessages({
@@ -13,25 +13,40 @@ const messages = defineMessages({
   }
 });
 
-type Props = {||}
+type Props = {|
+  showWebAuthnTop: boolean,
+  isFirefox: boolean
+|}
 
 @observer
 export default class WebAuthnTopBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
 
   render() {
+    const {
+      showWebAuthnTop,
+      isFirefox
+    } = this.props;
+
+    if (!showWebAuthnTop) {
+      // Do not show this component
+      return (null);
+    }
+
+    const styleComponent = isFirefox ?
+      `${styles.component} ${styles.componentFirefox}` :
+      `${styles.component}`;
+
     return (
-      <div className={styles.component}>
-        <div className={styles.dialogShadow}>
-          <div className={styles.textBlock}>
-            <img
-              className={styles.arrow}
-              src={imgBackArrow}
-              alt="Back arrow"
-            />
-            <span className={styles.text}>
-              {<FormattedHTMLMessage {...messages.noteText} />}
-            </span>
+      <div className={styleComponent}>
+        <div className={styles.warningBlock}>
+          <img
+            className={styles.warningIcon}
+            src={imgWarningIcon}
+            alt="Warning Icon"
+          />
+          <div className={styles.text}>
+            {<FormattedHTMLMessage {...messages.noteText} />}
           </div>
         </div>
       </div>

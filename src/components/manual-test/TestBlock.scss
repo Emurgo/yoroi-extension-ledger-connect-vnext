@@ -1,25 +1,34 @@
 .component {
   // opacity: 0.3;
   position: absolute;
+  z-index: 1;
   top: 4px;
   left: 4px;
-  padding: 20px;
-  background-color: #82E331; // TODO, add
+  padding: 15px;
+  background-color: #82E331;
   border: 3px solid red;
   border-radius: 5px;
   font-size: 20px;
-
   button {
     width: 200px;
     height: 26px;
     margin: 8px;
   }
-
   .devArea {
     margin-bottom: 10px;
   }
-
   .deviceBlock {
     margin-bottom: 6px;
   }
+  .visibilityInfo {
+    text-align: center;
+    font-size: 9px;
+  }
+}
+
+.visible {
+  opacity: 1;
+}
+.hidden {
+  opacity: 0;
 }

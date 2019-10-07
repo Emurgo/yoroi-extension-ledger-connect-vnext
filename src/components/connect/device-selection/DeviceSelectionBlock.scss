@@ -2,6 +2,7 @@
 
 .component {
   height: 100%;
+  min-height: 230px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,9 +28,9 @@
     }      
     .device {
       width: 400px;
-      height: 52px;
+      height: 48px;
       border-radius: 8px;
-      margin-bottom: 28px;
+      margin-bottom: 36px;
       cursor: pointer;
       background-color: #17D1AA; // TODO
 

@@ -15,7 +15,7 @@ import it from 'react-intl/locale-data/it';
 
 import RootStore from './stores';
 
-import SuspenceFallback from './components/widgets/SuspenseFallback';
+import LoadingFull from './components/widgets/LoadingFull';
 
 import { translations } from './i18n/translations';
 import { DEFAULT_LOCALE } from './const';
@@ -50,7 +50,7 @@ export default class App extends React.Component<Props> {
 
     const component = (
       <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
-        <Suspense fallback={<SuspenceFallback />}>
+        <Suspense fallback={<LoadingFull />}>
           <StyleVariableLoader variables={styleVariables} />
           <ConnectPage rootStore={this.props.rootStore} />
         </Suspense>

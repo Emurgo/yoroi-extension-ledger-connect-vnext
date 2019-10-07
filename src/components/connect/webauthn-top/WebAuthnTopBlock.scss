@@ -1,35 +1,28 @@
-$ShadowHeight: 292px;
-$ShadowWidth: 454px;
-
 .component {
-  display: inline-flex;
   width: 100%;
+  min-height: 310px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   opacity: 0.8;
-  height: 320px;
-  background-color: #060D24;  // TODO, add
-
-  .dialogShadow {
-    margin: 0 auto;
-    height: $ShadowHeight;
-    width: $ShadowWidth;
-    
-    .textBlock {
-      position: relative;
-      top: $ShadowHeight - 45;
-      left: $ShadowWidth + 10;
-      color: white;
-  
-      .arrow {
-        height: 18px;
-        width: 18px;
-        vertical-align: sub;
-      }
-  
-      .text {
-        line-height: 18px;
-        font-size: 12px;
-        margin-left: 4px;
-      }
-    }    
+  background-color: #060D24; // TODO, add
+  .warningBlock {
+    display: flex;
+    margin-bottom: 6px;
+    .warningIcon {
+      height: 16px;
+      width: 22px;
+      vertical-align: sub;
+    }
+    .text {
+      height: 18px;
+      color: #ffffff;
+      line-height: 18px;
+      font-size: 11px; // TODO, add
+    }
   }
+}
+
+.componentFirefox {
+  min-height: 160px;
 }

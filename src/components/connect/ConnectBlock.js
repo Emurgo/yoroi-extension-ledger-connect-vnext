@@ -17,6 +17,7 @@ import styles from './ConnectBlock.scss';
 
 type Props = {|
   isWebAuthn: boolean,
+  isFirefox: boolean,
   progressState: ProgressStateType,
   currentOparationName: OparationNameType,
   executeAction: Function,
@@ -29,6 +30,7 @@ export default class ConnectBlock extends React.Component<Props> {
   render() {
     const {
       isWebAuthn,
+      isFirefox,
       progressState,
       currentOparationName,
       executeAction,
@@ -37,7 +39,10 @@ export default class ConnectBlock extends React.Component<Props> {
     } = this.props;
 
     const content = !deviceName ?
-      <DeviceSelectionBlock executeAction={executeAction} /> :
+      <DeviceSelectionBlock
+        executeAction={executeAction}
+        currentOparationName={currentOparationName}
+      /> :
       <OparationBlock
         deviceName={deviceName}
         currentOparationName={currentOparationName}
@@ -45,11 +50,17 @@ export default class ConnectBlock extends React.Component<Props> {
         verifyAddressInfo={verifyAddressInfo}
       />;
 
-    const showWebAuthnTop = isWebAuthn && deviceName;
+    let showWebAuthnTop: boolean = false;
+    if (isWebAuthn && deviceName) {
+      showWebAuthnTop = true;
+    }
 
     return (
       <div className={styles.component}>
-        { showWebAuthnTop && <WebAuthnTopBlock />}
+        <WebAuthnTopBlock
+          showWebAuthnTop={showWebAuthnTop}
+          isFirefox={isFirefox}
+        />
         <TitleBlock currentOparationName={currentOparationName} />
         {content}
       </div>

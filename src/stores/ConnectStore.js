@@ -11,9 +11,6 @@ import type {
   SignTransactionResponse,
   DeriveAddressResponse
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
-import type Transport from '@ledgerhq/hw-transport';
-import TransportWebAuthn from '@ledgerhq/hw-transport-webauthn';
-import TransportU2F from '@ledgerhq/hw-transport-u2f';
 
 import type {
   MessageType,
@@ -28,7 +25,11 @@ import {
   OPARATION_NAME,
 } from '../types/cmn';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
-import { pathToString } from '../utils';
+import {
+  pathToString,
+  ledgerErrToMessage,
+  makeTransport
+} from '../utils';
 
 export type ExtenedPublicKeyResp = {
   ePublicKey: GetExtendedPublicKeyResponse,
@@ -44,7 +45,7 @@ export default class ConnectStore {
   userInteractableRequest: RequestType;
 
   constructor(transportId: string) {
-    this._addMessageEventListeners();
+    window.addEventListener('message', this._onMessage);
 
     runInAction(() => {
       this.transportId = transportId;
@@ -61,6 +62,11 @@ export default class ConnectStore {
   @computed
   get isTransportU2F(): boolean {
     return this.transportId === 'u2f';
+  }
+
+  @computed
+  get isTransportWebUSB(): boolean {
+    return this.transportId === 'webusb';
   }
 
   @action('Changing Transport')
@@ -88,71 +94,7 @@ export default class ConnectStore {
     this.verifyAddressInfo = verifyAddressInfo;
   }
 
-  // Ledger API
-  _addMessageEventListeners = (): void => {
-    const processMessage = async (e) => {
-      if (e && e.data && e.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
-        const { source } = e;
-        const { params } = e.data;
-        const actn = e.data.action;
-
-        this._closeOnSorceClosed(source);
-
-        console.debug(`[YLC]::request: ${actn}`);
-
-        switch (actn) {
-          case OPARATION_NAME.TEST_READY:
-            this.testReady(source, actn);
-            break;
-          case OPARATION_NAME.GET_LEDGER_VERSION:
-          case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-          case OPARATION_NAME.SIGN_TX:
-          case OPARATION_NAME.SHOW_ADDRESS:
-          case OPARATION_NAME.DERIVE_ADDRESS:
-            this.setCurrentOparationName(actn);
-            if (!this.userInteractableRequest) {
-              this.userInteractableRequest = {
-                params,
-                action: actn,
-                source
-              };
-            }
-            break;
-          default:
-            // FOR NOW NO-OPERATION
-            break;
-        }
-      } else {
-        console.debug(`Got non ledger connectore request: ${e.origin}}`);
-      }
-    };
-
-    window.addEventListener('message', processMessage, false);
-  }
-
-  _replyMessage = (source: window, msg: MessageType): void => {
-    if (source) {
-      msg.action = `${msg.action}-reply`;
-      source.postMessage(msg, '*');
-    } else {
-      console.debug('[YOROI-LB]::_replyMessage::No Source window provided');
-    }
-  }
-
-  _makeTransport = async (): Promise<Transport<*>> => {
-    let transport;
-    if (this.transportId === 'webauthn') {
-      transport = TransportWebAuthn;
-    } else if (this.transportId === 'u2f') {
-      transport = TransportU2F;
-    } else {
-      throw new Error('Transport protocol not supported');
-    }
-
-    return await transport.create();
-  }
-
-  _detectLedgerDevice = async (transport: Transport<*>): Promise<GetVersionResponse> => {
+  _detectLedgerDevice = async (transport: any): Promise<GetVersionResponse> => {
     this.setProgressState(PROGRESS_STATE.DETECTING_DEVICE);
 
     const adaApp = new AdaApp(transport);
@@ -161,33 +103,6 @@ export default class ConnectStore {
     this.setProgressState(PROGRESS_STATE.DEVICE_FOUND);
 
     return verResp;
-  }
-
-  testReady = async (
-    source: window,
-    actn: string
-  ): Promise<void> => {
-    try {
-      console.debug(`[YOROI-LB]::testReady::${actn}`);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: true,
-          payload: true
-        }
-      );
-    } catch (err) {
-      console.error(`[YOROI-LB]::testReady::${actn}::error::${JSON.stringify(err)}`);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: false,
-          payload: { error: err.toString() }
-        }
-      );
-    }
   }
 
   executeActionWithCustomRequest = (
@@ -202,24 +117,23 @@ export default class ConnectStore {
     this.setDeviceName(deviceName);
 
     const actn = this.userInteractableRequest.action;
-    const source = this.userInteractableRequest.source;
     const { params } = this.userInteractableRequest;
 
     switch (actn) {
       case OPARATION_NAME.GET_LEDGER_VERSION:
-        this.getVersion(source, actn);
+        this.getVersion(actn);
         break;
       case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-        this.getExtendedPublicKey(source, actn, params.hdPath);
+        this.getExtendedPublicKey(actn, params.hdPath);
         break;
       case OPARATION_NAME.SIGN_TX:
-        this.signTransaction(source, actn, params.inputs, params.outputs);
+        this.signTransaction(actn, params.inputs, params.outputs);
         break;
       case OPARATION_NAME.SHOW_ADDRESS:
-        this.showAddress(source, actn, params.hdPath, params.address);
+        this.showAddress(actn, params.hdPath, params.address);
         break;
       case OPARATION_NAME.DERIVE_ADDRESS:
-        this.deriveAddress(source, actn, params.hdPath);
+        this.deriveAddress(actn, params.hdPath);
         break;
       default:
         // FOR NOW NO-OPERATION
@@ -227,51 +141,36 @@ export default class ConnectStore {
     }
   }
 
+  // #==============================================#
+  //  Cardano Ledger APIs
+  // #==============================================#
+
   getVersion = async (
-    source: window,
     actn: OparationNameType
   ): Promise<GetVersionResponse | void> => {
     let transport;
     try {
+      transport = await makeTransport(this.transportId);
 
-      transport = await this._makeTransport();
       const adaApp = new AdaApp(transport);
-
       const res: GetVersionResponse = await adaApp.getVersion();
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: true,
-          payload: res,
-        }
-      );
+      this._replyMessageWrap(actn, true, res);
+
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::getVersion::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() }
-        }
-      );
+      this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
   }
 
   getExtendedPublicKey = async (
-    source: window,
     actn: OparationNameType,
     hdPath: BIP32Path
   ): Promise<ExtenedPublicKeyResp | void> => {
     let transport;
     try {
-
-      transport = await this._makeTransport();
+      transport = await makeTransport(this.transportId);
       const verResp = await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
@@ -283,74 +182,39 @@ export default class ConnectStore {
         ePublicKey: ePublicKeyResp,
         deviceVersion: verResp
       };
+      this._replyMessageWrap(actn, true, res);
 
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: true,
-          payload: res,
-        }
-      );
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::getExtendedPublicKey::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() }
-        }
-      );
+      this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
   }
 
   signTransaction = async (
-    source: window,
     actn: OparationNameType,
     inputs: Array<InputTypeUTxO>,
     outputs: Array<OutputTypeAddress | OutputTypeChange>
   ): Promise<SignTransactionResponse | void> => {
     let transport;
     try {
-
-      transport = await this._makeTransport();
+      transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-
       const res: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: true,
-          payload: res,
-        }
-      );
+      this._replyMessageWrap(actn, true, res);
+
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::signTransaction::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() }
-        }
-      );
+      this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
   }
 
   showAddress = async (
-    source: window,
     actn: OparationNameType,
     hdPath: BIP32Path,
     address: string
@@ -362,124 +226,124 @@ export default class ConnectStore {
         hdPath: pathToString(hdPath)
       });
 
-      transport = await this._makeTransport();
+      transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-
       const res = await adaApp.showAddress(hdPath);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: true,
-          payload: res
-        }
-      );
+      this._replyMessageWrap(actn, true, res);
+
     } catch (err) {
-      console.error(`[YOROI-LB]::showAddress::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() }
-        }
-      );
+      this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
   }
 
   deriveAddress = async (
-    source: window,
     actn: OparationNameType,
     hdPath: BIP32Path
   ): Promise<DeriveAddressResponse | void> => {
     let transport;
     try {
-
-      transport = await this._makeTransport();
+      transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-
       const res: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: true,
-          payload: res,
-        }
-      );
+      this._replyMessageWrap(actn, true, res);
+
       return res;
     } catch (err) {
-      console.error(`[YOROI-LB]::deriveAddress::${actn}::error::${JSON.stringify(err)}`);
-      const e = this._ledgerErrToMessage(err);
-      this._replyMessage(
-        source,
-        {
-          action: actn,
-          success: false,
-          payload: { error: e.toString() },
-        }
-      );
+      this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
   }
 
-  _closeOnSorceClosed = (source: window) => {
-    setInterval(() => {
-      if (source.closed) {
-        window.close();
+  // #==============================================#
+  //  Website <==> Content Script communications
+  // #==============================================#
+
+  /**
+   * Handle message from Content Script [ Website <== Content Script ]
+   * @param {*} req request message object
+   */
+  _onMessage = (req: any): void => {
+    if (req && req.data && req.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
+      const { source } = req;
+      const { params } = req.data;
+      const actn = req.data.action;
+
+      console.debug(`[YLC]::request: ${actn}`);
+
+      switch (actn) {
+        case OPARATION_NAME.GET_LEDGER_VERSION:
+        case OPARATION_NAME.GET_EXTENDED_PUBLIC_KEY:
+        case OPARATION_NAME.SIGN_TX:
+        case OPARATION_NAME.SHOW_ADDRESS:
+        case OPARATION_NAME.DERIVE_ADDRESS:
+          this.setCurrentOparationName(actn);
+          if (!this.userInteractableRequest) {
+            this.userInteractableRequest = {
+              params,
+              action: actn,
+              source
+            };
+          }
+          break;
+        case OPARATION_NAME.CLOSE_WINDOW:
+          window.close();
+          break;
+        default:
+          // FOR NOW NO-OPERATION
+          break;
       }
-    }, 1000);
+    } else {
+      console.debug(`[YLC]::Got non ledger connectore request: ${req.origin}}`);
+    }
   }
 
   /**
-   * Converts error code to string
-   * @param {*} err
+   * Wrapper for _replyMessage()
+   * @param {*} actn action string
+   * @param {*} success success status boolean
+   * @param {*} payload payload object
    */
-  _ledgerErrToMessage = (err: any): any => {
-    const isU2FError = (error) => !!error && !!(error).metaData;
-    const isStringError = (error) => typeof error === 'string';
-    // https://developers.yubico.com/U2F/Libraries/Client_error_codes.html
-    const isErrorWithId = (error) => (
-      Object.prototype.hasOwnProperty.call(error, 'id') &&
-      Object.prototype.hasOwnProperty.call(error, 'message')
-    );
+  _replyMessageWrap = (
+    actn: string,
+    success: boolean,
+    payload: any
+  ): void => {
+    this._replyMessage({
+      success,
+      payload,
+      action: actn,
+    });
+  }
 
-    if (isU2FError(err)) {
-      // Timeout
-      if (err.metaData.code === 5) {
-        return 'LEDGER_TIMEOUT';
-      }
-      return err.metaData.type;
-    }
+  /**
+   * Wrapper for _replyMessage() for sending error
+   * @param {*} actn action string
+   * @param {*} err Error object
+   */
+  _replyError = (
+    actn: string,
+    err: Error
+  ): void => {
+    console.error(`[YLC]::${actn}::error::${JSON.stringify(err)}`);
+    const payload = {
+      error: ledgerErrToMessage(err).toString()
+    };
+    this._replyMessageWrap(actn, false, payload);
+  }
 
-    if (isStringError(err)) {
-      // Wrong app logged into
-      if (err.includes('6804')) {
-        return 'LEDGER_WRONG_APP';
-      }
-      // Ledger locked
-      if (err.includes('6801')) {
-        return 'LEDGER_LOCKED';
-      }
-      return err;
-    }
-
-    if (isErrorWithId(err)) {
-      // Browser doesn't support U2F
-      if (err.message.includes('U2F not supported')) {
-        return 'U2F_NOT_SUPPORTED';
-      }
-    }
-
-    // Other
-    return err.toString();
+  /**
+   * Reply message to Content Script  [ Website ==> Content Script ]
+   * @param {*} msg MessageType object as reply
+   */
+  _replyMessage = (msg: MessageType): void => {
+    msg.action = `${msg.action}-reply`;
+    window.postMessage(msg, '*');
   }
 }
