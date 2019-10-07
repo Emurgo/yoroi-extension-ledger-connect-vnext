@@ -1,9 +1,8 @@
 {
-  "suspence.fallbackText": "読み込み中…",
+  "suspence.fallbackText": "  Loading...",
   "footer.version": "バージョン：",
   "footer.transportId": "トランスポート：",
   "webauthn.note": "<strong>キャンセル</strong>ボタンを押さないでください",
-  "title.default": "初期化中…",
   "title.connect": "Ledgerハードウェアウォレットに接続",
   "title.sendTx": "Ledgerを使用してトランザクションを実行",
   "title.verifyAddress": "Ledgerでアドレスを確認",
