@@ -1,9 +1,8 @@
 {
-  "suspence.fallbackText": "Chargement...",
+  "suspence.fallbackText": "  Loading...",
   "footer.version": "Version :",
   "footer.transportId": "Transport:",
   "webauthn.note": "Do not press the <strong>Cancel</strong> button",
-  "title.default": "Initialisation...",
   "title.connect": "Connecter au wallet matériel ledger",
   "title.sendTx": "Confirmer la transaction en utilisant ledger",
   "title.verifyAddress": "Vérifier l'adresse sur ledger",
