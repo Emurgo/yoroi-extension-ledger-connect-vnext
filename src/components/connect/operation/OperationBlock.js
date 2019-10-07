@@ -32,6 +32,7 @@ type Props = {|
   currentOperationName: OperationNameType,
   progressState: ProgressStateType,
   verifyAddressInfo: VerifyAddressInfoType,
+  wasDeviceLocked: boolean,
 |};
 
 @observer
@@ -44,11 +45,15 @@ export default class OperationBlock extends React.Component<Props> {
       deviceCode,
       currentOperationName,
       progressState,
-      verifyAddressInfo
+      verifyAddressInfo,
+      wasDeviceLocked
     } = this.props;
 
     let content;
     switch (progressState) {
+      case PROGRESS_STATE.DEVICE_TYPE_SELECTED:
+        content = (<div>Small Loading Page</div>);
+        break;
       case PROGRESS_STATE.DETECTING_DEVICE:
         content = (
           <CommonHintBlock
@@ -62,12 +67,18 @@ export default class OperationBlock extends React.Component<Props> {
         switch (currentOperationName) {
           case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY:
             content = (
-              <ConnectLedgerHintBlock deviceCode={deviceCode} />
+              <ConnectLedgerHintBlock
+                deviceCode={deviceCode}
+                wasDeviceLocked={wasDeviceLocked}
+              />
             );
             break;
           case OPERATION_NAME.SIGN_TX:
             content = (
-              <SendTxHintBlock deviceCode={deviceCode} />
+              <SendTxHintBlock
+                deviceCode={deviceCode}
+                wasDeviceLocked={wasDeviceLocked}
+              />
             );
             break;
           case OPERATION_NAME.SHOW_ADDRESS:
@@ -75,6 +86,7 @@ export default class OperationBlock extends React.Component<Props> {
               <VerifyAddressHintBlock
                 deviceCode={deviceCode}
                 verifyAddressInfo={verifyAddressInfo}
+                wasDeviceLocked={wasDeviceLocked}
               />
             );
             break;

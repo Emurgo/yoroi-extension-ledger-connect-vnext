@@ -24,7 +24,10 @@ import {
   PROGRESS_STATE,
   OPERATION_NAME,
 } from '../types/cmn';
-import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../const';
+import {
+  YOROI_LEDGER_CONNECT_TARGET_NAME,
+  DEVICE_LOCK_CHECK_TIMEOUT
+} from '../const';
 import {
   pathToString,
   ledgerErrToMessage,
@@ -42,12 +45,14 @@ export default class ConnectStore {
   @observable currentOperationName: OperationNameType;
   @observable verifyAddressInfo: VerifyAddressInfoType;
   @observable deviceCode: DeviceCodeType
+  @observable wasDeviceLocked: boolean;
   userInteractableRequest: RequestType;
 
   constructor(transportId: string) {
     window.addEventListener('message', this._onMessage);
 
     runInAction(() => {
+      this.wasDeviceLocked = false;
       this.transportId = transportId;
       this.progressState = PROGRESS_STATE.LOADING;
     });
@@ -94,11 +99,17 @@ export default class ConnectStore {
   }
 
   _detectLedgerDevice = async (transport: any): Promise<GetVersionResponse> => {
-    this.setProgressState(PROGRESS_STATE.DETECTING_DEVICE);
 
     setTimeout(() => {
-      console.log(`STATE: ${this.progressState}`);
-    }, 100);
+      // Device is not detected till now so we assume that it's locked
+      if (this.progressState === PROGRESS_STATE.DEVICE_TYPE_SELECTED) {
+        runInAction(() => {
+          this.wasDeviceLocked = true;
+          this.setProgressState(PROGRESS_STATE.DETECTING_DEVICE);
+        });
+      }
+    }, DEVICE_LOCK_CHECK_TIMEOUT);
+
     const adaApp = new AdaApp(transport);
     const verResp = await adaApp.getVersion();
 

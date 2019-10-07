@@ -29,6 +29,7 @@ const message = defineMessages({
 
 type Props = {|
   deviceCode: DeviceCodeType,
+  wasDeviceLocked: boolean,
 |};
 
 @observer
@@ -36,20 +37,25 @@ export default class ConnectLedgerHintBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
 
   render() {
-    const { deviceCode } = this.props;
+    const {
+      deviceCode,
+      wasDeviceLocked
+    } = this.props;
 
+    const stepStartNumber: number = wasDeviceLocked ? 2 : 0; // 2 = count of common step
     const imgConnect1 = require(`../../../../assets/img/nano-${deviceCode}/hint-connect-1.png`);
     const imgConnect2 = require(`../../../../assets/img/nano-${deviceCode}/hint-connect-2.png`);
+
     const content = (
       <div className={styles.stepsRowOne}>
         <HintBlock
-          number={1}
+          number={stepStartNumber + 1}
           text={message[`${deviceCode}ExportPublicKey`]}
           imagePath={imgConnect1}
         />
         <div className={styles.gap} />
         <HintBlock
-          number={2}
+          number={stepStartNumber + 2}
           text={message[`${deviceCode}ConfirmExportPublicKey`]}
           imagePath={imgConnect2}
         />

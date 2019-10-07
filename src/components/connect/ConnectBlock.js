@@ -25,6 +25,7 @@ type Props = {|
   executeAction: Function,
   deviceCode: DeviceCodeType,
   verifyAddressInfo: VerifyAddressInfoType,
+  wasDeviceLocked: boolean,
 |};
 
 @observer
@@ -37,7 +38,8 @@ export default class ConnectBlock extends React.Component<Props> {
       currentOperationName,
       executeAction,
       deviceCode,
-      verifyAddressInfo
+      verifyAddressInfo,
+      wasDeviceLocked
     } = this.props;
 
     let content;
@@ -59,6 +61,7 @@ export default class ConnectBlock extends React.Component<Props> {
             currentOperationName={currentOperationName}
             progressState={progressState}
             verifyAddressInfo={verifyAddressInfo}
+            wasDeviceLocked={wasDeviceLocked}
           />
         );
     }
