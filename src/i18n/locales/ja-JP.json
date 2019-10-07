@@ -14,7 +14,7 @@
   "deviceSelection.videoLink.part1": "詳細は以下のビデオをご覧ください。",
   "deviceSelection.videoLink.part2": "又は",
   "deviceSelection.videoLink.part3": "　",
-  "oparation.top.ledgerDeviceInfo": "以下の操作をLedgerデバイスで行ってください",
+  "operation.top.ledgerDeviceInfo": "Perform the following actions on your Ledger device",
   "hint.common.pinCode": "お使いのLedgerデバイスがロックされている場合は、PINを入力します。PINの入力は、<strong>右ボタン</strong>と<strong>左ボタン</strong>で数字を選択し、<strong>両方のボタン</strong>を押して決定します。",
   "hint.common.CardanoApp": "Ledgerデバイス上で<strong>Cardano ADA</strong>アプリをハイライトさせてから、<strong>両方のボタン</strong>を押します。",
   "hint.connect.exportPublicKey": "Ledgerの画面を確認してから、<strong>両方のボタン</strong>を押します。",
