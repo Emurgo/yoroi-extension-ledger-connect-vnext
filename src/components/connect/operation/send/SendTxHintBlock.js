@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
 import type { DeviceCodeType }  from '../../../../types/cmn';
-import HintBlock from '../../../widgets/HintBlock';
+import HintBlock from '../../../widgets/hint/HintBlock';
 
 import styles from './SendTxHintBlock.scss';
 

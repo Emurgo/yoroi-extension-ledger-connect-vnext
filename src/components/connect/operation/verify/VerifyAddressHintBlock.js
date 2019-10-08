@@ -7,8 +7,8 @@ import type {
   DeviceCodeType,
   VerifyAddressInfoType,
 }  from '../../../../types/cmn';
-import HintBlock from '../../../widgets/HintBlock';
-import HintGap from '../../../widgets/HintGap';
+import HintBlock from '../../../widgets/hint/HintBlock';
+import HintGap from '../../../widgets/hint/HintGap';
 
 import styles from './VerifyAddressHintBlock.scss';
 
