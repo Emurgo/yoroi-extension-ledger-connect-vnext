@@ -14,14 +14,13 @@ const messages = defineMessages({
 });
 
 type Props = {|
-  showText?: boolean,
-  small?: boolean
+  showText?: boolean
 |};
 
 @observer
 export default class Loading extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
-  static defaultProps = { showText: false, small: false };
+  static defaultProps = { showText: false };
 
   render() {
     const { intl } = this.context;
