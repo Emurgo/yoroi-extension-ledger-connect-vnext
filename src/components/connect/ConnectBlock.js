@@ -9,7 +9,7 @@ import type {
   VerifyAddressInfoType,
 } from '../../types/cmn';
 import { PROGRESS_STATE } from '../../types/cmn';
-import Loading from '../widgets/Loading';
+import LoadingSpinner from '../widgets/LoadingSpinner';
 import WebAuthnTopBlock from './webauthn-top/WebAuthnTopBlock';
 import TitleBlock from './title/TitleBlock';
 import DeviceSelectionBlock from './device-selection/DeviceSelectionBlock';
@@ -30,6 +30,9 @@ type Props = {|
 
 @observer
 export default class ConnectBlock extends React.Component<Props> {
+  // Yoroi styled loading spinner
+  loadingSpinner: ?LoadingSpinner;
+
   render() {
     const {
       isWebAuthn,
@@ -47,7 +50,12 @@ export default class ConnectBlock extends React.Component<Props> {
 
     switch (progressState) {
       case PROGRESS_STATE.LOADING:
-        content = <Loading showText />;
+        content = (
+          <LoadingSpinner
+            ref={(component) => { this.loadingSpinner = component; }}
+            showText
+          />
+        );
         break;
       case PROGRESS_STATE.DEVICE_TYPE_SELECTION:
         content = (

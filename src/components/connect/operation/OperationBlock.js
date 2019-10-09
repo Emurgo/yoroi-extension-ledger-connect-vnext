@@ -13,7 +13,7 @@ import {
   OPERATION_NAME,
   PROGRESS_STATE,
 } from '../../../types/cmn';
-import Loading from '../../widgets/Loading';
+import LoadingSpinner from '../../widgets/LoadingSpinner';
 import CommonHintBlock from './common/CommonHintBlock';
 import ConnectLedgerHintBlock from './connect/ConnectLedgerHintBlock';
 import SendTxHintBlock from './send/SendTxHintBlock';
@@ -39,6 +39,8 @@ type Props = {|
 @observer
 export default class OperationBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
+  // Yoroi styled loading spinner
+  loadingSpinner: ?LoadingSpinner;
 
   render() {
     const { intl } = this.context;
@@ -53,7 +55,9 @@ export default class OperationBlock extends React.Component<Props> {
     let content;
     switch (progressState) {
       case PROGRESS_STATE.DEVICE_TYPE_SELECTED:
-        content = (<Loading />);
+        content = (
+          <LoadingSpinner ref={(component) => { this.loadingSpinner = component; }} />
+        );
         break;
       case PROGRESS_STATE.DETECTING_DEVICE:
         content = (

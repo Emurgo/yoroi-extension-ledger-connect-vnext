@@ -15,7 +15,7 @@ import it from 'react-intl/locale-data/it';
 
 import RootStore from './stores';
 
-import Loading from './components/widgets/Loading';
+import LoadingSpinner from './components/widgets/LoadingSpinner';
 
 import { translations } from './i18n/translations';
 import { DEFAULT_LOCALE } from './const';
@@ -33,6 +33,8 @@ type Props = {
 
 @observer
 export default class App extends React.Component<Props> {
+  // Yoroi styled loading spinner
+  loadingSpinner: ?LoadingSpinner;
 
   render() {
     const { profileStore } = this.props.rootStore;
@@ -48,9 +50,16 @@ export default class App extends React.Component<Props> {
       translations[locale]
     );
 
+    const loadingSpinner = (
+      <LoadingSpinner
+        ref={(component) => { this.loadingSpinner = component; }}
+        showText
+      />
+    );
+
     const component = (
       <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
-        <Suspense fallback={<Loading showText />}>
+        <Suspense fallback={loadingSpinner}>
           <StyleVariableLoader variables={styleVariables} />
           <ConnectPage rootStore={this.props.rootStore} />
         </Suspense>
