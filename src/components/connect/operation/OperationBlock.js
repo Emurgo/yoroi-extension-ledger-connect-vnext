@@ -24,7 +24,7 @@ import styles from './OperationBlock.scss';
 const message = defineMessages({
   topInfo: {
     id: 'operation.top.ledgerDeviceInfo',
-    defaultMessage: '!!!Perform the following actions on your Ledger device'
+    defaultMessage: '!!!Perform the following actions on your Ledger'
   },
 });
 

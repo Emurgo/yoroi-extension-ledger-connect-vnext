@@ -14,7 +14,7 @@
   "deviceSelection.videoLink.part1": "You can also check video instuction for\u2000",
   "deviceSelection.videoLink.part2": "\u2000or\u2000",
   "deviceSelection.videoLink.part3": " .",
-  "operation.top.ledgerDeviceInfo": "Perform the following actions on your Ledger device",
+  "operation.top.ledgerDeviceInfo": "Perform the following actions on your Ledger",
   "hint.common.pinCode": "If your Ledger device is locked enter your PIN, using the <strong>right</strong> and <strong>left</strong> buttons to select each number and then <strong>both</strong> buttons to confirm.",
   "hint.common.CardanoApp": "Highlight the <strong>Cardano ADA</strong> app on your Ledger and press <strong>both</strong> buttons.",
   "hint.connect.exportPublicKey": "Check your Ledger screen, then press <strong>both</strong> buttons.",
