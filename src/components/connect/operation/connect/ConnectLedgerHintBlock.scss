@@ -1,1 +1,14 @@
-@import '../CommonStyle.scss';
+.component {
+  width: 100%;
+  .stepsRow {
+    display: flex;
+    margin-top: 30px;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    :global(.HintBlock_component) {
+      height: 38vh;
+      width: 42vh;
+    }
+  }
+}
