@@ -26,8 +26,8 @@
   "hint.nanoX.sendTx.confirmAddress": "Bestätigen Sie die Adresse des Empfängers, indem Sie die <strong>rechte</strong> Taste drücken, um durch die gesamte Adresse zu scrollen. Drücken Sie dann <strong>beide</strong> Tasten.",
   "hint.sendTx.confirmFee": "Bestätigen Sie die Transaktionsgebühr, indem Sie <strong>beide</strong> Tasten drücken.",
   "hint.sendTx.confirmTx": "Bestätigen Sie die Transaktion, indem Sie die <strong>rechte</strong> Taste drücken.",
-  "hint.verifyAddress.info": "Check your Ledger screen, then press <strong>both</strong> buttons.",
-  "hint.verifyAddress.path": "Make sure the address path shown on your Ledger is the same as the one shown below, then press <strong>both</strong> buttons.",
-  "hint.verifyAddress.address": "Make sure the address shown on your Ledger is the same as the one shown below, then press <strong>both</strong> buttons.",
-  "hint.nanoX.verifyAddress.address": "Make sure the address shown on your Ledger is the same as the one shown below. Press the <strong>right</strong> button on your Ledger to scroll to the end of the address, then press <strong>both</strong> buttons."
+  "hint.verifyAddress.info": "Überprüfen Sie Ihren Ledger-Bildschirm, dann drücken Sie <strong>beide</strong> Tasten.",
+  "hint.verifyAddress.path": "Stellen Sie sicher, dass der auf Ihrem Ledger angezeigte Adresspfad der gleiche ist wie der unten angezeigte, und drücken Sie dann <strong>beide</strong> Tasten.",
+  "hint.verifyAddress.address": "Stellen Sie sicher, dass die auf Ihrem Ledger angezeigte Adresse die gleiche ist wie die unten angezeigte, und drücken Sie dann <strong>beide</strong> Tasten.",
+  "hint.nanoX.verifyAddress.address": "Stellen Sie sicher, dass die auf Ihrem Ledger angezeigte Adresse die gleiche ist wie die unten angezeigte. Drücken Sie die <strong>rechte</strong> Taste auf Ihrem Ledger, um zum Ende der Adresse zu scrollen, und drücken Sie dann <strong>beide</strong> Tasten."
 }
