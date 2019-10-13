@@ -1,5 +1,5 @@
 {
-  "suspence.fallbackText": "  Loading...",
+  "suspence.fallbackText": "Laden...",
   "footer.version": "Version:",
   "footer.transportId": "Transport:",
   "webauthn.note": "Do not press the <strong>Cancel</strong> button",
