@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: flex-end;
   opacity: 0.8;
-  background-color: #060D24; // TODO, add
+  background-color: var(--webauthn-top-background-color);
   .warningBlock {
     display: flex;
     margin-bottom: 6px;

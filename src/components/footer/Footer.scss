@@ -7,7 +7,7 @@
   .wrapper {
     margin-right: 20px;
     .textLine {
-      color: #ADAEB6; // TODO, add
+      color: var(--text-color-1);
       font-size: 12px;
       line-height: 14px;    
     }    

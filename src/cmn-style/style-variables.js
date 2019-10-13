@@ -21,5 +21,14 @@ export default {
   '--button-background-color': '#17D1AA',
   '--button-hover-background-color': '#6BE4B9',
   '--button-active-background-color': '#63D3AB',
-  '--link-underline-color': '#38393D'
+  '--link-underline-color': '#38393D',
+  '--webauthn-top-background-color': '#060D24',
+  '--image-block-background-color': '#F2F4FB',
+  '--hint-secondary-text-background-color': '#F0F3F5',
+
+  // TEXT-COLOR
+  '--text-color-1': '#ADAEB6',
+  '--text-color-2': '#92979D',
+  '--text-color-3': '#92979D',
+  '--text-color-4': '#676970',
 };

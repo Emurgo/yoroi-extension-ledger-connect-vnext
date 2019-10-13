@@ -5,7 +5,7 @@ $CounterSize: 24px;
   .imageBlock {
     margin-bottom: 12px;
     border-radius: 6px;
-    background-color: #F2F4FB;
+    background-color: var(--image-block-background-color);
 
     .image {
       max-width: 100%;
@@ -26,8 +26,8 @@ $CounterSize: 24px;
         justify-content: center;
         align-items: center;
         border-radius: 50%;
-        background-color: #f2f4fb; // TODO, add variables
-        color: #92979D; // TODO, add variables
+        background-color: var(--image-block-background-color);
+        color: var(--text-color-2);
         height: $CounterSize;
         width: $CounterSize;
         font-size: 14px;
@@ -38,7 +38,7 @@ $CounterSize: 24px;
       .primaryText,
       .secondaryText {
         overflow-wrap: break-word;
-        color: #38393D;
+        color: var(--text-color-3);
         font-size: 14px;
         line-height: 22px;
       }
@@ -49,7 +49,7 @@ $CounterSize: 24px;
         text-align: center;
         margin-top: 4px;
         padding: 6px;
-        background-color: #F0F3F5; // TODO, add variables
+        background-color: var(--hint-secondary-text-background-color);
         border-radius: 4px;
       }
     }
