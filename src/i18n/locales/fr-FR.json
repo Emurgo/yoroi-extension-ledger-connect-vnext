@@ -29,5 +29,5 @@
   "hint.verifyAddress.info": "Vérifiez l'écran de votre Ledger, puis appuyez sur les <strong>deux</strong> boutons.",
   "hint.verifyAddress.path": "Assurez-vous que le chemin d'adresse affiché sur votre Ledger est le même que celui indiqué ci-dessous, puis appuyez sur les <strong>deux</strong> boutons.",
   "hint.verifyAddress.address": "Assurez-vous que l'adresse affichée sur votre Ledger est la même que celle indiquée ci-dessous, puis appuyez sur les <strong>deux</strong> boutons.",
-  "hint.nanoX.verifyAddress.address": "Make sure the address shown on your Ledger is the same as the one shown below. Press the <strong>right</strong> button on your Ledger to scroll to the end of the address, then press <strong>both</strong> buttons."
+  "hint.nanoX.verifyAddress.address": "Assurez-vous que l'adresse affichée sur votre Ledger est la même que celle affichée ci-dessous. Appuyez sur le bouton <strong>droit</strong> de votre Ledger pour faire défiler et afficher la fin de l'adresse, puis appuyez sur les <strong>deux</strong> boutons."
 }
