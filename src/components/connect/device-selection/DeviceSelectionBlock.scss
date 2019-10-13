@@ -1,4 +1,5 @@
 @import '../../../cmn-style/mixin/underline.scss';
+@import '../../../cmn-style/mixin/button.scss';
 
 .component {
   height: 100%;
@@ -17,27 +18,18 @@
       text-align: center;
       margin-bottom: 34px
     }
-    // TODO: make it mixins
-    button {
-      background: none;
-      border: none;
-      padding: 0;
-    
-      &:focus {
-        outline: 0;
-      }
-    }      
+    @include buttonDefault;
     .device {
       width: 400px;
       height: 48px;
       border-radius: 8px;
       margin-bottom: 36px;
       cursor: pointer;
-      background-color: #17D1AA; // TODO
+      background-color: var(--button-background-color);
 
       .text {
         height: 21px;
-        color: #FFFFFF; // TODO
+        color: var(--color-white);
         font-size: 16px;
         font-weight: bold;
         line-height: 21px;
@@ -48,10 +40,10 @@
       margin-bottom: 0px;
     }
     .device:hover {
-      background-color: rgb(107, 228, 185); // TODO
+      background-color: var(--button-hover-background-color);
     }
     .device:active {
-      background-color: rgb(99, 211, 171) // TODO
+      background-color: var(--button-active-background-color);
     }
   }
   .videoLink {
@@ -64,10 +56,7 @@
       font-size: 14px;
       height: 22px;
       line-height: 22px;
-      color: #38393D;
-    }
-    .link {
-      @include underline(#38393D);
+      @include underline(var(--link-underline-color));
     }
     .linkIcon {
       margin-left: 4px;

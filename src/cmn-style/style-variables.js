@@ -11,8 +11,15 @@ export default {
 
   // GAP
   '--layout-top-gap': '0px',
-  '--webauthn-layout-top-gap': '300px',
+  '--webauthn-layout-top-gap': '20rem',
+  '--webauthn-layout-top-gap-firefox': '10rem',
 
   // COLORS
   '--scrollbar-thumb-background': '#c8ccce',
+  '--color-white': '#ffffff',
+
+  '--button-background-color': '#17D1AA',
+  '--button-hover-background-color': '#6BE4B9',
+  '--button-active-background-color': '#63D3AB',
+  '--link-underline-color': '#38393D'
 };

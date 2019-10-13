@@ -1,6 +1,6 @@
 .component {
   width: 100%;
-  min-height: 20rem;
+  min-height: var(--webauthn-layout-top-gap);
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -16,7 +16,7 @@
     }
     .text {
       height: 18px;
-      color: #ffffff;
+      color: var(--color-white);
       line-height: 18px;
       font-size: 13px;
     }
@@ -24,5 +24,5 @@
 }
 
 .componentFirefox {
-  min-height: 10rem;
+  min-height: var(--webauthn-layout-top-gap-firefox);
 }
