@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  min-width: 680px;
 
   .stepsGrid {
     display: inline-grid;
@@ -43,7 +44,7 @@
       grid-row: 2 / 3;
     }
     :global(.HintBlock_component) {
-      width: 22vw;
+      width: 28vh;
       min-width: 140px;
       max-width: 260px;
     }    
