@@ -11,7 +11,7 @@
   "wallet.title.ledgerNanoS": "Ledger Nano S",
   "wallet.title.ledgerNanoX": "Ledger Nano X",
   "deviceSelection.chooseDevice": "Choisissez votre appareil",
-  "deviceSelection.videoLink.part1": "Vous pouvez également vérifier la vidéo d'instructions pour",
+  "deviceSelection.videoLink.part1": "You can also check video instruction for ",
   "deviceSelection.videoLink.part2": "ou",
   "deviceSelection.videoLink.part3": " .",
   "operation.top.ledgerDeviceInfo": "Effectuez les actions suivantes sur votre Ledger",
