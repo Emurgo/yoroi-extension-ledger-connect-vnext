@@ -1,13 +1,13 @@
 .component {
   width: 100%;
   .stepsRow {
-    display: flex;
-    margin-top: 30px;
-    flex-direction: row;
     width: 100%;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
-    :global(.HintBlock_component) {
-      width: 38vh;
+    :global(.HintBlock_image) {
+      max-height: 180px;
+      height: 20vh;
     }
   }
 }

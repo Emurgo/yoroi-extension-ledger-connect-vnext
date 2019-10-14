@@ -5,6 +5,7 @@ import { intlShape, defineMessages } from 'react-intl';
 
 import type { DeviceCodeType }  from '../../../../types/cmn';
 import HintBlock from '../../../widgets/hint/HintBlock';
+import HintGap from '../../../widgets/hint/HintGap';
 
 import styles from './SendTxHintBlock.scss';
 
@@ -82,7 +83,9 @@ export default class SendTxHintBlock extends React.Component<Props> {
             imagePath={imgSend1}
           />
         </div>
-        <div className={styles.gap1} />
+        <div className={styles.gap1}>
+          <HintGap />
+        </div>
         <div className={styles.item2}>
           <HintBlock
             number={stepStartNumber + 2}
@@ -90,7 +93,9 @@ export default class SendTxHintBlock extends React.Component<Props> {
             imagePath={imgSend2}
           />
         </div>
-        <div className={styles.gap2} />
+        <div className={styles.gap2}>
+          <HintGap />
+        </div>
         <div className={styles.item3}>
           <HintBlock
             number={stepStartNumber + 3}
@@ -105,7 +110,9 @@ export default class SendTxHintBlock extends React.Component<Props> {
             imagePath={imgSend4}
           />
         </div>
-        <div className={styles.gap3} />
+        <div className={styles.gap3}>
+          <HintGap />
+        </div>
         <div className={styles.item5}>
           <HintBlock
             number={stepStartNumber + 5}

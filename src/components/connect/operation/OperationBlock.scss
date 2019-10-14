@@ -1,11 +1,12 @@
 .component {
   width: 100%;
+  padding: 30px 20px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 
   .performActionText {
-    margin-top: 20px;
+    margin-bottom: 30px;
     font-size: 14px;
     line-height: 22px;
     text-align: center;

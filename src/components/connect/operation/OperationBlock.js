@@ -34,11 +34,13 @@ type Props = {|
   progressState: ProgressStateType,
   verifyAddressInfo: VerifyAddressInfoType,
   wasDeviceLocked: boolean,
+  showPerformActionText?: boolean,
 |};
 
 @observer
 export default class OperationBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
+  static defaultProps = { showPerformActionText: false }
   // Yoroi styled loading spinner
   loadingSpinner: ?LoadingSpinner;
 
@@ -49,7 +51,8 @@ export default class OperationBlock extends React.Component<Props> {
       currentOperationName,
       progressState,
       verifyAddressInfo,
-      wasDeviceLocked
+      wasDeviceLocked,
+      showPerformActionText,
     } = this.props;
 
     let content;
@@ -104,11 +107,19 @@ export default class OperationBlock extends React.Component<Props> {
         return (null);
     }
 
-    return (
-      <div className={styles.component}>
+    // By default performActionText block is hidded
+    let performActionText;
+    if (showPerformActionText) {
+      performActionText = (
         <div className={styles.performActionText}>
           {intl.formatMessage(message.topInfo)}
         </div>
+      );
+    }
+
+    return (
+      <div className={styles.component}>
+        {performActionText}
         {content}
       </div>
     );
