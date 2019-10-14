@@ -23,11 +23,11 @@
   "hint.nanoX.sendTx.startNewTx": "Controlla la schermata sul Ledger, quindi premi <strong>entrambi</strong> i pulsanti.",
   "hint.sendTx.confirmValue": "Conferma l'importo di ADA premendo <strong>entrambi</strong> i pulsanti.",
   "hint.sendTx.confirmAddress": "Conferma l'indirizzo del destinatario premendo <strong>entrambi</strong> i pulsanti.",
-  "hint.nanoX.sendTx.confirmAddress": "Confirm the receiver's address by pressing the <strong>right</strong> button to scroll through the entire address. Then press <strong>both</strong> buttons.",
-  "hint.sendTx.confirmFee": "Confirm Transaction Fee by pressing <strong>both</strong> buttons.",
-  "hint.sendTx.confirmTx": "Confirm the transaction by pressing the <strong>right</strong> button.",
-  "hint.verifyAddress.info": "Check your Ledger screen, then press <strong>both</strong> buttons.",
-  "hint.verifyAddress.path": "Make sure the address path shown on your Ledger is the same as the one shown below, then press <strong>both</strong> buttons.",
-  "hint.verifyAddress.address": "Make sure the address shown on your Ledger is the same as the one shown below, then press <strong>both</strong> buttons.",
-  "hint.nanoX.verifyAddress.address": "Make sure the address shown on your Ledger is the same as the one shown below. Press the <strong>right</strong> button on your Ledger to scroll to the end of the address, then press <strong>both</strong> buttons."
+  "hint.nanoX.sendTx.confirmAddress": "Conferma l'indirizzo del destinatario premendo il pulsante <strong>destro</strong> per scorrere l'intero indirizzo. Quindi premi <strong>entrambi</strong> i pulsanti.",
+  "hint.sendTx.confirmFee": "Conferma la commissione di transazione premendo <strong>entrambi</strong> i pulsanti.",
+  "hint.sendTx.confirmTx": "Conferma la transazione premendo il pulsante <strong>destro</strong>.",
+  "hint.verifyAddress.info": "Controlla la schermata sul Ledger, quindi premi <strong>entrambi</strong> i pulsanti.",
+  "hint.verifyAddress.path": "Assicurati che il percorso dell'indirizzo mostrato sul Ledger sia uguale a quello mostrato di seguito, quindi premi <strong>entrambi</strong> i pulsanti.",
+  "hint.verifyAddress.address": "Assicurati che l'indirizzo indicato sul Ledger sia uguale a quello mostrato di seguito, quindi premi <strong>entrambi</strong> i pulsanti.",
+  "hint.nanoX.verifyAddress.address": "Assicurati che l'indirizzo indicato sul Ledger sia uguale a quello mostrato di seguito. Premi il pulsante <strong>destro</strong> sul Ledger per scorrere fino alla fine dell'indirizzo, quindi premi <strong>entrambi</strong> i pulsanti."
 }
