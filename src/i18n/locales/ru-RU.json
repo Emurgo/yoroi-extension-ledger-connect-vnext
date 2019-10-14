@@ -19,7 +19,7 @@
   "hint.common.CardanoApp": "Выберите приложение <strong>Cardano ADA</strong> на вашем устройстве и нажмите <strong>обе</strong> клавиши.",
   "hint.connect.exportPublicKey": "Проверьте экран Ledger, затем нажмите <strong>обе</strong> клавиши.",
   "hint.connect.confirmExportPublicKey": "Подтвердите экспорт публичного ключа нажатием <strong>обеих</strong> клавиш.",
-  "hint.sendTx.startNewTx": "Проверьте экран Ledger, затем нажмите <strong>правую</strong> клавишу.",
+  "hint.sendTx.startNewTx": "Проверьте экран Ledger и нажмите <strong>правую</strong> клавишу.",
   "hint.nanoX.sendTx.startNewTx": "Проверьте экран Ledger, затем нажмите <strong>обе</strong> клавиши.",
   "hint.sendTx.confirmValue": "Подтвердите количество ADA нажатием <strong>обеих</strong> клавиш.",
   "hint.sendTx.confirmAddress": "Подтвердите адрес получателя нажатием <strong>обеих</strong> клавиш.",
