@@ -1,6 +1,6 @@
 {
   "name": "yoroi-extension-ledger-connect",
-  "version": "1.0.29",
+  "version": "1.0.30",
   "description": "A web app which communicates between Ledger device and Yoroi Extension",
   "author": "EMURGO.io",
   "scripts": {
