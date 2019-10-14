@@ -6,7 +6,7 @@
 
   .stepsGrid {
     display: inline-grid;
-    grid-template-columns: auto auto auto auto auto auto auto;
+    grid-template-columns: auto minmax(50px, 420px) auto minmax(50px, 420px) auto minmax(50px, 420px) auto;
     grid-template-rows: auto auto;
     row-gap: 26px;
 
