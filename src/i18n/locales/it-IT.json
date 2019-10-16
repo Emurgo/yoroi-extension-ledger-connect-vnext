@@ -3,11 +3,11 @@
   "footer.version": "Versione:",
   "footer.transportId": "Trasporto:",
   "webauthn.note": "Non premere il pulsante <strong>Annulla</strong>",
-  "title.connect": "Connettiti al portafoglio hardware del ledger",
+  "title.connect": "Connetti al wallet hardware",
   "title.sendTx": "Conferma la transazione tramite il ledger",
   "title.verifyAddress": "Verifica l'indirizzo sul ledger",
-  "title.ledgerVersion": "Scarica la versione del dispositivo Ledger",
-  "title.deriveAddress": "Indirizzo derivato",
+  "title.ledgerVersion": "Recupera versione del dispositivo Ledger",
+  "title.deriveAddress": "Indirizzo ricavato",
   "wallet.title.ledgerNanoS": "Ledger Nano S",
   "wallet.title.ledgerNanoX": "Ledger Nano X",
   "deviceSelection.chooseDevice": "Scegli il tuo dispositivo",
@@ -27,7 +27,7 @@
   "hint.sendTx.confirmFee": "Conferma la commissione di transazione premendo <strong>entrambi</strong> i pulsanti.",
   "hint.sendTx.confirmTx": "Conferma la transazione premendo il pulsante <strong>destro</strong>.",
   "hint.verifyAddress.info": "Controlla la schermata sul Ledger, quindi premi <strong>entrambi</strong> i pulsanti.",
-  "hint.verifyAddress.path": "Assicurati che il percorso dell'indirizzo mostrato sul Ledger sia uguale a quello mostrato di seguito, quindi premi <strong>entrambi</strong> i pulsanti.",
+  "hint.verifyAddress.path": "Assicurati che l'indirizzo indicato sul Ledger sia uguale a quello mostrato di seguito, quindi premi <strong>entrambi</strong> i pulsanti.",
   "hint.verifyAddress.address": "Assicurati che l'indirizzo indicato sul Ledger sia uguale a quello mostrato di seguito, quindi premi <strong>entrambi</strong> i pulsanti.",
   "hint.nanoX.verifyAddress.address": "Assicurati che l'indirizzo indicato sul Ledger sia uguale a quello mostrato di seguito. Premi il pulsante <strong>destro</strong> sul Ledger per scorrere fino alla fine dell'indirizzo, quindi premi <strong>entrambi</strong> i pulsanti."
 }
