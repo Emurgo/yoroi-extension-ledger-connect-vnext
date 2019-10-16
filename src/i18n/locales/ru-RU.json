@@ -1,5 +1,5 @@
 {
-  "suspence.fallbackText": "\u2000\u2000Загрузка...",
+  "suspence.fallbackText": "  Загрузка...",
   "footer.version": "Версия:",
   "footer.transportId": "Transport:",
   "webauthn.note": "Не нажимайте кнопку <strong>Cancel</strong>",
@@ -11,8 +11,8 @@
   "wallet.title.ledgerNanoS": "Ledger Nano S",
   "wallet.title.ledgerNanoX": "Ledger Nano X",
   "deviceSelection.chooseDevice": "Выберите ваше устройство",
-  "deviceSelection.videoLink.part1": "Вы также можете найти видео-инструкцию для\u2000",
-  "deviceSelection.videoLink.part2": "\u2000или\u2000",
+  "deviceSelection.videoLink.part1": "Вы также можете найти видео-инструкцию для ",
+  "deviceSelection.videoLink.part2": " или ",
   "deviceSelection.videoLink.part3": " .",
   "operation.top.ledgerDeviceInfo": "Выполните следующие действия на Ledger",
   "hint.common.pinCode": "Если ваш Ledger заблокирован, введите свой PIN, используя <strong>правую</strong> и <strong>левую</strong> клавиши чтобы выбрать нужную цифру и <strong>обе</strong> клавиши для подтверждения.",
