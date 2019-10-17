@@ -49,8 +49,8 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.props.currentLocale !== transportId &&
       this.state.visible === `${styles.visible}`
     ) {
-      console.debug(`[YLC]::Transport Selection Changed to : ${transportId}`);
       this.props.setTransport(transportId);
+      console.debug(`[YLC] Transport Selection Changed to : ${transportId}`);
     }
   };
 
@@ -59,7 +59,7 @@ export default class TestBlock extends React.Component<Props, State> {
       this.state.visible === `${styles.visible}`
     ) {
       this.props.setLocale(locale);
-      console.debug(`[YLC]::Language Selection Changed to : ${locale}`);
+      console.debug(`[YLC] Language Selection Changed to : ${locale}`);
     }
   };
 

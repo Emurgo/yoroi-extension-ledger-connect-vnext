@@ -153,8 +153,7 @@ export default class ConnectStore {
         this.deriveAddress(actn, params.hdPath);
         break;
       default:
-        // FOR NOW NO-OPERATION
-        break;
+        throw new Error(`[YLC] Unexpected action called: ${actn}`);
     }
   }
 
@@ -291,7 +290,7 @@ export default class ConnectStore {
       const { params } = req.data;
       const actn = req.data.action;
 
-      console.debug(`[YLC]::request: ${actn}`);
+      console.debug(`[YLC] request: ${actn}`);
 
       switch (actn) {
         case OPERATION_NAME.GET_LEDGER_VERSION:
@@ -315,11 +314,11 @@ export default class ConnectStore {
           window.close();
           break;
         default:
-          // FOR NOW NO-OPERATION
+          console.debug(`[YLC] Unexpected action requested: ${actn}`);
           break;
       }
     } else {
-      console.debug(`[YLC]::Got non ledger connectore request: ${req.origin}}`);
+      console.debug(`[YLC] Got non ledger connectore request: ${req.origin}}`);
     }
   }
 
@@ -350,7 +349,7 @@ export default class ConnectStore {
     actn: string,
     err: Error
   ): void => {
-    console.error(`[YLC]::${actn}::error::${JSON.stringify(err)}`);
+    console.error(`[YLC] ${actn}::error::${JSON.stringify(err)}`);
     const payload = {
       error: ledgerErrToMessage(err).toString()
     };

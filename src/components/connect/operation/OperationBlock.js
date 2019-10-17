@@ -99,11 +99,12 @@ export default class OperationBlock extends React.Component<Props> {
             );
             break;
           default:
-            // FOR NOW NO-OPERATION
-            break;
+            console.error(`[YLC] Unexpected operation: ${currentOperationName}`);
+            return (null);
         }
         break;
       default:
+        console.error(`[YLC] Unexpected progress state: ${progressState}`);
         return (null);
     }
 
