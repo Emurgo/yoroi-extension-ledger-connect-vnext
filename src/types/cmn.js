@@ -11,7 +11,7 @@ export type RequestType = {
 }
 
 export type URLParams = {
-  transportId: string,
+  transportId: TransportId,
   locale: string
 }
 
