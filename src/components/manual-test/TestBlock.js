@@ -118,31 +118,31 @@ export default class TestBlock extends React.Component<Props, State> {
               type="button"
               onClick={this.onLogExtendedPublicKey}
             >
-              Log Extended public key
+              Extended public key
             </button>
             <button
               type="button"
               onClick={this.onLogSignTransaction}
             >
-              Log Sign Transaction
+              Sign Transaction
             </button>
             <button
               type="button"
               onClick={this.onLogShowAddress}
             >
-              Log Verify Address
+              Verify Address
             </button>
             <button
               type="button"
               onClick={this.onLogDeriveAddress}
             >
-              Log Derive Address
+              Derive Address
             </button>
             <button
               type="button"
               onClick={this.onLogVersion}
             >
-              Log Device Version
+              Device Version
             </button>
           </div>
           <div className={styles.visibilityInfo}>
