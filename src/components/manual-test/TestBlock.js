@@ -7,14 +7,15 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { utils as CUtils } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
-import type {
-  DeviceCodeType,
-} from '../../types/cmn';
+import type { TransportId } from '../../types/cmn';
 import {
   OPERATION_NAME,
-  DEVICE_CODE,
+  TRANSPORT_ID
 } from '../../types/cmn';
+import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../../const';
+import { SUPPORTED_LOCALS } from '../../i18n/translations';
 import styles from './TestBlock.scss';
+
 
 type Props = {|
   executeActionWithCustomRequest: Function,
@@ -22,8 +23,9 @@ type Props = {|
 |};
 
 type State = {|
-  selectedDevice: DeviceCodeType,
-  visible: string
+  visible: string,
+  selectedTransport: TransportId,
+  selectedLang: string,
 |};
 
 @observer
@@ -31,8 +33,9 @@ export default class TestBlock extends React.Component<Props, State> {
   constructor() {
     super();
     this.state = {
-      selectedDevice: DEVICE_CODE.NANO_S,
-      visible: `${styles.visible}`
+      visible: `${styles.visible}`,
+      selectedTransport: TRANSPORT_ID.WEB_AUTHN,
+      selectedLang: 'en-US',
     };
   }
 
@@ -44,12 +47,21 @@ export default class TestBlock extends React.Component<Props, State> {
     this.setState({ visible: `${styles.hidden}` });
   }
 
-  onDeviceSelectionChange = (deviceName: DeviceCodeType) => {
-    if (this.state.selectedDevice !== deviceName &&
+  onTransportSelectionChange = (transportId: TransportId) => {
+    if (this.state.selectedTransport !== transportId &&
       this.state.visible === `${styles.visible}`
     ) {
-      console.debug(`[YLC]::Device Selection Changed to : ${deviceName}`);
-      this.setState({ selectedDevice: deviceName });
+      console.debug(`[YLC]::Transport Selection Changed to : ${transportId}`);
+      this.setState({ selectedTransport: transportId });
+    }
+  };
+
+  onLangSelectionChange = (lang: string) => {
+    if (this.state.selectedLang !== lang &&
+      this.state.visible === `${styles.visible}`
+    ) {
+      console.debug(`[YLC]::Language Selection Changed to : ${lang}`);
+      this.setState({ selectedLang: lang });
     }
   };
 
@@ -60,66 +72,91 @@ export default class TestBlock extends React.Component<Props, State> {
         onClick={this.onCompClicked}
         onDoubleClick={this.onCompDoubleClicked}
       >
-        <div>
-          <input
-            type="radio"
-            name="device"
-            id={DEVICE_CODE.NANO_S}
-            checked={this.state.selectedDevice === DEVICE_CODE.NANO_S}
-            onChange={this.onDeviceSelectionChange.bind(null, DEVICE_CODE.NANO_S)}
-          />
-          <label style={{ marginRight: '26px' }} htmlFor={DEVICE_CODE.NANO_S}>Nano S</label>
-          <input
-            type="radio"
-            name="device"
-            id={DEVICE_CODE.NANO_X}
-            checked={this.state.selectedDevice === DEVICE_CODE.NANO_X}
-            onChange={this.onDeviceSelectionChange.bind(null, DEVICE_CODE.NANO_X)}
-          />
-          <label htmlFor={DEVICE_CODE.NANO_X}>Nano X</label>
+        <div className={styles.column1}>
+          {SUPPORTED_LOCALS.map(lang => {
+            return (
+              <div>
+                <input
+                  type="radio"
+                  name="language"
+                  id={lang}
+                  checked={this.state.selectedLang === lang}
+                  onChange={this.onLangSelectionChange.bind(null, lang)}
+                />
+                <label htmlFor={lang}>{lang}</label>
+              </div>
+            );
+          })}
         </div>
-        <div className={styles.btnWrap}>
-          <button
-            type="button"
-            onClick={this.onLogExtendedPublicKey}
-          >
-            Log Extended public key
-          </button>
-        </div>
-        <div className={styles.btnWrap}>
-          <button
-            type="button"
-            onClick={this.onLogSignTransaction}
-          >
-            Log Sign Transaction
-          </button>
-        </div>
-        <div className={styles.btnWrap}>
-          <button
-            type="button"
-            onClick={this.onLogShowAddress}
-          >
-            Log Verify Address
-          </button>
-        </div>
-        <div className={styles.btnWrap}>
-          <button
-            type="button"
-            onClick={this.onLogDeriveAddress}
-          >
-            Log Derive Address
-          </button>
-        </div>
-        <div className={styles.btnWrap}>
-          <button
-            type="button"
-            onClick={this.onLogVersion}
-          >
-            Log Device Version
-          </button>
-        </div>
-        <div className={styles.visibilityInfo}>
-          *Double click=invisible | single click=visible again
+        <div className={styles.column2}>
+          <div className={styles.transportSelection}>
+            {Object.keys(TRANSPORT_ID).map(key => {
+              if (Object.prototype.hasOwnProperty.call(TRANSPORT_ID, key)) {
+                const tranportId = TRANSPORT_ID[key];
+                return (
+                  <span>
+                    <input
+                      type="radio"
+                      name="transport"
+                      id={tranportId}
+                      checked={this.state.selectedTransport === tranportId}
+                      onChange={this.onTransportSelectionChange.bind(null, tranportId)}
+                    />
+                    <label
+                      className={styles.tranportLabel}
+                      htmlFor={tranportId}
+                    >
+                      {tranportId}
+                    </label>
+                  </span>
+                );
+              }
+              return null;
+            })}
+          </div>
+          <div className={styles.btnWrap}>
+            <button
+              type="button"
+              onClick={this.onLogExtendedPublicKey}
+            >
+              Log Extended public key
+            </button>
+          </div>
+          <div className={styles.btnWrap}>
+            <button
+              type="button"
+              onClick={this.onLogSignTransaction}
+            >
+              Log Sign Transaction
+            </button>
+          </div>
+          <div className={styles.btnWrap}>
+            <button
+              type="button"
+              onClick={this.onLogShowAddress}
+            >
+              Log Verify Address
+            </button>
+          </div>
+          <div className={styles.btnWrap}>
+            <button
+              type="button"
+              onClick={this.onLogDeriveAddress}
+            >
+              Log Derive Address
+            </button>
+          </div>
+          <div className={styles.btnWrap}>
+            <button
+              type="button"
+              onClick={this.onLogVersion}
+            >
+              Log Device Version
+            </button>
+          </div>
+          <div className={styles.visibilityInfo}>
+            *Double click=invisible | single click=visible again
+          </div>
         </div>
       </div>
     );
@@ -133,13 +170,11 @@ export default class TestBlock extends React.Component<Props, State> {
       const req = {
         action: OPERATION_NAME.GET_LEDGER_VERSION,
         params: null,
-        source: null
+        target: YOROI_LEDGER_CONNECT_TARGET_NAME,
       };
-
-      this.props.setCurrentOperationName(OPERATION_NAME.GET_LEDGER_VERSION);
-      const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
-      console.debug(`[YLC]::onLogVersion: ${JSON.stringify(resp, null, 2)}`);
+      window.postMessage(req);
     }
+    console.debug(`[YLC] TEST:onLogVersion`);
   }
 
   /**
@@ -151,13 +186,11 @@ export default class TestBlock extends React.Component<Props, State> {
       const req = {
         action: OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
         params: { hdPath },
-        source: null
+        target: YOROI_LEDGER_CONNECT_TARGET_NAME,
       };
-
-      this.props.setCurrentOperationName(OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY);
-      const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
-      console.debug(`[YLC]::onLogExtendedPublicKey: ${JSON.stringify(resp, null, 2)}`);
+      window.postMessage(req);
     }
+    console.debug(`[YLC] TEST:onLogExtendedPublicKey`);
   }
 
   /**
@@ -199,17 +232,15 @@ export default class TestBlock extends React.Component<Props, State> {
           inputs,
           outputs
         },
-        source: null
+        target: YOROI_LEDGER_CONNECT_TARGET_NAME,
       };
-
-      this.props.setCurrentOperationName(OPERATION_NAME.SIGN_TX);
-      const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
-      console.debug(`[YLC]::onLogSignTransaction: ${JSON.stringify(resp, null, 2)}`);
+      window.postMessage(req);
     }
+    console.debug(`[YLC] TEST:onLogSignTransaction`);
   }
 
   /**
-   * Test showAddress
+   * Test showAddress = Verify Address
    */
   onLogShowAddress = async () => {
     if (this.state.visible === `${styles.visible}`) {
@@ -218,13 +249,11 @@ export default class TestBlock extends React.Component<Props, State> {
       const req = {
         action: OPERATION_NAME.SHOW_ADDRESS,
         params: { hdPath, address },
-        source: null
+        target: YOROI_LEDGER_CONNECT_TARGET_NAME,
       };
-
-      this.props.setCurrentOperationName(OPERATION_NAME.SHOW_ADDRESS);
-      const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
-      console.debug(`[YLC]::onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
+      window.postMessage(req);
     }
+    console.debug(`[YLC] TEST:onLogShowAddress`);
   }
 
   /**
@@ -236,12 +265,10 @@ export default class TestBlock extends React.Component<Props, State> {
       const req = {
         action: OPERATION_NAME.DERIVE_ADDRESS,
         params: { hdPath },
-        source: null
+        target: YOROI_LEDGER_CONNECT_TARGET_NAME,
       };
-
-      this.props.setCurrentOperationName(OPERATION_NAME.DERIVE_ADDRESS);
-      const resp = await this.props.executeActionWithCustomRequest(this.state.selectedDevice, req);
-      console.debug(`[YLC]::onLogDeriveAddress: ${JSON.stringify(resp, null, 2)}`);
+      window.postMessage(req);
     }
+    console.debug(`[YLC] TEST:onLogDeriveAddress`);
   }
 }

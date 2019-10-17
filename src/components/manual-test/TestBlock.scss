@@ -1,14 +1,14 @@
 .component {
   // opacity: 0.3;
   position: absolute;
+  display: flex;
   z-index: 1;
   top: 4px;
   left: 4px;
-  padding: 15px;
+  padding: 10px;
   background-color: #82E331;
   border: 3px solid red;
   border-radius: 5px;
-  font-size: 20px;
   button {
     width: 200px;
     height: 26px;
@@ -24,8 +24,22 @@
     text-align: center;
     font-size: 9px;
   }
+  .column1 {
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+  .column2 {
+    background-color: #F8D11F;
+    .transportSelection {
+      background-color: #10F1E7;
+      margin-bottom: 5px;
+      .tranportLabel {
+        font-size: 14px;
+      }
+    }
+  }  
 }
-
 .visible {
   opacity: 1;
 }
