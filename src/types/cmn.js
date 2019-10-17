@@ -44,3 +44,10 @@ export const DEVICE_CODE = Object.freeze({
   NANO_X: 'x',
 });
 export type DeviceCodeType = $Values<typeof DEVICE_CODE>;
+
+export const TRANSPORT_ID = Object.freeze({
+  WEB_AUTHN: 'webauthn',
+  U2F: 'u2f',
+  WEB_USB: 'webusb'
+});
+export type TransportId = $Values<typeof TRANSPORT_ID>;
