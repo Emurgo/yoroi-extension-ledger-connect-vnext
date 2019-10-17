@@ -113,39 +113,31 @@ export default class TestBlock extends React.Component<Props, State> {
               return null;
             })}
           </div>
-          <div className={styles.btnWrap}>
+          <div className={styles.operationSelection}>
             <button
               type="button"
               onClick={this.onLogExtendedPublicKey}
             >
               Log Extended public key
             </button>
-          </div>
-          <div className={styles.btnWrap}>
             <button
               type="button"
               onClick={this.onLogSignTransaction}
             >
               Log Sign Transaction
             </button>
-          </div>
-          <div className={styles.btnWrap}>
             <button
               type="button"
               onClick={this.onLogShowAddress}
             >
               Log Verify Address
             </button>
-          </div>
-          <div className={styles.btnWrap}>
             <button
               type="button"
               onClick={this.onLogDeriveAddress}
             >
               Log Derive Address
             </button>
-          </div>
-          <div className={styles.btnWrap}>
             <button
               type="button"
               onClick={this.onLogVersion}
