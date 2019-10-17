@@ -287,7 +287,6 @@ export default class ConnectStore {
    */
   _onMessage = (req: any): void => {
     if (req && req.data && req.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
-      const { source } = req;
       const { params } = req.data;
       const actn = req.data.action;
 
@@ -308,7 +307,6 @@ export default class ConnectStore {
             this.userInteractableRequest = {
               params,
               action: actn,
-              source
             };
           }
           break;
