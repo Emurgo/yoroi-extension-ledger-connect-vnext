@@ -14,13 +14,10 @@ import {
 } from '../../types/cmn';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../../const';
 import { SUPPORTED_LOCALS } from '../../i18n/translations';
+
 import styles from './TestBlock.scss';
 
-
-type Props = {|
-  executeActionWithCustomRequest: Function,
-  setCurrentOperationName: Function,
-|};
+type Props = {||};
 
 type State = {|
   visible: string,

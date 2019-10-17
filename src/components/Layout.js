@@ -9,11 +9,9 @@ import Footer from './footer/Footer';
 import styles from './Layout.scss';
 
 type Props = {|
-  executeActionWithCustomRequest: Function,
   isDevelopment: boolean,
   appVersion: string,
   transportId: string,
-  setCurrentOperationName: Function,
   children: Node,
 |};
 
@@ -21,8 +19,6 @@ type Props = {|
 export default class Layout extends React.Component<Props> {
   render() {
     const {
-      executeActionWithCustomRequest,
-      setCurrentOperationName,
       isDevelopment,
       appVersion,
       transportId,
@@ -33,10 +29,7 @@ export default class Layout extends React.Component<Props> {
       <div className={styles.component}>
         {/* TestBlock will only be visible in Development mode */}
         {isDevelopment && (
-          <TestBlock
-            executeActionWithCustomRequest={executeActionWithCustomRequest}
-            setCurrentOperationName={setCurrentOperationName}
-          />
+          <TestBlock />
         )}
         {/* Development mode block end */}
 

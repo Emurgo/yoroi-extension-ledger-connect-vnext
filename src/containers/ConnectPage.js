@@ -17,8 +17,6 @@ export default class ConnectPage extends React.Component<Props> {
       profileStore
     } = this.props.rootStore;
     const {
-      executeActionWithCustomRequest,
-      setCurrentOperationName,
       isTransportWebAuthn,
       transportId,
       progressState,
@@ -32,8 +30,6 @@ export default class ConnectPage extends React.Component<Props> {
 
     return (
       <Layout
-        executeActionWithCustomRequest={executeActionWithCustomRequest}
-        setCurrentOperationName={setCurrentOperationName}
         isDevelopment={ENV.isDevelopment}
         appVersion={appVersion}
         transportId={transportId}
