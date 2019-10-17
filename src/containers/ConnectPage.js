@@ -16,6 +16,7 @@ export default class ConnectPage extends React.Component<Props> {
       connectStore,
       profileStore
     } = this.props.rootStore;
+
     const {
       isTransportWebAuthn,
       transportId,
@@ -25,14 +26,23 @@ export default class ConnectPage extends React.Component<Props> {
       deviceCode,
       verifyAddressInfo,
       wasDeviceLocked,
+      setTransport
     } = connectStore;
-    const { appVersion } = profileStore;
+
+    const {
+      appVersion,
+      setLocale,
+      currentLocale,
+    } = profileStore;
 
     return (
       <Layout
+        setTransport={setTransport}
+        setLocale={setLocale}
         isDevelopment={ENV.isDevelopment}
         appVersion={appVersion}
         transportId={transportId}
+        currentLocale={currentLocale}
       >
         <ConnectBlock
           isWebAuthn={isTransportWebAuthn}

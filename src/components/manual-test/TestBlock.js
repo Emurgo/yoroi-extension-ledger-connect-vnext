@@ -17,12 +17,15 @@ import { SUPPORTED_LOCALS } from '../../i18n/translations';
 
 import styles from './TestBlock.scss';
 
-type Props = {||};
+type Props = {|
+  setTransport: Function,
+  currentTransportId: TransportId,
+  setLocale: Function,
+  currentLocale: string
+|};
 
 type State = {|
   visible: string,
-  selectedTransport: TransportId,
-  selectedLang: string,
 |};
 
 @observer
@@ -31,8 +34,6 @@ export default class TestBlock extends React.Component<Props, State> {
     super();
     this.state = {
       visible: `${styles.visible}`,
-      selectedTransport: TRANSPORT_ID.WEB_AUTHN,
-      selectedLang: 'en-US',
     };
   }
 
@@ -45,20 +46,20 @@ export default class TestBlock extends React.Component<Props, State> {
   }
 
   onTransportSelectionChange = (transportId: TransportId) => {
-    if (this.state.selectedTransport !== transportId &&
+    if (this.props.currentLocale !== transportId &&
       this.state.visible === `${styles.visible}`
     ) {
       console.debug(`[YLC]::Transport Selection Changed to : ${transportId}`);
-      this.setState({ selectedTransport: transportId });
+      this.props.setTransport(transportId);
     }
   };
 
-  onLangSelectionChange = (lang: string) => {
-    if (this.state.selectedLang !== lang &&
+  onLangSelectionChange = (locale: string) => {
+    if (this.props.currentTransportId !== locale &&
       this.state.visible === `${styles.visible}`
     ) {
-      console.debug(`[YLC]::Language Selection Changed to : ${lang}`);
-      this.setState({ selectedLang: lang });
+      this.props.setLocale(locale);
+      console.debug(`[YLC]::Language Selection Changed to : ${locale}`);
     }
   };
 
@@ -70,17 +71,17 @@ export default class TestBlock extends React.Component<Props, State> {
         onDoubleClick={this.onCompDoubleClicked}
       >
         <div className={styles.column1}>
-          {SUPPORTED_LOCALS.map(lang => {
+          {SUPPORTED_LOCALS.map(locale => {
             return (
-              <div>
+              <div key={locale}>
                 <input
                   type="radio"
                   name="language"
-                  id={lang}
-                  checked={this.state.selectedLang === lang}
-                  onChange={this.onLangSelectionChange.bind(null, lang)}
+                  id={locale}
+                  checked={this.props.currentLocale === locale}
+                  onChange={this.onLangSelectionChange.bind(null, locale)}
                 />
-                <label htmlFor={lang}>{lang}</label>
+                <label htmlFor={locale}>{locale}</label>
               </div>
             );
           })}
@@ -91,12 +92,13 @@ export default class TestBlock extends React.Component<Props, State> {
               if (Object.prototype.hasOwnProperty.call(TRANSPORT_ID, key)) {
                 const tranportId = TRANSPORT_ID[key];
                 return (
-                  <span>
+                  <span key={tranportId}>
                     <input
+                      key={tranportId}
                       type="radio"
                       name="transport"
                       id={tranportId}
-                      checked={this.state.selectedTransport === tranportId}
+                      checked={this.props.currentTransportId === tranportId}
                       onChange={this.onTransportSelectionChange.bind(null, tranportId)}
                     />
                     <label

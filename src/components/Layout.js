@@ -3,15 +3,19 @@ import React from 'react';
 import type { Node } from 'react';
 import { observer } from 'mobx-react';
 
+import type { TransportId } from '../types/cmn';
 import TestBlock from './manual-test/TestBlock';
 import Footer from './footer/Footer';
 
 import styles from './Layout.scss';
 
 type Props = {|
+  setTransport: Function,
+  setLocale: Function,
+  currentLocale: string,
   isDevelopment: boolean,
   appVersion: string,
-  transportId: string,
+  transportId: TransportId,
   children: Node,
 |};
 
@@ -19,9 +23,12 @@ type Props = {|
 export default class Layout extends React.Component<Props> {
   render() {
     const {
+      setTransport,
+      setLocale,
       isDevelopment,
       appVersion,
       transportId,
+      currentLocale,
       children,
     } = this.props;
 
@@ -29,7 +36,12 @@ export default class Layout extends React.Component<Props> {
       <div className={styles.component}>
         {/* TestBlock will only be visible in Development mode */}
         {isDevelopment && (
-          <TestBlock />
+          <TestBlock
+            setTransport={setTransport}
+            currentTransportId={transportId}
+            setLocale={setLocale}
+            currentLocale={currentLocale}
+          />
         )}
         {/* Development mode block end */}
 
