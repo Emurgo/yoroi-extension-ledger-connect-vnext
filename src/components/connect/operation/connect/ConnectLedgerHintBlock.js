@@ -12,19 +12,19 @@ import styles from './ConnectLedgerHintBlock.scss';
 const message = defineMessages({
   sExportPublicKey: {
     id: 'hint.connect.exportPublicKey',
-    defaultMessage: '!!!Check your Ledger screen, then press both buttons.'
+    defaultMessage: '!!!Check your Ledger screen, then press <strong>both</strong> buttons.'
   },
   sConfirmExportPublicKey: {
     id: 'hint.connect.confirmExportPublicKey',
-    defaultMessage: '!!!Confirm exporting the public key by pressing both buttons.'
+    defaultMessage: '!!!Confirm exporting the public key by pressing <strong>right</strong> button.'
   },
   xExportPublicKey: {
     id: 'hint.connect.exportPublicKey',
-    defaultMessage: '!!!Check your Ledger screen, then press both buttons.'
+    defaultMessage: '!!!Check your Ledger screen, then press <strong>both</strong> buttons.'
   },
   xConfirmExportPublicKey: {
-    id: 'hint.connect.confirmExportPublicKey',
-    defaultMessage: '!!!Confirm exporting the public key by pressing both buttons.'
+    id: 'hint.nanoX.connect.confirmExportPublicKey',
+    defaultMessage: '!!!Confirm exporting the public key by pressing <strong>both</strong> buttons.'
   },
 });
 

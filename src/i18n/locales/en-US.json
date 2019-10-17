@@ -19,6 +19,7 @@
   "hint.common.CardanoApp": "Highlight the <strong>Cardano ADA</strong> app on your Ledger and press <strong>both</strong> buttons.",
   "hint.connect.exportPublicKey": "Check your Ledger screen, then press <strong>both</strong> buttons.",
   "hint.connect.confirmExportPublicKey": "Confirm exporting the public key by pressing <strong>right</strong> button.",
+  "hint.nanoX.connect.confirmExportPublicKey": "Confirm exporting the public key by pressing <strong>both</strong> buttons.",
   "hint.sendTx.startNewTx": "Check your Ledger screen, then press <strong>right</strong> button.",
   "hint.nanoX.sendTx.startNewTx": "Check your Ledger screen, then press <strong>both</strong> buttons.",
   "hint.sendTx.confirmValue": "Confirm the ADA amount by pressing <strong>both</strong> buttons.",
