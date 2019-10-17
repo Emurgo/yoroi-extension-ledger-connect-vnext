@@ -7,7 +7,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { utils as CUtils } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
-import type { TransportId } from '../../types/cmn';
+import type { TransportIdType } from '../../types/cmn';
 import {
   OPERATION_NAME,
   TRANSPORT_ID
@@ -19,7 +19,7 @@ import styles from './TestBlock.scss';
 
 type Props = {|
   setTransport: Function,
-  currentTransportId: TransportId,
+  currentTransportId: TransportIdType,
   setLocale: Function,
   currentLocale: string
 |};
@@ -45,7 +45,7 @@ export default class TestBlock extends React.Component<Props, State> {
     this.setState({ visible: `${styles.hidden}` });
   }
 
-  onTransportSelectionChange = (transportId: TransportId) => {
+  onTransportSelectionChange = (transportId: TransportIdType) => {
     if (this.props.currentLocale !== transportId &&
       this.state.visible === `${styles.visible}`
     ) {

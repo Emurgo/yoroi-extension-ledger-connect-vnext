@@ -11,7 +11,7 @@ export type RequestType = {
 }
 
 export type URLParams = {
-  transportId: TransportId,
+  transportId: TransportIdType,
   locale: string
 }
 
@@ -50,4 +50,4 @@ export const TRANSPORT_ID = Object.freeze({
   U2F: 'u2f',
   WEB_USB: 'webusb'
 });
-export type TransportId = $Values<typeof TRANSPORT_ID>;
+export type TransportIdType = $Values<typeof TRANSPORT_ID>;

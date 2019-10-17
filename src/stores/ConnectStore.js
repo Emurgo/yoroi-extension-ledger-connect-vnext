@@ -19,7 +19,7 @@ import type {
   ProgressStateType,
   OperationNameType,
   VerifyAddressInfoType,
-  TransportId,
+  TransportIdType,
 } from '../types/cmn';
 import {
   PROGRESS_STATE,
@@ -41,7 +41,7 @@ export type ExtenedPublicKeyResp = {
 };
 
 export default class ConnectStore {
-  @observable transportId: TransportId;
+  @observable transportId: TransportIdType;
   @observable progressState: ProgressStateType;
   @observable currentOperationName: OperationNameType;
   @observable verifyAddressInfo: VerifyAddressInfoType;
@@ -49,7 +49,7 @@ export default class ConnectStore {
   @observable wasDeviceLocked: boolean;
   userInteractableRequest: RequestType;
 
-  constructor(transportId: TransportId) {
+  constructor(transportId: TransportIdType) {
     window.addEventListener('message', this._onMessage);
 
     runInAction(() => {
@@ -75,7 +75,7 @@ export default class ConnectStore {
   }
 
   @action('Changing Transport')
-  setTransport = (transportId: TransportId): void => {
+  setTransport = (transportId: TransportIdType): void => {
     this.transportId = transportId;
   }
 

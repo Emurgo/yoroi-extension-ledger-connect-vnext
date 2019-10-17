@@ -6,7 +6,7 @@ import {
   DEFAULT_LOCALE
 } from '../const';
 import { SUPPORTED_LOCALS } from '../i18n/translations';
-import type { URLParams, TransportId } from '../types/cmn';
+import type { URLParams, TransportIdType } from '../types/cmn';
 import { TRANSPORT_ID } from '../types/cmn';
 import { version as appVersion } from '../../package.json';
 
@@ -28,7 +28,7 @@ export default class RootStore {
     const urlParams = new URLSearchParams(window.location.search);
 
     // Parse Transport
-    let transportId: TransportId;
+    let transportId: TransportIdType;
     const urlTransportId = urlParams.get('transport') || DEFAULT_TRANSPORT_PROTOCOL;
     switch (urlTransportId) {
       case TRANSPORT_ID.U2F:

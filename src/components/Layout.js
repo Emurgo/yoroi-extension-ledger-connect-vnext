@@ -3,7 +3,7 @@ import React from 'react';
 import type { Node } from 'react';
 import { observer } from 'mobx-react';
 
-import type { TransportId } from '../types/cmn';
+import type { TransportIdType } from '../types/cmn';
 import TestBlock from './manual-test/TestBlock';
 import Footer from './footer/Footer';
 
@@ -15,7 +15,7 @@ type Props = {|
   currentLocale: string,
   isDevelopment: boolean,
   appVersion: string,
-  transportId: TransportId,
+  transportId: TransportIdType,
   children: Node,
 |};
 
