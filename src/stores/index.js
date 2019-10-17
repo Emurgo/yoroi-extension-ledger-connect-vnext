@@ -6,7 +6,8 @@ import {
   DEFAULT_LOCALE
 } from '../const';
 import { SUPPORTED_LOCALS } from '../i18n/translations';
-import type { URLParams } from '../types/cmn';
+import type { URLParams, TransportId } from '../types/cmn';
+import { TRANSPORT_ID } from '../types/cmn';
 import { version as appVersion } from '../../package.json';
 
 /**
@@ -26,21 +27,32 @@ export default class RootStore {
   parseURLParams = (): URLParams => {
     const urlParams = new URLSearchParams(window.location.search);
 
-    const p: URLParams = {
-      transportId: urlParams.get('transport') || '',
-      locale: urlParams.get('locale') || ''
+    // Parse Transport
+    let transportId: TransportId;
+    const urlTransportId = urlParams.get('transport') || DEFAULT_TRANSPORT_PROTOCOL;
+    switch (urlTransportId) {
+      case TRANSPORT_ID.U2F:
+        transportId = TRANSPORT_ID.U2F;
+        break;
+      case TRANSPORT_ID.WEB_USB:
+        transportId = TRANSPORT_ID.U2F;
+        break;
+      default:
+        transportId = DEFAULT_TRANSPORT_PROTOCOL;
+        break;
+    }
+
+    // Parse Locale
+    let locale = urlParams.get('locale');
+    if (locale == null ||
+      locale === '' ||
+      !SUPPORTED_LOCALS.includes(locale)) {
+      locale = DEFAULT_LOCALE;
+    }
+
+    return {
+      transportId,
+      locale,
     };
-
-    if (p.transportId == null || p.transportId === '') {
-      p.transportId = DEFAULT_TRANSPORT_PROTOCOL;
-    }
-
-    if (p.locale == null ||
-      p.locale === '' ||
-      !SUPPORTED_LOCALS.includes(p.locale)) {
-      p.locale = DEFAULT_LOCALE;
-    }
-
-    return p;
   }
 }
