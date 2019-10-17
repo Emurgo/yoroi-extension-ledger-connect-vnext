@@ -74,27 +74,27 @@ export default class ConnectStore {
   }
 
   @action('Changing Transport')
-  setTransport = (transportId: string) => {
+  setTransport = (transportId: string): void => {
     this.transportId = transportId;
   }
 
   @action('Changing Progress State')
-  setProgressState = (progressState: ProgressStateType) => {
+  setProgressState = (progressState: ProgressStateType): void => {
     this.progressState = progressState;
   }
 
   @action('Changing Current Operation Name')
-  setCurrentOperationName = (currentOperationName: OperationNameType) => {
+  setCurrentOperationName = (currentOperationName: OperationNameType): void => {
     this.currentOperationName = currentOperationName;
   }
 
   @action('Changing device name')
-  setDeviceName = (deviceCode: DeviceCodeType) => {
+  setDeviceName = (deviceCode: DeviceCodeType): void => {
     this.deviceCode = deviceCode;
   }
 
   @action('Change Verify Address Info')
-  setVerifyAddressInfo = (verifyAddressInfo: VerifyAddressInfoType) => {
+  setVerifyAddressInfo = (verifyAddressInfo: VerifyAddressInfoType): void => {
     this.verifyAddressInfo = verifyAddressInfo;
   }
 
