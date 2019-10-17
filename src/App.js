@@ -22,7 +22,19 @@ import { translations } from './i18n/translations';
 import { DEFAULT_LOCALE } from './const';
 import styleVariables from './cmn-style/style-variables';
 // https://github.com/yahoo/react-intl/wiki#loading-locale-data
-addLocaleData([...en, ...ko, ...ja, ...zh, ...ru, ...de, ...fr, ...id, ...es, ...it, ...pt]);
+addLocaleData([
+  ...en,
+  ...ko,
+  ...ja,
+  ...zh,
+  ...ru,
+  ...de,
+  ...fr,
+  ...id,
+  ...es,
+  ...it,
+  ...pt,
+]);
 
 // https://reactjs.org/docs/code-splitting.html#reactlazy
 const ConnectPage = lazy(() => import('./containers/ConnectPage'));
