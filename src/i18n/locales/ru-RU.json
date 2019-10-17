@@ -1,7 +1,7 @@
 {
   "suspence.fallbackText": "  Загрузка...",
   "footer.version": "Версия:",
-  "footer.transportId": "Transport:",
+  "footer.transportId": "Транспортировка:",
   "webauthn.note": "Не нажимайте кнопку <strong>Отменить</strong>",
   "title.connect": "Подключиться к аппаратному кошельку Ledger",
   "title.sendTx": "Подтвердить транзакцию, используя Ledger",
