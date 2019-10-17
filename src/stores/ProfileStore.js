@@ -13,7 +13,7 @@ export default class ProfileStore {
   }
 
   @action('Changing Locale')
-  setLocale = (locale: string) => {
+  setLocale = (locale: string): void => {
     this.currentLocale = locale;
   }
 }
