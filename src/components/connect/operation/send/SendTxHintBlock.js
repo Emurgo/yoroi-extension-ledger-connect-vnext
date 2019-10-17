@@ -47,8 +47,8 @@ const message = defineMessages({
     defaultMessage: '!!!Confirm Transaction Fee by pressing <strong>both</strong> buttons.'
   },
   xConfirmTx: {
-    id: 'hint.sendTx.confirmTx',
-    defaultMessage: '!!!Confirm Transaction Fee by pressing <strong>both</strong> buttons.'
+    id: 'hint.nanoX.sendTx.confirmTx',
+    defaultMessage: '!!!Confirm the transaction by pressing the <strong>both</strong> buttons.'
   },
 });
 
