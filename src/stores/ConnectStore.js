@@ -90,7 +90,7 @@ export default class ConnectStore {
   }
 
   @action('Changing device name')
-  setDeviceName = (deviceCode: DeviceCodeType): void => {
+  setDeviceCode = (deviceCode: DeviceCodeType): void => {
     this.deviceCode = deviceCode;
   }
 
@@ -120,16 +120,16 @@ export default class ConnectStore {
   }
 
   executeActionWithCustomRequest = (
-    deviceName: DeviceCodeType,
+    deviceCode: DeviceCodeType,
     request: RequestType
   ) => {
     this.userInteractableRequest = request;
-    this.executeAction(deviceName);
+    this.executeAction(deviceCode);
   }
 
-  executeAction = (deviceName: DeviceCodeType) => {
+  executeAction = (deviceCode: DeviceCodeType) => {
     runInAction(() => {
-      this.setDeviceName(deviceName);
+      this.setDeviceCode(deviceCode);
       this.setProgressState(PROGRESS_STATE.DEVICE_TYPE_SELECTED);
     });
 
