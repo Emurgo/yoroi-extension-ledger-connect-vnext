@@ -17,13 +17,19 @@
     background-color: rgb(214, 180, 136);
   }
   .column2 {
-    .transportSelection {
+    .transportSelection,
+    .deviceSelection {
       border-radius: 5px;
       margin-bottom: 5px;
       background-color: rgb(245, 182, 215);
-      .tranportLabel {
+      .tranportLabel,
+      .deviceLabel {
         font-size: 14px;
       }
+    }
+    .deviceSelection {
+      display: flex;
+      justify-content: space-evenly;
     }
     .operationSelection {
       margin-bottom: 5px;

@@ -32,7 +32,8 @@ import {
 import {
   pathToString,
   ledgerErrToMessage,
-  makeTransport
+  makeTransport,
+  convertStringToDeviceCodeType,
 } from '../utils';
 
 export type ExtenedPublicKeyResp = {
@@ -161,74 +162,53 @@ export default class ConnectStore {
   //  Cardano Ledger APIs
   // #==============================================#
 
-  getVersion = async (
-    actn: OperationNameType
-  ): Promise<GetVersionResponse | void> => {
-    let transport;
-    try {
-      transport = await makeTransport(this.transportId);
-
-      const adaApp = new AdaApp(transport);
-      const res: GetVersionResponse = await adaApp.getVersion();
-      this._replyMessageWrap(actn, true, res);
-
-      return res;
-    } catch (err) {
-      this._replyError(actn, err);
-    } finally {
-      transport && transport.close();
-    }
-  }
-
-  getExtendedPublicKey = async (
-    actn: OperationNameType,
-    hdPath: BIP32Path
-  ): Promise<ExtenedPublicKeyResp | void> => {
+  getExtendedPublicKey = async (actn: OperationNameType, hdPath: BIP32Path): Promise<void> => {
     let transport;
     try {
       transport = await makeTransport(this.transportId);
       const verResp = await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-
       const ePublicKeyResp: GetExtendedPublicKeyResponse =
         await adaApp.getExtendedPublicKey(hdPath);
 
-      const res = {
+      const resp = {
         ePublicKey: ePublicKeyResp,
-        deviceVersion: verResp
+        deviceVersion: verResp,
+        deviceCode: this.deviceCode,
       };
-      this._replyMessageWrap(actn, true, res);
-
-      return res;
+      this._replyMessageWrap(actn, true, resp);
     } catch (err) {
       this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
-  }
+  };
 
   signTransaction = async (
     actn: OperationNameType,
     inputs: Array<InputTypeUTxO>,
     outputs: Array<OutputTypeAddress | OutputTypeChange>
-  ): Promise<SignTransactionResponse | void> => {
+  ): Promise<void> => {
     let transport;
     try {
       transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-      const res: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
-      this._replyMessageWrap(actn, true, res);
+      const respSignTx: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
 
-      return res;
+      const resp = {
+        signedTx: respSignTx,
+        deviceCode: this.deviceCode,
+      };
+      this._replyMessageWrap(actn, true, resp);
     } catch (err) {
       this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
-  }
+  };
 
   showAddress = async (
     actn: OperationNameType,
@@ -246,36 +226,60 @@ export default class ConnectStore {
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-      const res = await adaApp.showAddress(hdPath);
-      this._replyMessageWrap(actn, true, res);
+      const respShowAddr = await adaApp.showAddress(hdPath);
 
+      const resp = {
+        showAddress: respShowAddr,
+        deviceCode: this.deviceCode,
+      };
+      this._replyMessageWrap(actn, true, resp);
     } catch (err) {
       this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
-  }
+  };
 
-  deriveAddress = async (
-    actn: OperationNameType,
-    hdPath: BIP32Path
-  ): Promise<DeriveAddressResponse | void> => {
+  deriveAddress = async (actn: OperationNameType, hdPath: BIP32Path): Promise<void> => {
     let transport;
     try {
       transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-      const res: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
-      this._replyMessageWrap(actn, true, res);
+      const respDeriveAddr: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
 
-      return res;
+      const resp = {
+        derivedAddress: respDeriveAddr,
+        deviceCode: this.deviceCode,
+      };
+      this._replyMessageWrap(actn, true, resp);
     } catch (err) {
       this._replyError(actn, err);
     } finally {
       transport && transport.close();
     }
-  }
+  };
+
+  getVersion = async (actn: OperationNameType): Promise<void> => {
+    let transport;
+    try {
+      transport = await makeTransport(this.transportId);
+
+      const adaApp = new AdaApp(transport);
+      const verResp: GetVersionResponse = await adaApp.getVersion();
+
+      const resp = {
+        deviceVersion: verResp,
+        deviceCode: this.deviceCode,
+      };
+      this._replyMessageWrap(actn, true, resp);
+    } catch (err) {
+      this._replyError(actn, err);
+    } finally {
+      transport && transport.close();
+    }
+  };
 
   // #==============================================#
   //  Website <==> Content Script communications
@@ -286,9 +290,15 @@ export default class ConnectStore {
    * @param {*} req request message object
    */
   _onMessage = (req: any): void => {
-    if (req && req.data && req.data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
-      const { params } = req.data;
-      const actn = req.data.action;
+    const { data } = req;
+    if (data &&
+      data.params &&
+      data.action &&
+      data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
+
+      const { params } = data;
+      const knownDeviceCode = convertStringToDeviceCodeType(data.knownDeviceCode);
+      const actn = data.action;
 
       console.debug(`[YLC] request: ${actn}`);
 
@@ -299,6 +309,7 @@ export default class ConnectStore {
         case OPERATION_NAME.SHOW_ADDRESS:
         case OPERATION_NAME.DERIVE_ADDRESS:
           runInAction(() => {
+            this.setDeviceCode(knownDeviceCode);
             this.setCurrentOperationName(actn);
             this.setProgressState(PROGRESS_STATE.DEVICE_TYPE_SELECTION);
           });
@@ -328,11 +339,7 @@ export default class ConnectStore {
    * @param {*} success success status boolean
    * @param {*} payload payload object
    */
-  _replyMessageWrap = (
-    actn: string,
-    success: boolean,
-    payload: any
-  ): void => {
+  _replyMessageWrap = (actn: string, success: boolean, payload: any): void => {
     this._replyMessage({
       success,
       payload,
@@ -345,10 +352,7 @@ export default class ConnectStore {
    * @param {*} actn action string
    * @param {*} err Error object
    */
-  _replyError = (
-    actn: string,
-    err: Error
-  ): void => {
+  _replyError = (actn: string, err: Error): void => {
     console.error(`[YLC] ${actn}::error::${JSON.stringify(err)}`);
     const payload = {
       error: ledgerErrToMessage(err).toString()

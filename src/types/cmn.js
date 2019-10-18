@@ -40,6 +40,7 @@ export const OPERATION_NAME = Object.freeze({
 export type OperationNameType = $Values<typeof OPERATION_NAME>;
 
 export const DEVICE_CODE = Object.freeze({
+  NONE: 'none',
   NANO_S: 's',
   NANO_X: 'x',
 });

@@ -24,6 +24,7 @@ type Props = {|
   currentOperationName: OperationNameType,
   executeAction: Function,
   deviceCode: DeviceCodeType,
+  setDeviceCode: Function,
   verifyAddressInfo: VerifyAddressInfoType,
   wasDeviceLocked: boolean,
 |};
@@ -40,6 +41,7 @@ export default class ConnectBlock extends React.Component<Props> {
       progressState,
       currentOperationName,
       executeAction,
+      setDeviceCode,
       deviceCode,
       verifyAddressInfo,
       wasDeviceLocked
@@ -59,7 +61,11 @@ export default class ConnectBlock extends React.Component<Props> {
         break;
       case PROGRESS_STATE.DEVICE_TYPE_SELECTION:
         content = (
-          <DeviceSelectionBlock executeAction={executeAction} />
+          <DeviceSelectionBlock
+            executeAction={executeAction}
+            knownDeviceCode={deviceCode}
+            setDeviceCode={setDeviceCode}
+          />
         );
         break;
       default:

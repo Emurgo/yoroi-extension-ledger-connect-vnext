@@ -1,8 +1,7 @@
 // @flow
 import React from 'react';
 import { observer } from 'mobx-react';
-import { intlShape, defineMessages } from 'react-intl';
-
+import { intlShape, defineMessages, FormattedHTMLMessage } from 'react-intl';
 
 import type { DeviceCodeType }  from '../../../types/cmn';
 import { DEVICE_CODE } from '../../../types/cmn';
@@ -15,11 +14,11 @@ import imgExternalLink from '../../../assets/img/external-link.svg';
 import styles from './DeviceSelectionBlock.scss';
 
 const message = defineMessages({
-  titleLedgerNanoS: {
+  deviceNanos: {
     id: 'wallet.title.ledgerNanoS',
     defaultMessage: '!!!Ledger Nano S'
   },
-  titleLedgerNanoX: {
+  deviceNanox: {
     id: 'wallet.title.ledgerNanoX',
     defaultMessage: '!!!Ledger Nano X'
   },
@@ -39,48 +38,137 @@ const message = defineMessages({
     id: 'deviceSelection.videoLink.part3',
     defaultMessage: '!!! .'
   },
+  knownInfo1: {
+    id: 'deviceKnown.info.connectToComputer',
+    defaultMessage: '!!!Make sure your <strong>{deviceName}<strong> is connected to your computer.'
+  },
+  knownInfo2: {
+    id: 'deviceKnown.info.doNotDisconnect',
+    defaultMessage: '!!!Do not disconnect it until all operations are complete.'
+  },
+  knownInfo3: {
+    id: 'deviceKnown.info.pressContinue',
+    defaultMessage: '!!!Press the <strong>Continue</strong> button below when ready.'
+  },
+  knownContinueButtonText: {
+    id: 'button.continue.text',
+    defaultMessage: '!!!Continue'
+  },
+  knownChoseWrongDevice: {
+    id: 'deviceKnown.choseWrongDevice',
+    defaultMessage: '!!!Chose the wrong device model?'
+  },
+  knownChoseWrongDeviceClickHere: {
+    id: 'deviceKnown.choseWrongDevice.clickHere',
+    defaultMessage: '!!!Click here'
+  },
 });
 
 type Props = {|
   executeAction: Function,
+  knownDeviceCode: DeviceCodeType,
+  setDeviceCode: Function,
 |};
 
 @observer
-export default @observer class DeviceSelectionBlock extends React.Component<Props> {
+export default class DeviceSelectionBlock extends React.Component<Props> {
   static contextTypes = { intl: intlShape.isRequired };
 
-  onButtonClicked = (deviceCode: DeviceCodeType) => {
+  onExecuteActionClicked = (deviceCode: DeviceCodeType): void => {
     this.props.executeAction(deviceCode);
   };
 
+  onDeviceSelectionClicked = (): void => {
+    this.props.setDeviceCode(DEVICE_CODE.NONE);
+  }
+
   render() {
     const { intl } = this.context;
+    const {
+      knownDeviceCode
+    } = this.props;
+
+    let middleComp;
+    switch (knownDeviceCode) {
+      case DEVICE_CODE.NONE:
+        middleComp = (
+          <div className={styles.deviceSelection}>
+            <div className={styles.title}>
+              {intl.formatMessage(message.chooseDevice)}
+            </div>
+            <button
+              className={styles.button}
+              type="button"
+              onClick={this.onExecuteActionClicked.bind(this, DEVICE_CODE.NANO_S)}
+            >
+              <div className={styles.text}>
+                {intl.formatMessage(message.deviceNanos)}
+              </div>
+            </button>
+            <button
+              className={styles.button}
+              type="button"
+              onClick={this.onExecuteActionClicked.bind(this, DEVICE_CODE.NANO_X)}
+            >
+              <div className={styles.text}>
+                {intl.formatMessage(message.deviceNanox)}
+              </div>
+            </button>
+          </div>
+        );
+        break;
+      case DEVICE_CODE.NANO_S:
+      case DEVICE_CODE.NANO_X:
+        {
+          const deviceName = intl.formatMessage(message[`deviceNano${knownDeviceCode}`]);
+          middleComp = (
+            <div className={styles.deviceKnown}>
+              <div className={styles.knowInfoBlock}>
+                <div className={styles.knownInfoText}>
+                  <FormattedHTMLMessage {...message.knownInfo1} values={{ deviceName }} />
+                </div>
+                <div className={styles.knownInfoText}>
+                  {intl.formatMessage(message.knownInfo2)}
+                </div>
+                <div className={styles.knownInfoText}>
+                  <FormattedHTMLMessage {...message.knownInfo3} />
+                </div>
+              </div>
+              <div className={styles.continueButtonBlock}>
+                <button
+                  className={styles.button}
+                  type="button"
+                  onClick={this.onExecuteActionClicked.bind(this, knownDeviceCode)}
+                >
+                  <div className={styles.text}>
+                    {intl.formatMessage(message.knownContinueButtonText)}
+                  </div>
+                </button>
+              </div>
+              <div className={styles.knownChoseWrongBlock}>
+                <span className={styles.knownChoseWrongText}>
+                  {intl.formatMessage(message.knownChoseWrongDevice)}
+                </span>
+                <button
+                  className={styles.linkClickHere}
+                  type="button"
+                  onClick={this.onDeviceSelectionClicked.bind(this)}
+                >
+                  {intl.formatMessage(message.knownChoseWrongDeviceClickHere)}
+                </button>
+              </div>
+            </div>
+          );
+        }
+        break;
+      default:
+        console.error(`[YLC] Unexpected device type: ${knownDeviceCode}`);
+        return (null);
+    }
 
     return (
       <div className={styles.component}>
-        <div className={styles.deviceSelection}>
-          <div className={styles.title}>
-            {intl.formatMessage(message.chooseDevice)}
-          </div>
-          <button
-            className={styles.device}
-            type="button"
-            onClick={this.onButtonClicked.bind(null, DEVICE_CODE.NANO_S)}
-          >
-            <div className={styles.text}>
-              {intl.formatMessage(message.titleLedgerNanoS)}
-            </div>
-          </button>
-          <button
-            className={styles.device}
-            type="button"
-            onClick={this.onButtonClicked.bind(null, DEVICE_CODE.NANO_X)}
-          >
-            <div className={styles.text}>
-              {intl.formatMessage(message.titleLedgerNanoX)}
-            </div>
-          </button>
-        </div>
+        {middleComp}
         <div className={styles.videoLink}>
           <span className={styles.videoLinkText}>
             {intl.formatMessage(message.videoLinkPart1)}
@@ -92,7 +180,7 @@ export default @observer class DeviceSelectionBlock extends React.Component<Prop
             rel="noopener noreferrer"
             target="_blank"
           >
-            {intl.formatMessage(message.titleLedgerNanoS)}
+            {intl.formatMessage(message.deviceNanos)}
           </a>
           <img
             className={styles.linkIcon}
@@ -109,7 +197,7 @@ export default @observer class DeviceSelectionBlock extends React.Component<Prop
             rel="noopener noreferrer"
             target="_blank"
           >
-            {intl.formatMessage(message.titleLedgerNanoX)}
+            {intl.formatMessage(message.deviceNanox)}
           </a>
           <img
             className={styles.linkIcon}

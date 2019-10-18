@@ -1,6 +1,15 @@
 // @flow
 import type { BIP32Path } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
+import type {
+  DeviceCodeType,
+  TransportIdType
+} from './types/cmn';
+import {
+  DEVICE_CODE,
+  TRANSPORT_ID
+} from './types/cmn';
+
 const HARDENED = 0x80000000;
 
 /**
@@ -60,19 +69,19 @@ export const ledgerErrToMessage = (err: any): any => {
 
 /**
  * Create Ledger Transport protocol
- * @param {*} transportId transportId string
+ * @param {*} transportId TransportIdType
  */
-export const makeTransport = async (transportId: string): any => {
+export const makeTransport = async (transportId: TransportIdType): any => {
   let transport;
 
   switch (transportId) {
-    case 'webauthn':
+    case TRANSPORT_ID.WEB_AUTHN:
       transport = require('@ledgerhq/hw-transport-webauthn').default;
       break;
-    case 'u2f':
+    case TRANSPORT_ID.U2F:
       transport = require('@ledgerhq/hw-transport-u2f').default;
       break;
-    case 'webusb':
+    case TRANSPORT_ID.WEB_USB:
       transport = require('@ledgerhq/hw-transport-webusb').default;
       break;
     default:
@@ -80,4 +89,19 @@ export const makeTransport = async (transportId: string): any => {
   }
 
   return await transport.create();
+};
+
+/**
+ * Converts deviceCodeInString to DeviceCodeType
+ * @param {*} deviceCodeInString string
+ */
+export const convertStringToDeviceCodeType = (deviceCodeInString: string): DeviceCodeType => {
+  switch (deviceCodeInString) {
+    case DEVICE_CODE.NANO_S:
+      return DEVICE_CODE.NANO_S;
+    case DEVICE_CODE.NANO_X:
+      return DEVICE_CODE.NANO_X;
+    default:
+      return DEVICE_CODE.NONE;
+  }
 };

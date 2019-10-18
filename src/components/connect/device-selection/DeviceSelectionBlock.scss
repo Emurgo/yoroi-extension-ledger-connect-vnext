@@ -9,6 +9,32 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  @include buttonDefault;
+  .button {
+    width: 400px;
+    height: 48px;
+    border-radius: 8px;
+    margin-bottom: 36px;
+    cursor: pointer;
+    background-color: var(--button-background-color);
+    .text {
+      height: 21px;
+      color: var(--color-white);
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 21px;
+      text-transform: uppercase;
+    }
+  }
+  .button:last-child {
+    margin-bottom: 0px;
+  }
+  .button:hover {
+    background-color: var(--button-hover-background-color);
+  }
+  .button:active {
+    background-color: var(--button-active-background-color);
+  }  
   .deviceSelection {
     display: flex;
     flex: 1;
@@ -18,32 +44,37 @@
       text-align: center;
       margin-bottom: 34px
     }
-    @include buttonDefault;
-    .device {
-      width: 400px;
-      height: 48px;
-      border-radius: 8px;
-      margin-bottom: 36px;
-      cursor: pointer;
-      background-color: var(--button-background-color);
-
-      .text {
-        height: 21px;
-        color: var(--color-white);
-        font-size: 16px;
-        font-weight: bold;
-        line-height: 21px;
-        text-transform: uppercase;
+  }
+  .deviceKnown {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    .knownInfoText {
+      text-align: center;
+      font-size: 14px;
+      height: 22px;
+      line-height: 22px;
+      color: var(--text-color-3);
+    }
+    .continueButtonBlock {
+      margin-top: 30px;
+    }
+    .knownChoseWrongBlock {
+      text-align: center;
+      margin-top: 10px;
+      .linkClickHere,
+      .knownChoseWrongText {
+        opacity: 0.7;
+        font-size: 12px;
+        height: 16px;
+        line-height: 16px;
+        color: var(--text-color-3);
       }
-    }
-    .device:last-child {
-      margin-bottom: 0px;
-    }
-    .device:hover {
-      background-color: var(--button-hover-background-color);
-    }
-    .device:active {
-      background-color: var(--button-active-background-color);
+      .linkClickHere {
+        margin-left: 6px;
+        @include underline(var(--text-color-3));
+      }
     }
   }
   .videoLink {

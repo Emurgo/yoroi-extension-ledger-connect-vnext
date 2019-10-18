@@ -7,10 +7,14 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { utils as CUtils } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
-import type { TransportIdType } from '../../types/cmn';
+import type {
+  TransportIdType,
+  DeviceCodeType,
+} from '../../types/cmn';
 import {
   OPERATION_NAME,
-  TRANSPORT_ID
+  TRANSPORT_ID,
+  DEVICE_CODE,
 } from '../../types/cmn';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../../const';
 import { SUPPORTED_LOCALS } from '../../i18n/translations';
@@ -26,6 +30,7 @@ type Props = {|
 
 type State = {|
   visible: string,
+  selectedDeviceCode: DeviceCodeType,
 |};
 
 @observer
@@ -34,10 +39,11 @@ export default class TestBlock extends React.Component<Props, State> {
     super();
     this.state = {
       visible: `${styles.visible}`,
+      selectedDeviceCode: DEVICE_CODE.NONE,
     };
   }
 
-  onCompClicked = () => {
+  onCompClicked = (): void => {
     this.setState({ visible: `${styles.visible}` });
   }
 
@@ -45,16 +51,7 @@ export default class TestBlock extends React.Component<Props, State> {
     this.setState({ visible: `${styles.hidden}` });
   }
 
-  onTransportSelectionChange = (transportId: TransportIdType) => {
-    if (this.props.currentLocale !== transportId &&
-      this.state.visible === `${styles.visible}`
-    ) {
-      this.props.setTransport(transportId);
-      console.debug(`[YLC] Transport Selection Changed to : ${transportId}`);
-    }
-  };
-
-  onLangSelectionChange = (locale: string) => {
+  onLangSelectionChange = (locale: string): void => {
     if (this.props.currentTransportId !== locale &&
       this.state.visible === `${styles.visible}`
     ) {
@@ -63,7 +60,106 @@ export default class TestBlock extends React.Component<Props, State> {
     }
   };
 
+  onTransportSelectionChange = (transportId: TransportIdType): void => {
+    if (this.props.currentLocale !== transportId &&
+      this.state.visible === `${styles.visible}`
+    ) {
+      this.props.setTransport(transportId);
+      console.debug(`[YLC] Transport Selection Changed to : ${transportId}`);
+    }
+  };
+
+  onDeviceSelectionChange = (deviceCode: DeviceCodeType): void => {
+    if (this.state.selectedDeviceCode !== deviceCode &&
+      this.state.visible === `${styles.visible}`
+    ) {
+      this.setState({ selectedDeviceCode: deviceCode });
+      console.debug(`[YLC] Device Selection Changed to : ${deviceCode}`);
+    }
+  };
+
   render() {
+    const supportedLocals = (
+      SUPPORTED_LOCALS.map(locale => {
+        return (
+          <div key={locale}>
+            <input
+              type="radio"
+              name="language"
+              id={locale}
+              checked={this.props.currentLocale === locale}
+              onChange={this.onLangSelectionChange.bind(this, locale)}
+            />
+            <label htmlFor={locale}>{locale}</label>
+          </div>
+        );
+      })
+    );
+
+    const transportSelection = (
+      <div className={styles.transportSelection}>
+        {Object.keys(TRANSPORT_ID).map(key => {
+          if (Object.prototype.hasOwnProperty.call(TRANSPORT_ID, key)) {
+            const tranportId = TRANSPORT_ID[key];
+            return (
+              <span key={tranportId}>
+                <input
+                  key={tranportId}
+                  type="radio"
+                  name="transport"
+                  id={tranportId}
+                  checked={this.props.currentTransportId === tranportId}
+                  onChange={this.onTransportSelectionChange.bind(this, tranportId)}
+                />
+                <label className={styles.tranportLabel} htmlFor={tranportId}>{tranportId}</label>
+              </span>
+            );
+          }
+          return null;
+        })}
+      </div>
+    );
+
+    const deviceSelection = (
+      <div className={styles.deviceSelection}>
+        {Object.keys(DEVICE_CODE).map(key => {
+          if (Object.prototype.hasOwnProperty.call(DEVICE_CODE, key)) {
+            const deviceCode = DEVICE_CODE[key];
+            return (
+              <span key={deviceCode}>
+                <input
+                  key={deviceCode}
+                  type="radio"
+                  name="device"
+                  id={deviceCode}
+                  checked={this.state.selectedDeviceCode === deviceCode}
+                  onChange={this.onDeviceSelectionChange.bind(this, deviceCode)}
+                />
+                <label className={styles.deviceLabel} htmlFor={deviceCode}>{deviceCode}</label>
+              </span>
+            );
+          }
+          return null;
+        })}
+      </div>
+    );
+
+    const operationSelection = (
+      <div className={styles.operationSelection}>
+        <button type="button" onClick={this.onExtendedPublicKey}>Extended public key</button>
+        <button type="button" onClick={this.onSignTransaction}>Sign Transaction</button>
+        <button type="button" onClick={this.onShowAddress}>Verify Address</button>
+        <button type="button" onClick={this.onDeriveAddress}>Derive Address</button>
+        <button type="button" onClick={this.onLogVersion}>Device Version</button>
+      </div>
+    );
+
+    const visibilityInfo = (
+      <div className={styles.visibilityInfo}>
+        *Double click=invisible | single click=visible again
+      </div>
+    );
+
     return (
       <div
         className={`${styles.component} ${this.state.visible}`}
@@ -71,83 +167,13 @@ export default class TestBlock extends React.Component<Props, State> {
         onDoubleClick={this.onCompDoubleClicked}
       >
         <div className={styles.column1}>
-          {SUPPORTED_LOCALS.map(locale => {
-            return (
-              <div key={locale}>
-                <input
-                  type="radio"
-                  name="language"
-                  id={locale}
-                  checked={this.props.currentLocale === locale}
-                  onChange={this.onLangSelectionChange.bind(null, locale)}
-                />
-                <label htmlFor={locale}>{locale}</label>
-              </div>
-            );
-          })}
+          {supportedLocals}
         </div>
         <div className={styles.column2}>
-          <div className={styles.transportSelection}>
-            {Object.keys(TRANSPORT_ID).map(key => {
-              if (Object.prototype.hasOwnProperty.call(TRANSPORT_ID, key)) {
-                const tranportId = TRANSPORT_ID[key];
-                return (
-                  <span key={tranportId}>
-                    <input
-                      key={tranportId}
-                      type="radio"
-                      name="transport"
-                      id={tranportId}
-                      checked={this.props.currentTransportId === tranportId}
-                      onChange={this.onTransportSelectionChange.bind(null, tranportId)}
-                    />
-                    <label
-                      className={styles.tranportLabel}
-                      htmlFor={tranportId}
-                    >
-                      {tranportId}
-                    </label>
-                  </span>
-                );
-              }
-              return null;
-            })}
-          </div>
-          <div className={styles.operationSelection}>
-            <button
-              type="button"
-              onClick={this.onLogExtendedPublicKey}
-            >
-              Extended public key
-            </button>
-            <button
-              type="button"
-              onClick={this.onLogSignTransaction}
-            >
-              Sign Transaction
-            </button>
-            <button
-              type="button"
-              onClick={this.onLogShowAddress}
-            >
-              Verify Address
-            </button>
-            <button
-              type="button"
-              onClick={this.onLogDeriveAddress}
-            >
-              Derive Address
-            </button>
-            <button
-              type="button"
-              onClick={this.onLogVersion}
-            >
-              Device Version
-            </button>
-          </div>
-          <div className={styles.visibilityInfo}>
-            *Double click=invisible | single click=visible again
-          </div>
+          {transportSelection}
+          {deviceSelection}
+          {operationSelection}
+          {visibilityInfo}
         </div>
       </div>
     );
@@ -156,13 +182,12 @@ export default class TestBlock extends React.Component<Props, State> {
   /**
    * Test getVersion
    */
-  onLogVersion = async () => {
+  onLogVersion = (): void => {
     if (this.state.visible === `${styles.visible}`) {
-      const req = {
-        action: OPERATION_NAME.GET_LEDGER_VERSION,
-        params: null,
-        target: YOROI_LEDGER_CONNECT_TARGET_NAME,
-      };
+      const req = this.makeRequest(
+        OPERATION_NAME.GET_LEDGER_VERSION,
+        null
+      );
       window.postMessage(req);
     }
     console.debug(`[YLC] TEST:onLogVersion`);
@@ -171,23 +196,23 @@ export default class TestBlock extends React.Component<Props, State> {
   /**
    * Test getExtendedPublicKey
    */
-  onLogExtendedPublicKey = async () => {
+  onExtendedPublicKey = (): void => {
     if (this.state.visible === `${styles.visible}`) {
       const hdPath = CUtils.str_to_path("44'/1815'/0'");
-      const req = {
-        action: OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
-        params: { hdPath },
-        target: YOROI_LEDGER_CONNECT_TARGET_NAME,
-      };
+
+      const req = this.makeRequest(
+        OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
+        { hdPath }
+      );
       window.postMessage(req);
     }
-    console.debug(`[YLC] TEST:onLogExtendedPublicKey`);
+    console.debug(`[YLC] TEST:onExtendedPublicKey`);
   }
 
   /**
    * Test signTransaction
    */
-  onLogSignTransaction = async () => {
+  onSignTransaction = (): void => {
     if (this.state.visible === `${styles.visible}`) {
       const inputs = [
         {
@@ -217,49 +242,57 @@ export default class TestBlock extends React.Component<Props, State> {
         }
       ];
 
-      const req = {
-        action: OPERATION_NAME.SIGN_TX,
-        params: {
-          inputs,
-          outputs
-        },
-        target: YOROI_LEDGER_CONNECT_TARGET_NAME,
-      };
+      const req = this.makeRequest(
+        OPERATION_NAME.SIGN_TX,
+        { inputs, outputs }
+      );
       window.postMessage(req);
     }
-    console.debug(`[YLC] TEST:onLogSignTransaction`);
+    console.debug(`[YLC] TEST:onSignTransaction`);
   }
 
   /**
    * Test showAddress = Verify Address
    */
-  onLogShowAddress = async () => {
+  onShowAddress = (): void => {
     if (this.state.visible === `${styles.visible}`) {
       const hdPath = CUtils.str_to_path("44'/1815'/1'/1/0");
       const address = 'Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV';
-      const req = {
-        action: OPERATION_NAME.SHOW_ADDRESS,
-        params: { hdPath, address },
-        target: YOROI_LEDGER_CONNECT_TARGET_NAME,
-      };
+
+      const req = this.makeRequest(
+        OPERATION_NAME.SHOW_ADDRESS,
+        { hdPath, address }
+      );
       window.postMessage(req);
     }
-    console.debug(`[YLC] TEST:onLogShowAddress`);
+    console.debug(`[YLC] TEST:onShowAddress`);
   }
 
   /**
    * Test deriveAddress
    */
-  onLogDeriveAddress = async () => {
+  onDeriveAddress = (): void => {
     if (this.state.visible === `${styles.visible}`) {
       const hdPath = CUtils.str_to_path("44'/1815'/0'/0/0");
-      const req = {
-        action: OPERATION_NAME.DERIVE_ADDRESS,
-        params: { hdPath },
-        target: YOROI_LEDGER_CONNECT_TARGET_NAME,
-      };
+
+      const req = this.makeRequest(
+        OPERATION_NAME.DERIVE_ADDRESS,
+        { hdPath }
+      );
       window.postMessage(req);
     }
-    console.debug(`[YLC] TEST:onLogDeriveAddress`);
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
+
+  /**
+   * Makes Request object
+   */
+  makeRequest = (action: string, params: any) => {
+    return {
+      action,
+      params,
+      target: YOROI_LEDGER_CONNECT_TARGET_NAME,
+      knownDeviceCode: this.state.selectedDeviceCode,
+    };
   }
 }
