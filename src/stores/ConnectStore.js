@@ -24,6 +24,7 @@ import type {
 import {
   PROGRESS_STATE,
   OPERATION_NAME,
+  DEVICE_CODE,
 } from '../types/cmn';
 import {
   YOROI_LEDGER_CONNECT_TARGET_NAME,
@@ -34,7 +35,11 @@ import {
   ledgerErrToMessage,
   makeTransport,
   convertStringToDeviceCodeType,
-} from '../utils';
+} from '../utils/cmn';
+import {
+  setKnownDeviceCode,
+  getKnownDeviceCode,
+} from '../utils/storage';
 
 export type ExtenedPublicKeyResp = {
   ePublicKey: GetExtendedPublicKeyResponse,
@@ -57,6 +62,7 @@ export default class ConnectStore {
       this.wasDeviceLocked = false;
       this.transportId = transportId;
       this.progressState = PROGRESS_STATE.LOADING;
+      this.deviceCode = convertStringToDeviceCodeType(getKnownDeviceCode());
     });
   }
 
@@ -130,6 +136,7 @@ export default class ConnectStore {
 
   executeAction = (deviceCode: DeviceCodeType) => {
     runInAction(() => {
+      setKnownDeviceCode(deviceCode);
       this.setDeviceCode(deviceCode);
       this.setProgressState(PROGRESS_STATE.DEVICE_TYPE_SELECTED);
     });
@@ -175,7 +182,6 @@ export default class ConnectStore {
       const resp = {
         ePublicKey: ePublicKeyResp,
         deviceVersion: verResp,
-        deviceCode: this.deviceCode,
       };
       this._replyMessageWrap(actn, true, resp);
     } catch (err) {
@@ -196,12 +202,8 @@ export default class ConnectStore {
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-      const respSignTx: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
+      const resp: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
 
-      const resp = {
-        signedTx: respSignTx,
-        deviceCode: this.deviceCode,
-      };
       this._replyMessageWrap(actn, true, resp);
     } catch (err) {
       this._replyError(actn, err);
@@ -226,12 +228,8 @@ export default class ConnectStore {
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-      const respShowAddr = await adaApp.showAddress(hdPath);
+      const resp = await adaApp.showAddress(hdPath);
 
-      const resp = {
-        showAddress: respShowAddr,
-        deviceCode: this.deviceCode,
-      };
       this._replyMessageWrap(actn, true, resp);
     } catch (err) {
       this._replyError(actn, err);
@@ -247,12 +245,8 @@ export default class ConnectStore {
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-      const respDeriveAddr: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
+      const resp: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
 
-      const resp = {
-        derivedAddress: respDeriveAddr,
-        deviceCode: this.deviceCode,
-      };
       this._replyMessageWrap(actn, true, resp);
     } catch (err) {
       this._replyError(actn, err);
@@ -267,12 +261,8 @@ export default class ConnectStore {
       transport = await makeTransport(this.transportId);
 
       const adaApp = new AdaApp(transport);
-      const verResp: GetVersionResponse = await adaApp.getVersion();
+      const resp: GetVersionResponse = await adaApp.getVersion();
 
-      const resp = {
-        deviceVersion: verResp,
-        deviceCode: this.deviceCode,
-      };
       this._replyMessageWrap(actn, true, resp);
     } catch (err) {
       this._replyError(actn, err);
@@ -297,7 +287,6 @@ export default class ConnectStore {
       data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
 
       const { params } = data;
-      const knownDeviceCode = convertStringToDeviceCodeType(data.knownDeviceCode);
       const actn = data.action;
 
       console.debug(`[YLC] request: ${actn}`);
@@ -308,17 +297,23 @@ export default class ConnectStore {
         case OPERATION_NAME.SIGN_TX:
         case OPERATION_NAME.SHOW_ADDRESS:
         case OPERATION_NAME.DERIVE_ADDRESS:
-          runInAction(() => {
-            this.setDeviceCode(knownDeviceCode);
-            this.setCurrentOperationName(actn);
-            this.setProgressState(PROGRESS_STATE.DEVICE_TYPE_SELECTION);
-          });
-
+          // Only one operation in one session
           if (!this.userInteractableRequest) {
             this.userInteractableRequest = {
               params,
               action: actn,
             };
+
+            runInAction(() => {
+              // In case of create wallet, we always
+              // want user to choose device
+              if (actn === OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY) {
+                this.setDeviceCode(DEVICE_CODE.NONE);
+                setKnownDeviceCode(DEVICE_CODE.NONE);
+              }
+              this.setCurrentOperationName(actn);
+              this.setProgressState(PROGRESS_STATE.DEVICE_TYPE_SELECTION);
+            });
           }
           break;
         case OPERATION_NAME.CLOSE_WINDOW:

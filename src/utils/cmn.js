@@ -4,11 +4,11 @@ import type { BIP32Path } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
   DeviceCodeType,
   TransportIdType
-} from './types/cmn';
+} from '../types/cmn';
 import {
   DEVICE_CODE,
   TRANSPORT_ID
-} from './types/cmn';
+} from '../types/cmn';
 
 const HARDENED = 0x80000000;
 
