@@ -1,4 +1,4 @@
-// @flow
+// @flow //
 import { TRANSPORT_ID } from './types/enum';
 
 export const YOROI_LEDGER_CONNECT_TARGET_NAME = 'YOROI-LEDGER-CONNECT';

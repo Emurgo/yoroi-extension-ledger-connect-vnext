@@ -1,4 +1,4 @@
-// @flow
+// @flow //
 import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';

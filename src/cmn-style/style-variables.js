@@ -1,4 +1,4 @@
-// @flow
+// @flow //
 export default {
   // FONTS
   '--default-font': 'Rubik-Regular',

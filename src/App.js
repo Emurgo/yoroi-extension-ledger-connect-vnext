@@ -1,4 +1,4 @@
-// @flow
+// @flow //
 import React, { Suspense, lazy } from 'react';
 import { observer } from 'mobx-react';
 import { addLocaleData, IntlProvider } from 'react-intl';

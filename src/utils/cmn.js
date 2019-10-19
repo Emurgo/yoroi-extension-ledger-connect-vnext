@@ -1,4 +1,4 @@
-// @flow
+// @flow //
 import type { BIP32Path } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import type {

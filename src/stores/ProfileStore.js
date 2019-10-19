@@ -1,4 +1,4 @@
-// @flow
+// @flow //
 import { observable, runInAction, action } from 'mobx';
 
 export default class ProfileStore {

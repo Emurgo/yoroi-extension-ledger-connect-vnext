@@ -1,4 +1,4 @@
-// @flow
+// @flow //
 
 export const PROGRESS_STATE = Object.freeze({
   LOADING: 'LOADING',

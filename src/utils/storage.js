@@ -1,4 +1,4 @@
-// @flow
+// @flow //
 
 import { ENV } from '../const';
 import { convertStringToDeviceCodeType } from './cmn';

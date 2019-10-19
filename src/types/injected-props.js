@@ -1,4 +1,4 @@
-// @flow
+// @flow //
 import type { Node } from 'react';
 import RootStore from '../stores/index';
 

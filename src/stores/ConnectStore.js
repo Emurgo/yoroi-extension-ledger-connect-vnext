@@ -1,4 +1,4 @@
-// @flow
+// @flow //
 import { observable, action, runInAction, computed } from 'mobx';
 import AdaApp from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
