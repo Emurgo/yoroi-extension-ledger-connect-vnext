@@ -6,8 +6,9 @@ import {
   DEFAULT_LOCALE
 } from '../const';
 import { SUPPORTED_LOCALS } from '../i18n/translations';
-import type { URLParams, TransportIdType } from '../types/cmn';
-import { TRANSPORT_ID } from '../types/cmn';
+import type { URLParams } from '../types/cmn';
+import type { TransportIdType } from '../types/enum';
+import { TRANSPORT_ID } from '../types/enum';
 import { version as appVersion } from '../../package.json';
 
 /**

@@ -3,7 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import type { DeviceCodeType }  from '../../../../types/cmn';
+import type { DeviceCodeType }  from '../../../../types/enum';
 import HintBlock from '../../../widgets/hint/HintBlock';
 import HintGap from '../../../widgets/hint/HintGap';
 

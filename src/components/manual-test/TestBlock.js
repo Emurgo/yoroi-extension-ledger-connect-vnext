@@ -7,15 +7,11 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { utils as CUtils } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
-import type {
-  TransportIdType,
-  DeviceCodeType,
-} from '../../types/cmn';
+import type { TransportIdType } from '../../types/enum';
 import {
   OPERATION_NAME,
   TRANSPORT_ID,
-  DEVICE_CODE,
-} from '../../types/cmn';
+} from '../../types/enum';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../../const';
 import { SUPPORTED_LOCALS } from '../../i18n/translations';
 
@@ -30,7 +26,6 @@ type Props = {|
 
 type State = {|
   visible: string,
-  selectedDeviceCode: DeviceCodeType,
 |};
 
 @observer
@@ -39,7 +34,6 @@ export default class TestBlock extends React.Component<Props, State> {
     super();
     this.state = {
       visible: `${styles.visible}`,
-      selectedDeviceCode: DEVICE_CODE.NONE,
     };
   }
 
@@ -66,15 +60,6 @@ export default class TestBlock extends React.Component<Props, State> {
     ) {
       this.props.setTransport(transportId);
       console.debug(`[YLC] Transport Selection Changed to : ${transportId}`);
-    }
-  };
-
-  onDeviceSelectionChange = (deviceCode: DeviceCodeType): void => {
-    if (this.state.selectedDeviceCode !== deviceCode &&
-      this.state.visible === `${styles.visible}`
-    ) {
-      this.setState({ selectedDeviceCode: deviceCode });
-      console.debug(`[YLC] Device Selection Changed to : ${deviceCode}`);
     }
   };
 
@@ -120,30 +105,6 @@ export default class TestBlock extends React.Component<Props, State> {
       </div>
     );
 
-    const deviceSelection = (
-      <div className={styles.deviceSelection}>
-        {Object.keys(DEVICE_CODE).map(key => {
-          if (Object.prototype.hasOwnProperty.call(DEVICE_CODE, key)) {
-            const deviceCode = DEVICE_CODE[key];
-            return (
-              <span key={deviceCode}>
-                <input
-                  key={deviceCode}
-                  type="radio"
-                  name="device"
-                  id={deviceCode}
-                  checked={this.state.selectedDeviceCode === deviceCode}
-                  onChange={this.onDeviceSelectionChange.bind(this, deviceCode)}
-                />
-                <label className={styles.deviceLabel} htmlFor={deviceCode}>{deviceCode}</label>
-              </span>
-            );
-          }
-          return null;
-        })}
-      </div>
-    );
-
     const operationSelection = (
       <div className={styles.operationSelection}>
         <button type="button" onClick={this.onExtendedPublicKey}>Extended public key</button>
@@ -171,7 +132,6 @@ export default class TestBlock extends React.Component<Props, State> {
         </div>
         <div className={styles.column2}>
           {transportSelection}
-          {deviceSelection}
           {operationSelection}
           {visibilityInfo}
         </div>
@@ -292,7 +252,6 @@ export default class TestBlock extends React.Component<Props, State> {
       action,
       params,
       target: YOROI_LEDGER_CONNECT_TARGET_NAME,
-      knownDeviceCode: this.state.selectedDeviceCode,
     };
   }
 }

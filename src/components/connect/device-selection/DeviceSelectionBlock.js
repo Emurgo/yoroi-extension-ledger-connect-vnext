@@ -3,8 +3,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages, FormattedHTMLMessage } from 'react-intl';
 
-import type { DeviceCodeType }  from '../../../types/cmn';
-import { DEVICE_CODE } from '../../../types/cmn';
+import type { DeviceCodeType }  from '../../../types/enum';
+import { DEVICE_CODE } from '../../../types/enum';
 import {
   VIDEO_LINK_NANO_S,
   VIDEO_LINK_NANO_X

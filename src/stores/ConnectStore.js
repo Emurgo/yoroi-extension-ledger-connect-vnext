@@ -15,17 +15,19 @@ import type {
 import type {
   MessageType,
   RequestType,
+  VerifyAddressInfoType,
+} from '../types/cmn';
+import type {
   DeviceCodeType,
   ProgressStateType,
   OperationNameType,
-  VerifyAddressInfoType,
   TransportIdType,
-} from '../types/cmn';
+} from '../types/enum';
 import {
   PROGRESS_STATE,
   OPERATION_NAME,
   DEVICE_CODE,
-} from '../types/cmn';
+} from '../types/enum';
 import {
   YOROI_LEDGER_CONNECT_TARGET_NAME,
   DEVICE_LOCK_CHECK_TIMEOUT
@@ -35,6 +37,7 @@ import {
   ledgerErrToMessage,
   makeTransport,
   convertStringToDeviceCodeType,
+  formatError,
 } from '../utils/cmn';
 import {
   setKnownDeviceCode,
@@ -320,11 +323,11 @@ export default class ConnectStore {
           window.close();
           break;
         default:
-          console.debug(`[YLC] Unexpected action requested: ${actn}`);
+          console.error(`[YLC] Unexpected action requested: ${actn}`);
           break;
       }
     } else {
-      console.debug(`[YLC] Got non ledger connectore request: ${req.origin}}`);
+      console.debug(`[YLC] Got non ledger connectore\nrequest: ${req.origin}\ndata: ${JSON.stringify(req.data, null, 2)}`);
     }
   }
 
@@ -348,7 +351,7 @@ export default class ConnectStore {
    * @param {*} err Error object
    */
   _replyError = (actn: string, err: Error): void => {
-    console.error(`[YLC] ${actn}::error::${JSON.stringify(err)}`);
+    console.error(`[YLC] ${actn}${formatError(err)}`);
     const payload = {
       error: ledgerErrToMessage(err).toString()
     };

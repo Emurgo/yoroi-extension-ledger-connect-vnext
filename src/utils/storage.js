@@ -2,7 +2,7 @@
 
 import { ENV } from '../const';
 import { convertStringToDeviceCodeType } from './cmn';
-import type { DeviceCodeType } from '../types/cmn';
+import type { DeviceCodeType } from '../types/enum';
 
 const STORAGE_KEYS = {
   knownDeviceCode: `${ENV.isDevelopment ? 'dev' : 'prod'}-knownDeviceCode`,

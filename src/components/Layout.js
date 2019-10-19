@@ -3,7 +3,7 @@ import React from 'react';
 import type { Node } from 'react';
 import { observer } from 'mobx-react';
 
-import type { TransportIdType } from '../types/cmn';
+import type { TransportIdType } from '../types/enum';
 import TestBlock from './manual-test/TestBlock';
 import Footer from './footer/Footer';
 

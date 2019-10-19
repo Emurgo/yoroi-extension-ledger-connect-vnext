@@ -4,15 +4,17 @@ import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
 import type {
+  VerifyAddressInfoType,
+}  from '../../../types/cmn';
+import type {
   DeviceCodeType,
   OperationNameType,
   ProgressStateType,
-  VerifyAddressInfoType,
-}  from '../../../types/cmn';
+}  from '../../../types/enum';
 import {
   OPERATION_NAME,
   PROGRESS_STATE,
-} from '../../../types/cmn';
+} from '../../../types/enum';
 import LoadingSpinner from '../../widgets/LoadingSpinner';
 import CommonHintBlock from './common/CommonHintBlock';
 import ConnectLedgerHintBlock from './connect/ConnectLedgerHintBlock';

@@ -3,12 +3,14 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import type {
+  VerifyAddressInfoType,
+} from '../../types/cmn';
+import type {
   DeviceCodeType,
   ProgressStateType,
   OperationNameType,
-  VerifyAddressInfoType,
-} from '../../types/cmn';
-import { PROGRESS_STATE } from '../../types/cmn';
+} from '../../types/enum';
+import { PROGRESS_STATE } from '../../types/enum';
 import LoadingSpinner from '../widgets/LoadingSpinner';
 import WebAuthnTopBlock from './webauthn-top/WebAuthnTopBlock';
 import TitleBlock from './title/TitleBlock';

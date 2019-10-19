@@ -4,11 +4,11 @@ import type { BIP32Path } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
   DeviceCodeType,
   TransportIdType
-} from '../types/cmn';
+} from '../types/enum';
 import {
   DEVICE_CODE,
   TRANSPORT_ID
-} from '../types/cmn';
+} from '../types/enum';
 
 const HARDENED = 0x80000000;
 
@@ -104,4 +104,31 @@ export const convertStringToDeviceCodeType = (deviceCodeInString: string): Devic
     default:
       return DEVICE_CODE.NONE;
   }
+};
+
+/**
+ * Simply filter some unwanted keys and return as string
+ * @param {*} err Error object
+ * @returns string
+ */
+export const formatError = (err: any): string => {
+  if (err == null) {
+    return 'null';
+  }
+
+  const ngFilter = (keyName) => {
+    if (keyName === 'stack') {
+      return false;
+    }
+    return true;
+  };
+
+  const formatted = Object.keys(err)
+    .filter(key => ngFilter(key))
+    .reduce((obj, key) => {
+      obj[key] = err[key];
+      return obj;
+    }, {});
+
+  return `\nERROR:${JSON.stringify(formatted, null, 2)}`;
 };

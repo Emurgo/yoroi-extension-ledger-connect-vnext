@@ -6,7 +6,7 @@ import { intlShape, defineMessages } from 'react-intl';
 import type {
   DeviceCodeType,
   ProgressStateType
-}  from '../../../../types/cmn';
+}  from '../../../../types/enum';
 import HintBlock from '../../../widgets/hint/HintBlock';
 import HintGap from '../../../widgets/hint/HintGap';
 

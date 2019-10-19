@@ -1,5 +1,5 @@
 // @flow
-import { TRANSPORT_ID } from './types/cmn';
+import { TRANSPORT_ID } from './types/enum';
 
 export const YOROI_LEDGER_CONNECT_TARGET_NAME = 'YOROI-LEDGER-CONNECT';
 export const DEFAULT_TRANSPORT_PROTOCOL = TRANSPORT_ID.WEB_AUTHN;
