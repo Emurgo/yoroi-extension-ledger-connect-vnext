@@ -11,6 +11,10 @@ import type {
   OperationNameType,
 } from '../../types/enum';
 import { PROGRESS_STATE } from '../../types/enum';
+import type {
+  executeActionFunc,
+  setDeviceCodeFunc,
+} from '../../types/func';
 import LoadingSpinner from '../widgets/LoadingSpinner';
 import WebAuthnTopBlock from './webauthn-top/WebAuthnTopBlock';
 import TitleBlock from './title/TitleBlock';
@@ -24,9 +28,9 @@ type Props = {|
   isFirefox: boolean,
   progressState: ProgressStateType,
   currentOperationName: OperationNameType,
-  executeAction: Function,
+  executeAction: executeActionFunc,
   deviceCode: DeviceCodeType,
-  setDeviceCode: Function,
+  setDeviceCode: setDeviceCodeFunc,
   verifyAddressInfo: VerifyAddressInfoType,
   wasDeviceLocked: boolean,
 |};

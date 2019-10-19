@@ -12,15 +12,19 @@ import {
   OPERATION_NAME,
   TRANSPORT_ID,
 } from '../../types/enum';
+import type {
+  setLocaleFunc,
+  setTransportFunc,
+} from '../../types/func';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../../const';
 import { SUPPORTED_LOCALS } from '../../i18n/translations';
 
 import styles from './TestBlock.scss';
 
 type Props = {|
-  setTransport: Function,
+  setLocale: setLocaleFunc,
+  setTransport: setTransportFunc,
   currentTransportId: TransportIdType,
-  setLocale: Function,
   currentLocale: string
 |};
 

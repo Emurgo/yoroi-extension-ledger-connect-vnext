@@ -5,6 +5,10 @@ import { intlShape, defineMessages, FormattedHTMLMessage } from 'react-intl';
 
 import type { DeviceCodeType }  from '../../../types/enum';
 import { DEVICE_CODE } from '../../../types/enum';
+import type {
+  executeActionFunc,
+  setDeviceCodeFunc,
+} from '../../../types/func';
 import {
   VIDEO_LINK_NANO_S,
   VIDEO_LINK_NANO_X
@@ -65,9 +69,9 @@ const message = defineMessages({
 });
 
 type Props = {|
-  executeAction: Function,
+  executeAction: executeActionFunc,
   knownDeviceCode: DeviceCodeType,
-  setDeviceCode: Function,
+  setDeviceCode: setDeviceCodeFunc,
 |};
 
 @observer

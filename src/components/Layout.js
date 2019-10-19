@@ -4,14 +4,18 @@ import type { Node } from 'react';
 import { observer } from 'mobx-react';
 
 import type { TransportIdType } from '../types/enum';
+import type {
+  setTransportFunc,
+  setLocaleFunc,
+} from '../types/func';
 import TestBlock from './manual-test/TestBlock';
 import Footer from './footer/Footer';
 
 import styles from './Layout.scss';
 
 type Props = {|
-  setTransport: Function,
-  setLocale: Function,
+  setTransport: setTransportFunc,
+  setLocale: setLocaleFunc,
   currentLocale: string,
   isDevelopment: boolean,
   appVersion: string,
