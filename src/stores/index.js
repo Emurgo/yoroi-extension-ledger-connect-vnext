@@ -36,7 +36,7 @@ export default class RootStore {
         transportId = TRANSPORT_ID.U2F;
         break;
       case TRANSPORT_ID.WEB_USB:
-        transportId = TRANSPORT_ID.U2F;
+        transportId = TRANSPORT_ID.WEB_USB;
         break;
       default:
         transportId = DEFAULT_TRANSPORT_PROTOCOL;
