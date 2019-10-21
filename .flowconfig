@@ -25,5 +25,7 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
 
 [untyped]
 .*/node_modules/@ledgerhq/hw-transport-webauthn/lib/TransportWebAuthn.js.flow
+.*/node_modules/@ledgerhq/hw-transport-webusb/src/webusb.js
+.*/node_modules/@ledgerhq/hw-transport-webusb/src/TransportWebUSB.js
 .*/node_modules/@ledgerhq/hw-transport-webusb/lib/TransportWebUSB.js.flow
 .*/node_modules/mobx/lib/mobx.js.flow
