@@ -9,6 +9,7 @@ import {
   DEVICE_CODE,
   TRANSPORT_ID
 } from '../types/enum';
+import { TRANSPORT_EXCHANGE_TIMEOUT_MS } from '../const';
 
 const HARDENED = 0x80000000;
 
@@ -72,23 +73,26 @@ export const ledgerErrToMessage = (err: any): any => {
  * @param {*} transportId TransportIdType
  */
 export const makeTransport = async (transportId: TransportIdType): any => {
-  let transport;
+  let transportFactory;
 
   switch (transportId) {
     case TRANSPORT_ID.WEB_AUTHN:
-      transport = require('@ledgerhq/hw-transport-webauthn').default;
+      transportFactory = require('@ledgerhq/hw-transport-webauthn').default;
       break;
     case TRANSPORT_ID.U2F:
-      transport = require('@ledgerhq/hw-transport-u2f').default;
+      transportFactory = require('@ledgerhq/hw-transport-u2f').default;
       break;
     case TRANSPORT_ID.WEB_USB:
-      transport = require('@ledgerhq/hw-transport-webusb').default;
+      transportFactory = require('@ledgerhq/hw-transport-webusb').default;
       break;
     default:
       throw new Error('Transport protocol not supported');
   }
 
-  return await transport.create();
+  const transport = await transportFactory.create();
+  transport.exchangeTimeout = TRANSPORT_EXCHANGE_TIMEOUT_MS;
+
+  return transport;
 };
 
 /**

@@ -11,4 +11,5 @@ export const ENV = {
 };
 export const VIDEO_LINK_NANO_S = 'https://www.youtube.com/watch?v=YwdBLh7qAsI&t=2s';
 export const VIDEO_LINK_NANO_X = 'https://www.youtube.com/watch?v=YwdBLh7qAsI&t=2s';
-export const DEVICE_LOCK_CHECK_TIMEOUT = 500; // In milli-seconds
+export const DEVICE_LOCK_CHECK_TIMEOUT_MS = 500; // In milli-seconds
+export const TRANSPORT_EXCHANGE_TIMEOUT_MS = 60000; // In milli-seconds

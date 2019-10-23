@@ -30,7 +30,7 @@ import {
 } from '../types/enum';
 import {
   YOROI_LEDGER_CONNECT_TARGET_NAME,
-  DEVICE_LOCK_CHECK_TIMEOUT
+  DEVICE_LOCK_CHECK_TIMEOUT_MS
 } from '../const';
 import {
   pathToString,
@@ -119,7 +119,7 @@ export default class ConnectStore {
           this.setProgressState(PROGRESS_STATE.DETECTING_DEVICE);
         });
       }
-    }, DEVICE_LOCK_CHECK_TIMEOUT);
+    }, DEVICE_LOCK_CHECK_TIMEOUT_MS);
 
     const adaApp = new AdaApp(transport);
     const verResp = await adaApp.getVersion();
