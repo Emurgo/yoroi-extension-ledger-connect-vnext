@@ -3,15 +3,30 @@ import type { BIP32Path } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import type {
   DeviceCodeType,
-  TransportIdType
+  TransportIdType,
+  OperationNameType,
 } from '../types/enum';
 import {
   DEVICE_CODE,
-  TRANSPORT_ID
+  TRANSPORT_ID,
+  OPERATION_NAME,
 } from '../types/enum';
 import { TRANSPORT_EXCHANGE_TIMEOUT_MS } from '../const';
 
 const HARDENED = 0x80000000;
+
+const TUTORIAL_LINK = {};
+TUTORIAL_LINK[DEVICE_CODE.NANO_S + OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY] = 'https://youtu.be/CJkMBYGqh84?t=170';
+TUTORIAL_LINK[DEVICE_CODE.NANO_S + OPERATION_NAME.SIGN_TX] = 'https://youtu.be/CJkMBYGqh84?t=285';
+TUTORIAL_LINK[DEVICE_CODE.NANO_S + OPERATION_NAME.SHOW_ADDRESS] = 'https://youtu.be/CJkMBYGqh84?t=429';
+TUTORIAL_LINK[DEVICE_CODE.NANO_S + OPERATION_NAME.DERIVE_ADDRESS] = 'https://youtu.be/CJkMBYGqh84?t=170'; // No Video available and not used in production
+TUTORIAL_LINK[DEVICE_CODE.NANO_S + OPERATION_NAME.GET_LEDGER_VERSION] = 'https://youtu.be/CJkMBYGqh84?t=170'; // No Video available and not used in production
+
+TUTORIAL_LINK[DEVICE_CODE.NANO_X + OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY] = 'https://youtu.be/CJkMBYGqh84?t=170';
+TUTORIAL_LINK[DEVICE_CODE.NANO_X + OPERATION_NAME.SIGN_TX] = 'https://youtu.be/CJkMBYGqh84?t=285';
+TUTORIAL_LINK[DEVICE_CODE.NANO_X + OPERATION_NAME.SHOW_ADDRESS] = 'https://youtu.be/CJkMBYGqh84?t=429';
+TUTORIAL_LINK[DEVICE_CODE.NANO_X + OPERATION_NAME.DERIVE_ADDRESS] = 'https://youtu.be/CJkMBYGqh84?t=170'; // No Video available and not used in production
+TUTORIAL_LINK[DEVICE_CODE.NANO_X + OPERATION_NAME.GET_LEDGER_VERSION] = 'https://youtu.be/CJkMBYGqh84?t=170'; // No Video available and not used in production
 
 /**
  * Converts hardened BIP32Path to it's string version
@@ -135,4 +150,21 @@ export const formatError = (err: any): string => {
     }, {});
 
   return `\nERROR:${JSON.stringify(formatted, null, 2)}`;
+};
+
+/**
+ * Returns tutorial link based on device code and oparation name
+ *
+ * @param {*} deviceCode DeviceCodeType
+ * @param {*} oparationName OperationNameType
+ * @returns string
+ */
+export const getTutorialLink = (
+  deviceCode: DeviceCodeType,
+  oparationName: OperationNameType
+): string => {
+  if (deviceCode == null || deviceCode === DEVICE_CODE.NONE) throw new Error('No tutorial is available for un-known device type');
+  if (oparationName == null || oparationName === OPERATION_NAME.CLOSE_WINDOW) throw new Error('No tutorial for CLOSE_WINDOW operation');
+
+  return TUTORIAL_LINK[deviceCode + oparationName];
 };

@@ -3,16 +3,16 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages, FormattedHTMLMessage } from 'react-intl';
 
-import type { DeviceCodeType }  from '../../../types/enum';
+import type {
+  DeviceCodeType,
+  OperationNameType
+} from '../../../types/enum';
 import { DEVICE_CODE } from '../../../types/enum';
 import type {
   executeActionFunc,
   setDeviceCodeFunc,
 } from '../../../types/func';
-import {
-  VIDEO_LINK_NANO_S,
-  VIDEO_LINK_NANO_X
-} from '../../../const';
+import { getTutorialLink } from '../../../utils/cmn';
 import imgExternalLink from '../../../assets/img/external-link.svg';
 
 import styles from './DeviceSelectionBlock.scss';
@@ -69,6 +69,7 @@ const message = defineMessages({
 });
 
 type Props = {|
+  currentOperationName: OperationNameType,
   executeAction: executeActionFunc,
   knownDeviceCode: DeviceCodeType,
   setDeviceCode: setDeviceCodeFunc,
@@ -89,7 +90,8 @@ export default class DeviceSelectionBlock extends React.Component<Props> {
   render() {
     const { intl } = this.context;
     const {
-      knownDeviceCode
+      knownDeviceCode,
+      currentOperationName,
     } = this.props;
 
     let middleComp;
@@ -177,9 +179,8 @@ export default class DeviceSelectionBlock extends React.Component<Props> {
           <span className={styles.videoLinkText}>
             {intl.formatMessage(message.videoLinkPart1)}
           </span>
-          {/* TODO: Update correct link  */}
           <a
-            href={VIDEO_LINK_NANO_S}
+            href={getTutorialLink(DEVICE_CODE.NANO_S, currentOperationName)}
             className={styles.link}
             rel="noopener noreferrer"
             target="_blank"
@@ -194,9 +195,8 @@ export default class DeviceSelectionBlock extends React.Component<Props> {
           <span className={styles.videoLinkText}>
             {intl.formatMessage(message.videoLinkPart2)}
           </span>
-          {/* TODO: Update correct link  */}
           <a
-            href={VIDEO_LINK_NANO_X}
+            href={getTutorialLink(DEVICE_CODE.NANO_X, currentOperationName)}
             className={styles.link}
             rel="noopener noreferrer"
             target="_blank"

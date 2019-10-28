@@ -68,9 +68,10 @@ export default class ConnectBlock extends React.Component<Props> {
       case PROGRESS_STATE.DEVICE_TYPE_SELECTION:
         content = (
           <DeviceSelectionBlock
-            executeAction={executeAction}
+            currentOperationName={currentOperationName}
             knownDeviceCode={deviceCode}
             setDeviceCode={setDeviceCode}
+            executeAction={executeAction}
           />
         );
         break;
