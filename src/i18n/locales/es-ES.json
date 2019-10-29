@@ -17,7 +17,7 @@
   "deviceKnown.choseWrongDevice": "¿Escogió el modelo de dispositivo equivocado?",
   "deviceKnown.choseWrongDevice.clickHere": "Haga clic aquí",
   "deviceSelection.chooseDevice": "Escoge tu dispositivo",
-  "deviceSelection.videoLink.part1": "Instrucciones en video también están disponibles para",
+  "deviceSelection.videoLink.part1": "Instrucciones en video también están disponibles para ",
   "deviceSelection.videoLink.part2": " y ",
   "deviceSelection.videoLink.part3": " .",
   "operation.top.ledgerDeviceInfo": "Realice las siguientes acciones en su Ledger",
