@@ -1,5 +1,5 @@
 # yoroi-extension-ledger-connect
-This module is resposible for showing Ledger operation steps UI and directly communicating with Ledger device using various [Transport protocol](https://github.com/LedgerHQ/ledgerjs#ledgerhqhw-transport-).WebPage is hosted as [`gh-pages`](https://emurgo.github.io/yoroi-extension-ledger-connect/).
+This module is resposible for showing Ledger operation steps UI and directly communicating with Ledger device using various [Transport protocol](https://github.com/LedgerHQ/ledgerjs#ledgerhqhw-transport-). WebPage is hosted as [`gh-pages`](https://emurgo.github.io/yoroi-extension-ledger-connect/).
 
 # Supported Ledger Transport
 Click [here](https://github.com/Emurgo/yoroi-extension-ledger-connect-handler#supported-ledger-transport)
