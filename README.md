@@ -17,7 +17,7 @@ Follwing steps is to start`webpack-dev-server`in hot reload mode at `http://loca
 Following steps is to deploy new version to `gh-pages`.
 - `nvm i`
 - `yarn`
-- Mave changes and update the version in `package.json`
+- Make changes and update the version in `package.json`
 - `git push`
 - `yarn run deploy`
 
