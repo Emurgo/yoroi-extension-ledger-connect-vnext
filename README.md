@@ -2,7 +2,7 @@
 This module is resposible for showing Ledger operation steps UI and directly communicating with Ledger device using various [Transport protocol](https://github.com/LedgerHQ/ledgerjs#ledgerhqhw-transport-).WebPage is hosted as [`gh-pages`](https://emurgo.github.io/yoroi-extension-ledger-connect/).
 
 # environment
-development` and `production` environments is supported.
+`development` and `production` environments is supported.
 
 # development
 Follwing steps is to start`webpack-dev-server`in hot reload mode at `http://localhost:8080/`.
