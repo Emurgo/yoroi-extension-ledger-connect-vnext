@@ -9,17 +9,17 @@ click [here](https://github.com/Emurgo/yoroi-extension-ledger-connect-handler#su
 
 # Development
 Follwing steps is to start`webpack-dev-server`in hot reload mode at `http://localhost:8080/`.
-- nvm i
-- yarn
-- yarn start
+- `nvm i`
+- `yarn`
+- `yarn start`
 
 # Deployment
 Following steps is to deploy new version to `gh-pages`.
-- nvm i
-- yarn
+- `nvm i`
+- `yarn`
 - Mave changes and update the version in `package.json`
-- git push
-- yarn run deploy
+- `git push`
+- `yarn run deploy`
 
 # Manual Testing
 In `development` mode testing panel will be shown on the top left like below.
