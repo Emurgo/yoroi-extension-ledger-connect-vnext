@@ -1,6 +1,6 @@
 {
   "name": "yoroi-extension-ledger-connect",
-  "version": "3.0.0",
+  "version": "3.0.3",
   "description": "A web app which communicates between Ledger device and Yoroi Extension",
   "author": "EMURGO.io",
   "scripts": {
@@ -41,7 +41,6 @@
     "sass-loader": "9.0.3",
     "style-loader": "1.2.1",
     "svg-inline-loader": "0.8.2",
-    "uglifyjs-webpack-plugin": "2.2.0",
     "url-loader": "4.1.0",
     "webpack": "4.44.1",
     "webpack-bundle-analyzer": "3.8.0",

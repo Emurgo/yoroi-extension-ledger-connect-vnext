@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 /**
  * Building config using function,
@@ -24,10 +23,20 @@ module.exports = (env) => {
 
   const DefinePlugin = new webpack.DefinePlugin({
     ENVIRONMENT: JSON.stringify(env),
+    'process.env': {
+      PUBLIC_URL: JSON.stringify(
+        isDevelopment
+          ? '/'
+          : '/yoroi-extension-ledger-connect/'
+      ) // Github pages uses the project name as the path
+    },
   });
 
   config.entry = ['babel-polyfill', './src/index.js'];
 
+  config.devServer = {
+    historyApiFallback: true,
+  };
   config.module = {
     rules: [
       {
@@ -84,17 +93,6 @@ module.exports = (env) => {
     runtimeChunk: {
       name: 'manifest'
     },
-    minimizer: [
-      new UglifyJsPlugin({
-        sourceMap: false,
-        uglifyOptions: {
-          ecma: 8,
-          mangle: false,
-          keep_classname: true,
-          keep_fnames: true
-        }
-      })
-    ]
   };
 
   if (isProduction) {

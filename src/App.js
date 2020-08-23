@@ -19,7 +19,7 @@ import RootStore from './stores';
 import LoadingSpinner from './components/widgets/LoadingSpinner';
 import ComingSoon from './components/widgets/ComingSoon';
 import {
-  BrowserRouter as Router,
+  HashRouter,
   Switch,
   Route,
   Redirect,
@@ -80,7 +80,7 @@ export default class App extends React.Component<Props> {
       <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
         <Suspense fallback={loadingSpinner}>
           <StyleVariableLoader variables={styleVariables} />
-          <Router>
+          <HashRouter basename={process.env.PUBLIC_URL}>
             <Switch>
               <Route exact path="/">
                 <ComingSoon />
@@ -90,7 +90,7 @@ export default class App extends React.Component<Props> {
               </Route>
               <Redirect to="/" />
             </Switch>
-          </Router>
+          </HashRouter>
         </Suspense>
       </IntlProvider>
     );
