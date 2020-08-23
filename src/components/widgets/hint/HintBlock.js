@@ -1,14 +1,13 @@
 // @flow //
 import React from 'react';
 import { observer } from 'mobx-react';
-import type { MessageDescriptor } from 'react-intl';
 import { intlShape, FormattedHTMLMessage } from 'react-intl';
 
 import styles from './HintBlock.scss';
 
 type Props = {|
   number: number,
-  text: MessageDescriptor,
+  text: any,
   secondaryText?: string,
   imagePath: string,
 |};

@@ -2,7 +2,6 @@
 import { observable, action, runInAction, computed } from 'mobx';
 import AdaApp from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
-  BIP32Path,
   GetVersionResponse,
   GetSerialResponse,
   DeriveAddressResponse,
@@ -15,6 +14,7 @@ import type {
   VerifyAddressInfoType,
   SignTransactionRequest,
   DeriveAddressRequest,
+  GetExtendedPublicKeyRequest,
 } from '../types/cmn';
 import type {
   DeviceCodeType,
@@ -55,7 +55,7 @@ export default class ConnectStore {
   @observable deviceCode: DeviceCodeType
   @observable wasDeviceLocked: boolean;
   @observable response: void | MessageType;
-  @observable expectedSerial: void | string;
+  @observable expectedSerial: ?string;
   userInteractableRequest: RequestType;
 
   constructor(transportId: TransportIdType) {
@@ -124,7 +124,10 @@ export default class ConnectStore {
     this.response = response;
   }
 
-  _detectLedgerDevice = async (transport: any): Promise<GetVersionResponse> => {
+  _detectLedgerDevice = async (transport: any): Promise<{|
+    version: GetVersionResponse,
+    serial: GetSerialResponse,
+  |}> => {
 
     setTimeout(() => {
       // Device is not detected till now so we assume that it's locked
@@ -138,8 +141,8 @@ export default class ConnectStore {
 
     const adaApp = new AdaApp(transport);
     const verResp = await adaApp.getVersion();
+    const currentSerial = await adaApp.getSerial();
     if (this.expectedSerial != null) {
-      const currentSerial = await adaApp.getSerial();
       if (currentSerial.serial !== this.expectedSerial) {
         throw new Error(`Incorrect hardware wallet. This wallet was created with a device with serial ID ${this.expectedSerial ?? 'undefined'}, but you are currently using ${currentSerial.serial}.`);
       }
@@ -152,7 +155,10 @@ export default class ConnectStore {
 
     this.setProgressState(PROGRESS_STATE.DEVICE_FOUND);
 
-    return verResp;
+    return {
+      version: verResp,
+      serial: currentSerial,
+    };
   }
 
   executeActionWithCustomRequest = (
@@ -181,7 +187,10 @@ export default class ConnectStore {
         this.getSerial(actn);
         break;
       case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-        this.getExtendedPublicKey(actn, params.hdPath);
+        this.getExtendedPublicKey({
+          actn,
+          params
+        });
         break;
       case OPERATION_NAME.SIGN_TX:
         this.signTransaction({
@@ -210,23 +219,27 @@ export default class ConnectStore {
   //  Cardano Ledger APIs
   // #==============================================#
 
-  getExtendedPublicKey = async (actn: OperationNameType, hdPath: BIP32Path): Promise<void> => {
+  getExtendedPublicKey: {|
+    actn: OperationNameType,
+    params: GetExtendedPublicKeyRequest,
+  |} => Promise<void> = async (request) => {
     let transport;
     try {
       transport = await makeTransport(this.transportId);
-      const verResp = await this._detectLedgerDevice(transport);
+      const deviceInfo = await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
       const ePublicKeyResp: GetExtendedPublicKeyResponse =
-        await adaApp.getExtendedPublicKey(hdPath);
+        await adaApp.getExtendedPublicKey(request.params.path);
 
       const resp = {
-        ePublicKey: ePublicKeyResp,
-        deviceVersion: verResp,
+        response: ePublicKeyResp,
+        deviceVersion: deviceInfo.version,
+        deriveSerial: deviceInfo.serial,
       };
-      this._replyMessageWrap(actn, true, resp);
+      this._replyMessageWrap(request.actn, true, resp);
     } catch (err) {
-      this._replyError(actn, err);
+      this._replyError(request.actn, err);
     } finally {
       transport && transport.close();
     }
@@ -365,7 +378,7 @@ export default class ConnectStore {
   _onMessage = (req: {
     origin?: string,
     data?: ?{
-      serial?: string,
+      serial?: ?string,
       params?: any,
       target?: string,
       action?: OperationNameType,

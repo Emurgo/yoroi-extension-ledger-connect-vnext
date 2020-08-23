@@ -208,11 +208,11 @@ export default class TestBlock extends React.Component<Props, State> {
    */
   onExtendedByronPublicKey = (): void => {
     if (this.state.visible === `${styles.visible}`) {
-      const hdPath = cardano.str_to_path("44'/1815'/0'");
+      const path = cardano.str_to_path("44'/1815'/0'");
 
       const req = this.makeRequest(
         OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
-        { hdPath }
+        { path }
       );
       window.postMessage(req);
     }
@@ -220,11 +220,11 @@ export default class TestBlock extends React.Component<Props, State> {
   }
   onExtendedShelleyPublicKey = (): void => {
     if (this.state.visible === `${styles.visible}`) {
-      const hdPath = cardano.str_to_path("1852'/1815'/0'");
+      const path = cardano.str_to_path("1852'/1815'/0'");
 
       const req = this.makeRequest(
         OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
-        { hdPath }
+        { path }
       );
       window.postMessage(req);
     }
