@@ -6,11 +6,13 @@ export const PROGRESS_STATE = Object.freeze({
   DEVICE_TYPE_SELECTED: 'DEVICE_TYPE_SELECTED',
   DETECTING_DEVICE: 'DETECTING_DEVICE',
   DEVICE_FOUND: 'DEVICE_FOUND',
+  DEVICE_RESPONSE: 'DEVICE_RESPONSE',
 });
 export type ProgressStateType = $Values<typeof PROGRESS_STATE>;
 
 export const OPERATION_NAME = Object.freeze({
   GET_LEDGER_VERSION: 'ledger-get-version',
+  GET_SERIAL: 'ledger-get-serial',
   GET_EXTENDED_PUBLIC_KEY: 'ledger-get-extended-public-key',
   SIGN_TX: 'ledger-sign-transaction',
   SHOW_ADDRESS: 'ledger-show-address',

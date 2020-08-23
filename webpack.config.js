@@ -45,7 +45,7 @@ module.exports = (env) => {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
-              sourceMap: true,
+              esModule: false,
               modules: {
                 mode: 'local',
                 localIdentName: '[name]_[local]',
@@ -54,24 +54,20 @@ module.exports = (env) => {
           },
           {
             loader: 'sass-loader',
-            options: {
-              sourceMap: true,
-            }
           }
         ]
       },
       {
         test: /\.(eot|otf|ttf|woff|woff2|gif|png)$/,
         loader: 'file-loader',
+        options: {
+          esModule: false,
+        },
       },
       {
         test: /\.svg$/,
         use: ['@svgr/webpack', 'url-loader'],
-      }
-      // {
-      //   test: /\.svg$/,
-      //   loader: 'svg-inline-loader?removeSVGTagAttrs=false&removeTags=true&removingTags[]=title&removingTags[]=desc&idPrefix=[sha512:hash:hex:5]-',
-      // },
+      },
     ]
   };
 
@@ -123,6 +119,7 @@ module.exports = (env) => {
     config.devtool = 'eval-source-map';
 
     config.output = {
+      publicPath: '/',
       path: path.join(__dirname, 'dist'),
       chunkFilename: '[name].bundle.js',
       filename: '[name].bundle.js'

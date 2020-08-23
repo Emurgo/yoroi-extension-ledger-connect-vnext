@@ -3,7 +3,10 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import type {
+  SignTransactionRequest,
   VerifyAddressInfoType,
+  DeriveAddressRequest,
+  MessageType,
 } from '../../types/cmn';
 import type {
   DeviceCodeType,
@@ -20,6 +23,7 @@ import WebAuthnTopBlock from './webauthn-top/WebAuthnTopBlock';
 import TitleBlock from './title/TitleBlock';
 import DeviceSelectionBlock from './device-selection/DeviceSelectionBlock';
 import OperationBlock from './operation/OperationBlock';
+import ResponseBlock from './response/ResponseBlock';
 
 import styles from './ConnectBlock.scss';
 
@@ -31,8 +35,11 @@ type Props = {|
   executeAction: executeActionFunc,
   deviceCode: DeviceCodeType,
   setDeviceCode: setDeviceCodeFunc,
+  signTxInfo: SignTransactionRequest,
   verifyAddressInfo: VerifyAddressInfoType,
+  deriveAddressInfo: DeriveAddressRequest,
   wasDeviceLocked: boolean,
+  response: MessageType | void
 |};
 
 @observer
@@ -49,8 +56,11 @@ export default class ConnectBlock extends React.Component<Props> {
       executeAction,
       setDeviceCode,
       deviceCode,
+      signTxInfo,
       verifyAddressInfo,
-      wasDeviceLocked
+      deriveAddressInfo,
+      wasDeviceLocked,
+      response,
     } = this.props;
 
     let content;
@@ -75,6 +85,14 @@ export default class ConnectBlock extends React.Component<Props> {
           />
         );
         break;
+      case PROGRESS_STATE.DEVICE_RESPONSE:
+        if (response == null) throw new Error(`Missing response`);
+        content = (
+          <ResponseBlock
+            response={response}
+          />
+        );
+        break;
       default:
         showWebAuthnTop = isWebAuthn;
         content = (
@@ -82,7 +100,9 @@ export default class ConnectBlock extends React.Component<Props> {
             deviceCode={deviceCode}
             currentOperationName={currentOperationName}
             progressState={progressState}
+            signTxInfo={signTxInfo}
             verifyAddressInfo={verifyAddressInfo}
+            deriveAddressInfo={deriveAddressInfo}
             wasDeviceLocked={wasDeviceLocked}
           />
         );

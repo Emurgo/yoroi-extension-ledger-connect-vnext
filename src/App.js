@@ -17,6 +17,13 @@ import pt from 'react-intl/locale-data/pt';
 import RootStore from './stores';
 
 import LoadingSpinner from './components/widgets/LoadingSpinner';
+import ComingSoon from './components/widgets/ComingSoon';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import { translations } from './i18n/translations';
 import { DEFAULT_LOCALE } from './const';
@@ -57,11 +64,10 @@ export default class App extends React.Component<Props> {
     // Merged english messages with selected by user locale messages
     // In this case all english data would be overridden to user selected locale, but untranslated
     // (missed in object keys) just stay in english
-    const mergedMessages = Object.assign(
-      {},
-      translations[DEFAULT_LOCALE],
-      translations[locale]
-    );
+    const mergedMessages = {
+      ...translations[DEFAULT_LOCALE],
+      ...translations[locale]
+    };
 
     const loadingSpinner = (
       <LoadingSpinner
@@ -72,7 +78,20 @@ export default class App extends React.Component<Props> {
 
     const component = (
       <IntlProvider {...{ locale, key: locale, messages: mergedMessages }}>
-        {loadingSpinner}
+        <Suspense fallback={loadingSpinner}>
+          <StyleVariableLoader variables={styleVariables} />
+          <Router>
+            <Switch>
+              <Route exact path="/">
+                <ComingSoon />
+              </Route>
+              <Route path="/v2">
+                <ConnectPage rootStore={this.props.rootStore} />
+              </Route>
+              <Redirect to="/" />
+            </Switch>
+          </Router>
+        </Suspense>
       </IntlProvider>
     );
 

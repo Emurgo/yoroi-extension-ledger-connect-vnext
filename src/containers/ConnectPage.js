@@ -24,10 +24,13 @@ export default class ConnectPage extends React.Component<Props> {
       currentOperationName,
       executeAction,
       deviceCode,
+      signTxInfo,
       verifyAddressInfo,
+      deriveAddressInfo,
       wasDeviceLocked,
       setTransport,
       setDeviceCode,
+      response,
     } = connectStore;
 
     const {
@@ -53,8 +56,11 @@ export default class ConnectPage extends React.Component<Props> {
           executeAction={executeAction}
           deviceCode={deviceCode}
           setDeviceCode={setDeviceCode}
+          signTxInfo={signTxInfo}
           verifyAddressInfo={verifyAddressInfo}
+          deriveAddressInfo={deriveAddressInfo}
           wasDeviceLocked={wasDeviceLocked}
+          response={response}
         />
       </Layout>
     );

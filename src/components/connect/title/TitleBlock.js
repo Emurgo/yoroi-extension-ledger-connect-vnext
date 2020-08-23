@@ -11,19 +11,23 @@ import styles from './TitleBlock.scss';
 const messages = defineMessages({
   titleConnect: {
     id: 'title.connect',
-    defaultMessage: '!!!Connect to ledger hardware wallet',
+    defaultMessage: '!!!Connect to Ledger hardware wallet',
   },
   titleSenTx: {
     id: 'title.sendTx',
-    defaultMessage: '!!!Send Transaction Using ledger',
+    defaultMessage: '!!!Send Transaction Using Ledger',
   },
   titleVerifyAddress: {
     id: 'title.verifyAddress',
-    defaultMessage: '!!!Verify address on ledger',
+    defaultMessage: '!!!Verify address on Ledger',
   },
   titleLedgerVersion: {
     id: 'title.ledgerVersion',
-    defaultMessage: '!!!Fetch ledger device version',
+    defaultMessage: '!!!Fetch Ledger device version',
+  },
+  titleLedgerSerial: {
+    id: 'title.ledgerSerial',
+    defaultMessage: '!!!Fetch Ledger serial number',
   },
   titleDeriveAddress: {
     id: 'title.deriveAddress',
@@ -56,6 +60,9 @@ export default class TitleBlock extends React.Component<Props> {
         break;
       case OPERATION_NAME.GET_LEDGER_VERSION:
         title = messages.titleLedgerVersion;
+        break;
+      case OPERATION_NAME.GET_SERIAL:
+        title = messages.titleLedgerSerial;
         break;
       case OPERATION_NAME.DERIVE_ADDRESS:
         title = messages.titleDeriveAddress;

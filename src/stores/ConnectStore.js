@@ -3,19 +3,18 @@ import { observable, action, runInAction, computed } from 'mobx';
 import AdaApp from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
   BIP32Path,
-  InputTypeUTxO,
-  OutputTypeAddress,
-  OutputTypeChange,
   GetVersionResponse,
+  GetSerialResponse,
+  DeriveAddressResponse,
   GetExtendedPublicKeyResponse,
   SignTransactionResponse,
-  DeriveAddressResponse
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
-
 import type {
   MessageType,
   RequestType,
   VerifyAddressInfoType,
+  SignTransactionRequest,
+  DeriveAddressRequest,
 } from '../types/cmn';
 import type {
   DeviceCodeType,
@@ -30,10 +29,11 @@ import {
 } from '../types/enum';
 import {
   YOROI_LEDGER_CONNECT_TARGET_NAME,
-  DEVICE_LOCK_CHECK_TIMEOUT_MS
+  DEVICE_LOCK_CHECK_TIMEOUT_MS,
+  ENV,
+  SUPPORTED_VERSION,
 } from '../const';
 import {
-  pathToString,
   ledgerErrToMessage,
   makeTransport,
   convertStringToDeviceCodeType,
@@ -43,19 +43,19 @@ import {
   setKnownDeviceCode,
   getKnownDeviceCode,
 } from '../utils/storage';
-
-export type ExtenedPublicKeyResp = {
-  ePublicKey: GetExtendedPublicKeyResponse,
-  deviceVersion: GetVersionResponse
-};
+import semverSatisfies from 'semver/functions/satisfies';
 
 export default class ConnectStore {
   @observable transportId: TransportIdType;
   @observable progressState: ProgressStateType;
   @observable currentOperationName: OperationNameType;
+  @observable signTxInfo: SignTransactionRequest;
   @observable verifyAddressInfo: VerifyAddressInfoType;
+  @observable deriveAddressInfo: DeriveAddressRequest;
   @observable deviceCode: DeviceCodeType
   @observable wasDeviceLocked: boolean;
+  @observable response: void | MessageType;
+  @observable expectedSerial: void | string;
   userInteractableRequest: RequestType;
 
   constructor(transportId: TransportIdType) {
@@ -104,9 +104,24 @@ export default class ConnectStore {
     this.deviceCode = deviceCode;
   }
 
+  @action('Change Sign Tx Info')
+  setSignTxInfo = (signTxInfo: SignTransactionRequest): void => {
+    this.signTxInfo = signTxInfo;
+  }
+
   @action('Change Verify Address Info')
   setVerifyAddressInfo = (verifyAddressInfo: VerifyAddressInfoType): void => {
     this.verifyAddressInfo = verifyAddressInfo;
+  }
+
+  @action('Change Derive Address Info')
+  setDeriveAddressInfo = (deriveAddressInfo: DeriveAddressRequest): void => {
+    this.deriveAddressInfo = deriveAddressInfo;
+  }
+
+  @action('Set response')
+  setResponse = (response: MessageType): void => {
+    this.response = response;
   }
 
   _detectLedgerDevice = async (transport: any): Promise<GetVersionResponse> => {
@@ -123,6 +138,17 @@ export default class ConnectStore {
 
     const adaApp = new AdaApp(transport);
     const verResp = await adaApp.getVersion();
+    if (this.expectedSerial != null) {
+      const currentSerial = await adaApp.getSerial();
+      if (currentSerial.serial !== this.expectedSerial) {
+        throw new Error(`Incorrect hardware wallet. This wallet was created with a device with serial ID ${this.expectedSerial ?? 'undefined'}, but you are currently using ${currentSerial.serial}.`);
+      }
+    }
+
+    const semverResp = `${verResp.major}.${verResp.minor}.${verResp.patch}`;
+    if (!semverSatisfies(semverResp, SUPPORTED_VERSION)) {
+      throw new Error(`Incorrect Cardano app version. Supports version ${SUPPORTED_VERSION} but you have version ${semverResp}`);
+    }
 
     this.setProgressState(PROGRESS_STATE.DEVICE_FOUND);
 
@@ -151,17 +177,29 @@ export default class ConnectStore {
       case OPERATION_NAME.GET_LEDGER_VERSION:
         this.getVersion(actn);
         break;
+      case OPERATION_NAME.GET_SERIAL:
+        this.getSerial(actn);
+        break;
       case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY:
         this.getExtendedPublicKey(actn, params.hdPath);
         break;
       case OPERATION_NAME.SIGN_TX:
-        this.signTransaction(actn, params.inputs, params.outputs);
+        this.signTransaction({
+          actn,
+          params,
+        });
         break;
       case OPERATION_NAME.SHOW_ADDRESS:
-        this.showAddress(actn, params.hdPath, params.address);
+        this.showAddress({
+          actn,
+          params,
+        });
         break;
       case OPERATION_NAME.DERIVE_ADDRESS:
-        this.deriveAddress(actn, params.hdPath);
+        this.deriveAddress({
+          actn,
+          params,
+        });
         break;
       default:
         throw new Error(`[YLC] Unexpected action called: ${actn}`);
@@ -194,65 +232,91 @@ export default class ConnectStore {
     }
   };
 
-  signTransaction = async (
+  signTransaction: {|
     actn: OperationNameType,
-    inputs: Array<InputTypeUTxO>,
-    outputs: Array<OutputTypeAddress | OutputTypeChange>
-  ): Promise<void> => {
+    params: SignTransactionRequest,
+  |} => Promise<void> = async (request) => {
     let transport;
     try {
+      this.setSignTxInfo(request.params);
+
       transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-      const resp: SignTransactionResponse = await adaApp.signTransaction(inputs, outputs);
+      const resp: SignTransactionResponse = await adaApp.signTransaction(
+        request.params.networkId,
+        request.params.protocolMagic,
+        request.params.inputs,
+        request.params.outputs,
+        request.params.feeStr,
+        request.params.ttlStr,
+        request.params.certificates,
+        request.params.withdrawals,
+        request.params.metadataHashHex,
+      );
 
-      this._replyMessageWrap(actn, true, resp);
+      this._replyMessageWrap(request.actn, true, resp);
     } catch (err) {
-      this._replyError(actn, err);
+      this._replyError(request.actn, err);
     } finally {
       transport && transport.close();
     }
   };
 
-  showAddress = async (
+  showAddress: {|
     actn: OperationNameType,
-    hdPath: BIP32Path,
-    address: string
-  ): Promise<void> => {
+    params: VerifyAddressInfoType,
+  |} => Promise<void> = async (request) => {
     let transport;
     try {
-      this.setVerifyAddressInfo({
-        address,
-        hdPath: pathToString(hdPath)
-      });
+      this.setVerifyAddressInfo(request.params);
 
       transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-      const resp = await adaApp.showAddress(hdPath);
+      const resp = await adaApp.showAddress(
+        request.params.addressTypeNibble,
+        request.params.networkIdOrProtocolMagic,
+        request.params.spendingPath,
+        request.params.stakingPath,
+        request.params.stakingKeyHashHex,
+        request.params.stakingBlockchainPointer,
+      );
 
-      this._replyMessageWrap(actn, true, resp);
+      this._replyMessageWrap(request.actn, true, resp);
     } catch (err) {
-      this._replyError(actn, err);
+      this._replyError(request.actn, err);
     } finally {
       transport && transport.close();
     }
   };
 
-  deriveAddress = async (actn: OperationNameType, hdPath: BIP32Path): Promise<void> => {
+  deriveAddress: {|
+    actn: OperationNameType,
+    params: DeriveAddressRequest,
+  |} => Promise<void> = async (request) => {
     let transport;
     try {
+      this.setDeriveAddressInfo(request.params);
+
       transport = await makeTransport(this.transportId);
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-      const resp: DeriveAddressResponse = await adaApp.deriveAddress(hdPath);
+      const resp: DeriveAddressResponse = await adaApp.deriveAddress(
+        request.params.addressTypeNibble,
+        request.params.networkIdOrProtocolMagic,
+        request.params.spendingPath,
+        request.params.stakingPath,
+        request.params.stakingKeyHashHex,
+        request.params.stakingBlockchainPointer,
+      );
 
-      this._replyMessageWrap(actn, true, resp);
+      this._replyMessageWrap(request.actn, true, resp);
     } catch (err) {
-      this._replyError(actn, err);
+      this._replyError(request.actn, err);
     } finally {
       transport && transport.close();
     }
@@ -274,6 +338,22 @@ export default class ConnectStore {
     }
   };
 
+  getSerial = async (actn: OperationNameType): Promise<void> => {
+    let transport;
+    try {
+      transport = await makeTransport(this.transportId);
+
+      const adaApp = new AdaApp(transport);
+      const resp: GetSerialResponse = await adaApp.getSerial();
+
+      this._replyMessageWrap(actn, true, resp);
+    } catch (err) {
+      this._replyError(actn, err);
+    } finally {
+      transport && transport.close();
+    }
+  };
+
   // #==============================================#
   //  Website <==> Content Script communications
   // #==============================================#
@@ -282,52 +362,71 @@ export default class ConnectStore {
    * Handle message from Content Script [ Website <== Content Script ]
    * @param {*} req request message object
    */
-  _onMessage = (req: any): void => {
+  _onMessage = (req: {
+    origin?: string,
+    data?: ?{
+      serial?: string,
+      params?: any,
+      target?: string,
+      action?: OperationNameType,
+      ...,
+    },
+    ...
+  }): void => {
     const { data } = req;
-    if (data &&
-      data.params &&
-      data.action &&
-      data.target === YOROI_LEDGER_CONNECT_TARGET_NAME) {
+    if (data == null) {
+      console.error(`Missing data in req ${JSON.stringify(req)}`);
+      return;
+    }
+    if (data.target !== YOROI_LEDGER_CONNECT_TARGET_NAME) {
+      console.debug(`[YLC] Got non ledger ConnectStore\nrequest: ${req.origin ?? 'undefined'}\ndata: ${JSON.stringify(req.data, null, 2) ?? 'undefined'}`);
+      return;
+    }
+    if (data.serial != null) {
+      runInAction(() => { this.expectedSerial = data.serial; });
+    }
+    if (data.action == null) {
+      console.error(`Missing action in req ${JSON.stringify(req)}`);
+      return;
+    }
 
-      const { params } = data;
-      const actn = data.action;
+    const { params } = data;
+    const actn = data.action;
 
-      console.debug(`[YLC] request: ${actn}`);
+    console.debug(`[YLC] request: ${actn}`);
 
-      switch (actn) {
-        case OPERATION_NAME.GET_LEDGER_VERSION:
-        case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY:
-        case OPERATION_NAME.SIGN_TX:
-        case OPERATION_NAME.SHOW_ADDRESS:
-        case OPERATION_NAME.DERIVE_ADDRESS:
-          // Only one operation in one session
-          if (!this.userInteractableRequest) {
-            this.userInteractableRequest = {
-              params,
-              action: actn,
-            };
+    switch (actn) {
+      case OPERATION_NAME.GET_LEDGER_VERSION:
+      case OPERATION_NAME.GET_SERIAL:
+      case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY:
+      case OPERATION_NAME.SIGN_TX:
+      case OPERATION_NAME.SHOW_ADDRESS:
+      case OPERATION_NAME.DERIVE_ADDRESS:
+        // Only one operation in one session
+        if (!this.userInteractableRequest) {
+          this.userInteractableRequest = {
+            params,
+            action: actn,
+          };
 
-            runInAction(() => {
-              // In case of create wallet, we always
-              // want user to choose device
-              if (actn === OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY) {
-                this.setDeviceCode(DEVICE_CODE.NONE);
-                setKnownDeviceCode(DEVICE_CODE.NONE);
-              }
-              this.setCurrentOperationName(actn);
-              this.setProgressState(PROGRESS_STATE.DEVICE_TYPE_SELECTION);
-            });
-          }
-          break;
-        case OPERATION_NAME.CLOSE_WINDOW:
-          window.close();
-          break;
-        default:
-          console.error(`[YLC] Unexpected action requested: ${actn}`);
-          break;
-      }
-    } else {
-      console.debug(`[YLC] Got non ledger connectore\nrequest: ${req.origin}\ndata: ${JSON.stringify(req.data, null, 2)}`);
+          runInAction(() => {
+            // In case of create wallet, we always
+            // want user to choose device
+            if (actn === OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY) {
+              this.setDeviceCode(DEVICE_CODE.NONE);
+              setKnownDeviceCode(DEVICE_CODE.NONE);
+            }
+            this.setCurrentOperationName(actn);
+            this.setProgressState(PROGRESS_STATE.DEVICE_TYPE_SELECTION);
+          });
+        }
+        break;
+      case OPERATION_NAME.CLOSE_WINDOW:
+        window.close();
+        break;
+      default:
+        console.error(`[YLC] Unexpected action requested: ${actn}`);
+        break;
     }
   }
 
@@ -363,6 +462,10 @@ export default class ConnectStore {
    * @param {*} msg MessageType object as reply
    */
   _replyMessage = (msg: MessageType): void => {
+    if (ENV.isDevelopment) {
+      this.setResponse(msg);
+      this.setProgressState(PROGRESS_STATE.DEVICE_RESPONSE);
+    }
     msg.action = `${msg.action}-reply`;
     window.postMessage(msg, '*');
   }

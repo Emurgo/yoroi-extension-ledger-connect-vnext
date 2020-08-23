@@ -5,7 +5,7 @@
 // @flow //
 import React from 'react';
 import { observer } from 'mobx-react';
-import { utils as CUtils } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import { cardano, CertTypes, AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import type { TransportIdType } from '../../types/enum';
 import {
@@ -21,6 +21,11 @@ import { SUPPORTED_LOCALS } from '../../i18n/translations';
 
 import styles from './TestBlock.scss';
 
+const MainnetIds = Object.freeze({
+  protocolMagic: 764824073, // for legacy Byron-era addresses
+  chainNetworkId: 1, // for Shelley-era addresses
+});
+
 type Props = {|
   setLocale: setLocaleFunc,
   setTransport: setTransportFunc,
@@ -30,6 +35,8 @@ type Props = {|
 
 type State = {|
   visible: string,
+  /** we can't change what Ledger query we're doing or how it's done once started */
+  startedQuery: boolean,
 |};
 
 @observer
@@ -38,6 +45,7 @@ export default class TestBlock extends React.Component<Props, State> {
     super();
     this.state = {
       visible: `${styles.visible}`,
+      startedQuery: false,
     };
   }
 
@@ -47,6 +55,10 @@ export default class TestBlock extends React.Component<Props, State> {
 
   onCompDoubleClicked = () => {
     this.setState({ visible: `${styles.hidden}` });
+  }
+
+  setStartedQuery = () => {
+    this.setState({ startedQuery: true });
   }
 
   onLangSelectionChange = (locale: string): void => {
@@ -89,18 +101,18 @@ export default class TestBlock extends React.Component<Props, State> {
       <div className={styles.transportSelection}>
         {Object.keys(TRANSPORT_ID).map(key => {
           if (Object.prototype.hasOwnProperty.call(TRANSPORT_ID, key)) {
-            const tranportId = TRANSPORT_ID[key];
+            const transportId = TRANSPORT_ID[key];
             return (
-              <span key={tranportId}>
+              <span key={transportId}>
                 <input
-                  key={tranportId}
+                  key={transportId}
                   type="radio"
                   name="transport"
-                  id={tranportId}
-                  checked={this.props.currentTransportId === tranportId}
-                  onChange={this.onTransportSelectionChange.bind(this, tranportId)}
+                  id={transportId}
+                  checked={this.props.currentTransportId === transportId}
+                  onChange={this.onTransportSelectionChange.bind(this, transportId)}
                 />
-                <label className={styles.tranportLabel} htmlFor={tranportId}>{tranportId}</label>
+                <label className={styles.tranportLabel} htmlFor={transportId}>{transportId}</label>
               </span>
             );
           }
@@ -111,11 +123,29 @@ export default class TestBlock extends React.Component<Props, State> {
 
     const operationSelection = (
       <div className={styles.operationSelection}>
-        <button type="button" onClick={this.onExtendedPublicKey}>Extended public key</button>
-        <button type="button" onClick={this.onSignTransaction}>Sign Transaction</button>
-        <button type="button" onClick={this.onShowAddress}>Verify Address</button>
-        <button type="button" onClick={this.onDeriveAddress}>Derive Address</button>
-        <button type="button" onClick={this.onLogVersion}>Device Version</button>
+        <div>
+          <button type="button" onClick={this.onExtendedByronPublicKey}>Extended Byron key</button>
+          <button type="button" onClick={this.onExtendedShelleyPublicKey}>Extended Shelley key</button>
+        </div>
+        <button type="button" onClick={this.onSignTransaction}>Sign transaction</button>
+        <div>
+          <button type="button" onClick={this.onShowByronAddress}>Verify Byron address</button>
+          <button type="button" onClick={this.onShowBasePathAddress}>Verify base path address</button>
+          <button type="button" onClick={this.onShowBaseHexAddress}>Verify base hex address</button>
+          <button type="button" onClick={this.onShowPointerAddress}>Verify pointer address</button>
+          <button type="button" onClick={this.onShowEnterpriseAddress}>Verify enterprise address</button>
+          <button type="button" onClick={this.onShowRewardAddress}>Verify reward address</button>
+        </div>
+        <div>
+          <button type="button" onClick={this.onDeriveByronAddress}>Derive Byron address</button>
+          <button type="button" onClick={this.onDeriveBasePathAddress}>Derive base path address</button>
+          <button type="button" onClick={this.onDeriveBaseHexAddress}>Derive base hex address</button>
+          <button type="button" onClick={this.onDerivePointerAddress}>Derive pointer address</button>
+          <button type="button" onClick={this.onDeriveEnterpriseAddress}>Derive enterprise address</button>
+          <button type="button" onClick={this.onDeriveRewardAddress}>Derive reward address</button>
+        </div>
+        <button type="button" onClick={this.onLogVersion}>Device version</button>
+        <button type="button" onClick={this.onLogSerial}>Serial number</button>
       </div>
     );
 
@@ -134,11 +164,13 @@ export default class TestBlock extends React.Component<Props, State> {
         <div className={styles.column1}>
           {supportedLocals}
         </div>
-        <div className={styles.column2}>
-          {transportSelection}
-          {operationSelection}
-          {visibilityInfo}
-        </div>
+        {this.state.startedQuery === false && (
+          <div className={styles.column2}>
+            {transportSelection}
+            {operationSelection}
+            {visibilityInfo}
+          </div>
+        )}
       </div>
     );
   }
@@ -158,11 +190,25 @@ export default class TestBlock extends React.Component<Props, State> {
   }
 
   /**
+   * Test getSerial
+   */
+  onLogSerial = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.GET_SERIAL,
+        null
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onLogSerial`);
+  }
+
+  /**
    * Test getExtendedPublicKey
    */
-  onExtendedPublicKey = (): void => {
+  onExtendedByronPublicKey = (): void => {
     if (this.state.visible === `${styles.visible}`) {
-      const hdPath = CUtils.str_to_path("44'/1815'/0'");
+      const hdPath = cardano.str_to_path("44'/1815'/0'");
 
       const req = this.makeRequest(
         OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
@@ -170,7 +216,19 @@ export default class TestBlock extends React.Component<Props, State> {
       );
       window.postMessage(req);
     }
-    console.debug(`[YLC] TEST:onExtendedPublicKey`);
+    console.debug(`[YLC] TEST:onExtendedByronPublicKey`);
+  }
+  onExtendedShelleyPublicKey = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const hdPath = cardano.str_to_path("1852'/1815'/0'");
+
+      const req = this.makeRequest(
+        OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
+        { hdPath }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onExtendedByronPublicKey`);
   }
 
   /**
@@ -180,35 +238,56 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const inputs = [
         {
-          txDataHex:
-            '839f8200d8185824825820918c11e1c041a0cb04baea651b9fb1bdef7ee5295f' +
-            '032307e2e57d109de118b8008200d81858248258208f34e4f719effe82c28c8f' +
-            'f45e426233651fc03686130cb7e1d4bc6de20e689c01ff9f8282d81858218358' +
-            '1cb6f4b193e083530aca83ff03de4a60f4e7a6732b68b4fa6972f42c11a0001a' +
-            '907ab5c71a000f42408282d818584283581cb5bacd405a2dcedce19899f8647a' +
-            '8c4f45d84c06fb532c63f9479a40a101581e581c6b8487e9d22850b7539db255' +
-            'e27dd48dc0a50c7994d678696be64f21001ac5000d871a03dc396fffa0',
+          txHashHex: 'e3a768c5b3109fa3268d875316063809a298602a272d7933c2b4443b69058d7a',
           outputIndex: 0,
-          path: CUtils.str_to_path("44'/1815'/0'/0/0")
+          path: cardano.str_to_path("1852'/1815'/0'/0/0")
         }
       ];
 
       const outputs = [
         {
           amountStr: '700000',
-          address58:
-            'DdzFFzCqrhsoarXqLakMBEiURCGPCUL7qRvPf2oGknKN2nNix5b9SQKj2YckgXZK' +
-            '6q1Ym7BNLxgEX3RQFjS2C41xt54yJHeE1hhMUfSG'
+          // Ae2tdPwUPEZCfyggUgSxD1E5UCx5f5hrXCdvQjJszxE7epyZ4ox9vRNUbHf
+          addressHex: '82d818582183581c9f01f38ec3af8341f45a301b075bfd6fd0cfbaddb01c5ebe780918b9a0001adb482c56',
         },
         {
+          addressTypeNibble: AddressTypeNibbles.BASE,
           amountStr: '100000',
-          path: CUtils.str_to_path("44'/1815'/0'/1/0")
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/1/0"),
+          stakingBlockchainPointer: undefined,
+          stakingKeyHashHex: undefined,
+          stakingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
         }
       ];
 
       const req = this.makeRequest(
         OPERATION_NAME.SIGN_TX,
-        { inputs, outputs }
+        {
+          networkId: MainnetIds.chainNetworkId,
+          protocolMagic: MainnetIds.protocolMagic,
+          inputs,
+          outputs,
+          feeStr: '500',
+          ttlStr: '20',
+          certificates: [{
+            type: CertTypes.staking_key_registration,
+            path: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          },
+          {
+            type: CertTypes.delegation,
+            path: cardano.str_to_path("1852'/1815'/0'/2/0"),
+            poolKeyHashHex: 'df1750df9b2df285fcfb50f4740657a18ee3af42727d410c37b86207',
+          },
+          {
+            type: CertTypes.staking_key_deregistration,
+            path: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          }],
+          withdrawals: [{
+            path: cardano.str_to_path("1852'/1815'/0'/2/0"),
+            amountStr: '1000000',
+          }],
+          metadataHashHex: 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef',
+        }
       );
       window.postMessage(req);
     }
@@ -218,30 +297,221 @@ export default class TestBlock extends React.Component<Props, State> {
   /**
    * Test showAddress = Verify Address
    */
-  onShowAddress = (): void => {
+  onShowByronAddress = (): void => {
     if (this.state.visible === `${styles.visible}`) {
-      const hdPath = CUtils.str_to_path("44'/1815'/1'/1/0");
-      const address = 'Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV';
-
       const req = this.makeRequest(
         OPERATION_NAME.SHOW_ADDRESS,
-        { hdPath, address }
+        {
+          address: 'Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV',
+          addressTypeNibble: AddressTypeNibbles.BYRON,
+          networkIdOrProtocolMagic: MainnetIds.protocolMagic,
+          spendingPath: cardano.str_to_path("44'/1815'/0'/0/0"),
+          stakingPath: null,
+          stakingKeyHashHex: null,
+          stakingBlockchainPointer: null,
+        }
       );
       window.postMessage(req);
     }
     console.debug(`[YLC] TEST:onShowAddress`);
   }
+  onShowBasePathAddress = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.SHOW_ADDRESS,
+        {
+          address: 'addr1qxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tnvz7nwqamg2fan294qzxlt89nt0ez4xzxpw4vtg7h2fggqgse4hr',
+          addressTypeNibble: AddressTypeNibbles.BASE,
+          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          stakingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          stakingKeyHashHex: null,
+          stakingBlockchainPointer: null
+        }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
+  onShowBaseHexAddress = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.SHOW_ADDRESS,
+        {
+          address: 'addr1qxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tnvz7nwqamg2fan294qzxlt89nt0ez4xzxpw4vtg7h2fggqgse4hr',
+          addressTypeNibble: AddressTypeNibbles.BASE,
+          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          stakingPath: null,
+          stakingKeyHashHex: '927aba6ef644783f1f0e2f737c66f74fb1c0c54966a3493d17f1a52e',
+          stakingBlockchainPointer: null
+        }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
+  onShowPointerAddress = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.SHOW_ADDRESS,
+        {
+          address: 'addr1gxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tsqqypqv2s002',
+          addressTypeNibble: AddressTypeNibbles.POINTER,
+          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          stakingPath: null,
+          stakingKeyHashHex: null,
+          stakingBlockchainPointer: {
+            blockIndex: 0,
+            txIndex: 1,
+            certificateIndex: 2,
+          }
+        }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
+  onShowEnterpriseAddress = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.SHOW_ADDRESS,
+        {
+          address: 'addr1vxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tsmdww5t',
+          addressTypeNibble: AddressTypeNibbles.ENTERPRISE,
+          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          stakingPath: null,
+          stakingKeyHashHex: null,
+          stakingBlockchainPointer: null,
+        }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
+  onShowRewardAddress = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.SHOW_ADDRESS,
+        {
+          address: 'addr1u8pcjgmx7962w6hey5hhsd502araxp26kdtgagakhaqtq8sxy9w7g',
+          addressTypeNibble: AddressTypeNibbles.REWARD,
+          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          stakingPath: null,
+          stakingKeyHashHex: null,
+          stakingBlockchainPointer: null,
+        }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
 
   /**
    * Test deriveAddress
    */
-  onDeriveAddress = (): void => {
+  onDeriveByronAddress = (): void => {
     if (this.state.visible === `${styles.visible}`) {
-      const hdPath = CUtils.str_to_path("44'/1815'/0'/0/0");
-
       const req = this.makeRequest(
         OPERATION_NAME.DERIVE_ADDRESS,
-        { hdPath }
+        {
+          addressTypeNibble: AddressTypeNibbles.BYRON,
+          networkIdOrProtocolMagic: MainnetIds.protocolMagic,
+          spendingPath: cardano.str_to_path("44'/1815'/0'/0/0"),
+          stakingPath: null,
+          stakingKeyHashHex: null,
+          stakingBlockchainPointer: null
+        }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
+  onDeriveBasePathAddress = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.DERIVE_ADDRESS,
+        {
+          addressTypeNibble: AddressTypeNibbles.BASE,
+          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          stakingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          stakingKeyHashHex: null,
+          stakingBlockchainPointer: null
+        }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
+  onDeriveBaseHexAddress = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.DERIVE_ADDRESS,
+        {
+          addressTypeNibble: AddressTypeNibbles.BASE,
+          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          stakingPath: null,
+          stakingKeyHashHex: '927aba6ef644783f1f0e2f737c66f74fb1c0c54966a3493d17f1a52e',
+          stakingBlockchainPointer: null
+        }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
+  onDerivePointerAddress = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.DERIVE_ADDRESS,
+        {
+          addressTypeNibble: AddressTypeNibbles.POINTER,
+          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          stakingPath: null,
+          stakingKeyHashHex: null,
+          stakingBlockchainPointer: {
+            blockIndex: 0,
+            txIndex: 1,
+            certificateIndex: 2,
+          }
+        }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
+  onDeriveEnterpriseAddress = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.DERIVE_ADDRESS,
+        {
+          addressTypeNibble: AddressTypeNibbles.ENTERPRISE,
+          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          stakingKeyHashHex: null,
+          stakingBlockchainPointer: null,
+        }
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onDeriveAddress`);
+  }
+  onDeriveRewardAddress = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const req = this.makeRequest(
+        OPERATION_NAME.DERIVE_ADDRESS,
+        {
+          addressTypeNibble: AddressTypeNibbles.REWARD,
+          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          stakingKeyHashHex: null,
+          stakingBlockchainPointer: null,
+        }
       );
       window.postMessage(req);
     }
@@ -252,6 +522,7 @@ export default class TestBlock extends React.Component<Props, State> {
    * Makes Request object
    */
   makeRequest = (action: string, params: any) => {
+    this.setStartedQuery();
     return {
       action,
       params,

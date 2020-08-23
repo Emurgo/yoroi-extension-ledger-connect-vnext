@@ -32,7 +32,7 @@ const message = defineMessages({
   },
   videoLinkPart1: {
     id: 'deviceSelection.videoLink.part1',
-    defaultMessage: '!!!You can also check video instuction for '
+    defaultMessage: '!!!You can also check video instruction for '
   },
   videoLinkPart2: {
     id: 'deviceSelection.videoLink.part2',

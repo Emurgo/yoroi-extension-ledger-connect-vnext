@@ -33,7 +33,8 @@ export default class LoadingSpinner extends Component<Props> {
 
     return (
       <div className={styles.component}>
-        {"Coming soon"}
+        <div className={styles.wrapper} ref={(div) => { this.root = div; }} />
+        {showText && textComp}
       </div>
     );
   }

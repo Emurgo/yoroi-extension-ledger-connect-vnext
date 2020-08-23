@@ -4,7 +4,9 @@ import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
 import type {
+  SignTransactionRequest,
   VerifyAddressInfoType,
+  DeriveAddressRequest,
 }  from '../../../types/cmn';
 import type {
   DeviceCodeType,
@@ -20,6 +22,7 @@ import CommonHintBlock from './common/CommonHintBlock';
 import ConnectLedgerHintBlock from './connect/ConnectLedgerHintBlock';
 import SendTxHintBlock from './send/SendTxHintBlock';
 import VerifyAddressHintBlock from './verify/VerifyAddressHintBlock';
+import DeriveAddressHintBlock from './derive/DeriveAddressHintBlock';
 
 import styles from './OperationBlock.scss';
 
@@ -34,7 +37,9 @@ type Props = {|
   deviceCode: DeviceCodeType,
   currentOperationName: OperationNameType,
   progressState: ProgressStateType,
+  signTxInfo: SignTransactionRequest,
   verifyAddressInfo: VerifyAddressInfoType,
+  deriveAddressInfo: DeriveAddressRequest,
   wasDeviceLocked: boolean,
   showPerformActionText?: boolean,
 |};
@@ -52,7 +57,9 @@ export default class OperationBlock extends React.Component<Props> {
       deviceCode,
       currentOperationName,
       progressState,
+      signTxInfo,
       verifyAddressInfo,
+      deriveAddressInfo,
       wasDeviceLocked,
       showPerformActionText,
     } = this.props;
@@ -87,6 +94,7 @@ export default class OperationBlock extends React.Component<Props> {
             content = (
               <SendTxHintBlock
                 deviceCode={deviceCode}
+                signTxInfo={signTxInfo}
                 wasDeviceLocked={wasDeviceLocked}
               />
             );
@@ -96,6 +104,15 @@ export default class OperationBlock extends React.Component<Props> {
               <VerifyAddressHintBlock
                 deviceCode={deviceCode}
                 verifyAddressInfo={verifyAddressInfo}
+                wasDeviceLocked={wasDeviceLocked}
+              />
+            );
+            break;
+          case OPERATION_NAME.DERIVE_ADDRESS:
+            content = (
+              <DeriveAddressHintBlock
+                deviceCode={deviceCode}
+                deriveAddressInfo={deriveAddressInfo}
                 wasDeviceLocked={wasDeviceLocked}
               />
             );
@@ -110,7 +127,7 @@ export default class OperationBlock extends React.Component<Props> {
         return (null);
     }
 
-    // By default performActionText block is hidded
+    // By default performActionText block is hidden
     let performActionText;
     if (showPerformActionText) {
       performActionText = (
