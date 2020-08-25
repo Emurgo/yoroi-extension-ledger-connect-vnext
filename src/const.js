@@ -11,4 +11,4 @@ export const ENV = {
 };
 export const DEVICE_LOCK_CHECK_TIMEOUT_MS = 500; // In milli-seconds
 export const TRANSPORT_EXCHANGE_TIMEOUT_MS = 120000; // In milli-seconds
-export const SUPPORTED_VERSION = `2.0.x`; // supported version of the Cardano app
+export const SUPPORTED_VERSION = `>=2.0.4`; // supported version of the Cardano app
