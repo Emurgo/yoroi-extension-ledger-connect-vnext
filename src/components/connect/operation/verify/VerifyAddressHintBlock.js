@@ -105,6 +105,7 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
           imagePath={imgVerify2}
           secondaryText={pathToString(verifyAddressInfo.spendingPath)}
         />
+        <HintGap />
         {getAddressHintBlock({
           deviceCode,
           getAndIncrementStep,
