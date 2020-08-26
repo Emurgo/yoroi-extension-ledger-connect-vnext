@@ -6,11 +6,11 @@ import { intlShape, defineMessages } from 'react-intl';
 import type { VerifyAddressInfoType } from '../../../../types/cmn';
 import type { DeviceCodeType } from '../../../../types/enum';
 import HintBlock from '../../../widgets/hint/HintBlock';
+import { getAddressHintBlock } from '../../../widgets/hint/AddressHintBlock';
 import HintGap from '../../../widgets/hint/HintGap';
 import {
   pathToString,
 } from '../../../../utils/cmn';
-import { AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import styles from './VerifyAddressHintBlock.scss';
 
@@ -86,14 +86,11 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
     const imgVerify1 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-1.png`);
     const imgVerify2 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-2.png`);
     const imgVerify3 = require(`../../../../assets/img/nano-${deviceCode}/hint-verify-3.png`);
-    const stakingKey = require(`../../../../assets/img/nano-${deviceCode}/hint-staking-key.png`);
-    const byronWarning = require(`../../../../assets/img/nano-${deviceCode}/hint-byron-warning.png`);
-    const enterpriseWarning = require(`../../../../assets/img/nano-${deviceCode}/hint-enterprise-warning.png`);
-    const rewardWarning = require(`../../../../assets/img/nano-${deviceCode}/hint-reward-warning.png`);
-    const keyHash = require(`../../../../assets/img/nano-${deviceCode}/hint-keyhash.png`);
-    const pointer = require(`../../../../assets/img/nano-${deviceCode}/hint-pointer.png`);
 
     let stepNumber = stepStartNumber;
+    const getAndIncrementStep = () => {
+      return ++stepNumber;
+    };
     const content = (
       <div className={styles.stepsRow}>
         <HintBlock
@@ -108,72 +105,12 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
           imagePath={imgVerify2}
           secondaryText={pathToString(verifyAddressInfo.spendingPath)}
         />
+        {getAddressHintBlock({
+          deviceCode,
+          getAndIncrementStep,
+          addressInfo: verifyAddressInfo,
+        })}
         <HintGap />
-        {verifyAddressInfo.addressTypeNibble === AddressTypeNibbles.BYRON && (
-          <>
-            <HintBlock
-              number={++stepNumber}
-              text={message[`${deviceCode}Warning`]}
-              imagePath={byronWarning}
-            />
-            <HintGap />
-          </>
-        )}
-        {verifyAddressInfo.addressTypeNibble === AddressTypeNibbles.ENTERPRISE && (
-          <>
-            <HintBlock
-              number={++stepNumber}
-              text={message[`${deviceCode}Warning`]}
-              imagePath={enterpriseWarning}
-            />
-            <HintGap />
-          </>
-        )}
-        {verifyAddressInfo.addressTypeNibble === AddressTypeNibbles.REWARD && (
-          <>
-            <HintBlock
-              number={++stepNumber}
-              text={message[`${deviceCode}Warning`]}
-              imagePath={rewardWarning}
-            />
-            <HintGap />
-          </>
-        )}
-        {verifyAddressInfo.stakingPath != null && (
-          <>
-            <HintBlock
-              number={++stepNumber}
-              text={message[`${deviceCode}Path`]}
-              imagePath={stakingKey}
-              secondaryText={pathToString(verifyAddressInfo.stakingPath)}
-            />
-            <HintGap />
-          </>
-        )}
-        {verifyAddressInfo.stakingKeyHashHex != null && (
-          <>
-            <HintBlock
-              number={++stepNumber}
-              text={message[`${deviceCode}Hash`]}
-              imagePath={keyHash}
-              secondaryText={verifyAddressInfo.stakingKeyHashHex}
-            />
-            <HintGap />
-          </>
-        )}
-        {verifyAddressInfo.stakingBlockchainPointer != null && (
-          <>
-            <HintBlock
-              number={++stepNumber}
-              text={message[`${deviceCode}Pointer`]}
-              imagePath={pointer}
-              secondaryText={
-                `(${verifyAddressInfo.stakingBlockchainPointer.blockIndex}, ${verifyAddressInfo.stakingBlockchainPointer.txIndex}, ${verifyAddressInfo.stakingBlockchainPointer.certificateIndex})`
-              }
-            />
-            <HintGap />
-          </>
-        )}
         <HintBlock
           number={++stepNumber}
           text={message[`${deviceCode}Address`]}

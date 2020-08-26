@@ -9,11 +9,12 @@ import type { DeviceCodeType }  from '../../../../types/enum';
 import HintBlock from '../../../widgets/hint/HintBlock';
 import HintGap from '../../../widgets/hint/HintGap';
 import type { Certificate } from '@cardano-foundation/ledgerjs-hw-app-cardano';
-import { CertTypes } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import { CertTypes, AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import {
   pathToString,
 } from '../../../../utils/cmn';
 import { encode, toWords } from 'bech32';
+import { getAddressHintBlock } from '../../../widgets/hint/AddressHintBlock';
 
 import styles from './SendTxHintBlock.scss';
 
@@ -133,6 +134,10 @@ const message = defineMessages({
   xWithdrawal: {
     id: 'hint.withdrawal',
     defaultMessage: '!!!Confirm the withdrawal, then press <strong>both</strong> buttons.'
+  },
+  xMetadata: {
+    id: 'hint.metadata',
+    defaultMessage: '!!!Confirm the metadata <strong>hash</strong>, then press <strong>both</strong> buttons.'
   },
 });
 
@@ -279,19 +284,29 @@ export default class SendTxHintBlock extends React.Component<Props> {
           imagePath={imgSend1}
         />
         <HintGap />
-        <HintBlock
-          number={++stepNumber}
-          text={message[`${deviceCode}ConfirmValue`]}
-          imagePath={imgSend2}
-        />
-        <HintGap />
         {signTxInfo.outputs.length > 0 && signTxInfo.outputs.map(output => {
-          if (output.addressHex == null) return null;
-          const nextStep = ++stepNumber;
-          return [
+          // note: Ledger prompts for an a change address if and only if
+          // it's NOT a Base address where the stakingPath is set (not stakingKeyHashHex)
+          if (
+            output.addressTypeNibble === AddressTypeNibbles.BASE &&
+            output.stakingPath != null
+          ) {
+            return null;
+          }
+
+          const nextStep1 = ++stepNumber;
+          const nextStep2 = ++stepNumber;
+          const result = [
             (<HintBlock
-              key={nextStep}
-              number={nextStep}
+              key={nextStep1}
+              number={nextStep1}
+              text={message[`${deviceCode}ConfirmValue`]}
+              imagePath={imgSend2}
+            />),
+            (<HintGap key={nextStep1 + 'gap'} />),
+            (<HintBlock
+              key={nextStep2}
+              number={nextStep2}
               text={message[`${deviceCode}ConfirmAddress`]}
               imagePath={imgSend3}
               // TODO: this doesn't handle base58 addresses
@@ -301,8 +316,18 @@ export default class SendTxHintBlock extends React.Component<Props> {
               //   1023, // bech32 can detect errors up this point
               // )}
             />),
-            (<HintGap key={nextStep + 'gap'} />),
+            (<HintGap key={nextStep2 + 'gap'} />),
           ];
+          if (output.addressHex !== undefined) return result;
+
+          const addressSteps = getAddressHintBlock({
+            deviceCode,
+            addressInfo: output,
+            getAndIncrementStep,
+          });
+          // need to add change address steps
+          result.push(...addressSteps);
+          return result;
         })}
         <HintBlock
           number={++stepNumber}

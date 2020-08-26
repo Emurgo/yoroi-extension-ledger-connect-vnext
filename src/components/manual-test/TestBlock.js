@@ -257,6 +257,14 @@ export default class TestBlock extends React.Component<Props, State> {
           stakingBlockchainPointer: undefined,
           stakingKeyHashHex: undefined,
           stakingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
+        },
+        {
+          addressTypeNibble: AddressTypeNibbles.BASE,
+          amountStr: '100000',
+          spendingPath: cardano.str_to_path("1852'/1815'/0'/1/0"),
+          stakingBlockchainPointer: undefined,
+          stakingKeyHashHex: '0f662d6ceb1b65733a69a1ed72f86f0bac5a16505a028897af1be345',
+          stakingPath: undefined,
         }
       ];
 
