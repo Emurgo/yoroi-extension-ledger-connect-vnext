@@ -24,4 +24,4 @@ Following steps is to deploy new version to `gh-pages`.
 # Manual Testing
 In `development` mode testing panel will be shown on the top left like below.
 You can hide it by double clicking over the panel or make it visible again by single click is the same top left area.<br>
-![manual-testing](https://user-images.githubusercontent.com/19986226/68367231-8c505680-0178-11ea-802d-ef9aaa29f70b.gif)
+![manual-testing](https://i.imgur.com/76V2SRn.gif)
