@@ -56,6 +56,7 @@ export default class ConnectStore {
   @observable wasDeviceLocked: boolean;
   @observable response: void | MessageType;
   @observable expectedSerial: ?string;
+  @observable extension: ?string;
   userInteractableRequest: RequestType;
 
   constructor(transportId: TransportIdType) {
@@ -382,6 +383,7 @@ export default class ConnectStore {
       params?: any,
       target?: string,
       action?: OperationNameType,
+      extension?: ?string,
       ...,
     },
     ...
@@ -394,6 +396,9 @@ export default class ConnectStore {
     if (!data.target?.startsWith(YOROI_LEDGER_CONNECT_TARGET_NAME)) {
       console.debug(`[YLC] Got non ledger ConnectStore\nrequest: ${req.origin ?? 'undefined'}\ndata: ${JSON.stringify(req.data, null, 2) ?? 'undefined'}`);
       return;
+    }
+    if (data.extension != null) {
+      runInAction(() => { this.extension = data.extension; });
     }
     if (data.serial != null) {
       runInAction(() => { this.expectedSerial = data.serial; });
@@ -454,6 +459,7 @@ export default class ConnectStore {
       success,
       payload,
       action: actn,
+      extension: this.extension,
     });
   }
 

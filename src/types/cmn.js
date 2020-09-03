@@ -17,6 +17,7 @@ import { AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano'
 
 export type MessageType = {
   action: string,
+  extension: ?string,
   success: boolean,
   payload: any
 };
