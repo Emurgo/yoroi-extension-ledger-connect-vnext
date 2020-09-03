@@ -391,7 +391,7 @@ export default class ConnectStore {
       console.error(`Missing data in req ${JSON.stringify(req)}`);
       return;
     }
-    if (data.target !== YOROI_LEDGER_CONNECT_TARGET_NAME) {
+    if (!data.target?.startsWith(YOROI_LEDGER_CONNECT_TARGET_NAME)) {
       console.debug(`[YLC] Got non ledger ConnectStore\nrequest: ${req.origin ?? 'undefined'}\ndata: ${JSON.stringify(req.data, null, 2) ?? 'undefined'}`);
       return;
     }
