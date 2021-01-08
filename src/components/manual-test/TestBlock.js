@@ -5,7 +5,7 @@
 // @flow //
 import React from 'react';
 import { observer } from 'mobx-react';
-import { cardano, CertificateTypes, AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import { utils, CertificateTypes, AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import type { TransportIdType } from '../../types/enum';
 import {
@@ -208,7 +208,7 @@ export default class TestBlock extends React.Component<Props, State> {
    */
   onExtendedByronPublicKey = (): void => {
     if (this.state.visible === `${styles.visible}`) {
-      const path = cardano.str_to_path("44'/1815'/0'");
+      const path = utils.str_to_path("44'/1815'/0'");
 
       const req = this.makeRequest(
         OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
@@ -220,7 +220,7 @@ export default class TestBlock extends React.Component<Props, State> {
   }
   onExtendedShelleyPublicKey = (): void => {
     if (this.state.visible === `${styles.visible}`) {
-      const path = cardano.str_to_path("1852'/1815'/0'");
+      const path = utils.str_to_path("1852'/1815'/0'");
 
       const req = this.makeRequest(
         OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
@@ -240,7 +240,7 @@ export default class TestBlock extends React.Component<Props, State> {
         {
           txHashHex: 'e3a768c5b3109fa3268d875316063809a298602a272d7933c2b4443b69058d7a',
           outputIndex: 0,
-          path: cardano.str_to_path("1852'/1815'/0'/0/0")
+          path: utils.str_to_path("1852'/1815'/0'/0/0")
         }
       ];
 
@@ -253,15 +253,15 @@ export default class TestBlock extends React.Component<Props, State> {
         {
           addressTypeNibble: AddressTypeNibbles.BASE,
           amountStr: '100000',
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/1/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/1/0"),
           stakingBlockchainPointer: undefined,
           stakingKeyHashHex: undefined,
-          stakingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
         },
         {
           addressTypeNibble: AddressTypeNibbles.BASE,
           amountStr: '100000',
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/1/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/1/0"),
           stakingBlockchainPointer: undefined,
           stakingKeyHashHex: '0f662d6ceb1b65733a69a1ed72f86f0bac5a16505a028897af1be345',
           stakingPath: undefined,
@@ -279,19 +279,19 @@ export default class TestBlock extends React.Component<Props, State> {
           ttlStr: '20',
           certificates: [{
             type: CertificateTypes.STAKE_REGISTRATION,
-            path: cardano.str_to_path("1852'/1815'/0'/2/0"),
+            path: utils.str_to_path("1852'/1815'/0'/2/0"),
           },
           {
             type: CertificateTypes.STAKE_DELEGATION,
-            path: cardano.str_to_path("1852'/1815'/0'/2/0"),
+            path: utils.str_to_path("1852'/1815'/0'/2/0"),
             poolKeyHashHex: 'df1750df9b2df285fcfb50f4740657a18ee3af42727d410c37b86207',
           },
           {
             type: CertificateTypes.STAKE_DEREGISTRATION,
-            path: cardano.str_to_path("1852'/1815'/0'/2/0"),
+            path: utils.str_to_path("1852'/1815'/0'/2/0"),
           }],
           withdrawals: [{
-            path: cardano.str_to_path("1852'/1815'/0'/2/0"),
+            path: utils.str_to_path("1852'/1815'/0'/2/0"),
             amountStr: '1000000',
           }],
           metadataHashHex: 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef',
@@ -313,7 +313,7 @@ export default class TestBlock extends React.Component<Props, State> {
           address: 'Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV',
           addressTypeNibble: AddressTypeNibbles.BYRON,
           networkIdOrProtocolMagic: MainnetIds.protocolMagic,
-          spendingPath: cardano.str_to_path("44'/1815'/0'/0/0"),
+          spendingPath: utils.str_to_path("44'/1815'/0'/0/0"),
           stakingPath: null,
           stakingKeyHashHex: null,
           stakingBlockchainPointer: null,
@@ -331,8 +331,8 @@ export default class TestBlock extends React.Component<Props, State> {
           address: 'addr1qxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tnvz7nwqamg2fan294qzxlt89nt0ez4xzxpw4vtg7h2fggqgse4hr',
           addressTypeNibble: AddressTypeNibbles.BASE,
           networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
-          stakingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+          stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
           stakingKeyHashHex: null,
           stakingBlockchainPointer: null
         }
@@ -349,7 +349,7 @@ export default class TestBlock extends React.Component<Props, State> {
           address: 'addr1qxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tnvz7nwqamg2fan294qzxlt89nt0ez4xzxpw4vtg7h2fggqgse4hr',
           addressTypeNibble: AddressTypeNibbles.BASE,
           networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
           stakingPath: null,
           stakingKeyHashHex: '927aba6ef644783f1f0e2f737c66f74fb1c0c54966a3493d17f1a52e',
           stakingBlockchainPointer: null
@@ -367,7 +367,7 @@ export default class TestBlock extends React.Component<Props, State> {
           address: 'addr1gxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tsqqypqv2s002',
           addressTypeNibble: AddressTypeNibbles.POINTER,
           networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
           stakingPath: null,
           stakingKeyHashHex: null,
           stakingBlockchainPointer: {
@@ -389,7 +389,7 @@ export default class TestBlock extends React.Component<Props, State> {
           address: 'addr1vxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tsmdww5t',
           addressTypeNibble: AddressTypeNibbles.ENTERPRISE,
           networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
           stakingPath: null,
           stakingKeyHashHex: null,
           stakingBlockchainPointer: null,
@@ -407,7 +407,7 @@ export default class TestBlock extends React.Component<Props, State> {
           address: 'addr1u8pcjgmx7962w6hey5hhsd502araxp26kdtgagakhaqtq8sxy9w7g',
           addressTypeNibble: AddressTypeNibbles.REWARD,
           networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
           stakingPath: null,
           stakingKeyHashHex: null,
           stakingBlockchainPointer: null,
@@ -428,7 +428,7 @@ export default class TestBlock extends React.Component<Props, State> {
         {
           addressTypeNibble: AddressTypeNibbles.BYRON,
           networkIdOrProtocolMagic: MainnetIds.protocolMagic,
-          spendingPath: cardano.str_to_path("44'/1815'/0'/0/0"),
+          spendingPath: utils.str_to_path("44'/1815'/0'/0/0"),
           stakingPath: null,
           stakingKeyHashHex: null,
           stakingBlockchainPointer: null
@@ -445,8 +445,8 @@ export default class TestBlock extends React.Component<Props, State> {
         {
           addressTypeNibble: AddressTypeNibbles.BASE,
           networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
-          stakingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+          stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
           stakingKeyHashHex: null,
           stakingBlockchainPointer: null
         }
@@ -462,7 +462,7 @@ export default class TestBlock extends React.Component<Props, State> {
         {
           addressTypeNibble: AddressTypeNibbles.BASE,
           networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
           stakingPath: null,
           stakingKeyHashHex: '927aba6ef644783f1f0e2f737c66f74fb1c0c54966a3493d17f1a52e',
           stakingBlockchainPointer: null
@@ -479,7 +479,7 @@ export default class TestBlock extends React.Component<Props, State> {
         {
           addressTypeNibble: AddressTypeNibbles.POINTER,
           networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
           stakingPath: null,
           stakingKeyHashHex: null,
           stakingBlockchainPointer: {
@@ -500,7 +500,7 @@ export default class TestBlock extends React.Component<Props, State> {
         {
           addressTypeNibble: AddressTypeNibbles.ENTERPRISE,
           networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/0/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
           stakingKeyHashHex: null,
           stakingBlockchainPointer: null,
         }
@@ -516,7 +516,7 @@ export default class TestBlock extends React.Component<Props, State> {
         {
           addressTypeNibble: AddressTypeNibbles.REWARD,
           networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: cardano.str_to_path("1852'/1815'/0'/2/0"),
+          spendingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
           stakingKeyHashHex: null,
           stakingBlockchainPointer: null,
         }
