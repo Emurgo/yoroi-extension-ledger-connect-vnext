@@ -5,7 +5,7 @@
 // @flow //
 import React from 'react';
 import { observer } from 'mobx-react';
-import { cardano, CertTypes, AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import { cardano, CertificateTypes, AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import type { TransportIdType } from '../../types/enum';
 import {
@@ -278,16 +278,16 @@ export default class TestBlock extends React.Component<Props, State> {
           feeStr: '500',
           ttlStr: '20',
           certificates: [{
-            type: CertTypes.staking_key_registration,
+            type: CertificateTypes.STAKE_REGISTRATION,
             path: cardano.str_to_path("1852'/1815'/0'/2/0"),
           },
           {
-            type: CertTypes.delegation,
+            type: CertificateTypes.STAKE_DELEGATION,
             path: cardano.str_to_path("1852'/1815'/0'/2/0"),
             poolKeyHashHex: 'df1750df9b2df285fcfb50f4740657a18ee3af42727d410c37b86207',
           },
           {
-            type: CertTypes.staking_key_deregistration,
+            type: CertificateTypes.STAKE_DEREGISTRATION,
             path: cardano.str_to_path("1852'/1815'/0'/2/0"),
           }],
           withdrawals: [{

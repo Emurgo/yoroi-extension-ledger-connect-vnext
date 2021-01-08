@@ -9,7 +9,7 @@ import type { DeviceCodeType }  from '../../../../types/enum';
 import HintBlock from '../../../widgets/hint/HintBlock';
 import HintGap from '../../../widgets/hint/HintGap';
 import type { Certificate } from '@cardano-foundation/ledgerjs-hw-app-cardano';
-import { CertTypes, AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import { CertificateTypes, AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import {
   pathToString,
 } from '../../../../utils/cmn';
@@ -157,7 +157,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
   |} => Array<Node> = (request) => {
     const stakingKey = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-staking-key.png`);
 
-    if (request.cert.type === CertTypes.staking_key_registration) {
+    if (request.cert.type === CertificateTypes.STAKE_REGISTRATION) {
       const imgRegister = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-registration.png`);
       const imgRegisterConfirm = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-registration-confirm.png`);
       const firstStep = request.getAndIncrementStep();
@@ -188,7 +188,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
         (<HintGap key={thirdStep + 'gap'} />),
       ];
     }
-    if (request.cert.type === CertTypes.delegation) {
+    if (request.cert.type === CertificateTypes.STAKE_DELEGATION) {
       const imgDelegatePool = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-delegation-pool.png`);
       const imgDelegateConfirm = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-delegation-confirm.png`);
       const firstStep = request.getAndIncrementStep();
@@ -220,7 +220,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
         (<HintGap key={thirdStep + 'gap'} />),
       ];
     }
-    if (request.cert.type === CertTypes.staking_key_deregistration) {
+    if (request.cert.type === CertificateTypes.STAKE_DEREGISTRATION) {
       const imgDeregister = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-deregister-key.png`);
       const imgDeregisterConfirm = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-deregister-confirm.png`);
       const firstStep = request.getAndIncrementStep();
