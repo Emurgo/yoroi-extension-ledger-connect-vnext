@@ -335,12 +335,14 @@ export default class SendTxHintBlock extends React.Component<Props> {
           imagePath={imgSend4}
         />
         <HintGap />
-        <HintBlock
-          number={++stepNumber}
-          text={message[`${deviceCode}Ttl`]}
-          imagePath={imgTtl}
-        />
         <HintGap />
+        {signTxInfo.ttlStr != null && (
+          <HintBlock
+            number={++stepNumber}
+            text={message[`${deviceCode}Ttl`]}
+            imagePath={imgTtl}
+          />
+        )}
         {signTxInfo.certificates.map(cert => this.renderCertificate({ cert, getAndIncrementStep }))}
         {signTxInfo.withdrawals.length > 0 && signTxInfo.withdrawals.map(_withdrawal => {
           const nextStep = ++stepNumber;
