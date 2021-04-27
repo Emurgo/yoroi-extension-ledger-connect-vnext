@@ -5,7 +5,14 @@
 // @flow //
 import React from 'react';
 import { observer } from 'mobx-react';
-import { utils, CertificateTypes, AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import {
+  utils,
+  AddressType,
+  CertificateType,
+  TransactionSigningMode,
+  TxAuxiliaryDataType,
+  TxOutputDestinationType,
+} from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import type { TransportIdType } from '../../types/enum';
 import {
@@ -18,6 +25,14 @@ import type {
 } from '../../types/func';
 import { YOROI_LEDGER_CONNECT_TARGET_NAME } from '../../const';
 import { SUPPORTED_LOCALS } from '../../i18n/translations';
+import type {
+  SignTransactionRequest,
+  DeriveAddressRequest,
+  GetExtendedPublicKeyRequest,
+} from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import type {
+  ShowAddressRequestWrapper,
+} from '../../types/cmn';
 
 import styles from './TestBlock.scss';
 
@@ -212,7 +227,7 @@ export default class TestBlock extends React.Component<Props, State> {
 
       const req = this.makeRequest(
         OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
-        { path }
+        ({ path }: GetExtendedPublicKeyRequest)
       );
       window.postMessage(req);
     }
@@ -224,7 +239,7 @@ export default class TestBlock extends React.Component<Props, State> {
 
       const req = this.makeRequest(
         OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY,
-        { path }
+        ({ path }: GetExtendedPublicKeyRequest)
       );
       window.postMessage(req);
     }
@@ -246,56 +261,87 @@ export default class TestBlock extends React.Component<Props, State> {
 
       const outputs = [
         {
-          amountStr: '700000',
-          // Ae2tdPwUPEZCfyggUgSxD1E5UCx5f5hrXCdvQjJszxE7epyZ4ox9vRNUbHf
-          addressHex: '82d818582183581c9f01f38ec3af8341f45a301b075bfd6fd0cfbaddb01c5ebe780918b9a0001adb482c56',
+          amount: '700000',
+          destination: {
+            type: TxOutputDestinationType.THIRD_PARTY,
+            params: {
+              // Ae2tdPwUPEZCfyggUgSxD1E5UCx5f5hrXCdvQjJszxE7epyZ4ox9vRNUbHf
+              addressHex: '82d818582183581c9f01f38ec3af8341f45a301b075bfd6fd0cfbaddb01c5ebe780918b9a0001adb482c56',
+            },
+          },
         },
         {
-          addressTypeNibble: AddressTypeNibbles.BASE,
-          amountStr: '100000',
-          spendingPath: utils.str_to_path("1852'/1815'/0'/1/0"),
-          stakingBlockchainPointer: undefined,
-          stakingKeyHashHex: undefined,
-          stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+          destination: {
+            type: TxOutputDestinationType.DEVICE_OWNED,
+            params: {
+              type: AddressType.BASE,
+              params: {
+                spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+                stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+              },
+            },
+          },
+          amount: '100000',
         },
         {
-          addressTypeNibble: AddressTypeNibbles.BASE,
-          amountStr: '100000',
-          spendingPath: utils.str_to_path("1852'/1815'/0'/1/0"),
-          stakingBlockchainPointer: undefined,
-          stakingKeyHashHex: '0f662d6ceb1b65733a69a1ed72f86f0bac5a16505a028897af1be345',
-          stakingPath: undefined,
+          destination: {
+            type: TxOutputDestinationType.DEVICE_OWNED,
+            params: {
+              type: AddressType.BASE,
+              params: {
+                spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+                stakingKeyHashHex: '0f662d6ceb1b65733a69a1ed72f86f0bac5a16505a028897af1be345',
+              },
+            },
+          },
+          amount: '100000',
         }
       ];
 
       const req = this.makeRequest(
         OPERATION_NAME.SIGN_TX,
-        {
-          networkId: MainnetIds.chainNetworkId,
-          protocolMagic: MainnetIds.protocolMagic,
-          inputs,
-          outputs,
-          feeStr: '500',
-          ttlStr: '20',
-          certificates: [{
-            type: CertificateTypes.STAKE_REGISTRATION,
-            path: utils.str_to_path("1852'/1815'/0'/2/0"),
-          },
-          {
-            type: CertificateTypes.STAKE_DELEGATION,
-            path: utils.str_to_path("1852'/1815'/0'/2/0"),
-            poolKeyHashHex: 'df1750df9b2df285fcfb50f4740657a18ee3af42727d410c37b86207',
-          },
-          {
-            type: CertificateTypes.STAKE_DEREGISTRATION,
-            path: utils.str_to_path("1852'/1815'/0'/2/0"),
-          }],
-          withdrawals: [{
-            path: utils.str_to_path("1852'/1815'/0'/2/0"),
-            amountStr: '1000000',
-          }],
-          metadataHashHex: 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef',
-        }
+        ({
+          signingMode: TransactionSigningMode.ORDINARY_TRANSACTION,
+          tx: {
+            network: {
+              networkId: MainnetIds.chainNetworkId,
+              protocolMagic: MainnetIds.protocolMagic,
+            },
+            inputs,
+            outputs,
+            fee: '500',
+            ttl: '20',
+            certificates: [{
+              type: CertificateType.STAKE_REGISTRATION,
+              params: {
+                path: utils.str_to_path("1852'/1815'/0'/2/0"),
+              }
+            },
+            {
+              type: CertificateType.STAKE_DELEGATION,
+              params: {
+                path: utils.str_to_path("1852'/1815'/0'/2/0"),
+                poolKeyHashHex: 'df1750df9b2df285fcfb50f4740657a18ee3af42727d410c37b86207',
+              }
+            },
+            {
+              type: CertificateType.STAKE_DEREGISTRATION,
+              params: {
+                path: utils.str_to_path("1852'/1815'/0'/2/0"),
+              },
+            }],
+            withdrawals: [{
+              path: utils.str_to_path("1852'/1815'/0'/2/0"),
+              amount: '1000000',
+            }],
+            auxiliaryData: {
+              type: TxAuxiliaryDataType.ARBITRARY_HASH,
+              params: {
+                hashHex: 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef',
+              }
+            }
+          }
+        }: SignTransactionRequest)
       );
       window.postMessage(req);
     }
@@ -309,15 +355,20 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.SHOW_ADDRESS,
-        {
-          address: 'Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV',
-          addressTypeNibble: AddressTypeNibbles.BYRON,
-          networkIdOrProtocolMagic: MainnetIds.protocolMagic,
-          spendingPath: utils.str_to_path("44'/1815'/0'/0/0"),
-          stakingPath: null,
-          stakingKeyHashHex: null,
-          stakingBlockchainPointer: null,
-        }
+        ({
+          expectedAddr: 'Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV',
+          address: {
+            type: AddressType.BASE,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+              stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: ShowAddressRequestWrapper)
       );
       window.postMessage(req);
     }
@@ -327,15 +378,20 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.SHOW_ADDRESS,
-        {
-          address: 'addr1qxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tnvz7nwqamg2fan294qzxlt89nt0ez4xzxpw4vtg7h2fggqgse4hr',
-          addressTypeNibble: AddressTypeNibbles.BASE,
-          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
-          stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
-          stakingKeyHashHex: null,
-          stakingBlockchainPointer: null
-        }
+        ({
+          expectedAddr: 'addr1qxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tnvz7nwqamg2fan294qzxlt89nt0ez4xzxpw4vtg7h2fggqgse4hr',
+          address: {
+            type: AddressType.BASE,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+              stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: ShowAddressRequestWrapper)
       );
       window.postMessage(req);
     }
@@ -345,15 +401,20 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.SHOW_ADDRESS,
-        {
-          address: 'addr1qxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tnvz7nwqamg2fan294qzxlt89nt0ez4xzxpw4vtg7h2fggqgse4hr',
-          addressTypeNibble: AddressTypeNibbles.BASE,
-          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
-          stakingPath: null,
-          stakingKeyHashHex: '927aba6ef644783f1f0e2f737c66f74fb1c0c54966a3493d17f1a52e',
-          stakingBlockchainPointer: null
-        }
+        ({
+          expectedAddr: 'addr1qxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tnvz7nwqamg2fan294qzxlt89nt0ez4xzxpw4vtg7h2fggqgse4hr',
+          address: {
+            type: AddressType.BASE,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+              stakingKeyHashHex: '927aba6ef644783f1f0e2f737c66f74fb1c0c54966a3493d17f1a52e',
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: ShowAddressRequestWrapper)
       );
       window.postMessage(req);
     }
@@ -363,19 +424,24 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.SHOW_ADDRESS,
-        {
-          address: 'addr1gxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tsqqypqv2s002',
-          addressTypeNibble: AddressTypeNibbles.POINTER,
-          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
-          stakingPath: null,
-          stakingKeyHashHex: null,
-          stakingBlockchainPointer: {
-            blockIndex: 0,
-            txIndex: 1,
-            certificateIndex: 2,
-          }
-        }
+        ({
+          expectedAddr: 'addr1gxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tsqqypqv2s002',
+          address: {
+            type: AddressType.POINTER,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+              stakingBlockchainPointer: {
+                blockIndex: 0,
+                txIndex: 1,
+                certificateIndex: 2,
+              }
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: ShowAddressRequestWrapper)
       );
       window.postMessage(req);
     }
@@ -385,15 +451,19 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.SHOW_ADDRESS,
-        {
-          address: 'addr1vxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tsmdww5t',
-          addressTypeNibble: AddressTypeNibbles.ENTERPRISE,
-          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
-          stakingPath: null,
-          stakingKeyHashHex: null,
-          stakingBlockchainPointer: null,
-        }
+        ({
+          expectedAddr: 'addr1vxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tsmdww5t',
+          address: {
+            type: AddressType.ENTERPRISE,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: ShowAddressRequestWrapper)
       );
       window.postMessage(req);
     }
@@ -403,15 +473,19 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.SHOW_ADDRESS,
-        {
-          address: 'addr1u8pcjgmx7962w6hey5hhsd502araxp26kdtgagakhaqtq8sxy9w7g',
-          addressTypeNibble: AddressTypeNibbles.REWARD,
-          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
-          stakingPath: null,
-          stakingKeyHashHex: null,
-          stakingBlockchainPointer: null,
-        }
+        ({
+          expectedAddr: 'addr1u8pcjgmx7962w6hey5hhsd502araxp26kdtgagakhaqtq8sxy9w7g',
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+          address: {
+            type: AddressType.REWARD,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+            },
+          }
+        }: ShowAddressRequestWrapper)
       );
       window.postMessage(req);
     }
@@ -425,14 +499,18 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.DERIVE_ADDRESS,
-        {
-          addressTypeNibble: AddressTypeNibbles.BYRON,
-          networkIdOrProtocolMagic: MainnetIds.protocolMagic,
-          spendingPath: utils.str_to_path("44'/1815'/0'/0/0"),
-          stakingPath: null,
-          stakingKeyHashHex: null,
-          stakingBlockchainPointer: null
-        }
+        ({
+          address: {
+            type: AddressType.BYRON,
+            params: {
+              spendingPath: utils.str_to_path("44'/1815'/0'/0/0"),
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: DeriveAddressRequest)
       );
       window.postMessage(req);
     }
@@ -442,14 +520,19 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.DERIVE_ADDRESS,
-        {
-          addressTypeNibble: AddressTypeNibbles.BASE,
-          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
-          stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
-          stakingKeyHashHex: null,
-          stakingBlockchainPointer: null
-        }
+        ({
+          address: {
+            type: AddressType.BASE,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+              stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: DeriveAddressRequest)
       );
       window.postMessage(req);
     }
@@ -459,14 +542,19 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.DERIVE_ADDRESS,
-        {
-          addressTypeNibble: AddressTypeNibbles.BASE,
-          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
-          stakingPath: null,
-          stakingKeyHashHex: '927aba6ef644783f1f0e2f737c66f74fb1c0c54966a3493d17f1a52e',
-          stakingBlockchainPointer: null
-        }
+        ({
+          address: {
+            type: AddressType.BASE,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+              stakingKeyHashHex: '927aba6ef644783f1f0e2f737c66f74fb1c0c54966a3493d17f1a52e',
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: DeriveAddressRequest)
       );
       window.postMessage(req);
     }
@@ -476,18 +564,23 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.DERIVE_ADDRESS,
-        {
-          addressTypeNibble: AddressTypeNibbles.POINTER,
-          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
-          stakingPath: null,
-          stakingKeyHashHex: null,
-          stakingBlockchainPointer: {
-            blockIndex: 0,
-            txIndex: 1,
-            certificateIndex: 2,
-          }
-        }
+        ({
+          address: {
+            type: AddressType.POINTER,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+              stakingBlockchainPointer: {
+                blockIndex: 0,
+                txIndex: 1,
+                certificateIndex: 2,
+              }
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: DeriveAddressRequest)
       );
       window.postMessage(req);
     }
@@ -497,13 +590,18 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.DERIVE_ADDRESS,
-        {
-          addressTypeNibble: AddressTypeNibbles.ENTERPRISE,
-          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
-          stakingKeyHashHex: null,
-          stakingBlockchainPointer: null,
-        }
+        ({
+          address: {
+            type: AddressType.ENTERPRISE,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: DeriveAddressRequest)
       );
       window.postMessage(req);
     }
@@ -513,13 +611,18 @@ export default class TestBlock extends React.Component<Props, State> {
     if (this.state.visible === `${styles.visible}`) {
       const req = this.makeRequest(
         OPERATION_NAME.DERIVE_ADDRESS,
-        {
-          addressTypeNibble: AddressTypeNibbles.REWARD,
-          networkIdOrProtocolMagic: MainnetIds.chainNetworkId,
-          spendingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
-          stakingKeyHashHex: null,
-          stakingBlockchainPointer: null,
-        }
+        ({
+          address: {
+            type: AddressType.REWARD,
+            params: {
+              spendingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+            },
+          },
+          network: {
+            networkId: MainnetIds.chainNetworkId,
+            protocolMagic: MainnetIds.protocolMagic,
+          },
+        }: DeriveAddressRequest)
       );
       window.postMessage(req);
     }

@@ -3,11 +3,13 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import type { DeriveAddressRequest } from '../../../../types/cmn';
 import type { DeviceCodeType } from '../../../../types/enum';
 import HintBlock from '../../../widgets/hint/HintBlock';
 import { getAddressHintBlock } from '../../../widgets/hint/AddressHintBlock';
 import HintGap from '../../../widgets/hint/HintGap';
+import type {
+  DeriveAddressRequest,
+} from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import styles from './DeriveAddressHintBlock.scss';
 
@@ -66,7 +68,7 @@ export default class DeriveAddressHintBlock extends React.Component<Props> {
         {getAddressHintBlock({
           deviceCode,
           getAndIncrementStep,
-          addressInfo: deriveAddressInfo,
+          addressInfo: deriveAddressInfo.address,
         })}
         <HintBlock
           number={++stepNumber}

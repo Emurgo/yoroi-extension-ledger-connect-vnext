@@ -4,11 +4,6 @@ import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
 import type {
-  SignTransactionRequest,
-  VerifyAddressInfoType,
-  DeriveAddressRequest,
-}  from '../../../types/cmn';
-import type {
   DeviceCodeType,
   OperationNameType,
   ProgressStateType,
@@ -23,6 +18,11 @@ import ConnectLedgerHintBlock from './connect/ConnectLedgerHintBlock';
 import SendTxHintBlock from './send/SendTxHintBlock';
 import VerifyAddressHintBlock from './verify/VerifyAddressHintBlock';
 import DeriveAddressHintBlock from './derive/DeriveAddressHintBlock';
+import type {
+  DeriveAddressRequest,
+  SignTransactionRequest,
+} from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import type { ShowAddressRequestWrapper } from '../../../types/cmn';
 
 import styles from './OperationBlock.scss';
 
@@ -38,7 +38,7 @@ type Props = {|
   currentOperationName: OperationNameType,
   progressState: ProgressStateType,
   signTxInfo: SignTransactionRequest,
-  verifyAddressInfo: VerifyAddressInfoType,
+  verifyAddressInfo: ShowAddressRequestWrapper,
   deriveAddressInfo: DeriveAddressRequest,
   wasDeviceLocked: boolean,
   showPerformActionText?: boolean,

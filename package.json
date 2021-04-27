@@ -1,6 +1,7 @@
+
 {
   "name": "yoroi-extension-ledger-connect",
-  "version": "3.1.2",
+  "version": "4.0.0",
   "description": "A web app which communicates between Ledger device and Yoroi Extension",
   "author": "EMURGO.io",
   "scripts": {
@@ -48,10 +49,10 @@
     "webpack-dev-server": "3.11.0"
   },
   "dependencies": {
-    "@cardano-foundation/ledgerjs-hw-app-cardano": "2.2.1",
+    "@cardano-foundation/ledgerjs-hw-app-cardano": "git+https://github.com/SebastienGllmt/ledgerjs-hw-app-cardano.git",
     "@ledgerhq/hw-transport-u2f": "5.36.0-deprecated",
     "@ledgerhq/hw-transport-webauthn": "5.36.0-deprecated",
-    "@ledgerhq/hw-transport-webusb": "5.38.0",
+    "@ledgerhq/hw-transport-webusb": "5.49.0",
     "babel-polyfill": "6.26.0",
     "bech32": "1.1.4",
     "es6-error": "4.1.1",

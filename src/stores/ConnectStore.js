@@ -7,14 +7,14 @@ import type {
   DeriveAddressResponse,
   GetExtendedPublicKeyResponse,
   SignTransactionResponse,
+  SignTransactionRequest,
+  DeriveAddressRequest,
+  GetExtendedPublicKeyRequest,
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
   MessageType,
   RequestType,
-  VerifyAddressInfoType,
-  SignTransactionRequest,
-  DeriveAddressRequest,
-  GetExtendedPublicKeyRequest,
+  ShowAddressRequestWrapper,
 } from '../types/cmn';
 import type {
   DeviceCodeType,
@@ -50,7 +50,7 @@ export default class ConnectStore {
   @observable progressState: ProgressStateType;
   @observable currentOperationName: OperationNameType;
   @observable signTxInfo: SignTransactionRequest;
-  @observable verifyAddressInfo: VerifyAddressInfoType;
+  @observable verifyAddressInfo: ShowAddressRequestWrapper;
   @observable deriveAddressInfo: DeriveAddressRequest;
   @observable deviceCode: DeviceCodeType
   @observable wasDeviceLocked: boolean;
@@ -111,7 +111,7 @@ export default class ConnectStore {
   }
 
   @action('Change Verify Address Info')
-  setVerifyAddressInfo = (verifyAddressInfo: VerifyAddressInfoType): void => {
+  setVerifyAddressInfo = (verifyAddressInfo: ShowAddressRequestWrapper): void => {
     this.verifyAddressInfo = verifyAddressInfo;
   }
 
@@ -141,7 +141,7 @@ export default class ConnectStore {
     }, DEVICE_LOCK_CHECK_TIMEOUT_MS);
 
     const adaApp = new AdaApp(transport);
-    const verResp = await adaApp.getVersion();
+    const versionResp = await adaApp.getVersion();
     const currentSerial = await adaApp.getSerial();
     if (this.expectedSerial != null) {
       if (currentSerial.serial !== this.expectedSerial) {
@@ -149,7 +149,7 @@ export default class ConnectStore {
       }
     }
 
-    const semverResp = `${verResp.major}.${verResp.minor}.${verResp.patch}`;
+    const semverResp = `${versionResp.version.major}.${versionResp.version.minor}.${versionResp.version.patch}`;
     if (!semverSatisfies(semverResp, SUPPORTED_VERSION)) {
       throw new Error(`Incorrect Cardano app version. Supports version ${SUPPORTED_VERSION} but you have version ${semverResp}`);
     }
@@ -157,7 +157,7 @@ export default class ConnectStore {
     this.setProgressState(PROGRESS_STATE.DEVICE_FOUND);
 
     return {
-      version: verResp,
+      version: versionResp,
       serial: currentSerial,
     };
   }
@@ -231,7 +231,7 @@ export default class ConnectStore {
 
       const adaApp = new AdaApp(transport);
       const ePublicKeyResp: GetExtendedPublicKeyResponse =
-        await adaApp.getExtendedPublicKey(request.params.path);
+        await adaApp.getExtendedPublicKey(request.params);
 
       const resp = {
         response: ePublicKeyResp,
@@ -259,15 +259,7 @@ export default class ConnectStore {
 
       const adaApp = new AdaApp(transport);
       const resp: SignTransactionResponse = await adaApp.signTransaction(
-        request.params.networkId,
-        request.params.protocolMagic,
-        request.params.inputs,
-        request.params.outputs,
-        request.params.feeStr,
-        request.params.ttlStr,
-        request.params.certificates,
-        request.params.withdrawals,
-        request.params.metadataHashHex,
+        request.params
       );
 
       this._replyMessageWrap(request.actn, true, resp);
@@ -280,7 +272,7 @@ export default class ConnectStore {
 
   showAddress: {|
     actn: OperationNameType,
-    params: VerifyAddressInfoType,
+    params: ShowAddressRequestWrapper,
   |} => Promise<void> = async (request) => {
     let transport;
     try {
@@ -290,14 +282,10 @@ export default class ConnectStore {
       await this._detectLedgerDevice(transport);
 
       const adaApp = new AdaApp(transport);
-      const resp = await adaApp.showAddress(
-        request.params.addressTypeNibble,
-        request.params.networkIdOrProtocolMagic,
-        request.params.spendingPath,
-        request.params.stakingPath,
-        request.params.stakingKeyHashHex,
-        request.params.stakingBlockchainPointer,
-      );
+      const resp = await adaApp.showAddress({
+        address: request.params.address,
+        network: request.params.network,
+      });
 
       this._replyMessageWrap(request.actn, true, resp);
     } catch (err) {
@@ -320,12 +308,7 @@ export default class ConnectStore {
 
       const adaApp = new AdaApp(transport);
       const resp: DeriveAddressResponse = await adaApp.deriveAddress(
-        request.params.addressTypeNibble,
-        request.params.networkIdOrProtocolMagic,
-        request.params.spendingPath,
-        request.params.stakingPath,
-        request.params.stakingKeyHashHex,
-        request.params.stakingBlockchainPointer,
+        request.params
       );
 
       this._replyMessageWrap(request.actn, true, resp);
