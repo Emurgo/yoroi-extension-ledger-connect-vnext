@@ -8,7 +8,7 @@ Click [here](https://github.com/Emurgo/yoroi-extension-ledger-connect-handler#su
 `development` and `production` environments is supported.
 
 # Development
-Follwing steps is to start`webpack-dev-server`in hot reload mode at `http://localhost:8080/`.
+Following steps is to start`webpack-dev-server`in hot reload mode at `http://localhost:8080/`.
 - `nvm i`
 - `yarn`
 - `yarn start`

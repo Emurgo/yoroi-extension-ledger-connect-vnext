@@ -3,9 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import type {
-  SignTransactionRequest,
-  VerifyAddressInfoType,
-  DeriveAddressRequest,
+  ShowAddressRequestWrapper,
   MessageType,
 } from '../../types/cmn';
 import type {
@@ -24,6 +22,10 @@ import TitleBlock from './title/TitleBlock';
 import DeviceSelectionBlock from './device-selection/DeviceSelectionBlock';
 import OperationBlock from './operation/OperationBlock';
 import ResponseBlock from './response/ResponseBlock';
+import type {
+  DeriveAddressRequest,
+  SignTransactionRequest,
+} from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import styles from './ConnectBlock.scss';
 
@@ -36,7 +38,7 @@ type Props = {|
   deviceCode: DeviceCodeType,
   setDeviceCode: setDeviceCodeFunc,
   signTxInfo: SignTransactionRequest,
-  verifyAddressInfo: VerifyAddressInfoType,
+  verifyAddressInfo: ShowAddressRequestWrapper,
   deriveAddressInfo: DeriveAddressRequest,
   wasDeviceLocked: boolean,
   response: MessageType | void

@@ -18,6 +18,7 @@ import RootStore from './stores';
 
 import LoadingSpinner from './components/widgets/LoadingSpinner';
 import ComingSoon from './components/widgets/ComingSoon';
+import Maintenance from './components/widgets/Maintenance';
 import {
   HashRouter,
   Switch,
@@ -86,6 +87,9 @@ export default class App extends React.Component<Props> {
                 <ComingSoon />
               </Route>
               <Route path="/v2">
+                <Maintenance />
+              </Route>
+              <Route path="/v3">
                 <ConnectPage rootStore={this.props.rootStore} />
               </Route>
               <Redirect to="/" />

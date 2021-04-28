@@ -3,7 +3,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import type { VerifyAddressInfoType } from '../../../../types/cmn';
 import type { DeviceCodeType } from '../../../../types/enum';
 import HintBlock from '../../../widgets/hint/HintBlock';
 import { getAddressHintBlock } from '../../../widgets/hint/AddressHintBlock';
@@ -11,6 +10,7 @@ import HintGap from '../../../widgets/hint/HintGap';
 import {
   pathToString,
 } from '../../../../utils/cmn';
+import type { ShowAddressRequestWrapper } from '../../../../types/cmn';
 
 import styles from './VerifyAddressHintBlock.scss';
 
@@ -67,7 +67,7 @@ const message = defineMessages({
 
 type Props = {|
   deviceCode: DeviceCodeType,
-  verifyAddressInfo: VerifyAddressInfoType,
+  verifyAddressInfo: ShowAddressRequestWrapper,
   wasDeviceLocked: boolean
 |};
 
@@ -103,20 +103,20 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
           number={++stepNumber}
           text={message[`${deviceCode}Path`]}
           imagePath={imgVerify2}
-          secondaryText={pathToString(verifyAddressInfo.spendingPath)}
+          secondaryText={pathToString(verifyAddressInfo.address.params.spendingPath)}
         />
         <HintGap />
         {getAddressHintBlock({
           deviceCode,
           getAndIncrementStep,
-          addressInfo: verifyAddressInfo,
+          addressInfo: verifyAddressInfo.address,
         })}
         <HintGap />
         <HintBlock
           number={++stepNumber}
           text={message[`${deviceCode}Address`]}
           imagePath={imgVerify3}
-          secondaryText={verifyAddressInfo.address}
+          secondaryText={verifyAddressInfo.expectedAddr}
         />
       </div>
     );

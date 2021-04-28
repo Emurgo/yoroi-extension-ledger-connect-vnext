@@ -9,10 +9,11 @@ import HintGap from './HintGap';
 import {
   pathToString,
 } from '../../../utils/cmn';
-import { AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import {
+  AddressType,
+} from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
-  BIP32Path,
-  StakingBlockchainPointer,
+  DeviceOwnedAddress,
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 const message = defineMessages({
@@ -60,14 +61,7 @@ const message = defineMessages({
 
 type Props = {|
   deviceCode: DeviceCodeType,
-  addressInfo: {
-    addressTypeNibble: $Values<typeof AddressTypeNibbles>,
-    spendingPath: BIP32Path,
-    stakingPath: ?BIP32Path,
-    stakingKeyHashHex: ?string,
-    stakingBlockchainPointer: ?StakingBlockchainPointer,
-    ...,
-  },
+  addressInfo: DeviceOwnedAddress,
   getAndIncrementStep: void => number,
 |};
 
@@ -85,7 +79,7 @@ export function getAddressHintBlock(props: Props): Array<Node> {
   const pointer = require(`../../../assets/img/nano-${deviceCode}/hint-pointer.png`);
 
   const result: Array<Node> = [];
-  if (addressInfo.addressTypeNibble === AddressTypeNibbles.BYRON) {
+  if (addressInfo.type === AddressType.BYRON) {
     const nextStep = props.getAndIncrementStep();
     result.push(
       <HintBlock
@@ -99,7 +93,7 @@ export function getAddressHintBlock(props: Props): Array<Node> {
       <HintGap key={nextStep + 'gap'} />
     );
   }
-  if (addressInfo.addressTypeNibble === AddressTypeNibbles.ENTERPRISE) {
+  if (addressInfo.type === AddressType.ENTERPRISE) {
     const nextStep = props.getAndIncrementStep();
     result.push(
       <HintBlock
@@ -113,7 +107,7 @@ export function getAddressHintBlock(props: Props): Array<Node> {
       <HintGap key={nextStep + 'gap'} />
     );
   }
-  if (addressInfo.addressTypeNibble === AddressTypeNibbles.REWARD) {
+  if (addressInfo.type === AddressType.REWARD) {
     const nextStep = props.getAndIncrementStep();
     result.push(
       <HintBlock
@@ -127,8 +121,9 @@ export function getAddressHintBlock(props: Props): Array<Node> {
       <HintGap key={nextStep + 'gap'} />
     );
   }
-  if (addressInfo.stakingPath != null) {
-    const stakingPath = addressInfo.stakingPath;
+  const params = addressInfo.params;
+  if (params.stakingPath != null) {
+    const stakingPath = params.stakingPath;
     const nextStep = props.getAndIncrementStep();
     result.push(
       <HintBlock
@@ -143,8 +138,8 @@ export function getAddressHintBlock(props: Props): Array<Node> {
       <HintGap key={nextStep + 'gap'} />
     );
   }
-  if (addressInfo.stakingKeyHashHex != null) {
-    const stakingKeyHashHex = addressInfo.stakingKeyHashHex;
+  if (params.stakingKeyHashHex != null) {
+    const stakingKeyHashHex = params.stakingKeyHashHex;
     const nextStep = props.getAndIncrementStep();
     result.push(
       <HintBlock
@@ -159,8 +154,8 @@ export function getAddressHintBlock(props: Props): Array<Node> {
       <HintGap key={nextStep + 'gap'} />
     );
   }
-  if (addressInfo.stakingBlockchainPointer != null) {
-    const stakingBlockchainPointer = addressInfo.stakingBlockchainPointer;
+  if (params.stakingBlockchainPointer != null) {
+    const stakingBlockchainPointer = params.stakingBlockchainPointer;
     const nextStep = props.getAndIncrementStep();
     result.push(
       <HintBlock

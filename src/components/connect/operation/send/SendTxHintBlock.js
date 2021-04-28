@@ -4,12 +4,11 @@ import type { Node } from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
 
-import type { SignTransactionRequest } from '../../../../types/cmn';
 import type { DeviceCodeType }  from '../../../../types/enum';
 import HintBlock from '../../../widgets/hint/HintBlock';
 import HintGap from '../../../widgets/hint/HintGap';
-import type { Certificate } from '@cardano-foundation/ledgerjs-hw-app-cardano';
-import { CertificateTypes, AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import type { SignTransactionRequest, Certificate } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import { AddressType, CertificateType, } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import {
   pathToString,
 } from '../../../../utils/cmn';
@@ -157,7 +156,8 @@ export default class SendTxHintBlock extends React.Component<Props> {
   |} => Array<Node> = (request) => {
     const stakingKey = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-staking-key.png`);
 
-    if (request.cert.type === CertificateTypes.STAKE_REGISTRATION) {
+    if (request.cert.type === CertificateType.STAKE_REGISTRATION) {
+      const { params } = request.cert;
       const imgRegister = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-registration.png`);
       const imgRegisterConfirm = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-registration-confirm.png`);
       const firstStep = request.getAndIncrementStep();
@@ -176,7 +176,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
           number={secondStep}
           text={message[`${this.props.deviceCode}Path`]}
           imagePath={stakingKey}
-          secondaryText={pathToString(request.cert.path)}
+          secondaryText={pathToString(params.path)}
         />),
         (<HintGap key={secondStep + 'gap'} />),
         (<HintBlock
@@ -188,7 +188,8 @@ export default class SendTxHintBlock extends React.Component<Props> {
         (<HintGap key={thirdStep + 'gap'} />),
       ];
     }
-    if (request.cert.type === CertificateTypes.STAKE_DELEGATION) {
+    if (request.cert.type === CertificateType.STAKE_DELEGATION) {
+      const { params } = request.cert;
       const imgDelegatePool = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-delegation-pool.png`);
       const imgDelegateConfirm = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-delegation-confirm.png`);
       const firstStep = request.getAndIncrementStep();
@@ -200,7 +201,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
           number={firstStep}
           text={message[`${this.props.deviceCode}Delegation`]}
           imagePath={imgDelegatePool}
-          secondaryText={request.cert.poolKeyHashHex ?? ''}
+          secondaryText={params.poolKeyHashHex ?? ''}
         />),
         (<HintGap key={firstStep + 'gap'} />),
         (<HintBlock
@@ -208,7 +209,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
           number={secondStep}
           text={message[`${this.props.deviceCode}Path`]}
           imagePath={stakingKey}
-          secondaryText={pathToString(request.cert.path)}
+          secondaryText={pathToString(params.path)}
         />),
         (<HintGap key={secondStep + 'gap'} />),
         (<HintBlock
@@ -220,7 +221,8 @@ export default class SendTxHintBlock extends React.Component<Props> {
         (<HintGap key={thirdStep + 'gap'} />),
       ];
     }
-    if (request.cert.type === CertificateTypes.STAKE_DEREGISTRATION) {
+    if (request.cert.type === CertificateType.STAKE_DEREGISTRATION) {
+      const { params } = request.cert;
       const imgDeregister = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-deregister-key.png`);
       const imgDeregisterConfirm = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-deregister-confirm.png`);
       const firstStep = request.getAndIncrementStep();
@@ -239,7 +241,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
           number={secondStep}
           text={message[`${this.props.deviceCode}Path`]}
           imagePath={stakingKey}
-          secondaryText={pathToString(request.cert.path)}
+          secondaryText={pathToString(params.path)}
         />),
         (<HintGap key={secondStep + 'gap'} />),
         (<HintBlock
@@ -250,6 +252,10 @@ export default class SendTxHintBlock extends React.Component<Props> {
         />),
         (<HintGap key={thirdStep + 'gap'} />),
       ];
+    }
+    if (request.cert.type === CertificateType.STAKE_POOL_REGISTRATION) {
+      const { params } = request.cert;
+      // TODO
     }
     //  unhandled certificate type
     return [];
@@ -284,12 +290,13 @@ export default class SendTxHintBlock extends React.Component<Props> {
           imagePath={imgSend1}
         />
         <HintGap />
-        {signTxInfo.outputs.length > 0 && signTxInfo.outputs.map(output => {
+        {signTxInfo.tx.outputs.length > 0 && signTxInfo.tx.outputs.map(output => {
+          const { params } = output.destination;
+
           // note: Ledger prompts for an a change address if and only if
-          // it's NOT a Base address where the stakingPath is set (not stakingKeyHashHex)
+          // it's NOT a Base address where the stakingPath is set (not stakingKeyHashHex
           if (
-            output.addressTypeNibble === AddressTypeNibbles.BASE &&
-            output.stakingPath != null
+            params.type === AddressType.BASE && params.params && params.params.stakingPath != null
           ) {
             return null;
           }
@@ -318,11 +325,11 @@ export default class SendTxHintBlock extends React.Component<Props> {
             />),
             (<HintGap key={nextStep2 + 'gap'} />),
           ];
-          if (output.addressHex !== undefined) return result;
+          if (params.addressHex !== undefined) return result;
 
           const addressSteps = getAddressHintBlock({
             deviceCode,
-            addressInfo: output,
+            addressInfo: params,
             getAndIncrementStep,
           });
           // need to add change address steps
@@ -336,33 +343,42 @@ export default class SendTxHintBlock extends React.Component<Props> {
         />
         <HintGap />
         <HintGap />
-        {signTxInfo.ttlStr != null && (
+        {signTxInfo.tx.ttl != null && (
           <HintBlock
             number={++stepNumber}
             text={message[`${deviceCode}Ttl`]}
             imagePath={imgTtl}
           />
         )}
-        {signTxInfo.certificates.map(cert => this.renderCertificate({ cert, getAndIncrementStep }))}
-        {signTxInfo.withdrawals.length > 0 && signTxInfo.withdrawals.map(_withdrawal => {
-          const nextStep = ++stepNumber;
-          return [
-            (<HintBlock
-              key={nextStep}
-              number={nextStep}
-              text={message[`${deviceCode}Withdrawal`]}
-              imagePath={imgWithdrawal}
-            />),
-            (<HintGap key={nextStep + 'gap'} />),
-          ];
-        })}
-        {signTxInfo.metadataHashHex != null && (
+        {
+          signTxInfo.tx.certificates != null &&
+          signTxInfo.tx.certificates.map(
+            cert => this.renderCertificate({ cert, getAndIncrementStep })
+          )
+        }
+        {
+          signTxInfo.tx.withdrawals &&
+          signTxInfo.tx.withdrawals.length > 0 &&
+          signTxInfo.tx.withdrawals.map(_withdrawal => {
+            const nextStep = ++stepNumber;
+            return [
+              (<HintBlock
+                key={nextStep}
+                number={nextStep}
+                text={message[`${deviceCode}Withdrawal`]}
+                imagePath={imgWithdrawal}
+              />),
+              (<HintGap key={nextStep + 'gap'} />),
+            ];
+          })
+        }
+        {signTxInfo.tx.auxiliaryData != null && (
           <>
             <HintBlock
               number={++stepNumber}
               text={message[`${deviceCode}Metadata`]}
               imagePath={imgMetadata}
-              secondaryText={signTxInfo.metadataHashHex}
+              secondaryText={signTxInfo.tx.auxiliaryData.params.hashHex}
             />
             <HintGap />
           </>

@@ -5,15 +5,8 @@ import type {
   TransportIdType
 } from './enum';
 import type {
-  BIP32Path,
-  InputTypeUTxO,
-  TxOutputTypeAddress,
-  TxOutputTypeAddressParams,
-  StakingBlockchainPointer,
-  Certificate,
-  Withdrawal,
+  ShowAddressRequest,
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
-import { AddressTypeNibbles } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 export type MessageType = {
   action: string,
@@ -34,39 +27,8 @@ export type URLParams = {
 
 export type GetVersionRequest = void;
 export type GetSerialRequest = void;
-export type GetExtendedPublicKeyRequest = {|
-  path: BIP32Path
-|};
-export type DeriveAddressRequest = {|
-  addressTypeNibble: $Values<typeof AddressTypeNibbles>,
-  networkIdOrProtocolMagic: number,
-  spendingPath: BIP32Path,
-  stakingPath: ?BIP32Path,
-  stakingKeyHashHex: ?string,
-  stakingBlockchainPointer: ?StakingBlockchainPointer,
-|};
-export type ShowAddressRequest = {|
-  addressTypeNibble: $Values<typeof AddressTypeNibbles>,
-  networkIdOrProtocolMagic: number,
-  spendingPath: BIP32Path,
-  stakingPath: ?BIP32Path,
-  stakingKeyHashHex: ?string,
-  stakingBlockchainPointer: ?StakingBlockchainPointer
-|};
-export type SignTransactionRequest = {|
-  networkId: number,
-  protocolMagic: number,
-  inputs: Array<InputTypeUTxO>,
-  outputs: Array<TxOutputTypeAddress | TxOutputTypeAddressParams>,
-  feeStr: string,
-  ttlStr?: string,
-  certificates: Array<Certificate>,
-  withdrawals: Array<Withdrawal>,
-  metadataHashHex: ?string,
-  validityIntervalStartStr: ?string,
-|};
 
-export type VerifyAddressInfoType = {|
-  address: string,
+export type ShowAddressRequestWrapper = {|
   ...ShowAddressRequest,
-|}
+  expectedAddr: string,
+|};
