@@ -52,6 +52,9 @@ export default class TitleBlock extends React.Component<Props> {
       case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY:
         title = messages.titleConnect;
         break;
+      case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEYS:
+        title = messages.titleConnect;
+        break;
       case OPERATION_NAME.SIGN_TX:
         title = messages.titleSenTx;
         break;

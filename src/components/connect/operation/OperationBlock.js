@@ -90,6 +90,14 @@ export default class OperationBlock extends React.Component<Props> {
               />
             );
             break;
+          case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEYS:
+            content = (
+              <ConnectLedgerHintBlock
+                deviceCode={deviceCode}
+                wasDeviceLocked={wasDeviceLocked}
+              />
+            );
+            break;
           case OPERATION_NAME.SIGN_TX:
             content = (
               <SendTxHintBlock

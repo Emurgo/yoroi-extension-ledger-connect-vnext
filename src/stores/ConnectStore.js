@@ -6,10 +6,12 @@ import type {
   GetSerialResponse,
   DeriveAddressResponse,
   GetExtendedPublicKeyResponse,
+  GetExtendedPublicKeysResponse,
   SignTransactionResponse,
   SignTransactionRequest,
   DeriveAddressRequest,
   GetExtendedPublicKeyRequest,
+  GetExtendedPublicKeysRequest,
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
   MessageType,
@@ -193,6 +195,12 @@ export default class ConnectStore {
           params
         });
         break;
+      case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEYS:
+        this.getExtendedPublicKeys({
+          actn,
+          params
+        });
+        break;
       case OPERATION_NAME.SIGN_TX:
         this.signTransaction({
           actn,
@@ -232,6 +240,32 @@ export default class ConnectStore {
       const adaApp = new AdaApp(transport);
       const ePublicKeyResp: GetExtendedPublicKeyResponse =
         await adaApp.getExtendedPublicKey(request.params);
+
+      const resp = {
+        response: ePublicKeyResp,
+        deviceVersion: deviceInfo.version,
+        deriveSerial: deviceInfo.serial,
+      };
+      this._replyMessageWrap(request.actn, true, resp);
+    } catch (err) {
+      this._replyError(request.actn, err);
+    } finally {
+      transport && transport.close();
+    }
+  };
+
+  getExtendedPublicKeys: {|
+    actn: OperationNameType,
+    params: GetExtendedPublicKeysRequest,
+  |} => Promise<void> = async (request) => {
+    let transport;
+    try {
+      transport = await makeTransport(this.transportId);
+      const deviceInfo = await this._detectLedgerDevice(transport);
+
+      const adaApp = new AdaApp(transport);
+      const ePublicKeyResp: GetExtendedPublicKeysResponse =
+        await adaApp.getExtendedPublicKeys(request.params);
 
       const resp = {
         response: ePublicKeyResp,
@@ -400,6 +434,7 @@ export default class ConnectStore {
       case OPERATION_NAME.GET_LEDGER_VERSION:
       case OPERATION_NAME.GET_SERIAL:
       case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY:
+      case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEYS:
       case OPERATION_NAME.SIGN_TX:
       case OPERATION_NAME.SHOW_ADDRESS:
       case OPERATION_NAME.DERIVE_ADDRESS:
@@ -414,6 +449,10 @@ export default class ConnectStore {
             // In case of create wallet, we always
             // want user to choose device
             if (actn === OPERATION_NAME.GET_EXTENDED_PUBLIC_KEY) {
+              this.setDeviceCode(DEVICE_CODE.NONE);
+              setKnownDeviceCode(DEVICE_CODE.NONE);
+            }
+            if (actn === OPERATION_NAME.GET_EXTENDED_PUBLIC_KEYS) {
               this.setDeviceCode(DEVICE_CODE.NONE);
               setKnownDeviceCode(DEVICE_CODE.NONE);
             }

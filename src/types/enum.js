@@ -14,6 +14,7 @@ export const OPERATION_NAME = Object.freeze({
   GET_LEDGER_VERSION: 'ledger-get-version',
   GET_SERIAL: 'ledger-get-serial',
   GET_EXTENDED_PUBLIC_KEY: 'ledger-get-extended-public-key',
+  GET_EXTENDED_PUBLIC_KEYS: 'ledger-get-extended-public-keys',
   SIGN_TX: 'ledger-sign-transaction',
   SHOW_ADDRESS: 'ledger-show-address',
   DERIVE_ADDRESS: 'ledger-derive-address',

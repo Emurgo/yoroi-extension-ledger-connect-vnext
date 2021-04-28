@@ -29,6 +29,7 @@ import type {
   SignTransactionRequest,
   DeriveAddressRequest,
   GetExtendedPublicKeyRequest,
+  GetExtendedPublicKeysRequest,
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
   ShowAddressRequestWrapper,
@@ -139,8 +140,12 @@ export default class TestBlock extends React.Component<Props, State> {
     const operationSelection = (
       <div className={styles.operationSelection}>
         <div>
-          <button type="button" onClick={this.onExtendedByronPublicKey}>Extended Byron key</button>
-          <button type="button" onClick={this.onExtendedShelleyPublicKey}>Extended Shelley key</button>
+          <button type="button" onClick={this.onExtendedByronPublicKey}>Extended Single Byron key</button>
+          <button type="button" onClick={this.onExtendedShelleyPublicKey}>Extended Single Shelley key</button>
+        </div>
+        <div>
+          <button type="button" onClick={this.onExtendedMultiByronPublicKey}>Extended Many Byron key</button>
+          <button type="button" onClick={this.onExtendedMultiShelleyPublicKey}>Extended Many Shelley key</button>
         </div>
         <button type="button" onClick={this.onSignTransaction}>Sign transaction</button>
         <div>
@@ -244,6 +249,40 @@ export default class TestBlock extends React.Component<Props, State> {
       window.postMessage(req);
     }
     console.debug(`[YLC] TEST:onExtendedByronPublicKey`);
+  }
+
+  /**
+   * Test getExtendedPublicKey
+   */
+  onExtendedMultiByronPublicKey = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const paths = [
+        utils.str_to_path("44'/1815'/0'"),
+        utils.str_to_path("44'/1815'/1'"),
+      ];
+
+      const req = this.makeRequest(
+        OPERATION_NAME.GET_EXTENDED_PUBLIC_KEYS,
+        ({ paths }: GetExtendedPublicKeysRequest)
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onExtendedMultiByronPublicKey`);
+  }
+  onExtendedMultiShelleyPublicKey = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const paths = [
+        utils.str_to_path("1852'/1815'/0'"),
+        utils.str_to_path("1852'/1815'/1'"),
+      ];
+
+      const req = this.makeRequest(
+        OPERATION_NAME.GET_EXTENDED_PUBLIC_KEYS,
+        ({ paths }: GetExtendedPublicKeysRequest)
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onExtendedMultiShelleyPublicKey`);
   }
 
   /**
