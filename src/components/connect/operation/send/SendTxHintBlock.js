@@ -142,6 +142,38 @@ const message = defineMessages({
     id: 'hint.metadata',
     defaultMessage: '!!!Confirm the metadata <strong>hash</strong>, then press <strong>both</strong> buttons.'
   },
+  catalystStep1: {
+    id: 'hint.catalystStep1',
+    defaultMessage: '!!!Confirm the network ID by pressing <strong>both</strong> buttons.',
+  },
+  catalystStep3: {
+    id: 'hint.catalystStep3',
+    defaultMessage: '!!!Confirm to register Catalyst voting key by pressing the <strong>right</strong> button.',
+  },
+  catalystStep4: {
+    id: 'hint.catalystStep4',
+    defaultMessage: '!!!Confirm the voting public key by pressing <strong>both</strong> buttons.',
+  },
+  catalystStep5: {
+    id: 'hint.catalystStep5',
+    defaultMessage: '!!!Confirm the staking key path by pressing <strong>both</strong> buttons.',
+  },
+  catalystStep6: {
+    id: 'hint.catalystStep6',
+    defaultMessage: '!!!Confirm the reward address by pressing <strong>both</strong> buttons.',
+  },
+  catalystStep7: {
+    id: 'hint.catalystStep7',
+    defaultMessage: '!!!Confirm the nonce by pressing <strong>both</strong> buttons.',
+  },
+  catalystStep8: {
+    id: 'hint.catalystStep8',
+    defaultMessage: '!!!Confirm voting key registration by pressing the <strong>right</strong> button.',
+  },
+  catalystStep9: {
+    id: 'hint.catalystStep9',
+    defaultMessage: '!!!Confirm the auxilliary data hash by pressing <strong>both</strong> buttons.',
+  },
 });
 
 type Props = {|
@@ -271,136 +303,246 @@ export default class SendTxHintBlock extends React.Component<Props> {
       signTxInfo,
       wasDeviceLocked
     } = this.props;
-
     const stepStartNumber: number = wasDeviceLocked ? 2 : 0; // 2 = count of common step
-    const imgSend1 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-1.png`);
-    const imgSend2 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-2.png`);
-    const imgSend3 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-3.png`);
-    const imgSend4 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-4.png`);
-    const imgSend5 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-5.png`);
-    const imgTtl = require(`../../../../assets/img/nano-${deviceCode}/hint-ttl.png`);
-    const imgWithdrawal = require(`../../../../assets/img/nano-${deviceCode}/hint-withdrawal.png`);
-    const imgMetadata = require(`../../../../assets/img/nano-${deviceCode}/hint-metadata.png`);
-
     let stepNumber = stepStartNumber;
-    const getAndIncrementStep = () => {
-      return ++stepNumber;
-    };
-    const content = (
-      <div className={styles.stepsGrid}>
-        <HintBlock
-          number={++stepNumber}
-          text={message[`${deviceCode}StartNewTx`]}
-          imagePath={imgSend1}
-        />
-        <HintGap />
-        {signTxInfo.tx.outputs.length > 0 && signTxInfo.tx.outputs.map(output => {
-          const { params } = output.destination;
+    let content;
 
-          // note: Ledger prompts for an a change address if and only if
-          // it's NOT a Base address where the stakingPath is set (not stakingKeyHashHex
-          if (
-            params.type === AddressType.BASE && params.params && params.params.stakingPath != null
-          ) {
-            return null;
-          }
+    if (
+      signTxInfo.tx.auxiliaryData &&
+        signTxInfo.tx.auxiliaryData.type === TxAuxiliaryDataType.CATALYST_REGISTRATION
+    ) {
+      const imgStep1 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep2 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-1.png`);
+      const imgStep3 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep4 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep5 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep6 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep7 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep8 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep9 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep10 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-4.png`);
+      const imgStep11 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep12 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-5.png`);
 
-          const nextStep1 = ++stepNumber;
-          const nextStep2 = ++stepNumber;
-          const result = [
-            (<HintBlock
-              key={nextStep1}
-              number={nextStep1}
-              text={message[`${deviceCode}ConfirmValue`]}
-              imagePath={imgSend2}
-            />),
-            (<HintGap key={nextStep1 + 'gap'} />),
-            (<HintBlock
-              key={nextStep2}
-              number={nextStep2}
-              text={message[`${deviceCode}ConfirmAddress`]}
-              imagePath={imgSend3}
-              // TODO: this doesn't handle base58 addresses
-              // secondaryText={encode(
-              //   'addr',
-              //   toWords(output.addressHex),
-              //   1023, // bech32 can detect errors up this point
-              // )}
-            />),
-            (<HintGap key={nextStep2 + 'gap'} />),
-          ];
-          if (params.addressHex !== undefined) return result;
+      content = (
+        <>
+          <HintBlock
+            number={++stepNumber}
+            text={message.catalystStep1}
+            imagePath={imgStep1}
+          />
+          <HintGap />
 
-          const addressSteps = getAddressHintBlock({
-            deviceCode,
-            addressInfo: params,
-            getAndIncrementStep,
-          });
-          // need to add change address steps
-          result.push(...addressSteps);
-          return result;
-        })}
-        <HintBlock
-          number={++stepNumber}
-          text={message[`${deviceCode}ConfirmFee`]}
-          imagePath={imgSend4}
-        />
-        <HintGap />
-        <HintGap />
-        {signTxInfo.tx.ttl != null && (
+          <HintBlock
+            number={++stepNumber}
+            text={message[`${deviceCode}StartNewTx`]}
+            imagePath={imgStep2}
+          />
+          <HintGap />
+
+          <HintBlock
+            number={++stepNumber}
+            text={message.catalystStep3}
+            imagePath={imgStep3}
+          />
+          <HintGap />
+
+          <HintBlock
+            number={++stepNumber}
+            text={message.catalystStep4}
+            imagePath={imgStep4}
+          />
+          <HintGap />
+
+          <HintBlock
+            number={++stepNumber}
+            text={message.catalystStep5}
+            imagePath={imgStep5}
+          />
+          <HintGap />
+
+          <HintBlock
+            number={++stepNumber}
+            text={message.catalystStep6}
+            imagePath={imgStep6}
+          />
+          <HintGap />
+
+          <HintBlock
+            number={++stepNumber}
+            text={message.catalystStep7}
+            imagePath={imgStep7}
+          />
+          <HintGap />
+
+          <HintBlock
+            number={++stepNumber}
+            text={message.catalystStep8}
+            imagePath={imgStep8}
+          />
+          <HintGap />
+
+          <HintBlock
+            number={++stepNumber}
+            text={message.catalystStep9}
+            imagePath={imgStep9}
+          />
+          <HintGap />
+
+          <HintBlock
+            number={++stepNumber}
+            text={message[`${deviceCode}ConfirmFee`]}
+            imagePath={imgStep10}
+          />
+          <HintGap />
+
           <HintBlock
             number={++stepNumber}
             text={message[`${deviceCode}Ttl`]}
-            imagePath={imgTtl}
+            imagePath={imgStep11}
           />
-        )}
-        {
-          signTxInfo.tx.certificates != null &&
-          signTxInfo.tx.certificates.map(
-            cert => this.renderCertificate({ cert, getAndIncrementStep })
-          )
-        }
-        {
-          signTxInfo.tx.withdrawals &&
-          signTxInfo.tx.withdrawals.length > 0 &&
-          signTxInfo.tx.withdrawals.map(_withdrawal => {
-            const nextStep = ++stepNumber;
-            return [
+          <HintGap />
+
+          <HintBlock
+            number={++stepNumber}
+            text={message[`${deviceCode}ConfirmTx`]}
+            imagePath={imgStep12}
+          />
+          <HintGap />
+       </>
+      );
+    } else {
+      const imgSend1 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-1.png`);
+      const imgSend2 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-2.png`);
+      const imgSend3 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-3.png`);
+      const imgSend4 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-4.png`);
+      const imgSend5 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-5.png`);
+      const imgTtl = require(`../../../../assets/img/nano-${deviceCode}/hint-ttl.png`);
+      const imgWithdrawal = require(`../../../../assets/img/nano-${deviceCode}/hint-withdrawal.png`);
+      const imgMetadata = require(`../../../../assets/img/nano-${deviceCode}/hint-metadata.png`);
+
+      const getAndIncrementStep = () => {
+        return ++stepNumber;
+      };
+
+      content = (
+        <>
+          <HintBlock
+            number={++stepNumber}
+            text={message[`${deviceCode}StartNewTx`]}
+            imagePath={imgSend1}
+          />
+          <HintGap />
+          {signTxInfo.tx.outputs.length > 0 && signTxInfo.tx.outputs.map(output => {
+            const { params } = output.destination;
+
+            // note: Ledger prompts for an a change address if and only if
+            // it's NOT a Base address where the stakingPath is set (not stakingKeyHashHex
+            if (
+              params.type === AddressType.BASE && params.params && params.params.stakingPath != null
+            ) {
+              return null;
+            }
+
+            const nextStep1 = ++stepNumber;
+            const nextStep2 = ++stepNumber;
+            const result = [
               (<HintBlock
-                key={nextStep}
-                number={nextStep}
-                text={message[`${deviceCode}Withdrawal`]}
-                imagePath={imgWithdrawal}
+                key={nextStep1}
+                number={nextStep1}
+                text={message[`${deviceCode}ConfirmValue`]}
+                imagePath={imgSend2}
               />),
-              (<HintGap key={nextStep + 'gap'} />),
+              (<HintGap key={nextStep1 + 'gap'} />),
+              (<HintBlock
+                key={nextStep2}
+                number={nextStep2}
+                text={message[`${deviceCode}ConfirmAddress`]}
+                imagePath={imgSend3}
+                // TODO: this doesn't handle base58 addresses
+                // secondaryText={encode(
+                //   'addr',
+                //   toWords(output.addressHex),
+                //   1023, // bech32 can detect errors up this point
+                // )}
+              />),
+              (<HintGap key={nextStep2 + 'gap'} />),
             ];
-          })
-        }
-        {signTxInfo.tx.auxiliaryData != null &&
-          signTxInfo.tx.auxiliaryData.type === TxAuxiliaryDataType.ARBITRARY_HASH &&
-          (
-            <>
-              <HintBlock
-                number={++stepNumber}
-                text={message[`${deviceCode}Metadata`]}
-                imagePath={imgMetadata}
-                secondaryText={signTxInfo.tx.auxiliaryData.params.hashHex}
-              />
-              <HintGap />
-            </>
+            if (params.addressHex !== undefined) return result;
+
+            const addressSteps = getAddressHintBlock({
+              deviceCode,
+              addressInfo: params,
+              getAndIncrementStep,
+            });
+            // need to add change address steps
+            result.push(...addressSteps);
+            return result;
+          })}
+          <HintBlock
+            number={++stepNumber}
+            text={message[`${deviceCode}ConfirmFee`]}
+            imagePath={imgSend4}
+          />
+          <HintGap />
+          <HintGap />
+          {signTxInfo.tx.ttl != null && (
+            <HintBlock
+              number={++stepNumber}
+              text={message[`${deviceCode}Ttl`]}
+              imagePath={imgTtl}
+            />
           )}
-        <HintBlock
-          number={++stepNumber}
-          text={message[`${deviceCode}ConfirmTx`]}
-          imagePath={imgSend5}
-        />
-        <HintGap />
-      </div>
-    );
+          {
+            signTxInfo.tx.certificates != null &&
+            signTxInfo.tx.certificates.map(
+              cert => this.renderCertificate({ cert, getAndIncrementStep })
+            )
+          }
+          {
+            signTxInfo.tx.withdrawals &&
+            signTxInfo.tx.withdrawals.length > 0 &&
+            signTxInfo.tx.withdrawals.map(_withdrawal => {
+              const nextStep = ++stepNumber;
+              return [
+                (<HintBlock
+                  key={nextStep}
+                  number={nextStep}
+                  text={message[`${deviceCode}Withdrawal`]}
+                  imagePath={imgWithdrawal}
+                />),
+                (<HintGap key={nextStep + 'gap'} />),
+              ];
+            })
+          }
+          {signTxInfo.tx.auxiliaryData != null &&
+            signTxInfo.tx.auxiliaryData.type === TxAuxiliaryDataType.ARBITRARY_HASH &&
+            (
+              <>
+                <HintBlock
+                  number={++stepNumber}
+                  text={message[`${deviceCode}Metadata`]}
+                  imagePath={imgMetadata}
+                  secondaryText={signTxInfo.tx.auxiliaryData.params.hashHex}
+                />
+                <HintGap />
+              </>
+            )}
+          <HintBlock
+            number={++stepNumber}
+            text={message[`${deviceCode}ConfirmTx`]}
+            imagePath={imgSend5}
+          />
+          <HintGap />
+        </>
+      );
+    }
 
     return (
       <div className={styles.component}>
-        {content}
+        <div className={styles.stepsGrid}>
+          {content}
+        </div>
       </div>
     );
   }

@@ -147,7 +147,12 @@ export default class TestBlock extends React.Component<Props, State> {
           <button type="button" onClick={this.onExtendedMultiByronPublicKey}>Extended Many Byron key</button>
           <button type="button" onClick={this.onExtendedMultiShelleyPublicKey}>Extended Many Shelley key</button>
         </div>
-        <button type="button" onClick={this.onSignTransaction}>Sign transaction</button>
+        <div>
+          <button type="button" onClick={this.onSignTransaction}>Sign transaction</button>
+          <button type="button" onClick={this.onCatalystRegistrationSignTransaction}>
+            Sign CIP-15 transaction
+          </button>
+        </div>
         <div>
           <button type="button" onClick={this.onShowByronAddress}>Verify Byron address</button>
           <button type="button" onClick={this.onShowBasePathAddress}>Verify base path address</button>
@@ -385,6 +390,90 @@ export default class TestBlock extends React.Component<Props, State> {
       window.postMessage(req);
     }
     console.debug(`[YLC] TEST:onSignTransaction`);
+  }
+
+  onCatalystRegistrationSignTransaction = (): void => {
+    if (this.state.visible === `${styles.visible}`) {
+      const inputs = [
+        {
+          txHashHex: 'e3a768c5b3109fa3268d875316063809a298602a272d7933c2b4443b69058d7a',
+          outputIndex: 0,
+          path: utils.str_to_path("1852'/1815'/0'/0/0")
+        }
+      ];
+
+      const outputs = [
+        {
+          amount: '700000',
+          destination: {
+            type: TxOutputDestinationType.THIRD_PARTY,
+            params: {
+              // Ae2tdPwUPEZCfyggUgSxD1E5UCx5f5hrXCdvQjJszxE7epyZ4ox9vRNUbHf
+              addressHex: '82d818582183581c9f01f38ec3af8341f45a301b075bfd6fd0cfbaddb01c5ebe780918b9a0001adb482c56',
+            },
+          },
+        },
+        {
+          destination: {
+            type: TxOutputDestinationType.DEVICE_OWNED,
+            params: {
+              type: AddressType.BASE,
+              params: {
+                spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+                stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+              },
+            },
+          },
+          amount: '100000',
+        },
+        {
+          destination: {
+            type: TxOutputDestinationType.DEVICE_OWNED,
+            params: {
+              type: AddressType.BASE,
+              params: {
+                spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
+                stakingKeyHashHex: '0f662d6ceb1b65733a69a1ed72f86f0bac5a16505a028897af1be345',
+              },
+            },
+          },
+          amount: '100000',
+        }
+      ];
+
+      const req = this.makeRequest(
+        OPERATION_NAME.SIGN_TX,
+        ({
+          signingMode: TransactionSigningMode.ORDINARY_TRANSACTION,
+          tx: {
+            network: {
+              networkId: MainnetIds.chainNetworkId,
+              protocolMagic: MainnetIds.protocolMagic,
+            },
+            inputs,
+            outputs,
+            fee: '500',
+            ttl: '20',
+            auxiliaryData: {
+              type: TxAuxiliaryDataType.CATALYST_REGISTRATION,
+              params: {
+                votingPublicKeyHex: '47ca0e9ba5f671a494067098affc86426401102094138b2300caf694d6a9f4fc',
+                stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+                rewardsDestination: {
+                  type: AddressType.REWARD,
+                  params: {
+                    stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+                  },
+                },
+                nonce: 0,
+              }
+            }
+          }
+        }: SignTransactionRequest)
+      );
+      window.postMessage(req);
+    }
+    console.debug(`[YLC] TEST:onSignCatalystRegistrationTransaction`);
   }
 
   /**

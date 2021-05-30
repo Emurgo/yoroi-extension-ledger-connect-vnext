@@ -52,5 +52,13 @@
   "hint.nanoX.verifyAddress.address": "Make sure the address shown on your Ledger is the same as the one shown below. Press the <strong>right</strong> button on your Ledger to scroll to the end of the address, then press <strong>both</strong> buttons.",
   "hint.warning": "Accept the warning by pressing <strong>both</strong> buttons.",
   "hint.withdrawal": "Confirm the withdrawal, then press <strong>both</strong> buttons.",
-  "response.title": "Response"
+  "response.title": "Response",
+  "hint.catalystStep1": "Confirm the network ID by pressing <strong>both</strong> buttons.",
+  "hint.catalystStep3": "Confirm to register Catalyst voting key by pressing the <strong>right</strong> button.",
+  "hint.catalystStep4": "Confirm the voting public key by pressing <strong>both</strong> buttons.",
+  "hint.catalystStep5": "Confirm the staking key path by pressing <strong>both</strong> buttons.",
+  "hint.catalystStep6": "Confirm the reward address by pressing <strong>both</strong> buttons.",
+  "hint.catalystStep7": "Confirm the nonce by pressing <strong>both</strong> buttons.",
+  "hint.catalystStep8": "Confirm voting key registration by pressing the <strong>right</strong> button.",
+  "hint.catalystStep9": "Confirm the auxilliary data hash by pressing <strong>both</strong> buttons."
 }
