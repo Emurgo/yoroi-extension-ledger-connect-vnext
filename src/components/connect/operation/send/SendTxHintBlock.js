@@ -8,7 +8,11 @@ import type { DeviceCodeType }  from '../../../../types/enum';
 import HintBlock from '../../../widgets/hint/HintBlock';
 import HintGap from '../../../widgets/hint/HintGap';
 import type { SignTransactionRequest, Certificate } from '@cardano-foundation/ledgerjs-hw-app-cardano';
-import { AddressType, CertificateType, } from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import {
+  AddressType,
+  CertificateType,
+  TxAuxiliaryDataType,
+} from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import {
   pathToString,
 } from '../../../../utils/cmn';
@@ -372,17 +376,19 @@ export default class SendTxHintBlock extends React.Component<Props> {
             ];
           })
         }
-        {signTxInfo.tx.auxiliaryData != null && (
-          <>
-            <HintBlock
-              number={++stepNumber}
-              text={message[`${deviceCode}Metadata`]}
-              imagePath={imgMetadata}
-              secondaryText={signTxInfo.tx.auxiliaryData.params.hashHex}
-            />
-            <HintGap />
-          </>
-        )}
+        {signTxInfo.tx.auxiliaryData != null &&
+          signTxInfo.tx.auxiliaryData.type === TxAuxiliaryDataType.ARBITRARY_HASH &&
+          (
+            <>
+              <HintBlock
+                number={++stepNumber}
+                text={message[`${deviceCode}Metadata`]}
+                imagePath={imgMetadata}
+                secondaryText={signTxInfo.tx.auxiliaryData.params.hashHex}
+              />
+              <HintGap />
+            </>
+          )}
         <HintBlock
           number={++stepNumber}
           text={message[`${deviceCode}ConfirmTx`]}

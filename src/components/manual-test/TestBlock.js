@@ -521,7 +521,7 @@ export default class TestBlock extends React.Component<Props, State> {
           address: {
             type: AddressType.REWARD,
             params: {
-              spendingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+              stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
             },
           }
         }: ShowAddressRequestWrapper)
@@ -654,7 +654,7 @@ export default class TestBlock extends React.Component<Props, State> {
           address: {
             type: AddressType.REWARD,
             params: {
-              spendingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+              stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
             },
           },
           network: {

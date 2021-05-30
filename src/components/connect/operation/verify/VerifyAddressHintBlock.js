@@ -91,6 +91,9 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
     const getAndIncrementStep = () => {
       return ++stepNumber;
     };
+    const path = verifyAddressInfo.address.params.spendingPath ||
+      verifyAddressInfo.address.params.stakingPath;
+
     const content = (
       <div className={styles.stepsRow}>
         <HintBlock
@@ -103,7 +106,7 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
           number={++stepNumber}
           text={message[`${deviceCode}Path`]}
           imagePath={imgVerify2}
-          secondaryText={pathToString(verifyAddressInfo.address.params.spendingPath)}
+          secondaryText={pathToString(path)}
         />
         <HintGap />
         {getAddressHintBlock({
