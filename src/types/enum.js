@@ -32,6 +32,7 @@ export type DeviceCodeType = $Values<typeof DEVICE_CODE>;
 export const TRANSPORT_ID = Object.freeze({
   WEB_AUTHN: 'webauthn',
   U2F: 'u2f',
-  WEB_USB: 'webusb'
+  WEB_USB: 'webusb',
+  WEB_HID: 'webhid',
 });
 export type TransportIdType = $Values<typeof TRANSPORT_ID>;
