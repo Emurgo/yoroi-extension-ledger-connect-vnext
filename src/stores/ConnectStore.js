@@ -1,6 +1,8 @@
 // @flow //
 import { observable, action, runInAction, computed } from 'mobx';
-import AdaApp from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import AdaApp, {
+  TxAuxiliaryDataType
+} from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import type {
   GetVersionResponse,
   GetSerialResponse,
@@ -289,7 +291,20 @@ export default class ConnectStore {
       this.setSignTxInfo(request.params);
 
       transport = await makeTransport(this.transportId);
-      await this._detectLedgerDevice(transport);
+      const { version } = await this._detectLedgerDevice(transport);
+
+      if (
+        (request.params.tx.auxiliaryData?.type ===
+          TxAuxiliaryDataType.CATALYST_REGISTRATION) &&
+        !version.compatibility.supportsCatalystRegistration
+      ) {
+        this._replyMessageWrap(
+          request.actn,
+          false,
+          { error: 'catalyst registration not supported' }
+        );
+        return;
+      }
 
       const adaApp = new AdaApp(transport);
       const resp: SignTransactionResponse = await adaApp.signTransaction(
