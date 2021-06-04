@@ -311,17 +311,17 @@ export default class SendTxHintBlock extends React.Component<Props> {
       signTxInfo.tx.auxiliaryData &&
         signTxInfo.tx.auxiliaryData.type === TxAuxiliaryDataType.CATALYST_REGISTRATION
     ) {
-      const imgStep1 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep1 = require(`../../../../assets/img/nano-${deviceCode}/hint-catalyst-1.svg`).default;
       const imgStep2 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-1.png`);
-      const imgStep3 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
-      const imgStep4 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
-      const imgStep5 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
-      const imgStep6 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
-      const imgStep7 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
-      const imgStep8 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
-      const imgStep9 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep3 = require(`../../../../assets/img/nano-${deviceCode}/hint-catalyst-3.svg`).default;
+      const imgStep4 = require(`../../../../assets/img/nano-${deviceCode}/hint-catalyst-4.svg`).default;
+      const imgStep5 = require(`../../../../assets/img/nano-${deviceCode}/hint-catalyst-5.svg`).default;
+      const imgStep6 = require(`../../../../assets/img/nano-${deviceCode}/hint-catalyst-6.svg`).default;
+      const imgStep7 = require(`../../../../assets/img/nano-${deviceCode}/hint-catalyst-7.svg`).default;
+      const imgStep8 = require(`../../../../assets/img/nano-${deviceCode}/hint-catalyst-8.svg`).default;
+      const imgStep9 = require(`../../../../assets/img/nano-${deviceCode}/hint-catalyst-9.svg`).default;
       const imgStep10 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-4.png`);
-      const imgStep11 = require(`../../../../assets/img/nano-${deviceCode}/hint-common-1.png`);
+      const imgStep11 = require(`../../../../assets/img/nano-${deviceCode}/hint-catalyst-11.svg`).default;
       const imgStep12 = require(`../../../../assets/img/nano-${deviceCode}/hint-send-5.png`);
 
       content = (
