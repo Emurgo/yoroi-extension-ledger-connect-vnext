@@ -41,7 +41,8 @@ type Props = {|
   verifyAddressInfo: ShowAddressRequestWrapper,
   deriveAddressInfo: DeriveAddressRequest,
   wasDeviceLocked: boolean,
-  response: MessageType | void
+  response: MessageType | void,
+  deviceVersion: ?string,
 |};
 
 @observer
@@ -63,6 +64,7 @@ export default class ConnectBlock extends React.Component<Props> {
       deriveAddressInfo,
       wasDeviceLocked,
       response,
+      deviceVersion,
     } = this.props;
 
     let content;
@@ -106,6 +108,7 @@ export default class ConnectBlock extends React.Component<Props> {
             verifyAddressInfo={verifyAddressInfo}
             deriveAddressInfo={deriveAddressInfo}
             wasDeviceLocked={wasDeviceLocked}
+            deviceVersion={deviceVersion}
           />
         );
     }
