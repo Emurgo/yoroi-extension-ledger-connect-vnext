@@ -56,6 +56,7 @@ export default class ConnectStore {
   @observable deriveAddressInfo: DeriveAddressRequest;
   @observable deviceCode: DeviceCodeType
   @observable wasDeviceLocked: boolean;
+  @observable deviceVersion: string;
   @observable response: void | MessageType;
   @observable expectedSerial: ?string;
   @observable extension: ?string;
@@ -155,7 +156,9 @@ export default class ConnectStore {
     if (!semverSatisfies(semverResp, SUPPORTED_VERSION)) {
       throw new Error(`Incorrect Cardano app version. Supports version ${SUPPORTED_VERSION} but you have version ${semverResp}`);
     }
-
+    runInAction(() => {
+      this.deviceVersion = semverResp;
+    });
     this.setProgressState(PROGRESS_STATE.DEVICE_FOUND);
 
     return {

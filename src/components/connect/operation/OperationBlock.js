@@ -42,6 +42,7 @@ type Props = {|
   deriveAddressInfo: DeriveAddressRequest,
   wasDeviceLocked: boolean,
   showPerformActionText?: boolean,
+  deviceVersion: ?string,
 |};
 
 @observer
@@ -62,6 +63,7 @@ export default class OperationBlock extends React.Component<Props> {
       deriveAddressInfo,
       wasDeviceLocked,
       showPerformActionText,
+      deviceVersion,
     } = this.props;
 
     let content;
@@ -104,6 +106,7 @@ export default class OperationBlock extends React.Component<Props> {
                 deviceCode={deviceCode}
                 signTxInfo={signTxInfo}
                 wasDeviceLocked={wasDeviceLocked}
+                deviceVersion={deviceVersion}
               />
             );
             break;
