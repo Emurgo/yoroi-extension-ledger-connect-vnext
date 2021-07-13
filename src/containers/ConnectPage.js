@@ -31,6 +31,7 @@ export default class ConnectPage extends React.Component<Props> {
       setTransport,
       setDeviceCode,
       response,
+      deviceVersion,
     } = connectStore;
 
     const {
@@ -61,6 +62,7 @@ export default class ConnectPage extends React.Component<Props> {
           deriveAddressInfo={deriveAddressInfo}
           wasDeviceLocked={wasDeviceLocked}
           response={response}
+          deviceVersion={deviceVersion}
         />
       </Layout>
     );

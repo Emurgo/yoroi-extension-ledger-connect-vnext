@@ -3,6 +3,7 @@ import React from 'react';
 import type { Node } from 'react';
 import { observer } from 'mobx-react';
 import { intlShape, defineMessages } from 'react-intl';
+import semverGte from 'semver/functions/gte';
 
 import type { DeviceCodeType }  from '../../../../types/enum';
 import HintBlock from '../../../widgets/hint/HintBlock';
@@ -144,6 +145,7 @@ type Props = {|
   deviceCode: DeviceCodeType,
   signTxInfo: SignTransactionRequest,
   wasDeviceLocked: boolean,
+  deviceVersion: ?string,
 |};
 
 @observer
@@ -153,6 +155,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
   renderCertificate: {|
     cert: Certificate,
     getAndIncrementStep: void => number,
+    deviceVersion: ?string,
   |} => Array<Node> = (request) => {
     const stakingKey = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-staking-key.png`);
 
@@ -195,13 +198,27 @@ export default class SendTxHintBlock extends React.Component<Props> {
       const firstStep = request.getAndIncrementStep();
       const secondStep = request.getAndIncrementStep();
       const thirdStep = request.getAndIncrementStep();
+      let poolId;
+      if (request.deviceVersion === undefined) {
+        throw new Error('unexpect null deviceVersion');
+      }
+      // Starting from version 2.4.1, the Ledger Cardano app show the pool ID
+      // in bech32, complying with CIP0005
+      if (semverGte(request.deviceVersion, '2.4.1')) {
+        poolId = encode(
+          'pool',
+          toWords(Buffer.from(params.poolKeyHashHex, 'hex'))
+        );
+      } else {
+        poolId = params.poolKeyHashHex;
+      }
       return [
         (<HintBlock
           key={firstStep}
           number={firstStep}
           text={message[`${this.props.deviceCode}Delegation`]}
           imagePath={imgDelegatePool}
-          secondaryText={params.poolKeyHashHex ?? ''}
+          secondaryText={poolId}
         />),
         (<HintGap key={firstStep + 'gap'} />),
         (<HintBlock
@@ -265,7 +282,8 @@ export default class SendTxHintBlock extends React.Component<Props> {
     const {
       deviceCode,
       signTxInfo,
-      wasDeviceLocked
+      wasDeviceLocked,
+      deviceVersion,
     } = this.props;
 
     const stepStartNumber: number = wasDeviceLocked ? 2 : 0; // 2 = count of common step
@@ -353,7 +371,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
         {
           signTxInfo.tx.certificates != null &&
           signTxInfo.tx.certificates.map(
-            cert => this.renderCertificate({ cert, getAndIncrementStep })
+            cert => this.renderCertificate({ cert, getAndIncrementStep, deviceVersion })
           )
         }
         {
