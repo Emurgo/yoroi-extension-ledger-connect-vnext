@@ -1042,16 +1042,15 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@cardano-foundation/ledgerjs-hw-app-cardano@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@cardano-foundation/ledgerjs-hw-app-cardano/-/ledgerjs-hw-app-cardano-3.1.0.tgz#7b27501a0001cb31cfc3c59ac9398bd6596c0648"
-  integrity sha512-vzO1o1ebmuYoKPhjpo+1ANaBORmrqFz5bmyFpuEkinBK3OM1URJYFNSj8nOXg070XM587wUT2uihPv8BFQxgJg==
+"@cardano-foundation/ledgerjs-hw-app-cardano@yushih/ledgerjs-hw-app-cardano-tmp#main":
+  version "4.0.0"
+  resolved "https://codeload.github.com/yushih/ledgerjs-hw-app-cardano-tmp/tar.gz/68e75f36fee11b47a9b0d6c8eeda28d99be9a3c6"
   dependencies:
     "@ledgerhq/hw-transport" "^5.12.0"
     "@types/ledgerhq__hw-transport" "^4.21.3"
     base-x "^3.0.5"
     bech32 "^1.1.4"
-    node-int64 "^0.4.0"
+    int64-buffer "^1.0.1"
 
 "@ledgerhq/devices@^5.22.0":
   version "5.22.0"
@@ -4777,6 +4776,11 @@ ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.7.tgz#a09363e1911972ea16d7a8851005d84cf09a9a84"
   integrity sha512-iKpRpXP+CrP2jyrxvg1kMUpXDyRUFDWurxbnVT1vQPx+Wz9uCYsMIqYuSBLV+PAaZG/d7kRLKRFc9oDMsH+mFQ==
 
+int64-buffer@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.nlark.com/int64-buffer/download/int64-buffer-1.0.1.tgz#c78d841b444cadf036cd04f8683696c740f15dca"
+  integrity sha1-x42EG0RMrfA2zQT4aDaWx0DxXco=
+
 internal-ip@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/internal-ip/-/internal-ip-4.3.0.tgz#845452baad9d2ca3b69c635a137acb9a0dad0907"
@@ -5912,11 +5916,6 @@ node-gyp@^3.8.0:
     semver "~5.3.0"
     tar "^2.0.0"
     which "1"
-
-node-int64@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
-  integrity sha1-h6kGXNs1XTGC2PlM4RGIuCXGijs=
 
 node-libs-browser@^2.2.1:
   version "2.2.1"

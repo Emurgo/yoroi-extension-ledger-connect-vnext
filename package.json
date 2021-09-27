@@ -49,7 +49,7 @@
     "webpack-dev-server": "3.11.0"
   },
   "dependencies": {
-    "@cardano-foundation/ledgerjs-hw-app-cardano": "3.1.0",
+    "@cardano-foundation/ledgerjs-hw-app-cardano": "yushih/ledgerjs-hw-app-cardano-tmp#main",
     "@ledgerhq/hw-transport-u2f": "5.36.0-deprecated",
     "@ledgerhq/hw-transport-webauthn": "5.36.0-deprecated",
     "@ledgerhq/hw-transport-webusb": "5.49.0",

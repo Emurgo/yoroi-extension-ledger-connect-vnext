@@ -13,6 +13,11 @@ import {
 import type { ShowAddressRequestWrapper } from '../../../../types/cmn';
 
 import styles from './VerifyAddressHintBlock.scss';
+import type {
+  DeviceOwnedAddress,
+  AddressParamsBase,
+} from '@cardano-foundation/ledgerjs-hw-app-cardano';
+import { AddressType } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 const message = defineMessages({
   sInfo: {
@@ -91,8 +96,53 @@ export default class VerifyAddressHintBlock extends React.Component<Props> {
     const getAndIncrementStep = () => {
       return ++stepNumber;
     };
-    const path = verifyAddressInfo.address.params.spendingPath ||
-      verifyAddressInfo.address.params.stakingPath;
+
+    let path;
+    const address: DeviceOwnedAddress = verifyAddressInfo.address;
+    if (address.type === AddressType.BYRON) {
+      path = address.params.spendingPath;
+    } else if (
+      address.type === AddressType.BASE_PAYMENT_KEY_STAKE_KEY ||
+        address.type === AddressType.BASE_PAYMENT_SCRIPT_STAKE_KEY ||
+        address.type === AddressType.BASE_PAYMENT_KEY_STAKE_SCRIPT ||
+        address.type === AddressType.BASE_PAYMENT_SCRIPT_STAKE_SCRIPT
+    ) {
+      const params: AddressParamsBase = address.params;
+      if (params.spendingPath) {
+        path = params.spendingPath;
+      } else {
+        throw new Error('unsupported base address type');
+      }
+    } else if (
+      address.type === AddressType.ENTERPRISE_KEY ||
+        address.type === AddressType.ENTERPRISE_SCRIPT
+    ) {
+      if (address.params.spendingPath) {
+        path = address.params.spendingPath;
+      } else {
+        throw new Error('unsupported enterprise address type');
+      }
+    } else if (
+      address.type === AddressType.POINTER_KEY ||
+        address.type === AddressType.POINTER_SCRIPT
+    ) {
+      if (address.params.spendingPath) {
+        path = address.params.spendingPath;
+      } else {
+        throw new Error('unsupported pointer address type');
+      }
+    } else if (
+      address.type === AddressType.REWARD_KEY ||
+        address.type === AddressType.REWARD_SCRIPT
+    ) {
+      if (address.params.stakingPath) {
+        path = address.params.stakingPath;
+      } else {
+        throw new Error('unsupported reward address type');
+      }
+    } else {
+      throw new Error('unexpected address type');
+    }
 
     const content = (
       <div className={styles.stepsRow}>
