@@ -93,7 +93,7 @@ export function getAddressHintBlock(props: Props): Array<Node> {
       <HintGap key={nextStep + 'gap'} />
     );
   }
-  if (addressInfo.type === AddressType.ENTERPRISE) {
+  if (addressInfo.type === AddressType.ENTERPRISE_KEY) {
     const nextStep = props.getAndIncrementStep();
     result.push(
       <HintBlock
@@ -107,7 +107,7 @@ export function getAddressHintBlock(props: Props): Array<Node> {
       <HintGap key={nextStep + 'gap'} />
     );
   }
-  if (addressInfo.type === AddressType.REWARD) {
+  if (addressInfo.type === AddressType.REWARD_KEY) {
     const nextStep = props.getAndIncrementStep();
     result.push(
       <HintBlock

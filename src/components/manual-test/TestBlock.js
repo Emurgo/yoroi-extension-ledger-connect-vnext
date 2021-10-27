@@ -12,6 +12,7 @@ import {
   TransactionSigningMode,
   TxAuxiliaryDataType,
   TxOutputDestinationType,
+  StakeCredentialParamsType,
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 
 import type { TransportIdType } from '../../types/enum';
@@ -318,7 +319,7 @@ export default class TestBlock extends React.Component<Props, State> {
           destination: {
             type: TxOutputDestinationType.DEVICE_OWNED,
             params: {
-              type: AddressType.BASE,
+              type: AddressType.BASE_PAYMENT_KEY_STAKE_KEY,
               params: {
                 spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
                 stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
@@ -331,7 +332,7 @@ export default class TestBlock extends React.Component<Props, State> {
           destination: {
             type: TxOutputDestinationType.DEVICE_OWNED,
             params: {
-              type: AddressType.BASE,
+              type: AddressType.BASE_PAYMENT_KEY_STAKE_KEY,
               params: {
                 spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
                 stakingKeyHashHex: '0f662d6ceb1b65733a69a1ed72f86f0bac5a16505a028897af1be345',
@@ -358,24 +359,36 @@ export default class TestBlock extends React.Component<Props, State> {
             certificates: [{
               type: CertificateType.STAKE_REGISTRATION,
               params: {
-                path: utils.str_to_path("1852'/1815'/0'/2/0"),
+                stakeCredential: {
+                  type: StakeCredentialParamsType.KEY_PATH,
+                  keyPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+                },
               }
             },
             {
               type: CertificateType.STAKE_DELEGATION,
               params: {
-                path: utils.str_to_path("1852'/1815'/0'/2/0"),
+                stakeCredential: {
+                  type: StakeCredentialParamsType.KEY_PATH,
+                  keyPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+                },
                 poolKeyHashHex: 'df1750df9b2df285fcfb50f4740657a18ee3af42727d410c37b86207',
               }
             },
             {
               type: CertificateType.STAKE_DEREGISTRATION,
               params: {
-                path: utils.str_to_path("1852'/1815'/0'/2/0"),
+                stakeCredential: {
+                  type: StakeCredentialParamsType.KEY_PATH,
+                  keyPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+                },
               },
             }],
             withdrawals: [{
-              path: utils.str_to_path("1852'/1815'/0'/2/0"),
+              stakeCredential: {
+                type: StakeCredentialParamsType.KEY_PATH,
+                keyPath: utils.str_to_path("1852'/1815'/0'/2/0"),
+              },
               amount: '1000000',
             }],
             auxiliaryData: {
@@ -384,7 +397,8 @@ export default class TestBlock extends React.Component<Props, State> {
                 hashHex: 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef',
               }
             }
-          }
+          },
+          additionalWitnessPaths: [],
         }: SignTransactionRequest)
       );
       window.postMessage(req);
@@ -417,7 +431,7 @@ export default class TestBlock extends React.Component<Props, State> {
           destination: {
             type: TxOutputDestinationType.DEVICE_OWNED,
             params: {
-              type: AddressType.BASE,
+              type: AddressType.BASE_PAYMENT_KEY_STAKE_KEY,
               params: {
                 spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
                 stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
@@ -430,7 +444,7 @@ export default class TestBlock extends React.Component<Props, State> {
           destination: {
             type: TxOutputDestinationType.DEVICE_OWNED,
             params: {
-              type: AddressType.BASE,
+              type: AddressType.BASE_PAYMENT_KEY_STAKE_KEY,
               params: {
                 spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
                 stakingKeyHashHex: '0f662d6ceb1b65733a69a1ed72f86f0bac5a16505a028897af1be345',
@@ -460,7 +474,7 @@ export default class TestBlock extends React.Component<Props, State> {
                 votingPublicKeyHex: '47ca0e9ba5f671a494067098affc86426401102094138b2300caf694d6a9f4fc',
                 stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
                 rewardsDestination: {
-                  type: AddressType.REWARD,
+                  type: AddressType.REWARD_KEY,
                   params: {
                     stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
                   },
@@ -468,7 +482,8 @@ export default class TestBlock extends React.Component<Props, State> {
                 nonce: 0,
               }
             }
-          }
+          },
+          additionalWitnessPaths: [],
         }: SignTransactionRequest)
       );
       window.postMessage(req);
@@ -486,7 +501,7 @@ export default class TestBlock extends React.Component<Props, State> {
         ({
           expectedAddr: 'Ae2tdPwUPEZ46CWnexxkBpEM4Y1Y2QQxz8zDE9TtFK6PjM7xsizBAPShHVV',
           address: {
-            type: AddressType.BASE,
+            type: AddressType.BASE_PAYMENT_KEY_STAKE_KEY,
             params: {
               spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
               stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
@@ -509,7 +524,7 @@ export default class TestBlock extends React.Component<Props, State> {
         ({
           expectedAddr: 'addr1qxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tnvz7nwqamg2fan294qzxlt89nt0ez4xzxpw4vtg7h2fggqgse4hr',
           address: {
-            type: AddressType.BASE,
+            type: AddressType.BASE_PAYMENT_KEY_STAKE_KEY,
             params: {
               spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
               stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
@@ -532,7 +547,7 @@ export default class TestBlock extends React.Component<Props, State> {
         ({
           expectedAddr: 'addr1qxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tnvz7nwqamg2fan294qzxlt89nt0ez4xzxpw4vtg7h2fggqgse4hr',
           address: {
-            type: AddressType.BASE,
+            type: AddressType.BASE_PAYMENT_KEY_STAKE_KEY,
             params: {
               spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
               stakingKeyHashHex: '927aba6ef644783f1f0e2f737c66f74fb1c0c54966a3493d17f1a52e',
@@ -555,7 +570,7 @@ export default class TestBlock extends React.Component<Props, State> {
         ({
           expectedAddr: 'addr1gxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tsqqypqv2s002',
           address: {
-            type: AddressType.POINTER,
+            type: AddressType.POINTER_KEY,
             params: {
               spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
               stakingBlockchainPointer: {
@@ -582,7 +597,7 @@ export default class TestBlock extends React.Component<Props, State> {
         ({
           expectedAddr: 'addr1vxf84wnw7ez8s0clpchhxlrx7a8mrsx9f9n2xjfazlc62tsmdww5t',
           address: {
-            type: AddressType.ENTERPRISE,
+            type: AddressType.ENTERPRISE_KEY,
             params: {
               spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
             },
@@ -608,7 +623,7 @@ export default class TestBlock extends React.Component<Props, State> {
             protocolMagic: MainnetIds.protocolMagic,
           },
           address: {
-            type: AddressType.REWARD,
+            type: AddressType.REWARD_KEY,
             params: {
               stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
             },
@@ -650,7 +665,7 @@ export default class TestBlock extends React.Component<Props, State> {
         OPERATION_NAME.DERIVE_ADDRESS,
         ({
           address: {
-            type: AddressType.BASE,
+            type: AddressType.BASE_PAYMENT_KEY_STAKE_KEY,
             params: {
               spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
               stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
@@ -672,7 +687,7 @@ export default class TestBlock extends React.Component<Props, State> {
         OPERATION_NAME.DERIVE_ADDRESS,
         ({
           address: {
-            type: AddressType.BASE,
+            type: AddressType.BASE_PAYMENT_KEY_STAKE_KEY,
             params: {
               spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
               stakingKeyHashHex: '927aba6ef644783f1f0e2f737c66f74fb1c0c54966a3493d17f1a52e',
@@ -694,7 +709,7 @@ export default class TestBlock extends React.Component<Props, State> {
         OPERATION_NAME.DERIVE_ADDRESS,
         ({
           address: {
-            type: AddressType.POINTER,
+            type: AddressType.POINTER_KEY,
             params: {
               spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
               stakingBlockchainPointer: {
@@ -720,7 +735,7 @@ export default class TestBlock extends React.Component<Props, State> {
         OPERATION_NAME.DERIVE_ADDRESS,
         ({
           address: {
-            type: AddressType.ENTERPRISE,
+            type: AddressType.ENTERPRISE_KEY,
             params: {
               spendingPath: utils.str_to_path("1852'/1815'/0'/0/0"),
             },
@@ -741,7 +756,7 @@ export default class TestBlock extends React.Component<Props, State> {
         OPERATION_NAME.DERIVE_ADDRESS,
         ({
           address: {
-            type: AddressType.REWARD,
+            type: AddressType.REWARD_KEY,
             params: {
               stakingPath: utils.str_to_path("1852'/1815'/0'/2/0"),
             },

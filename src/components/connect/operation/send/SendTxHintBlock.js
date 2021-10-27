@@ -13,6 +13,7 @@ import {
   AddressType,
   CertificateType,
   TxAuxiliaryDataType,
+  StakeCredentialParamsType,
 } from '@cardano-foundation/ledgerjs-hw-app-cardano';
 import {
   pathToString,
@@ -197,6 +198,10 @@ export default class SendTxHintBlock extends React.Component<Props> {
 
     if (request.cert.type === CertificateType.STAKE_REGISTRATION) {
       const { params } = request.cert;
+      if (request.cert.params.stakeCredential.type !== StakeCredentialParamsType.KEY_PATH) {
+        throw new Error('unsupported stake credential type');
+      }
+      const { keyPath } = request.cert.params.stakeCredential;
       const imgRegister = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-registration.png`);
       const imgRegisterConfirm = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-registration-confirm.png`);
       const firstStep = request.getAndIncrementStep();
@@ -215,7 +220,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
           number={secondStep}
           text={message[`${this.props.deviceCode}Path`]}
           imagePath={stakingKey}
-          secondaryText={pathToString(params.path)}
+          secondaryText={pathToString(keyPath)}
         />),
         (<HintGap key={secondStep + 'gap'} />),
         (<HintBlock
@@ -229,6 +234,10 @@ export default class SendTxHintBlock extends React.Component<Props> {
     }
     if (request.cert.type === CertificateType.STAKE_DELEGATION) {
       const { params } = request.cert;
+      if (request.cert.params.stakeCredential.type !== StakeCredentialParamsType.KEY_PATH) {
+        throw new Error('unsupported stake credential type');
+      }
+      const { keyPath } = request.cert.params.stakeCredential;
       const imgDelegatePool = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-delegation-pool.png`);
       const imgDelegateConfirm = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-delegation-confirm.png`);
       const firstStep = request.getAndIncrementStep();
@@ -264,7 +273,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
           number={secondStep}
           text={message[`${this.props.deviceCode}Path`]}
           imagePath={stakingKey}
-          secondaryText={pathToString(params.path)}
+          secondaryText={pathToString(keyPath)}
         />),
         (<HintGap key={secondStep + 'gap'} />),
         (<HintBlock
@@ -278,6 +287,10 @@ export default class SendTxHintBlock extends React.Component<Props> {
     }
     if (request.cert.type === CertificateType.STAKE_DEREGISTRATION) {
       const { params } = request.cert;
+      if (request.cert.params.stakeCredential.type !== StakeCredentialParamsType.KEY_PATH) {
+        throw new Error('unsupported stake credential type');
+      }
+      const { keyPath } = request.cert.params.stakeCredential;
       const imgDeregister = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-deregister-key.png`);
       const imgDeregisterConfirm = require(`../../../../assets/img/nano-${this.props.deviceCode}/hint-deregister-confirm.png`);
       const firstStep = request.getAndIncrementStep();
@@ -296,7 +309,7 @@ export default class SendTxHintBlock extends React.Component<Props> {
           number={secondStep}
           text={message[`${this.props.deviceCode}Path`]}
           imagePath={stakingKey}
-          secondaryText={pathToString(params.path)}
+          secondaryText={pathToString(keyPath)}
         />),
         (<HintGap key={secondStep + 'gap'} />),
         (<HintBlock
@@ -459,7 +472,9 @@ export default class SendTxHintBlock extends React.Component<Props> {
             // note: Ledger prompts for an a change address if and only if
             // it's NOT a Base address where the stakingPath is set (not stakingKeyHashHex
             if (
-              params.type === AddressType.BASE && params.params && params.params.stakingPath != null
+              params.type === AddressType.BASE_PAYMENT_KEY_STAKE_KEY &&
+                params.params &&
+                params.params.stakingPath != null
             ) {
               return null;
             }
