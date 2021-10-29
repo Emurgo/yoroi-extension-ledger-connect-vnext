@@ -90,6 +90,9 @@ export default class App extends React.Component<Props> {
                 <Maintenance />
               </Route>
               <Route path="/v3.1">
+                <Maintenance />
+              </Route>
+              <Route path="/v4.1">
                 <ConnectPage rootStore={this.props.rootStore} />
               </Route>
               <Redirect to="/" />
