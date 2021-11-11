@@ -15,6 +15,7 @@ import {
 import LoadingSpinner from '../../widgets/LoadingSpinner';
 import CommonHintBlock from './common/CommonHintBlock';
 import ConnectLedgerHintBlock from './connect/ConnectLedgerHintBlock';
+import ConnectLedgerMultiKeysHintBlock from './connect/ConnectLedgerMultiKeysHintBlock';
 import SendTxHintBlock from './send/SendTxHintBlock';
 import VerifyAddressHintBlock from './verify/VerifyAddressHintBlock';
 import DeriveAddressHintBlock from './derive/DeriveAddressHintBlock';
@@ -94,7 +95,7 @@ export default class OperationBlock extends React.Component<Props> {
             break;
           case OPERATION_NAME.GET_EXTENDED_PUBLIC_KEYS:
             content = (
-              <ConnectLedgerHintBlock
+              <ConnectLedgerMultiKeysHintBlock
                 deviceCode={deviceCode}
                 wasDeviceLocked={wasDeviceLocked}
               />
