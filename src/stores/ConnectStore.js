@@ -149,8 +149,8 @@ export default class ConnectStore {
     const versionResp = await adaApp.getVersion();
     const currentSerial = await adaApp.getSerial();
     if (this.expectedSerial != null) {
-      if (currentSerial.serial !== this.expectedSerial) {
-        throw new Error(`Incorrect hardware wallet. This wallet was created with a device with serial ID ${this.expectedSerial ?? 'undefined'}, but you are currently using ${currentSerial.serial}.`);
+      if (currentSerial.serialHex !== this.expectedSerial) {
+        throw new Error(`Incorrect hardware wallet. This wallet was created with a device with serial ID ${this.expectedSerial ?? 'undefined'}, but you are currently using ${currentSerial.serialHex}.`);
       }
     }
 
