@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --env development --open --hot",
     "build": "webpack --env production",
     "predeploy": "yarn run build",
-    "deploy-multisig": "gh-pages -d dist -e multisig -n",
+    "deploy-ledgerjs5": "gh-pages -d dist -e ledgerjs5 -n",
     "flow": "flow",
     "lint": "eslint *.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -49,7 +49,7 @@
     "webpack-dev-server": "3.11.0"
   },
   "dependencies": {
-    "@cardano-foundation/ledgerjs-hw-app-cardano": "4.0.0",
+    "@cardano-foundation/ledgerjs-hw-app-cardano": "5.0.0",
     "@ledgerhq/hw-transport-u2f": "5.36.0-deprecated",
     "@ledgerhq/hw-transport-webauthn": "5.36.0-deprecated",
     "@ledgerhq/hw-transport-webusb": "5.49.0",
