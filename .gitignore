@@ -62,3 +62,6 @@ package-lock.json
 
 # distribution directory
 dist/
+
+# idea folder
+.idea/
