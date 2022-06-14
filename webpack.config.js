@@ -95,6 +95,10 @@ module.exports = (env) => {
     },
   };
 
+  config.node = {
+    net: 'empty'
+  };
+
   if (isProduction) {
     config.mode = 'production';
 
