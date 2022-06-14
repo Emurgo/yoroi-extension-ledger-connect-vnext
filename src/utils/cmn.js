@@ -107,11 +107,16 @@ export const makeTransport = async (transportId: TransportIdType): any => {
     case TRANSPORT_ID.WEB_HID:
       transportFactory = require('@ledgerhq/hw-transport-webhid').default;
       break;
+    case TRANSPORT_ID.SPECULOS:
+      transportFactory = require('@ledgerhq/hw-transport-node-speculos').default;
+      break;
     default:
       throw new Error('Transport protocol not supported');
   }
 
-  const transport = await transportFactory.create();
+  const transport = transportId === TRANSPORT_ID.SPECULOS
+    ? (await transportFactory.open({ apduPort: 9999 }))
+    : (await transportFactory.create());
   transport.exchangeTimeout = TRANSPORT_EXCHANGE_TIMEOUT_MS;
 
   return transport;
@@ -143,10 +148,7 @@ export const formatError = (err: any): string => {
   }
 
   const ngFilter = (keyName) => {
-    if (keyName === 'stack') {
-      return false;
-    }
-    return true;
+    return keyName !== 'stack';
   };
 
   const formatted = Object.keys(err)

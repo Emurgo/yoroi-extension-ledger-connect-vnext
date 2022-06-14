@@ -34,5 +34,6 @@ export const TRANSPORT_ID = Object.freeze({
   U2F: 'u2f',
   WEB_USB: 'webusb',
   WEB_HID: 'webhid',
+  SPECULOS: 'speculos',
 });
 export type TransportIdType = $Values<typeof TRANSPORT_ID>;
